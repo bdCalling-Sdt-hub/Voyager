@@ -141,3 +141,16 @@ export const IconColoredTik = `<svg width="24" height="24" viewBox="0 0 24 24" f
 <path d="M7.75 12L10.58 14.83L16.25 9.17001" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
+
+export const IconSettings = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 9.10998V14.88C3 17 3 17 5 18.35L10.5 21.53C11.33 22.01 12.68 22.01 13.5 21.53L19 18.35C21 17 21 17 21 14.89V9.10998C21 6.99998 21 6.99999 19 5.64999L13.5 2.46999C12.68 1.98999 11.33 1.98999 10.5 2.46999L5 5.64999C3 6.99999 3 6.99998 3 9.10998Z" stroke="#9BA5B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="#9BA5B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+export const IconAdd = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M5.33337 8H10.6667" stroke="#8C78EA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8 10.6667V5.33333" stroke="#8C78EA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M6.00004 14.6667H10C13.3334 14.6667 14.6667 13.3333 14.6667 10V6.00001C14.6667 2.66668 13.3334 1.33334 10 1.33334H6.00004C2.66671 1.33334 1.33337 2.66668 1.33337 6.00001V10C1.33337 13.3333 2.66671 14.6667 6.00004 14.6667Z" stroke="#8C78EA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
