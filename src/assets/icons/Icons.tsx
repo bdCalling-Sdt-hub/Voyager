@@ -82,3 +82,9 @@ export const IconUser = `<svg width="16" height="22" viewBox="0 0 16 22" fill="n
 <path d="M3.15997 13.56C0.739971 15.18 0.739971 17.82 3.15997 19.43C5.90997 21.27 10.42 21.27 13.17 19.43C15.59 17.81 15.59 15.17 13.17 13.56C10.43 11.73 5.91997 11.73 3.15997 13.56Z" stroke="#9BA5B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
+
+export const IconVerifiedTik = `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M11 21C16.5 21 21 16.5 21 11C21 5.5 16.5 1 11 1C5.5 1 1 5.5 1 11C1 16.5 5.5 21 11 21Z" fill="#8C78EA" stroke="#8C78EA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M6.75 11L9.58 13.83L15.25 8.17001" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;

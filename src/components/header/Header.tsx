@@ -32,7 +32,11 @@ const Header = ({
         />
       </View>
       <View style={[tw``, titleContainer]}>
-        <Text style={[tw`text-black text-2xl font-WorkMedium`, titleStyle]}>
+        <Text
+          style={[
+            tw`text-black text-2xl font-WorkMedium capitalize`,
+            titleStyle,
+          ]}>
           {title}
         </Text>
       </View>

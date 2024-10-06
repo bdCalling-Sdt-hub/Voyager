@@ -12,7 +12,7 @@ import tw from '../../lib/tailwind';
 import CircularProgress from '../../components/progressBar/CircularProgress';
 import RangeSlider from '../../components/slider/RangeSlider';
 import {SvgXml} from 'react-native-svg';
-import places from '../../utils/places.json';
+import places from '../../utils/json/places.json';
 import {
   IconColoredRightArrow,
   IconFilledHeart,

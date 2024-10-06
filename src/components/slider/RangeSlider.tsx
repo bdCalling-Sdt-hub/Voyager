@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Text} from 'react-native';
 import {Slider} from 'react-native-ui-lib';
 import tw from '../../lib/tailwind';
@@ -11,11 +11,12 @@ const RangeSlider = ({color, containerStyle, value}: any) => {
         value={value}
         minimumValue={0}
         maximumValue={100}
-        thumbTintColor={color} //circle color
-        minimumTrackTintColor={color} //range color
-        maximumTrackTintColor="#ffffff"
+        thumbTintColor={color} // circle color
+        minimumTrackTintColor={color} // range color
+        maximumTrackTintColor="#ffffff" // track color
         thumbStyle={tw`w-7 h-7 border-2 border-white bg-pink100 rounded-full`}
         trackStyle={tw`h-3.5 rounded-full`}
+        disableActiveStyling={true}
       />
       <View style={tw`w-2/15`}>
         <Text

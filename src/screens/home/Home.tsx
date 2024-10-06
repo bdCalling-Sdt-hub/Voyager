@@ -17,13 +17,15 @@ import {
   IconSearch,
   IconTikWhiteWithCircle,
   IconTikWithCircle,
+  IconVerifiedTik,
   IconWhiteFilledHeart,
   IconWhiteSearch,
 } from '../../assets/icons/Icons';
 import {SvgXml} from 'react-native-svg';
-import personalized from '../../utils/personalized.json';
+import personalized from '../../utils/json/personalized.json';
+import {NavigProps} from '../../utils/interface/NaviProps';
 
-const Home = () => {
+const Home = ({navigation}: NavigProps<null>) => {
   return (
     <ScrollView contentContainerStyle={tw`px-[4%] bg-white`}>
       <View>
@@ -33,7 +35,7 @@ const Home = () => {
           IconContainer={tw`bg-black`}
           icon={IconWhiteSearch}
         />
-        <View style={tw`bg-gray80 rounded-full flex-row items-center p-2`}>
+        <View style={tw`bg-gray80 rounded-full flex-row items-center p-1`}>
           <View
             style={tw`bg-white rounded-full flex-row items-center gap-4 flex-1 pl-4`}>
             <SvgXml xml={IconSearch} />
@@ -58,7 +60,13 @@ const Home = () => {
           </Text>
 
           <View style={tw`flex-row gap-4 justify-between mt-6`}>
-            <TouchableOpacity style={tw`flex-1`}>
+            <TouchableOpacity
+              style={tw`flex-1`}
+              onPress={() => {
+                navigation?.navigate('NextDestination', {
+                  title: 'attractions',
+                });
+              }}>
               <Image
                 source={require('../../assets/images/attractions-cards.png')}
               />
@@ -67,14 +75,26 @@ const Home = () => {
                 Attractions
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={tw`flex-1`}>
+            <TouchableOpacity
+              style={tw`flex-1`}
+              onPress={() => {
+                navigation?.navigate('NextDestination', {
+                  title: 'cities',
+                });
+              }}>
               <Image source={require('../../assets/images/cities-cards.png')} />
               <Text
                 style={tw`text-sm font-WorkMedium text-black text-center mt-2`}>
                 Cities
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={tw`flex-1`}>
+            <TouchableOpacity
+              style={tw`flex-1`}
+              onPress={() => {
+                navigation?.navigate('NextDestination', {
+                  title: 'countries',
+                });
+              }}>
               <Image
                 source={require('../../assets/images/countries-cards.png')}
               />
@@ -158,7 +178,11 @@ const Home = () => {
                     <SvgXml
                       xml={item?.isFav ? IconFilledHeart : IconWhiteFilledHeart}
                     />
-                    <SvgXml xml={IconTikWithCircle} />
+                    <SvgXml
+                      xml={
+                        item?.isVerified ? IconVerifiedTik : IconTikWithCircle
+                      }
+                    />
                   </View>
                   <View style={tw`bg-white p-3 w-full rounded-2xl`}>
                     <View style={tw`flex-row items-center`}>

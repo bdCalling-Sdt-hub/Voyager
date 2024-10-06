@@ -5,6 +5,7 @@ import tw from '../lib/tailwind';
 import {IconDashboard, IconLocation} from '../assets/icons/Icons';
 import Dashboard from '../screens/dashboard/Dashboard';
 import Home from '../screens/home/Home';
+import NextDestination from '../screens/home/NextDestination';
 
 const Tab = createBottomTabNavigator();
 

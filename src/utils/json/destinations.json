@@ -1,0 +1,102 @@
+{
+  "data": {
+    "countries": [
+      {
+        "name": "Finland",
+        "location": "Country in Europe"
+      },
+      {
+        "name": "Italy",
+        "location": "Country in Southern Europe"
+      },
+      {
+        "name": "Japan",
+        "location": "Country in East Asia"
+      },
+      {
+        "name": "Brazil",
+        "location": "Country in South America"
+      },
+      {
+        "name": "Australia",
+        "location": "Country in Oceania"
+      }
+    ],
+    "cities": [
+      {
+        "name": "Helsinki",
+        "location": "Finland, Country in Europe"
+      },
+      {
+        "name": "Rome",
+        "location": "Italy, Country in Southern Europe"
+      },
+      {
+        "name": "Tokyo",
+        "location": "Japan, Country in East Asia"
+      },
+      {
+        "name": "Rio de Janeiro",
+        "location": "Brazil, Country in South America"
+      },
+      {
+        "name": "Sydney",
+        "location": "Australia, Country in Oceania"
+      },
+      {
+        "name": "Paris",
+        "location": "France, Country in Western Europe"
+      },
+      {
+        "name": "Toronto",
+        "location": "Canada, Country in North America"
+      },
+      {
+        "name": "Cape Town",
+        "location": "South Africa, Country in Africa"
+      }
+    ],
+    "attractions": [
+      {
+        "name": "Suomenlinna Fortress",
+        "city": "Helsinki",
+        "country": "Finland"
+      },
+      {
+        "name": "Colosseum",
+        "city": "Rome",
+        "country": "Italy"
+      },
+      {
+        "name": "Tokyo Skytree",
+        "city": "Tokyo",
+        "country": "Japan"
+      },
+      {
+        "name": "Christ the Redeemer",
+        "city": "Rio de Janeiro",
+        "country": "Brazil"
+      },
+      {
+        "name": "Sydney Opera House",
+        "city": "Sydney",
+        "country": "Australia"
+      },
+      {
+        "name": "Eiffel Tower",
+        "city": "Paris",
+        "country": "France"
+      },
+      {
+        "name": "CN Tower",
+        "city": "Toronto",
+        "country": "Canada"
+      },
+      {
+        "name": "Table Mountain",
+        "city": "Cape Town",
+        "country": "South Africa"
+      }
+    ]
+  }
+}
