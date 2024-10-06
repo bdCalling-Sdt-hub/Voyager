@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "title": "The Book of Kells Experience",
+    "subtitle": "Tourist attraction in Dublin, Ireland",
+    "image": "https://example.com/images/beach.jpg",
+    "isFav": false
+  },
+  {
+    "id": 2,
+    "title": "Mountain Escape",
+    "subtitle": "A peaceful retreat in the mountains",
+    "image": "https://example.com/images/mountain.jpg",
+    "isFav": true
+  },
+  {
+    "id": 3,
+    "title": "City Lights",
+    "subtitle": "A bustling city view at night",
+    "image": "https://example.com/images/city.jpg",
+    "isFav": false
+  },
+  {
+    "id": 4,
+    "title": "Desert Adventure",
+    "subtitle": "A thrilling desert safari experience",
+    "image": "https://example.com/images/desert.jpg",
+    "isFav": true
+  }
+]
