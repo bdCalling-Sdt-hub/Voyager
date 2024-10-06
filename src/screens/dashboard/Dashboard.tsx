@@ -19,7 +19,7 @@ import {
   IconTikWithCircle,
 } from '../../assets/icons/Icons';
 
-const Dashbaord = () => {
+const Dashboard = () => {
   const [activePlace, setActivePlace] = React.useState('attractions');
   return (
     <ScrollView style={tw`px-[4%] bg-white`}>
@@ -155,4 +155,4 @@ const Dashbaord = () => {
   );
 };
 
-export default Dashbaord;
+export default Dashboard;

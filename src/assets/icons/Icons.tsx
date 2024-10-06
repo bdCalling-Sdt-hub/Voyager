@@ -47,3 +47,38 @@ export const IconFilter = `<svg width="24" height="24" viewBox="0 0 24 24" fill=
 <path d="M14 21C15.933 21 17.5 19.433 17.5 17.5C17.5 15.567 15.933 14 14 14C12.067 14 10.5 15.567 10.5 17.5C10.5 19.433 12.067 21 14 21Z" stroke="#9BA5B2" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
+
+export const IconDashboard = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.5401 8.31001C18.8987 8.31001 20.0001 7.20863 20.0001 5.85001C20.0001 4.49139 18.8987 3.39001 17.5401 3.39001C16.1814 3.39001 15.0801 4.49139 15.0801 5.85001C15.0801 7.20863 16.1814 8.31001 17.5401 8.31001Z" stroke="#9BA5B2" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M6.46001 8.31001C7.81863 8.31001 8.92 7.20863 8.92 5.85001C8.92 4.49139 7.81863 3.39001 6.46001 3.39001C5.10139 3.39001 4 4.49139 4 5.85001C4 7.20863 5.10139 8.31001 6.46001 8.31001Z" stroke="#9BA5B2" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M17.5401 20.61C18.8987 20.61 20.0001 19.5086 20.0001 18.15C20.0001 16.7914 18.8987 15.69 17.5401 15.69C16.1814 15.69 15.0801 16.7914 15.0801 18.15C15.0801 19.5086 16.1814 20.61 17.5401 20.61Z" stroke="#9BA5B2" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M6.46001 20.61C7.81863 20.61 8.92 19.5086 8.92 18.15C8.92 16.7914 7.81863 15.69 6.46001 15.69C5.10139 15.69 4 16.7914 4 18.15C4 19.5086 5.10139 20.61 6.46001 20.61Z" stroke="#9BA5B2" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+export const IconLocation = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="#9BA5B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="#9BA5B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+export const IconHeart = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M20.8401 4.60999C20.3294 4.099 19.7229 3.69364 19.0555 3.41708C18.388 3.14052 17.6726 2.99817 16.9501 2.99817C16.2276 2.99817 15.5122 3.14052 14.8448 3.41708C14.1773 3.69364 13.5709 4.099 13.0601 4.60999L12.0001 5.66999L10.9401 4.60999C9.90843 3.5783 8.50915 2.9987 7.05012 2.9987C5.59109 2.9987 4.19181 3.5783 3.16012 4.60999C2.12843 5.64169 1.54883 7.04096 1.54883 8.49999C1.54883 9.95903 2.12843 11.3583 3.16012 12.39L4.22012 13.45L12.0001 21.23L19.7801 13.45L20.8401 12.39C21.3511 11.8792 21.7565 11.2728 22.033 10.6053C22.3096 9.93789 22.4519 9.22248 22.4519 8.49999C22.4519 7.77751 22.3096 7.0621 22.033 6.39464C21.7565 5.72718 21.3511 5.12075 20.8401 4.60999Z" stroke="#9BA5B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+export const IconTrophy = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12.1499 16.5V18.6" stroke="#9BA5B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.1499 22H17.1499V21C17.1499 19.9 16.2499 19 15.1499 19H9.1499C8.0499 19 7.1499 19.9 7.1499 21V22V22Z" stroke="#9BA5B2" stroke-width="1.5" stroke-miterlimit="10"/>
+<path d="M6.1499 22H18.1499" stroke="#9BA5B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 16C8.13 16 5 12.87 5 9V6C5 3.79 6.79 2 9 2H15C17.21 2 19 3.79 19 6V9C19 12.87 15.87 16 12 16Z" stroke="#9BA5B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M5.47004 11.65C4.72004 11.41 4.06004 10.97 3.54004 10.45C2.64004 9.45001 2.04004 8.25001 2.04004 6.85001C2.04004 5.45001 3.14004 4.35001 4.54004 4.35001H5.19004C4.99004 4.81001 4.89004 5.32001 4.89004 5.85001V8.85001C4.89004 9.85001 5.10004 10.79 5.47004 11.65Z" stroke="#9BA5B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M18.53 11.65C19.28 11.41 19.94 10.97 20.46 10.45C21.36 9.45001 21.96 8.25001 21.96 6.85001C21.96 5.45001 20.86 4.35001 19.46 4.35001H18.81C19.01 4.81001 19.11 5.32001 19.11 5.85001V8.85001C19.11 9.85001 18.9 10.79 18.53 11.65Z" stroke="#9BA5B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+export const IconUser = `<svg width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.16006 9.87C8.06006 9.86 7.94006 9.86 7.83006 9.87C5.45006 9.79 3.56006 7.84 3.56006 5.44C3.56006 2.99 5.54006 1 8.00006 1C10.4501 1 12.4401 2.99 12.4401 5.44C12.4301 7.84 10.5401 9.79 8.16006 9.87Z" stroke="#9BA5B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3.15997 13.56C0.739971 15.18 0.739971 17.82 3.15997 19.43C5.90997 21.27 10.42 21.27 13.17 19.43C15.59 17.81 15.59 15.17 13.17 13.56C10.43 11.73 5.91997 11.73 3.15997 13.56Z" stroke="#9BA5B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
