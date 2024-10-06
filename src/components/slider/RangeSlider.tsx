@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 import {Slider} from 'react-native-ui-lib';
 import tw from '../../lib/tailwind';
 
-const RangeSlider = ({color, containerStyle, value}: any) => {
+const RangeSlider = ({color, containerStyle, value, trackColor}: any) => {
   return (
     <View style={[tw`flex-row justify-between`, containerStyle]}>
       <Slider
@@ -13,7 +13,7 @@ const RangeSlider = ({color, containerStyle, value}: any) => {
         maximumValue={100}
         thumbTintColor={color} // circle color
         minimumTrackTintColor={color} // range color
-        maximumTrackTintColor="#ffffff" // track color
+        maximumTrackTintColor={trackColor || '#ffffff'} // track color
         thumbStyle={tw`w-7 h-7 border-2 border-white bg-pink100 rounded-full`}
         trackStyle={tw`h-3.5 rounded-full`}
         disableActiveStyling={true}

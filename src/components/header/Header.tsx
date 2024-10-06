@@ -2,7 +2,7 @@ import {View, Text, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import tw from '../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
-import {IconSearch} from '../../assets/icons/Icons';
+import {IconLeftArrow, IconSearch} from '../../assets/icons/Icons';
 import {useNavigation} from '@react-navigation/native';
 import {NavigProps} from '../../utils/interface/NaviProps';
 
@@ -14,6 +14,7 @@ interface Props {
   titleStyle?: any;
   containerStyle?: any;
   icon?: any;
+  isIcon?: boolean;
 }
 const Header = ({
   title,
@@ -23,18 +24,28 @@ const Header = ({
   titleStyle,
   containerStyle,
   icon,
+  isIcon,
 }: Props) => {
-  const navigation: NavigProps<null> = useNavigation();
+  const navigation: any = useNavigation();
   return (
     <View
       style={[tw`flex-row items-center justify-between py-2`, containerStyle]}>
       <TouchableOpacity
         style={[tw``, imageContainer]}
-        onPress={() => navigation?.navigate('Home')}>
-        <Image
-          source={require('../../assets/images/user.png')}
-          style={tw`h-12 w-12 rounded-full`}
-        />
+        onPress={() =>
+          isIcon ? navigation?.goBack() : navigation?.navigate('Home')
+        }>
+        {isIcon ? (
+          <View
+            style={tw`h-12 w-12 rounded-full bg-white items-center justify-center border border-gray90`}>
+            <SvgXml xml={IconLeftArrow} />
+          </View>
+        ) : (
+          <Image
+            source={require('../../assets/images/user.png')}
+            style={tw`h-12 w-12 rounded-full`}
+          />
+        )}
       </TouchableOpacity>
       <View style={[tw``, titleContainer]}>
         <Text

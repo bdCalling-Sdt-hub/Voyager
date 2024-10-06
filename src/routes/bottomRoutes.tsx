@@ -2,10 +2,11 @@ import {Image, TouchableOpacity, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {SvgXml} from 'react-native-svg';
 import tw from '../lib/tailwind';
-import {IconDashboard, IconLocation} from '../assets/icons/Icons';
+import {IconDashboard, IconLocation, IconTrophy} from '../assets/icons/Icons';
 import Dashboard from '../screens/dashboard/Dashboard';
 import Home from '../screens/home/Home';
 import NextDestination from '../screens/home/NextDestination';
+import WeeklyQuestions from '../screens/questions/WeeklyQuestions';
 
 const Tab = createBottomTabNavigator();
 
@@ -34,6 +35,9 @@ function BottomRoutes() {
             case 'Home':
               icon = IconLocation;
               break;
+            case 'WeeklyQuestions':
+              icon = IconTrophy;
+              break;
             default:
               icon = IconDashboard;
               break;
@@ -54,6 +58,7 @@ function BottomRoutes() {
       })}>
       <Tab.Screen name="Dashboard" component={Dashboard} />
       <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="WeeklyQuestions" component={WeeklyQuestions} />
     </Tab.Navigator>
   );
 }

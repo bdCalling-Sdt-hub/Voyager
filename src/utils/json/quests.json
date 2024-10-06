@@ -1,0 +1,44 @@
+{
+  "quests": [
+    {
+      "id": 1,
+      "question": "Complete 5 daily exercises",
+      "coins": 50,
+      "trophy": "100 XP",
+      "image": "https://example.com/images/quest1.png",
+      "status": "incomplete"
+    },
+    {
+      "id": 2,
+      "question": "Read a chapter from a book",
+      "coins": 30,
+      "trophy": "50 XP",
+      "image": "https://example.com/images/quest2.png",
+      "status": "incomplete"
+    },
+    {
+      "id": 3,
+      "question": "Walk 10,000 steps today",
+      "coins": 100,
+      "trophy": "200 XP",
+      "image": "https://example.com/images/quest3.png",
+      "status": "incomplete"
+    },
+    {
+      "id": 4,
+      "question": "Watch an educational video",
+      "coins": 20,
+      "trophy": "30 XP",
+      "image": "https://example.com/images/quest4.png",
+      "status": "incomplete"
+    },
+    {
+      "id": 5,
+      "question": "Meditate for 15 minutes",
+      "coins": 40,
+      "trophy": "80 XP",
+      "image": "https://example.com/images/quest5.png",
+      "status": "incomplete"
+    }
+  ]
+}

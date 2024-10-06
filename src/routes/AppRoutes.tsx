@@ -1,12 +1,11 @@
-import {View, Text} from 'react-native';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-// import Dashbaord from '../screens/dashboard/Dashbaord';
 import Home from '../screens/home/Home';
 import BottomRoutes from './bottomRoutes';
 import NextDestination from '../screens/home/NextDestination';
 import DestinationDetails from '../screens/home/components/DestinationDetails';
+import Places from '../screens/home/Places';
 
 const AppRoutes = () => {
   const Stack = createNativeStackNavigator();
@@ -18,6 +17,7 @@ const AppRoutes = () => {
         <Stack.Screen name="BottomRoutes" component={BottomRoutes} />
         <Stack.Screen name="NextDestination" component={NextDestination} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Places" component={Places} />
         <Stack.Screen
           name="DestinationDetails"
           component={DestinationDetails}

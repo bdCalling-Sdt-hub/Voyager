@@ -107,12 +107,16 @@ const Home = ({navigation}: NavigProps<null>) => {
         </View>
 
         <View style={tw`mt-6`}>
-          <View style={tw`flex-row items-center`}>
+          <TouchableOpacity
+            style={tw`flex-row items-center`}
+            onPress={() => {
+              navigation?.navigate('Places', {title: 'picks for you'});
+            }}>
             <Text style={tw`text-black text-base font-WorkMedium`}>
               Personalized Picks{' '}
             </Text>
             <SvgXml xml={IconColoredRightArrow} />
-          </View>
+          </TouchableOpacity>
           <Text style={tw`text-gray100 font-WorkRegular text-sm mt-1`}>
             Destinations that match your interests
           </Text>
@@ -155,12 +159,16 @@ const Home = ({navigation}: NavigProps<null>) => {
         </View>
 
         <View style={tw`mt-6`}>
-          <View style={tw`flex-row items-center`}>
+          <TouchableOpacity
+            style={tw`flex-row items-center`}
+            onPress={() => {
+              navigation?.navigate('Places', {title: 'visited'});
+            }}>
             <Text style={tw`text-black text-base font-WorkMedium`}>
               Top Destinations{' '}
             </Text>
             <SvgXml xml={IconColoredRightArrow} />
-          </View>
+          </TouchableOpacity>
           <Text style={tw`text-gray100 font-WorkRegular text-sm mt-1`}>
             Discover popular attractions around the globe
           </Text>
