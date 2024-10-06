@@ -1,0 +1,110 @@
+import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
+import React from 'react';
+import tw from '../../../lib/tailwind';
+import {SvgXml} from 'react-native-svg';
+import {
+  IconClock,
+  IconColoredHeart,
+  IconColoredLocation,
+  IconHeart,
+  IconLeftArrow,
+  IconLogout,
+  IconMuseum,
+  IconTicket,
+  IconTik,
+} from '../../../assets/icons/Icons';
+import {NavigProps} from '../../../utils/interface/NaviProps';
+
+const DestinationDetails = ({navigation}: NavigProps<null>) => {
+  return (
+    <View style={tw`bg-white h-full`}>
+      <View>
+        <Image
+          source={require('../../../assets/images/explore-card-2.png')}
+          style={tw`w-full h-66`}
+          resizeMode="cover"
+        />
+        <View
+          style={tw`bg-white h-10 w-10 rounded-full items-center justify-center absolute top-4 right-[4%]`}>
+          <SvgXml xml={IconLogout} />
+        </View>
+        <TouchableOpacity
+          style={tw`bg-white h-10 w-10 rounded-full items-center justify-center absolute top-4 left-[4%]`}
+          onPress={() => navigation?.goBack()}>
+          <SvgXml xml={IconLeftArrow} />
+        </TouchableOpacity>
+      </View>
+
+      <ScrollView style={tw`px-[4%] pt-6`}>
+        <Text style={tw`text-black text-[20px] font-WorkMedium`}>
+          The Book of Kells Experience
+        </Text>
+        <View style={tw`flex-row items-center gap-2 mt-2`}>
+          <SvgXml xml={IconColoredLocation} />
+          <Text style={tw`text-gray100 font-WorkRegular text-sm`}>
+            Dublin, Ireland
+          </Text>
+        </View>
+        <Text style={tw`text-sm font-WorkRegular text-black leading-6 mt-4`}>
+          The Book of Kells Experience is housed in the Grand Library at Trinity
+          College, Dublin. This exhibition features illuminated illustrations of
+          the Christian Gospels dating back to 800 AD, offering a glimpse into
+          Ireland’s medieval artistry and religious heritage.
+        </Text>
+
+        <View style={tw`bg-gray80 p-4 rounded-2xl mt-6`}>
+          <View
+            style={tw`flex-row items-center gap-4 border-b border-b-gray90 py-4`}>
+            <SvgXml xml={IconMuseum} style={tw`flex-shrink`} />
+            <Text
+              style={tw`text-sm text-gray100 font-WorkRegular leading-[20px] flex-wrap flex-1`}>
+              Historical Landmark, Cultural Attraction, Museum Exhibit
+            </Text>
+          </View>
+          <View
+            style={tw`flex-row items-center gap-4 border-b border-b-gray90 py-4`}>
+            <SvgXml xml={IconClock} style={tw`flex-shrink`} />
+            <Text
+              style={tw`text-sm text-gray100 font-WorkRegular leading-[20px] flex-wrap flex-1`}>
+              Mon to Sat: 8:30 AM – 7:00 PM{'\n'}
+              Sun: 9:30 AM – 6:30 PM
+            </Text>
+          </View>
+          <View style={tw`flex-row items-center gap-4 py-4`}>
+            <SvgXml xml={IconTicket} style={tw`flex-shrink`} />
+            <Text
+              style={tw`text-sm text-gray100 font-WorkRegular leading-[20px] flex-wrap flex-1`}>
+              €18.50 euros per adult{'\n'}
+              €14 euros for youths 13-17{'\n'}
+              €10 euros for children 6-12{'\n'}
+            </Text>
+          </View>
+        </View>
+
+        <View style={tw`mt-6`}>
+          <Text style={tw`text-black text-[20px] font-WorkMedium mb-6`}>
+            Locaiton
+          </Text>
+          <Image source={require('../../../assets/images/map.png')} />
+        </View>
+      </ScrollView>
+
+      <View style={tw`flex-row items-center gap-4 pb-4 pt-2 px-[4%]`}>
+        <TouchableOpacity
+          style={tw`border-violet100 border py-3 rounded-full flex-row items-center justify-center gap-3 flex-1`}>
+          <SvgXml xml={IconColoredHeart} />
+          <Text style={tw`text-sm font-WorkRegular text-violet100`}>
+            Bucket List
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={tw`border-violet100 bg-violet100 border py-3 rounded-full flex-row items-center justify-center gap-3 flex-1`}>
+          <SvgXml xml={IconTik} />
+          <Text style={tw`text-sm font-WorkRegular text-white`}>Visited</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
+export default DestinationDetails;

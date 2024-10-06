@@ -1,8 +1,10 @@
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import tw from '../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
 import {IconSearch} from '../../assets/icons/Icons';
+import {useNavigation} from '@react-navigation/native';
+import {NavigProps} from '../../utils/interface/NaviProps';
 
 interface Props {
   title: string;
@@ -22,15 +24,18 @@ const Header = ({
   containerStyle,
   icon,
 }: Props) => {
+  const navigation: NavigProps<null> = useNavigation();
   return (
     <View
       style={[tw`flex-row items-center justify-between py-2`, containerStyle]}>
-      <View style={[tw``, imageContainer]}>
+      <TouchableOpacity
+        style={[tw``, imageContainer]}
+        onPress={() => navigation?.navigate('Home')}>
         <Image
           source={require('../../assets/images/user.png')}
           style={tw`h-12 w-12 rounded-full`}
         />
-      </View>
+      </TouchableOpacity>
       <View style={[tw``, titleContainer]}>
         <Text
           style={[

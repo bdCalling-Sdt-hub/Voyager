@@ -124,7 +124,10 @@ const Home = ({navigation}: NavigProps<null>) => {
             {personalized.map(item => (
               <TouchableOpacity
                 style={tw`rounded-2xl overflow-hidden mt-6`}
-                key={item.id}>
+                key={item.id}
+                onPress={() => {
+                  navigation?.navigate('DestinationDetails');
+                }}>
                 <ImageBackground
                   source={require('../../assets/images/explore-card-1.png')}
                   resizeMode="cover"

@@ -62,8 +62,11 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
       </View>
 
       <ScrollView contentContainerStyle={tw`gap-y-4 mt-6`}>
-        {destinationData?.map((item: any) => (
-          <View style={tw`flex-row items-center gap-4`} key={item?.id}>
+        {destinationData?.map((item: any, index: number) => (
+          <TouchableOpacity
+            style={tw`flex-row items-center gap-4`}
+            key={index}
+            onPress={() => navigation?.navigate('DestinationDetails', {item})}>
             <Image
               source={require('../../assets/images/explore-card-2.png')}
               style={tw`rounded-2xl w-4/12 h-24`}
@@ -82,7 +85,7 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
                 <SvgXml xml={IconTikWithCircle} />
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </View>
