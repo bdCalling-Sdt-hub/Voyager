@@ -45,6 +45,24 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
             Dublin, Ireland
           </Text>
         </View>
+        <View style={tw`flex-row gap-4 mt-2`}>
+          <View style={tw`flex-row items-center gap-1 flex-shrink`}>
+            <Image
+              source={require('../../../assets/images/coin.png')}
+              style={tw`h-6 w-6`}
+            />
+            <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
+              50 coins
+            </Text>
+          </View>
+          <View style={tw`flex-row items-center gap-1 flex-shrink`}>
+            <Image
+              source={require('../../../assets/images/trophy.png')}
+              style={tw`h-6 w-6`}
+            />
+            <Text style={tw`text-gray100 text-xs font-WorkRegular`}>75 XP</Text>
+          </View>
+        </View>
         <Text style={tw`text-sm font-WorkRegular text-black leading-6 mt-4`}>
           The Book of Kells Experience is housed in the Grand Library at Trinity
           College, Dublin. This exhibition features illuminated illustrations of

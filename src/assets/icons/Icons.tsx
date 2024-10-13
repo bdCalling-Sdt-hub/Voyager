@@ -99,6 +99,18 @@ export const IconVerifiedTik = `<svg width="22" height="22" viewBox="0 0 22 22" 
 </svg>
 `;
 
+export const IconSuccessTik = `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M11 21C16.5 21 21 16.5 21 11C21 5.5 16.5 1 11 1C5.5 1 1 5.5 1 11C1 16.5 5.5 21 11 21Z" fill="#89B09A" stroke="#89B09A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M6.75 10.9999L9.58 13.8299L15.25 8.16992" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+export const IconShare = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4.93312 4.21344L10.5931 2.32677C13.1331 1.4801 14.5131 2.86677 13.6731 5.40677L11.7865 11.0668C10.5198 14.8734 8.43979 14.8734 7.17312 11.0668L6.61312 9.38677L4.93312 8.82677C1.12646 7.5601 1.12646 5.48677 4.93312 4.21344Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M6.74023 9.10036L9.1269 6.70703" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
 export const IconLogout = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M4 12V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V12" stroke="#9BA5B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M16 6L12 2L8 6" stroke="#9BA5B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

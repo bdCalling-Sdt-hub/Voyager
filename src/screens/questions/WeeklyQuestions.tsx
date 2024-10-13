@@ -1,262 +1,120 @@
 import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
-import React from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
 import RangeSlider from '../../components/slider/RangeSlider';
 import quests from '../../utils/json/quests.json';
 import {SvgXml} from 'react-native-svg';
-import {IconColoredRightArrow} from '../../assets/icons/Icons';
+import {
+  IconClose,
+  IconColoredRightArrow,
+  IconSearch,
+  IconShare,
+  IconSuccessTik,
+  IconVerifiedTik,
+} from '../../assets/icons/Icons';
+import BottomSheet from '@gorhom/bottom-sheet';
+import NormalModal from '../../components/modals/NormalModal';
 
+interface SheetData {
+  title?: string;
+  subtitle?: string;
+  image?: string;
+}
 const WeeklyQuestions = () => {
   const [activeQuest, setActiveQuest] = React.useState('quests');
+  const [achievementsPopupVisible, setAchievementsPopupVisible] =
+    useState<boolean>(false);
+
+  const bottomSheetRef = useRef(null);
+
+  const [sheetData, setSheetData] = useState<SheetData | null>(null);
+
+  // configure snap points
+  const snapPoints = useMemo(() => ['50%'], []);
+
+  // function to handle expanding the bottom sheet
+  const handleExpand = (data: SheetData) => {
+    bottomSheetRef.current?.expand();
+    setSheetData(data);
+  };
+
+  console.log(sheetData);
+
   return (
-    <ScrollView style={tw`px-[4%] bg-white`}>
-      <Header title="Quests" containerStyle={tw`mt-2`} />
-      {/* visited location card */}
-      <View style={tw``}>
-        <View style={tw`flex-row bg-gray80 p-1 rounded-full`}>
-          <TouchableOpacity
-            style={tw`${
-              activeQuest === 'quests' ? 'bg-violet100' : ''
-            } py-4 rounded-full flex-1 justify-center items-center`}
-            onPress={() => setActiveQuest('quests')}>
-            <Text
+    <>
+      <ScrollView style={tw`px-[4%] bg-white`}>
+        <Header title="Quests" containerStyle={tw`mt-2`} />
+        {/* visited location card */}
+        <View style={tw``}>
+          <View style={tw`flex-row bg-gray80 p-1 rounded-full`}>
+            <TouchableOpacity
               style={tw`${
-                activeQuest === 'quests' ? 'text-white' : 'text-gray100'
-              } text-xs font-WorkMedium`}>
-              Weekly Quests
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={tw`${
-              activeQuest === 'achievements' ? 'bg-violet100' : ''
-            } py-4 rounded-full flex-1 justify-center items-center`}
-            onPress={() => setActiveQuest('achievements')}>
-            <Text
-              style={tw`${
-                activeQuest === 'achievements' ? 'text-white' : 'text-gray100'
-              } text-xs font-WorkMedium`}>
-              Achievements
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      {activeQuest === 'quests' ? (
-        <View>
-          <View
-            style={tw`bg-brown80 flex-row rounded-2xl items-center mt-4 py-3 pl-6 gap-4`}>
-            <Image source={require('../../assets/images/time-stamp.png')} />
-            <Text style={tw`text-brown100 text-base font-WorkMedium`}>
-              4 days left
-            </Text>
-          </View>
-          <View style={tw`border border-gray90 p-4 rounded-2xl bg-pink90 mt-4`}>
-            <Text style={tw`text-black text-base font-WorkMedium mb-2`}>
-              Weekly Quests Progress
-            </Text>
-            <Text style={tw`text-xs font-WorkMedium`}>Completed 1/3</Text>
-            <RangeSlider color="#ff5c8d" containerStyle={tw`mt-4`} value={33} />
-          </View>
-
-          <View style={tw`mt-8`}>
-            <View style={tw`flex-row items-center`}>
-              <Text style={tw`text-black text-base font-WorkMedium`}>
-                Incomplete
+                activeQuest === 'quests' ? 'bg-violet100' : ''
+              } py-4 rounded-full flex-1 justify-center items-center`}
+              onPress={() => setActiveQuest('quests')}>
+              <Text
+                style={tw`${
+                  activeQuest === 'quests' ? 'text-white' : 'text-gray100'
+                } text-xs font-WorkMedium`}>
+                Weekly Quests
               </Text>
-            </View>
-
-            <View style={tw`gap-y-4 mt-6`}>
-              {quests?.quests?.map((item: any) => (
-                <View
-                  style={tw`flex-row items-center gap-3 border border-gray90 rounded-2xl p-4`}
-                  key={item?.id}>
-                  <View style={tw``}>
-                    <Image
-                      source={require('../../assets/images/quest-1.png')}
-                    />
-                  </View>
-                  <View style={tw`flex-shrink gap-y-3`}>
-                    <Text style={tw`text-black font-WorkRegular text-base `}>
-                      {item?.question}
-                    </Text>
-
-                    <View style={tw`gap-4 flex-row items-center`}>
-                      <View style={tw`flex-row items-center gap-2`}>
-                        <Image
-                          source={require('../../assets/images/coin.png')}
-                        />
-                        <Text
-                          style={tw`text-gray100 text-[10px] font-WorkRegular`}>
-                          {item?.coins} Coins
-                        </Text>
-                      </View>
-                      <View style={tw`flex-row items-center gap-2`}>
-                        <Image
-                          source={require('../../assets/images/trophy.png')}
-                        />
-                        <Text
-                          style={tw`text-gray100 text-[10px] font-WorkRegular`}>
-                          {item?.trophy}
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              ))}
-            </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={tw`${
+                activeQuest === 'achievements' ? 'bg-violet100' : ''
+              } py-4 rounded-full flex-1 justify-center items-center`}
+              onPress={() => setActiveQuest('achievements')}>
+              <Text
+                style={tw`${
+                  activeQuest === 'achievements' ? 'text-white' : 'text-gray100'
+                } text-xs font-WorkMedium`}>
+                Achievements
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
-      ) : (
-        <View style={tw`mt-6`}>
-          <View style={tw`flex-row items-center gap-4`}>
-            <Text style={tw`text-base text-black font-WorkMedium`}>
-              Badges Earned
-            </Text>
-            <View style={tw`flex-row items-center`}>
-              <Text style={tw`text-violet100 text-2xl font-WorkMedium`}>
-                12{' '}
-              </Text>
-              <Text style={tw`text-violet100 text-xs font-WorkMedium`}>
-                / 60
-              </Text>
-            </View>
-            <SvgXml xml={IconColoredRightArrow} />
-          </View>
 
-          <View style={tw`flex-row items-center mt-4`}>
-            <View style={tw`items-center justify-center flex-1`}>
-              <Image
-                source={require('../../assets/images/travel-expert.png')}
-              />
-              <Text style={tw`text-black text-[10px] font-WorkRegular`}>
-                Travel Expert
-              </Text>
-            </View>
-            <View style={tw`items-center justify-center flex-1`}>
-              <Image
-                source={require('../../assets/images/top-the-world.png')}
-              />
-              <Text style={tw`text-black text-[10px] font-WorkRegular`}>
-                Top of the World
-              </Text>
-            </View>
-            <View style={tw`items-center justify-center flex-1`}>
-              <Image
-                source={require('../../assets/images/cultural-explorer.png')}
-              />
-              <Text style={tw`text-black text-[10px] font-WorkRegular`}>
-                Cultural Explorer
-              </Text>
-            </View>
-          </View>
-
+        {activeQuest === 'quests' ? (
           <View>
-            <View style={tw`flex-row items-center my-4`}>
-              <Text style={tw`text-black text-base font-WorkMedium`}>
-                Ongoing
+            <View
+              style={tw`bg-brown70 flex-row rounded-2xl items-center mt-4 py-3 pl-6 gap-4`}>
+              <Image source={require('../../assets/images/time-stamp.png')} />
+              <Text style={tw`text-brown100 text-base font-WorkMedium`}>
+                4 days left
               </Text>
             </View>
-            <View style={tw`gap-y-4`}>
-              <View style={tw`border border-gray90 p-4 rounded-2xl bg-white`}>
-                <View style={tw`flex-row items-center gap-3`}>
-                  <Image
-                    source={require('../../assets/images/city-hopper.png')}
-                  />
-                  <View>
-                    <Text
-                      style={tw`text-black text-base font-WorkRegular mb-1`}>
-                      City Hopper
-                    </Text>
-                    <Text style={tw`text-[10px] font-WorkMedium text-gray100`}>
-                      Visit 15 different cities
-                    </Text>
-                    <View style={tw`gap-4 flex-row items-center mt-3`}>
-                      <View style={tw`flex-row items-center gap-2`}>
-                        <Image
-                          source={require('../../assets/images/coin.png')}
-                        />
-                        <Text
-                          style={tw`text-gray100 text-[10px] font-WorkRegular`}>
-                          250 Coins
-                        </Text>
-                      </View>
-                      <View style={tw`flex-row items-center gap-2`}>
-                        <Image
-                          source={require('../../assets/images/trophy.png')}
-                        />
-                        <Text
-                          style={tw`text-gray100 text-[10px] font-WorkRegular`}>
-                          350 XP
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
+            <View
+              style={tw`border border-gray90 p-4 rounded-2xl bg-pink90 mt-4`}>
+              <Text style={tw`text-black text-base font-WorkMedium mb-2`}>
+                Weekly Quests Progress
+              </Text>
+              <Text style={tw`text-xs font-WorkMedium`}>Completed 1/3</Text>
+              <View pointerEvents="none">
                 <RangeSlider
-                  color="#8C78EA"
+                  color="#ff5c8d"
                   containerStyle={tw`mt-4`}
-                  value={35}
-                  trackColor="#E5D6FB"
+                  value={33}
                 />
               </View>
-              <View style={tw`border border-gray90 p-4 rounded-2xl bg-white`}>
-                <View style={tw`flex-row items-center gap-3`}>
-                  <Image
-                    source={require('../../assets/images/beach-explorer.png')}
-                  />
-                  <View>
-                    <Text
-                      style={tw`text-black text-base font-WorkRegular mb-1`}>
-                      Beach Explorer
-                    </Text>
-                    <Text style={tw`text-[10px] font-WorkMedium text-gray100`}>
-                      Visit 10 different beaches
-                    </Text>
-                    <View style={tw`gap-4 flex-row items-center mt-3`}>
-                      <View style={tw`flex-row items-center gap-2`}>
-                        <Image
-                          source={require('../../assets/images/coin.png')}
-                        />
-                        <Text
-                          style={tw`text-gray100 text-[10px] font-WorkRegular`}>
-                          200 Coins
-                        </Text>
-                      </View>
-                      <View style={tw`flex-row items-center gap-2`}>
-                        <Image
-                          source={require('../../assets/images/trophy.png')}
-                        />
-                        <Text
-                          style={tw`text-gray100 text-[10px] font-WorkRegular`}>
-                          400 XP
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-                <RangeSlider
-                  color="#8C78EA"
-                  containerStyle={tw`mt-4`}
-                  value={10}
-                  trackColor="#E5D6FB"
-                />
-              </View>
+            </View>
 
+            <View style={tw`mt-8`}>
               <View>
-                <View style={tw`flex-row items-center my-4`}>
+                <View style={tw`flex-row items-center`}>
                   <Text style={tw`text-black text-base font-WorkMedium`}>
-                    Locked
+                    Incomplete
                   </Text>
                 </View>
-                <View style={tw`gap-y-4`}>
+
+                <View style={tw`gap-y-4 mt-6`}>
                   {quests?.quests?.map((item: any) => (
                     <View
                       style={tw`flex-row items-center gap-3 border border-gray90 rounded-2xl p-4`}
                       key={item?.id}>
                       <View style={tw``}>
                         <Image
-                          source={require('../../assets/images/locked.png')}
+                          source={require('../../assets/images/quest-1.png')}
                         />
                       </View>
                       <View style={tw`flex-shrink gap-y-3`}>
@@ -290,11 +148,338 @@ const WeeklyQuestions = () => {
                   ))}
                 </View>
               </View>
+
+              <View style={tw`mt-6`}>
+                <View style={tw`flex-row items-center`}>
+                  <Text style={tw`text-black text-base font-WorkMedium`}>
+                    Completed
+                  </Text>
+                </View>
+
+                <View style={tw`gap-y-4 mt-6`}>
+                  {quests?.quests?.map((item: any) => (
+                    <View
+                      style={tw`flex-row items-center justify-between gap-3 border border-gray90 rounded-2xl p-4`}
+                      key={item?.id}>
+                      <View style={tw``}>
+                        <Image
+                          source={require('../../assets/images/quest-1.png')}
+                        />
+                      </View>
+                      <View style={tw`flex-shrink gap-y-3`}>
+                        <Text
+                          style={tw`text-black font-WorkRegular text-base `}>
+                          {item?.question}
+                        </Text>
+
+                        <View style={tw`gap-4 flex-row items-center`}>
+                          <View style={tw`flex-row items-center gap-2`}>
+                            <Image
+                              source={require('../../assets/images/coin.png')}
+                            />
+                            <Text
+                              style={tw`text-gray100 text-[10px] font-WorkRegular`}>
+                              {item?.coins} Coins
+                            </Text>
+                          </View>
+                          <View style={tw`flex-row items-center gap-2`}>
+                            <Image
+                              source={require('../../assets/images/trophy.png')}
+                            />
+                            <Text
+                              style={tw`text-gray100 text-[10px] font-WorkRegular`}>
+                              {item?.trophy}
+                            </Text>
+                          </View>
+                        </View>
+                      </View>
+                      <SvgXml xml={IconSuccessTik} />
+                    </View>
+                  ))}
+                </View>
+              </View>
+            </View>
+          </View>
+        ) : (
+          <View style={tw`mt-6`}>
+            <View style={tw`flex-row items-center justify-between gap-4`}>
+              <View style={tw`flex-row items-center`}>
+                <Text style={tw`text-base text-black font-WorkMedium`}>
+                  Badges Earned{' '}
+                </Text>
+                <View style={tw`flex-row items-center`}>
+                  <Text style={tw`text-violet100 text-2xl font-WorkMedium`}>
+                    12{' '}
+                  </Text>
+                  <Text style={tw`text-violet100 text-xs font-WorkMedium`}>
+                    / 60
+                  </Text>
+                </View>
+              </View>
+              <SvgXml xml={IconColoredRightArrow} />
+            </View>
+
+            <View style={tw`flex-row items-center mt-4`}>
+              <TouchableOpacity
+                style={tw`items-center justify-center flex-1`}
+                onPress={() =>
+                  handleExpand({
+                    title: 'Travel Expert',
+                    subtitle: 'Travel Expert Hey there, \nhow are you',
+                    image: require('../../assets/images/travel-expert.png'),
+                  })
+                }>
+                <Image
+                  source={require('../../assets/images/travel-expert.png')}
+                />
+                <Text style={tw`text-black text-[10px] font-WorkRegular`}>
+                  Travel Expert
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={tw`items-center justify-center flex-1`}
+                onPress={() =>
+                  handleExpand({
+                    title: 'Top of the World',
+                    subtitle: 'You visited 10 countries to earn \nthis badge',
+                    image: require('../../assets/images/top-the-world.png'),
+                  })
+                }>
+                <Image
+                  source={require('../../assets/images/top-the-world.png')}
+                />
+                <Text style={tw`text-black text-[10px] font-WorkRegular`}>
+                  Top of the World
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={tw`items-center justify-center flex-1`}
+                onPress={() =>
+                  handleExpand({
+                    title: 'Cultural Explorer',
+                    subtitle: 'Cultural Explorer Hey there, \nhow are you',
+                    image: require('../../assets/images/cultural-explorer.png'),
+                  })
+                }>
+                <Image
+                  source={require('../../assets/images/cultural-explorer.png')}
+                />
+                <Text style={tw`text-black text-[10px] font-WorkRegular`}>
+                  Cultural Explorer
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View>
+              <View style={tw`flex-row items-center my-4`}>
+                <Text style={tw`text-black text-base font-WorkMedium`}>
+                  Ongoing
+                </Text>
+              </View>
+              <View style={tw`gap-y-4`}>
+                <View style={tw`border border-gray90 p-4 rounded-2xl bg-white`}>
+                  <View style={tw`flex-row items-center gap-3`}>
+                    <Image
+                      source={require('../../assets/images/city-hopper.png')}
+                    />
+                    <View>
+                      <Text
+                        style={tw`text-black text-base font-WorkRegular mb-1`}>
+                        City Hopper
+                      </Text>
+                      <Text
+                        style={tw`text-[10px] font-WorkMedium text-gray100`}>
+                        Visit 15 different cities
+                      </Text>
+                      <View style={tw`gap-4 flex-row items-center mt-3`}>
+                        <View style={tw`flex-row items-center gap-2`}>
+                          <Image
+                            source={require('../../assets/images/coin.png')}
+                          />
+                          <Text
+                            style={tw`text-gray100 text-[10px] font-WorkRegular`}>
+                            250 Coins
+                          </Text>
+                        </View>
+                        <View style={tw`flex-row items-center gap-2`}>
+                          <Image
+                            source={require('../../assets/images/trophy.png')}
+                          />
+                          <Text
+                            style={tw`text-gray100 text-[10px] font-WorkRegular`}>
+                            350 XP
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                  <RangeSlider
+                    color="#8C78EA"
+                    containerStyle={tw`mt-4`}
+                    value={35}
+                    trackColor="#E5D6FB"
+                  />
+                </View>
+                <View style={tw`border border-gray90 p-4 rounded-2xl bg-white`}>
+                  <View style={tw`flex-row items-center gap-3`}>
+                    <Image
+                      source={require('../../assets/images/beach-explorer.png')}
+                    />
+                    <View>
+                      <Text
+                        style={tw`text-black text-base font-WorkRegular mb-1`}>
+                        Beach Explorer
+                      </Text>
+                      <Text
+                        style={tw`text-[10px] font-WorkMedium text-gray100`}>
+                        Visit 10 different beaches
+                      </Text>
+                      <View style={tw`gap-4 flex-row items-center mt-3`}>
+                        <View style={tw`flex-row items-center gap-2`}>
+                          <Image
+                            source={require('../../assets/images/coin.png')}
+                          />
+                          <Text
+                            style={tw`text-gray100 text-[10px] font-WorkRegular`}>
+                            200 Coins
+                          </Text>
+                        </View>
+                        <View style={tw`flex-row items-center gap-2`}>
+                          <Image
+                            source={require('../../assets/images/trophy.png')}
+                          />
+                          <Text
+                            style={tw`text-gray100 text-[10px] font-WorkRegular`}>
+                            400 XP
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                  <RangeSlider
+                    color="#8C78EA"
+                    containerStyle={tw`mt-4`}
+                    value={10}
+                    trackColor="#E5D6FB"
+                  />
+                </View>
+
+                <View>
+                  <View style={tw`flex-row items-center my-4`}>
+                    <Text style={tw`text-black text-base font-WorkMedium`}>
+                      Locked
+                    </Text>
+                  </View>
+                  <View style={tw`gap-y-4`}>
+                    {quests?.quests?.map((item: any) => (
+                      <View
+                        style={tw`flex-row items-center gap-3 border border-gray90 rounded-2xl p-4`}
+                        key={item?.id}>
+                        <View style={tw``}>
+                          <Image
+                            source={require('../../assets/images/locked.png')}
+                          />
+                        </View>
+                        <View style={tw`flex-shrink gap-y-3`}>
+                          <Text
+                            style={tw`text-black font-WorkRegular text-base `}>
+                            {item?.question}
+                          </Text>
+
+                          <View style={tw`gap-4 flex-row items-center`}>
+                            <View style={tw`flex-row items-center gap-2`}>
+                              <Image
+                                source={require('../../assets/images/coin.png')}
+                              />
+                              <Text
+                                style={tw`text-gray100 text-[10px] font-WorkRegular`}>
+                                {item?.coins} Coins
+                              </Text>
+                            </View>
+                            <View style={tw`flex-row items-center gap-2`}>
+                              <Image
+                                source={require('../../assets/images/trophy.png')}
+                              />
+                              <Text
+                                style={tw`text-gray100 text-[10px] font-WorkRegular`}>
+                                {item?.trophy}
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    ))}
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        )}
+      </ScrollView>
+      <BottomSheet
+        ref={bottomSheetRef}
+        snapPoints={snapPoints}
+        index={-1}
+        enablePanDownToClose>
+        <View style={tw`px-4 py-2`}>
+          <View style={tw`items-center`}>
+            <Image source={sheetData?.image} style={tw`h-28 w-28`} />
+          </View>
+          <Text
+            style={tw`text-2xl text-center font-WorkBold text-black font-bold mt-6`}>
+            {sheetData?.title || 'Question Title'}
+          </Text>
+          <Text
+            style={tw`text-base text-gray70 font-WorkMedium text-center mt-2`}>
+            {sheetData?.subtitle}
+          </Text>
+          <View style={tw`items-center`}>
+            <TouchableOpacity
+              style={tw`bg-violet100 p-3 mt-6 flex-row gap-2 items-center justify-center w-5/12 rounded-full`}>
+              <SvgXml xml={IconShare} />
+              <Text style={tw`text-white text-sm font-WorkSemiBold`}>
+                Share
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </BottomSheet>
+      <NormalModal
+        visible={achievementsPopupVisible}
+        setVisible={setAchievementsPopupVisible}
+        layerContainerStyle={tw`self-center items-center justify-center h-full w-[80%]`}
+        containerStyle={tw`bg-white p-4 rounded-2xl`}>
+        <View style={tw`p-4`}>
+          <View style={tw`items-end`}>
+            <SvgXml xml={IconClose} />
+          </View>
+          <View style={tw`items-center`}>
+            <Image
+              source={require('../../assets/images/achievements.png')}
+              style={tw`w-24 h-24`}
+            />
+            <Text
+              style={tw`text-2xl text-center font-WorkBold text-black font-bold mt-6`}>
+              Reached Level 5!
+            </Text>
+            <Text
+              style={tw`text-base text-gray70 font-WorkMedium text-center mt-2`}>
+              Your adventures are paying off! Keep exploring to unlock even more
+              rewards
+            </Text>
+            <View style={tw`items-center`}>
+              <TouchableOpacity
+                style={tw`bg-violet100 px-8 py-3 mt-6 flex-row gap-2 items-center justify-center rounded-full`}>
+                {/* <SvgXml xml={IconShare} /> */}
+                <Text style={tw`text-white text-sm font-WorkSemiBold`}>
+                  Share
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
-      )}
-    </ScrollView>
+      </NormalModal>
+    </>
   );
 };
 

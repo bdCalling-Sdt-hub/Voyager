@@ -128,23 +128,15 @@ const Places = ({navigation, route}: NavigProps<null>) => {
                     </Text>
                   </View>
 
-                  {title === undefined ? (
-                    <View style={tw`flex-row items-center gap-1 flex-shrink`}>
-                      <Image
-                        source={require('../../assets/images/trophy.png')}
-                        style={tw`h-6 w-6`}
-                      />
-                      <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
-                        100 XP
-                      </Text>
-                    </View>
-                  ) : (
-                    <SvgXml
-                      xml={
-                        title === 'visited' ? IconColoredTik : IconTikWithCircle
-                      }
+                  <View style={tw`flex-row items-center gap-1 flex-shrink`}>
+                    <Image
+                      source={require('../../assets/images/trophy.png')}
+                      style={tw`h-6 w-6`}
                     />
-                  )}
+                    <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
+                      100 XP
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
