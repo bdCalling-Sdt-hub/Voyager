@@ -1,12 +1,11 @@
-import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
 import React from 'react';
+import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
 import tw from '../../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
 import {
   IconClock,
   IconColoredHeart,
   IconColoredLocation,
-  IconHeart,
   IconLeftArrow,
   IconLogout,
   IconMuseum,
@@ -14,6 +13,7 @@ import {
   IconTik,
 } from '../../../assets/icons/Icons';
 import {NavigProps} from '../../../utils/interface/NaviProps';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 
 const DestinationDetails = ({navigation}: NavigProps<null>) => {
   return (
@@ -83,9 +83,23 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
 
         <View style={tw`mt-6`}>
           <Text style={tw`text-black text-[20px] font-WorkMedium mb-6`}>
-            Locaiton
+            Location
           </Text>
-          <Image source={require('../../../assets/images/map.png')} />
+          <MapView
+            provider={PROVIDER_GOOGLE}
+            style={tw`w-full h-[300px]`}
+            initialRegion={{
+              latitude: 37.78825,
+              longitude: -122.4324,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}>
+            <Marker
+              coordinate={{latitude: 37.78825, longitude: -122.4324}}
+              title="Marker Title"
+              description="Marker Description"
+            />
+          </MapView>
         </View>
       </ScrollView>
 
