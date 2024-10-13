@@ -4,28 +4,29 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
-  FlatList,
   TextInput,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
-import CircularProgress from '../../components/progressBar/CircularProgress';
-import RangeSlider from '../../components/slider/RangeSlider';
 import {SvgXml} from 'react-native-svg';
 import {
   IconColoredTik,
+  IconFilledHeart,
   IconFilter,
-  IconHeart,
   IconSearch,
   IconTikWithCircle,
+  IconTrophy,
 } from '../../assets/icons/Icons';
 import desticaions from '../../utils/json/destinations.json';
 import {NavigProps} from '../../utils/interface/NaviProps';
+import ActionModal from '../../components/modals/ActionModal';
+import NormalModal from '../../components/modals/NormalModal';
 
 const Places = ({navigation, route}: NavigProps<null>) => {
-  const [activePlace, setActivePlace] = React.useState('attractions');
-  const {title}: any = route?.params || null;
+  const [activePlace, setActivePlace] = useState('attractions');
+  const [filterModal, setFilterModal] = useState(false);
+  const {title}: any = route?.params || '';
 
   const destinationData = (() => {
     switch (activePlace) {
@@ -39,10 +40,11 @@ const Places = ({navigation, route}: NavigProps<null>) => {
         return null;
     }
   })();
+
   return (
-    <View style={tw`px-[4%] bg-white`}>
+    <View style={tw`px-[4%] bg-white h-full`}>
       <Header
-        title={title || 'Places'}
+        title={title || 'Bucket List'}
         containerStyle={tw`mt-2`}
         isIcon={true}
       />
@@ -54,7 +56,8 @@ const Places = ({navigation, route}: NavigProps<null>) => {
         </View>
         <View>
           <TouchableOpacity
-            style={tw`h-12 w-12 flex items-center justify-center rounded-full ml-2 bg-white`}>
+            style={tw`h-12 w-12 flex items-center justify-center rounded-full ml-2 bg-white`}
+            onPress={() => setFilterModal(true)}>
             <SvgXml xml={IconFilter} />
           </TouchableOpacity>
         </View>
@@ -97,7 +100,9 @@ const Places = ({navigation, route}: NavigProps<null>) => {
           </Text>
         </TouchableOpacity>
       </View>
-      <ScrollView contentContainerStyle={tw`gap-y-4 mt-6`}>
+      <ScrollView
+        contentContainerStyle={tw`gap-y-4 mt-6`}
+        showsVerticalScrollIndicator={false}>
         {destinationData?.map((item: any, index: number) => (
           <TouchableOpacity
             style={tw`flex-row items-center gap-4`}
@@ -107,25 +112,60 @@ const Places = ({navigation, route}: NavigProps<null>) => {
               source={require('../../assets/images/explore-card-2.png')}
               style={tw`rounded-2xl w-4/12 h-24`}
             />
-            <View style={tw`gap-y-4`}>
-              <View>
-                <Text style={tw`text-black font-WorkMedium text-base`}>
-                  {item?.name}
-                </Text>
-                <Text style={tw`text-gray100 font-WorkRegular text-[10px]`}>
-                  {item?.location}
-                </Text>
-              </View>
-              <View style={tw`flex-row gap-4`}>
-                <SvgXml xml={IconHeart} />
-                <SvgXml
-                  xml={title === 'visited' ? IconColoredTik : IconTikWithCircle}
-                />
+            <View
+              style={tw`flex-1 justify-between flex-row items-center gap-2`}>
+              <View style={tw`gap-y-1`}>
+                <View style={tw``}>
+                  <View style={tw`flex-row items-center`}>
+                    <Text style={tw`text-black font-WorkSemiBold text-[20px]`}>
+                      {item?.name}
+                    </Text>
+                  </View>
+                  <Text style={tw`text-gray100 font-WorkRegular text-sm`}>
+                    {item?.location || 'Location'}
+                  </Text>
+                </View>
+                <View style={tw`flex-row gap-4`}>
+                  <View style={tw`flex-row items-center gap-1 flex-shrink`}>
+                    <Image
+                      source={require('../../assets/images/coin.png')}
+                      style={tw`h-6 w-6`}
+                    />
+                    <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
+                      50 coins
+                    </Text>
+                  </View>
+
+                  {title === undefined ? (
+                    <View style={tw`flex-row items-center gap-1 flex-shrink`}>
+                      <Image
+                        source={require('../../assets/images/trophy.png')}
+                        style={tw`h-6 w-6`}
+                      />
+                      <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
+                        100 XP
+                      </Text>
+                    </View>
+                  ) : (
+                    <SvgXml
+                      xml={
+                        title === 'visited' ? IconColoredTik : IconTikWithCircle
+                      }
+                    />
+                  )}
+                </View>
               </View>
             </View>
+            <SvgXml xml={IconFilledHeart} />
           </TouchableOpacity>
         ))}
       </ScrollView>
+      <NormalModal
+        visible={filterModal}
+        setVisible={setFilterModal}
+        layerContainerStyle={tw`self-center items-center justify-center h-full w-[80%]`}>
+        <Text>hey there</Text>
+      </NormalModal>
     </View>
   );
 };

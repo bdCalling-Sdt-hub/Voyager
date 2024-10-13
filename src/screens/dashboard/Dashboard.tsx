@@ -17,6 +17,7 @@ import {
   IconColoredRightArrow,
   IconFilledHeart,
   IconTikWithCircle,
+  IconVerifiedLocation,
 } from '../../assets/icons/Icons';
 
 const Dashboard = () => {
@@ -64,47 +65,76 @@ const Dashboard = () => {
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={tw`bg-green90 flex-row rounded-2xl items-center mt-4`}>
+        <View style={tw`bg-violet80 flex-row rounded-2xl items-center mt-4`}>
           <View style={tw`w-4/12`}>
             <CircularProgress percentage={70} />
           </View>
           <View style={tw`gap-y-2`}>
-            <Text style={tw`capitalize text-black text-sm font-WorkRegular`}>
+            <Text style={tw`capitalize text-black text-sm font-WorkMedium`}>
               {activePlace} Visited
             </Text>
             <Text
-              style={tw`capitalize text-green100 text-[20px] font-WorkMedium`}>
+              style={tw`capitalize text-violet100 text-2xl font-WorkSemiBold`}>
               45
             </Text>
           </View>
         </View>
-        <ScrollView
-          horizontal
-          contentContainerStyle={tw`flex-row items-center mt-4 gap-2`}
-          showsHorizontalScrollIndicator={false}>
-          <View>
-            <Image source={require('../../assets/images/city-1.png')} />
-          </View>
-          <View>
-            <Image source={require('../../assets/images/city-2.png')} />
-          </View>
-          <View>
-            <Image source={require('../../assets/images/city-3.png')} />
-          </View>
-          <View>
-            <Image source={require('../../assets/images/city-1.png')} />
-          </View>
-          <View>
-            <Image source={require('../../assets/images/city-2.png')} />
-          </View>
-          <View>
-            <Image source={require('../../assets/images/city-3.png')} />
-          </View>
-        </ScrollView>
+        <View>
+          <Text style={tw`text-gray100 text-xs font-WorkRegular mt-4 mb-2`}>
+            Places you visited
+          </Text>
+          <ScrollView
+            horizontal
+            contentContainerStyle={tw`flex-row items-center gap-2`}
+            showsHorizontalScrollIndicator={false}>
+            <View>
+              <Image source={require('../../assets/images/city-1.png')} />
+              <SvgXml
+                xml={IconVerifiedLocation}
+                style={tw`absolute bottom-2 right-2`}
+              />
+            </View>
+            <View>
+              <Image source={require('../../assets/images/city-2.png')} />
+              <SvgXml
+                xml={IconVerifiedLocation}
+                style={tw`absolute bottom-2 right-2`}
+              />
+            </View>
+            <View>
+              <Image source={require('../../assets/images/city-3.png')} />
+              <SvgXml
+                xml={IconVerifiedLocation}
+                style={tw`absolute bottom-2 right-2`}
+              />
+            </View>
+            <View>
+              <Image source={require('../../assets/images/city-1.png')} />
+              <SvgXml
+                xml={IconVerifiedLocation}
+                style={tw`absolute bottom-2 right-2`}
+              />
+            </View>
+            <View>
+              <Image source={require('../../assets/images/city-2.png')} />
+              <SvgXml
+                xml={IconVerifiedLocation}
+                style={tw`absolute bottom-2 right-2`}
+              />
+            </View>
+            <View>
+              <Image source={require('../../assets/images/city-3.png')} />
+              <SvgXml
+                xml={IconVerifiedLocation}
+                style={tw`absolute bottom-2 right-2`}
+              />
+            </View>
+          </ScrollView>
+        </View>
       </View>
 
       {/* weekly progress */}
-      <View style={tw`border border-gray90 p-4 rounded-2xl bg-pink90`}>
+      <View style={tw`border border-gray90 p-4 rounded-2xl bg-pink80`}>
         <Text style={tw`text-black text-base font-WorkMedium mb-2`}>
           Weekly Quests Progress
         </Text>
@@ -112,7 +142,7 @@ const Dashboard = () => {
         <RangeSlider color="#ff5c8d" containerStyle={tw`mt-4`} value={33} />
       </View>
 
-      <View style={tw`border border-gray90 p-4 rounded-2xl bg-blue90 mt-4`}>
+      <View style={tw`border border-gray90 p-4 rounded-2xl bg-blue80 mt-4`}>
         <Text style={tw`text-black text-base font-WorkMedium mb-2`}>
           Bucket List Progress
         </Text>
@@ -121,32 +151,35 @@ const Dashboard = () => {
       </View>
 
       <View style={tw`mt-8`}>
-        <View style={tw`flex-row items-center`}>
-          <Text style={tw`text-black text-base font-WorkMedium`}>
-            Make Progress on Your Bucket List{' '}
-          </Text>
+        <TouchableOpacity style={tw`flex-row items-center justify-between`}>
+          <View style={tw``}>
+            <Text style={tw`text-black text-base font-WorkMedium`}>
+              Make Progress on Your Bucket List{' '}
+            </Text>
+            <Text style={tw`text-gray100 font-WorkRegular text-sm mt-1`}>
+              Visit these places to check them off your list
+            </Text>
+          </View>
           <SvgXml xml={IconColoredRightArrow} />
-        </View>
-        <Text style={tw`text-gray100 font-WorkRegular text-sm mt-1`}>
-          Visit these places to check them off your list
-        </Text>
+        </TouchableOpacity>
 
         {places.map(place => (
           <View style={tw`flex-row items-center gap-2 mt-6`} key={place.id}>
-            <View style={tw`w-4/12`}>
-              <Image source={require('../../assets/images/place.png')} />
+            <View style={tw`w-11/12 flex-row items-center gap-4`}>
+              <View style={tw`w-4/12`}>
+                <Image source={require('../../assets/images/place.png')} />
+              </View>
+              <View style={tw`flex-shrink`}>
+                <Text style={tw`text-black font-WorkSemiBold text-[20px]`}>
+                  {place?.title}
+                </Text>
+                <Text style={tw`text-gray100 font-WorkRegular text-xs`}>
+                  {place?.subtitle}
+                </Text>
+              </View>
             </View>
             <View>
-              <Text style={tw`text-black font-WorkMedium text-sm`}>
-                {place?.title}
-              </Text>
-              <Text style={tw`text-gray100 font-WorkRegular text-[10px]`}>
-                {place?.subtitle}
-              </Text>
-              <View style={tw`gap-4 flex-row items-center mt-4`}>
-                <SvgXml xml={IconFilledHeart} />
-                <SvgXml xml={IconTikWithCircle} />
-              </View>
+              <SvgXml xml={IconFilledHeart} />
             </View>
           </View>
         ))}

@@ -1,3 +1,4 @@
+const {blue} = require('react-native-reanimated/lib/typescript/Colors');
 const plugin = require('tailwindcss/plugin');
 
 module.exports = {
@@ -34,13 +35,16 @@ module.exports = {
         violet90: '#e5d6fb',
         pink100: '#fc5d88',
         pink90: '#fadadb',
+        pink80: '#FECDDA',
         blue100: '#32b1b4',
         blue90: '#ebf1ff',
+        blue80: '#BFE7E8',
         green100: '#97c1a9',
         green90: '#f0ffec',
         brown100: '#cc7b70',
         brown90: '#f5c69b',
         brown80: '#fffdc7',
+        violet80: '#DBD5F8',
       },
     },
   },

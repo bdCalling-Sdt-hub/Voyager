@@ -31,7 +31,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({percentage}) => {
           cx="50%"
           cy="50%"
           r={radius}
-          stroke="#ffffff"
+          stroke="#F4F2FD"
           strokeWidth={strokeWidth}
           fill="none"
         />
@@ -39,7 +39,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({percentage}) => {
           cx="50%"
           cy="50%"
           r={radius}
-          stroke="#97c1a9"
+          stroke="#8C78EA"
           strokeWidth={strokeWidth}
           fill="none"
           strokeLinecap="round"

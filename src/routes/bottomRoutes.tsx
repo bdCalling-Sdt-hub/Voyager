@@ -4,6 +4,8 @@ import {SvgXml} from 'react-native-svg';
 import tw from '../lib/tailwind';
 import {
   IconDashboard,
+  IconExplore,
+  IconHeart,
   IconLocation,
   IconTrophy,
   IconUser,
@@ -13,6 +15,7 @@ import Home from '../screens/home/Home';
 import NextDestination from '../screens/home/NextDestination';
 import WeeklyQuestions from '../screens/questions/WeeklyQuestions';
 import Profile from '../screens/profile/Profile';
+import Places from '../screens/home/Places';
 
 const Tab = createBottomTabNavigator();
 
@@ -39,7 +42,10 @@ function BottomRoutes() {
               icon = IconDashboard;
               break;
             case 'Home':
-              icon = IconLocation;
+              icon = IconExplore;
+              break;
+            case 'Places':
+              icon = IconHeart;
               break;
             case 'WeeklyQuestions':
               icon = IconTrophy;
@@ -67,6 +73,7 @@ function BottomRoutes() {
       })}>
       <Tab.Screen name="Dashboard" component={Dashboard} />
       <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Places" component={Places} />
       <Tab.Screen name="WeeklyQuestions" component={WeeklyQuestions} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
