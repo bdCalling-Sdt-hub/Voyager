@@ -167,3 +167,8 @@ export const IconExplore = `<svg width="25" height="24" viewBox="0 0 25 24" fill
 <path d="M16.7398 7.75977L14.6198 14.1198L8.25977 16.2398L10.3798 9.87977L16.7398 7.75977Z" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
+
+export const IconClose = `<svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M5.79293 6.50004L0.146484 0.853591L0.853591 0.146484L6.50004 5.79293L12.1465 0.146484L12.8536 0.853591L7.20714 6.50004L12.8536 12.1465L12.1465 12.8536L6.50004 7.20714L0.853591 12.8536L0.146484 12.1465L5.79293 6.50004Z" fill="#24272B"/>
+</svg>
+`;
