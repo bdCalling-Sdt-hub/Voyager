@@ -6,7 +6,7 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
 import CircularProgress from '../../components/progressBar/CircularProgress';
@@ -16,17 +16,26 @@ import places from '../../utils/json/places.json';
 import {
   IconColoredRightArrow,
   IconFilledHeart,
+  IconSearch,
   IconTikWithCircle,
   IconVerifiedLocation,
 } from '../../assets/icons/Icons';
 
 const Dashboard = () => {
-  const [activePlace, setActivePlace] = React.useState('attractions');
+  const [activePlace, setActivePlace] = useState('attractions');
+  const [isSearchVisible, setSearchVisible] = useState(false);
   return (
     <ScrollView style={tw`px-[4%] bg-white`}>
-      <Header title="Dashbaord" containerStyle={tw`mt-2`} />
+      <Header
+        title="Dashbaord"
+        containerStyle={tw`mt-2`}
+        IconContainer={tw`${isSearchVisible ? 'bg-black' : ''}`}
+        icon={IconSearch}
+        onPressSearch={() => setSearchVisible(!isSearchVisible)}
+        isSearchVisible={isSearchVisible}
+      />
       {/* visited location card */}
-      <View style={tw`border border-gray90 p-4 rounded-2xl`}>
+      <View style={tw`border border-gray90 p-4 rounded-2xl mt-4`}>
         <View style={tw`flex-row bg-gray80 p-1 rounded-full`}>
           <TouchableOpacity
             style={tw`${
@@ -139,7 +148,9 @@ const Dashboard = () => {
           Weekly Quests Progress
         </Text>
         <Text style={tw`text-xs font-WorkMedium`}>Completed 1/3</Text>
-        <RangeSlider color="#ff5c8d" containerStyle={tw`mt-4`} value={33} />
+        <View style={tw`mt-4`} pointerEvents="none">
+          <RangeSlider color="#ff5c8d" value={33} />
+        </View>
       </View>
 
       <View style={tw`border border-gray90 p-4 rounded-2xl bg-blue80 mt-4`}>
@@ -147,7 +158,9 @@ const Dashboard = () => {
           Bucket List Progress
         </Text>
         <Text style={tw`text-xs font-WorkMedium`}>Visited 14/40</Text>
-        <RangeSlider color="#32B1B4" containerStyle={tw`mt-4`} value={35} />
+        <View pointerEvents="none">
+          <RangeSlider color="#32B1B4" containerStyle={tw`mt-4`} value={35} />
+        </View>
       </View>
 
       <View style={tw`mt-8`}>

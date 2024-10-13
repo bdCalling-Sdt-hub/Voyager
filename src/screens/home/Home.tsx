@@ -7,7 +7,7 @@ import {
   Image,
   ImageBackground,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
 import {
@@ -26,29 +26,19 @@ import personalized from '../../utils/json/personalized.json';
 import {NavigProps} from '../../utils/interface/NaviProps';
 
 const Home = ({navigation}: NavigProps<null>) => {
+  const [isSearchVisible, setSearchVisible] = useState(false);
+  console.log(isSearchVisible);
   return (
     <ScrollView contentContainerStyle={tw`px-[4%] bg-white`}>
       <View>
         <Header
           title="Explore"
           containerStyle={tw`mt-2`}
-          IconContainer={tw`bg-black`}
-          icon={IconWhiteSearch}
+          IconContainer={tw`${isSearchVisible ? 'bg-black' : ''}`}
+          icon={IconSearch}
+          onPressSearch={() => setSearchVisible(!isSearchVisible)}
+          isSearchVisible={isSearchVisible}
         />
-        <View style={tw`bg-gray80 rounded-full flex-row items-center p-1`}>
-          <View
-            style={tw`bg-white rounded-full flex-row items-center gap-4 flex-1 pl-4`}>
-            <SvgXml xml={IconSearch} />
-            <TextInput placeholder="Search" />
-          </View>
-          <View>
-            <TouchableOpacity
-              style={tw`h-12 w-12 flex items-center justify-center rounded-full ml-2 bg-white`}>
-              <SvgXml xml={IconFilter} />
-            </TouchableOpacity>
-          </View>
-        </View>
-
         <View>
           <View style={tw`mt-4`}>
             <Text style={tw`text-black text-base font-WorkMedium`}>
@@ -108,18 +98,20 @@ const Home = ({navigation}: NavigProps<null>) => {
 
         <View style={tw`mt-6`}>
           <TouchableOpacity
-            style={tw`flex-row items-center`}
+            style={tw`flex-row items-center justify-between`}
             onPress={() => {
               navigation?.navigate('Places', {title: 'picks for you'});
             }}>
-            <Text style={tw`text-black text-base font-WorkMedium`}>
-              Personalized Picks{' '}
-            </Text>
+            <View style={tw``}>
+              <Text style={tw`text-black text-base font-WorkMedium`}>
+                Make Progress on Your Bucket List{' '}
+              </Text>
+              <Text style={tw`text-gray100 font-WorkRegular text-sm mt-1`}>
+                Visit these places to check them off your list
+              </Text>
+            </View>
             <SvgXml xml={IconColoredRightArrow} />
           </TouchableOpacity>
-          <Text style={tw`text-gray100 font-WorkRegular text-sm mt-1`}>
-            Destinations that match your interests
-          </Text>
 
           <ScrollView
             horizontal
@@ -157,7 +149,6 @@ const Home = ({navigation}: NavigProps<null>) => {
             ))}
           </ScrollView>
         </View>
-
         <View style={tw`mt-6`}>
           <TouchableOpacity
             style={tw`flex-row items-center`}

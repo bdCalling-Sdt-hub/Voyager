@@ -23,19 +23,9 @@ import {NavigProps} from '../../utils/interface/NaviProps';
 import NormalModal from '../../components/modals/NormalModal';
 import {Checkbox, RadioButton, RadioGroup} from 'react-native-ui-lib';
 
-const activityType = [
-  {id: 1, label: 'Adventure'},
-  {id: 2, label: 'Historical'},
-  {id: 3, label: 'Cultural'},
-  {id: 4, label: 'Nature'},
-  {id: 5, label: 'Relaxation'},
-];
 const Places = ({navigation, route}: NavigProps<null>) => {
   const [activePlace, setActivePlace] = useState('attractions');
-  const [filterModal, setFilterModal] = useState(false);
-  const [locationType, setLocationType] = useState('');
-  const [selectedItems, setSelectedItems] = useState([]);
-  const [visitedStatus, setVisitedStatus] = useState<string>('');
+  const [isSearchVisible, setSearchVisible] = useState(false);
   const {title}: any = route?.params || '';
 
   const destinationData = (() => {
@@ -51,35 +41,19 @@ const Places = ({navigation, route}: NavigProps<null>) => {
     }
   })();
 
-  const handleCheckboxChange = value => {
-    if (selectedItems.includes(value)) {
-      setSelectedItems(selectedItems.filter(item => item !== value));
-    } else {
-      setSelectedItems([...selectedItems, value]);
-    }
-  };
-
   return (
     <View style={tw`px-[4%] bg-white h-full`}>
       <Header
         title={title || 'Bucket List'}
         containerStyle={tw`mt-2`}
         isIcon={true}
+        IconRouteName={'Home'}
+        IconContainer={tw`${isSearchVisible ? 'bg-black' : ''}`}
+        icon={IconSearch}
+        onPressSearch={() => setSearchVisible(!isSearchVisible)}
+        isSearchVisible={isSearchVisible}
       />
-      <View style={tw`bg-gray80 rounded-full flex-row items-center p-1`}>
-        <View
-          style={tw`bg-white rounded-full flex-row items-center gap-4 flex-1 pl-4`}>
-          <SvgXml xml={IconSearch} />
-          <TextInput placeholder="Search" />
-        </View>
-        <View>
-          <TouchableOpacity
-            style={tw`h-12 w-12 flex items-center justify-center rounded-full ml-2 bg-white`}
-            onPress={() => setFilterModal(true)}>
-            <SvgXml xml={IconFilter} />
-          </TouchableOpacity>
-        </View>
-      </View>
+
       <View style={tw`flex-row bg-gray80 p-1 rounded-full mt-4`}>
         <TouchableOpacity
           style={tw`${
@@ -178,115 +152,6 @@ const Places = ({navigation, route}: NavigProps<null>) => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      <NormalModal
-        visible={filterModal}
-        setVisible={setFilterModal}
-        layerContainerStyle={tw`self-center items-center justify-center h-full w-[80%]`}>
-        <View>
-          {/* header */}
-          <View style={tw`flex-row items-center justify-between w-full`}>
-            <Text style={tw`text-black text-base font-WorkSemiBold`}>
-              Filters
-            </Text>
-            <TouchableOpacity onPress={() => setFilterModal(false)}>
-              <SvgXml xml={IconClose} />
-            </TouchableOpacity>
-          </View>
-
-          {/* location type */}
-          <View style={tw`mt-2`}>
-            <Text style={tw`text-lg text-black font-WorkMedium`}>
-              Location Type
-            </Text>
-            <RadioGroup
-              onValueChange={(value: any) => setLocationType(value)}
-              style={tw`gap-y-3 mt-1`}>
-              <RadioButton label="Cities" value="cities" color="#8C78EA" />
-
-              <RadioButton
-                label="Attractions"
-                value="attractions"
-                color="#8C78EA"
-              />
-
-              <RadioButton
-                label="Countries"
-                value="countries"
-                color="#8C78EA"
-              />
-            </RadioGroup>
-          </View>
-
-          {/* visited Status */}
-          <View style={tw`mt-5`}>
-            <Text style={tw`text-lg text-black font-WorkMedium`}>
-              Visited Status
-            </Text>
-            <View style={tw`flex-row gap-3 mt-1`}>
-              <TouchableOpacity
-                style={tw`${
-                  visitedStatus === 'visited' ? 'bg-violet100' : 'bg-white'
-                } py-2 rounded-full justify-center items-center border-[2px] border-violet100 flex-1`}
-                onPress={() => setVisitedStatus('visited')}>
-                <Text
-                  style={tw`
-                  ${
-                    visitedStatus === 'visited'
-                      ? 'text-white'
-                      : 'text-violet100'
-                  } font-WorkMedium text-sm`}>
-                  Visited
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={tw`${
-                  visitedStatus === 'notVisited' ? 'bg-violet100' : 'bg-white'
-                } py-2 rounded-full justify-center items-center border-[2px] border-violet100 flex-1`}
-                onPress={() => setVisitedStatus('notVisited')}>
-                <Text
-                  style={tw`${
-                    visitedStatus === 'notVisited'
-                      ? 'text-white'
-                      : 'text-violet100'
-                  } font-WorkMedium text-sm`}>
-                  Not Visited
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={tw`${
-                  visitedStatus === 'inProgress' ? 'bg-violet100' : 'bg-white'
-                } py-2 rounded-full justify-center items-center border-[2px] border-violet100 flex-1`}
-                onPress={() => setVisitedStatus('inProgress')}>
-                <Text
-                  style={tw`${
-                    visitedStatus === 'inProgress'
-                      ? 'text-white'
-                      : 'text-violet100'
-                  } font-WorkMedium text-sm`}>
-                  In Progress
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          {/* activity type */}
-          <View style={tw`gap-y-3 mt-5`}>
-            <Text style={tw`text-black text-base font-WorkSemiBold`}>
-              Activity Type
-            </Text>
-
-            {activityType.map(item => (
-              <Checkbox
-                key={item.id}
-                color={'#8C78EA'}
-                value={selectedItems.includes(item.label)}
-                label={item.label}
-                onValueChange={() => handleCheckboxChange(item.label)}
-              />
-            ))}
-          </View>
-        </View>
-      </NormalModal>
     </View>
   );
 };
