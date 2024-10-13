@@ -117,7 +117,7 @@ const Header = ({
           <View
             style={tw`bg-white rounded-full flex-row items-center gap-4 flex-1 pl-4`}>
             <SvgXml xml={IconSearch} />
-            <TextInput placeholder="Search" />
+            <TextInput placeholder="Search" style={tw`w-[85%]`} />
           </View>
           <View>
             <TouchableOpacity

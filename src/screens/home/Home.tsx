@@ -14,11 +14,13 @@ import {
   IconColoredRightArrow,
   IconFilledHeart,
   IconFilter,
+  IconHeart,
   IconSearch,
   IconTikWhiteWithCircle,
   IconTikWithCircle,
   IconVerifiedTik,
   IconWhiteFilledHeart,
+  IconWhiteHeart,
   IconWhiteSearch,
 } from '../../assets/icons/Icons';
 import {SvgXml} from 'react-native-svg';
@@ -104,10 +106,10 @@ const Home = ({navigation}: NavigProps<null>) => {
             }}>
             <View style={tw``}>
               <Text style={tw`text-black text-base font-WorkMedium`}>
-                Make Progress on Your Bucket List{' '}
+                Personalized Picks
               </Text>
               <Text style={tw`text-gray100 font-WorkRegular text-sm mt-1`}>
-                Visit these places to check them off your list
+                Destinations that match your interests
               </Text>
             </View>
             <SvgXml xml={IconColoredRightArrow} />
@@ -130,9 +132,8 @@ const Home = ({navigation}: NavigProps<null>) => {
                   style={tw`h-[260px] w-82 justify-between items-center rounded-2xl p-4`}>
                   <View style={tw`gap-y-3 items-end w-full`}>
                     <SvgXml
-                      xml={item?.isFav ? IconFilledHeart : IconWhiteFilledHeart}
+                      xml={item?.isFav ? IconFilledHeart : IconWhiteHeart}
                     />
-                    <SvgXml xml={IconTikWithCircle} />
                   </View>
                   <View style={tw`bg-white p-3 w-full rounded-2xl`}>
                     <View style={tw`flex-row items-center`}>
@@ -151,18 +152,20 @@ const Home = ({navigation}: NavigProps<null>) => {
         </View>
         <View style={tw`mt-6`}>
           <TouchableOpacity
-            style={tw`flex-row items-center`}
+            style={tw`flex-row items-center justify-between`}
             onPress={() => {
-              navigation?.navigate('Places', {title: 'visited'});
+              navigation?.navigate('Places', {title: 'top destinations'});
             }}>
-            <Text style={tw`text-black text-base font-WorkMedium`}>
-              Top Destinations{' '}
-            </Text>
+            <View style={tw``}>
+              <Text style={tw`text-black text-base font-WorkMedium`}>
+                Top Destinations
+              </Text>
+              <Text style={tw`text-gray100 font-WorkRegular text-sm mt-1`}>
+                Discover popular attractions around the globe
+              </Text>
+            </View>
             <SvgXml xml={IconColoredRightArrow} />
           </TouchableOpacity>
-          <Text style={tw`text-gray100 font-WorkRegular text-sm mt-1`}>
-            Discover popular attractions around the globe
-          </Text>
 
           <ScrollView
             horizontal
@@ -178,13 +181,13 @@ const Home = ({navigation}: NavigProps<null>) => {
                   style={tw`h-[260px] w-82 justify-between items-center rounded-2xl p-4`}>
                   <View style={tw`gap-y-3 items-end w-full`}>
                     <SvgXml
-                      xml={item?.isFav ? IconFilledHeart : IconWhiteFilledHeart}
+                      xml={item?.isFav ? IconFilledHeart : IconWhiteHeart}
                     />
-                    <SvgXml
+                    {/* <SvgXml
                       xml={
                         item?.isVerified ? IconVerifiedTik : IconTikWithCircle
                       }
-                    />
+                    /> */}
                   </View>
                   <View style={tw`bg-white p-3 w-full rounded-2xl`}>
                     <View style={tw`flex-row items-center`}>
