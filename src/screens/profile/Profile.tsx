@@ -1,13 +1,15 @@
-import {View, Text, TouchableOpacity, Image} from 'react-native';
-import React from 'react';
+import {View, Text, TouchableOpacity, Image, ScrollView} from 'react-native';
+import React, {useState} from 'react';
 import tw from '../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
 import {IconAdd, IconSearch, IconSettings} from '../../assets/icons/Icons';
 import LinearGradient from 'react-native-linear-gradient';
+import Achievements from './components/Achievements';
 
 const Profile = () => {
+  const [activeTab, setActiveTab] = useState(0);
   return (
-    <View style={tw`px-[4%] pt-2 bg-white h-full`}>
+    <ScrollView style={tw`px-[4%] pt-2 bg-white h-full`}>
       <View>
         <View style={tw`flex-row items-start justify-between py-2`}>
           <TouchableOpacity style={[tw``]}>
@@ -32,118 +34,82 @@ const Profile = () => {
         <Text style={tw`text-black text-2xl font-WorkMedium text-center`}>
           Henry William
         </Text>
-        <View style={tw`items-center mt-2`}>
-          <Image
-            source={require('../../assets/images/country-flag.png')}
-            style={tw`h-5 w-7`}
-          />
-        </View>
         <View style={tw`flex-row items-center mt-6`}>
           <View style={tw`items-center flex-1`}>
-            <Text style={tw`text-black text-sm font-WorkRegular`}>Joined</Text>
-            <Text style={tw`text-violet100 text-base font-WorkMedium`}>
-              2024
-            </Text>
+            <Text style={tw`text-gray70 text-sm font-WorkMedium`}>Joined</Text>
+            <Text style={tw`text-black text-lg font-WorkSemiBold`}>2024</Text>
           </View>
           <View style={tw`items-center flex-1`}>
-            <Text style={tw`text-black text-sm font-WorkRegular`}>
-              Followers
-            </Text>
-            <Text style={tw`text-violet100 text-base font-WorkMedium`}>10</Text>
+            <Text style={tw`text-gray70 text-sm font-WorkMedium`}>Friends</Text>
+            <Text style={tw`text-black text-lg font-WorkSemiBold`}>10</Text>
           </View>
           <View style={tw`items-center flex-1`}>
-            <Text style={tw`text-black text-sm font-WorkRegular`}>
-              Following
-            </Text>
-            <Text style={tw`text-violet100 text-base font-WorkMedium`}>8</Text>
+            <Text style={tw`text-gray70 text-sm font-WorkMedium`}>Coutnry</Text>
+            <Image
+              source={{uri: 'https://flagsapi.com/US/flat/64.png'}}
+              style={tw`h-5 w-7 mt-1`}
+            />
           </View>
         </View>
-        <View style={tw`items-center mt-6`}>
+        <View style={tw`items-center mt-6 gap-y-4`}>
           <TouchableOpacity
-            style={tw`border-violet100 border py-3 rounded-full flex-row items-center justify-center gap-3 w-5/10`}>
+            style={tw`border-violet100 border py-3 rounded-full flex-row items-center justify-center gap-3 w-full`}>
             <SvgXml xml={IconAdd} />
-            <Text style={tw`text-sm font-WorkRegular text-violet100`}>
-              Bucket List
+            <Text style={tw`text-sm font-WorkMedium text-violet100 font-500`}>
+              Add Friends
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={tw`border-pink100 bg-pink100 border py-3 rounded-full flex-row items-center justify-center gap-3 w-full`}>
+            <Text style={tw`text-sm font-WorkSemibold text-white font-600`}>
+              Upgrade to Premium
             </Text>
           </TouchableOpacity>
         </View>
 
-        <View style={tw`gap-y-4 mt-8`}>
-          <View style={tw`flex-row items-center gap-4`}>
-            <View
-              style={tw`border border-gray90 rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
-              <Image source={require('../../assets/images/level.png')} />
-              <View>
-                <Text style={tw`text-black text-[20px] font-WorkMedium`}>
-                  5
-                </Text>
-                <Text style={tw`text-gray100 text-sm font-WorkRegular`}>
-                  Level
-                </Text>
-              </View>
-            </View>
-            <View
-              style={tw`border border-gray90 rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
-              <Image source={require('../../assets/images/level.png')} />
-              <View>
-                <Text style={tw`text-black text-[20px] font-WorkMedium`}>
-                  12
-                </Text>
-                <Text style={tw`text-gray100 text-sm font-WorkRegular`}>
-                  Badges
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View style={tw`flex-row items-center gap-4`}>
-            <View
-              style={tw`border border-gray90 rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
-              <Image source={require('../../assets/images/level.png')} />
-              <View>
-                <Text style={tw`text-black text-[20px] font-WorkMedium`}>
-                  400
-                </Text>
-                <Text style={tw`text-gray100 text-sm font-WorkRegular`}>
-                  Coins
-                </Text>
-              </View>
-            </View>
-            <View
-              style={tw`border border-gray90 rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
-              <Image source={require('../../assets/images/level.png')} />
-              <View>
-                <Text style={tw`text-black text-[20px] font-WorkMedium`}>
-                  550
-                </Text>
-                <Text style={tw`text-gray100 text-sm font-WorkRegular`}>
-                  Points
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-
-        <LinearGradient
-          colors={['#E1A0F0', '#F8C1CF']}
-          start={{x: 0, y: 0}}
-          end={{x: 1, y: 0}}
-          style={tw`mt-12 rounded-2xl p-4 flex-row`}>
-          <View style={tw`w-4/12`}>
-            <Image source={require('../../assets/images/treasure-box.png')} />
-          </View>
-          <View style={tw`w-8/12 flex-shrink`}>
-            <Text style={tw`text-black text-base font-WorkMedium`}>
-              Shop: Unlock Exclusive {'\n'}Rewards
-            </Text>
+        {/* tabs */}
+        <View style={tw`mt-12 mb-6 flex-row items-center gap-4`}>
+          <TouchableOpacity
+            style={tw`${
+              activeTab === 0 ? 'border-b-[2px] border-b-violet100' : ''
+            }  pb-2`}
+            onPress={() => setActiveTab(0)}>
             <Text
-              style={tw`text-black text-sm font-WorkRegular leading-[13px] mt-1`}>
-              Use your coins to buy new avatars, digital items, and other in-app
-              upgrades!
+              style={tw` ${
+                activeTab === 0 ? 'text-violet100' : 'text-gray100'
+              } text-sm font-WorkBold font-700`}>
+              Achievements
             </Text>
-          </View>
-        </LinearGradient>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={tw`${
+              activeTab === 1 ? 'border-b-[2px] border-b-violet100' : ''
+            }  pb-2`}
+            onPress={() => setActiveTab(1)}>
+            <Text
+              style={tw` ${
+                activeTab === 1 ? 'text-violet100' : 'text-gray100'
+              } text-sm font-WorkBold font-700`}>
+              Visited
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={tw`${
+              activeTab === 2 ? 'border-b-[2px] border-b-violet100' : ''
+            }  pb-2`}
+            onPress={() => setActiveTab(2)}>
+            <Text
+              style={tw` ${
+                activeTab === 2 ? 'text-violet100' : 'text-gray100'
+              } text-sm font-WorkBold font-700`}>
+              Friends
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {/* achievements */}
+        <Achievements />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

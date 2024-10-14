@@ -59,7 +59,10 @@ const WeeklyQuestions = () => {
     return (
       <TouchableWithoutFeedback onPress={() => bottomSheetRef.current?.close()}>
         <View
-          style={[props.style, tw`absolute inset-0 bg-black bg-opacity-50`]}
+          style={[
+            props.style,
+            tw`absolute inset-0 bg-black bg-opacity-50 transition-all`,
+          ]}
         />
       </TouchableWithoutFeedback>
     );
