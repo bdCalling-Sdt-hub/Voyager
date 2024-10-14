@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "title": "Congratulations",
+    "subtitle": "You’ve unlocked level 4.",
+    "time": "2 minutes ago"
+  },
+  {
+    "id": 2,
+    "title": "New Message",
+    "subtitle": "You have received a new message from John.",
+    "time": "10 days ago"
+  },
+  {
+    "id": 3,
+    "title": "Order Shipped",
+    "subtitle": "Your order #12345 has been shipped.",
+    "time": "15 days ago"
+  },
+  {
+    "id": 4,
+    "title": "Event Reminder",
+    "subtitle": "Don't forget your meeting at 2 PM.",
+    "time": "10 days ago"
+  },
+  {
+    "id": 5,
+    "title": "New Friend Request",
+    "subtitle": "You have a new friend request from Sarah.",
+    "time": "5 days ago"
+  },
+  {
+    "id": 6,
+    "title": "App Update Available",
+    "subtitle": "A new version of the app is available for download.",
+    "time": "3 days ago"
+  },
+  {
+    "id": 7,
+    "title": "Password Change",
+    "subtitle": "Your password has been successfully changed.",
+    "time": "1 week ago"
+  },
+  {
+    "id": 8,
+    "title": "Payment Received",
+    "subtitle": "Your payment of $50 has been received.",
+    "time": "2 weeks ago"
+  }
+]

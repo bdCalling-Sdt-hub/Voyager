@@ -111,6 +111,18 @@ export const IconShare = `<svg width="16" height="16" viewBox="0 0 16 16" fill="
 </svg>
 `;
 
+export const IconNotification = `<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M2.05678 21C1.17278 21 0.684778 19.9 1.22778 19.21C2.56378 17.5 4.28778 14.86 4.28778 12.63C4.28778 9 4.85178 4.58 10.1938 3.36C10.9158 3.19 9.69378 1 12.6938 1C15.8318 1 14.4718 3.19 15.1938 3.36C20.5358 4.58 22.0998 9 22.0998 12.63C22.0998 14.91 23.5158 17.62 24.5698 19.33C25.0038 20.03 24.5068 21 23.6798 21H2.05678Z" stroke="#6C6E71" stroke-width="1.5"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M8.90879 21.5C8.86979 21.22 9.08979 21 9.36579 21H16.3658C16.6418 21 16.8618 21.22 16.8228 21.5C16.6718 22.57 15.9838 25 12.8658 25C9.74779 25 9.05979 22.57 8.90879 21.5Z" stroke="#6C6E71" stroke-width="1.5"/>
+</svg>
+`;
+
+export const IconFilledNotification = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.05678 20C0.172778 20 -0.315222 18.9 0.227778 18.21C1.56378 16.5 3.28778 13.86 3.28778 11.63C3.28778 8 3.85178 3.58 9.19378 2.36C9.91578 2.19 8.69378 0 11.6938 0C14.8318 0 13.4718 2.19 14.1938 2.36C19.5358 3.58 21.0998 8 21.0998 11.63C21.0998 13.91 22.5158 16.62 23.5698 18.33C24.0038 19.03 23.5068 20 22.6798 20H1.05678Z" fill="#E89A46"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M7.90879 20.5C7.86979 20.22 8.08979 20 8.36579 20H15.3658C15.6418 20 15.8618 20.22 15.8228 20.5C15.6718 21.57 14.9838 24 11.8658 24C8.74779 24 8.05979 21.57 7.90879 20.5Z" fill="#E89A46"/>
+</svg>
+`;
+
 export const IconLogout = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M4 12V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V12" stroke="#9BA5B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M16 6L12 2L8 6" stroke="#9BA5B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

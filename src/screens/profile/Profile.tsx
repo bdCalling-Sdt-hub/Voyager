@@ -2,11 +2,14 @@ import {View, Text, TouchableOpacity, Image, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 import tw from '../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
-import {IconAdd, IconSearch, IconSettings} from '../../assets/icons/Icons';
-import LinearGradient from 'react-native-linear-gradient';
+import {
+  IconAdd,
+  IconNotification,
+  IconSettings,
+} from '../../assets/icons/Icons';
 import Achievements from './components/Achievements';
 
-const Profile = () => {
+const Profile = ({navigation}) => {
   const [activeTab, setActiveTab] = useState(0);
   return (
     <ScrollView style={tw`px-[4%] pt-2 bg-white h-full`}>
@@ -24,12 +27,19 @@ const Profile = () => {
               style={tw`h-24 w-24 rounded-full`}
             />
           </View>
-          <View
+          <TouchableOpacity
             style={[
               tw`border border-gray90 rounded-full h-10 w-10 flex items-center justify-center`,
-            ]}>
-            <SvgXml xml={IconSearch} />
-          </View>
+            ]}
+            onPress={() => {
+              navigation?.navigate('Notifications');
+            }}>
+            <SvgXml xml={IconNotification} />
+            <View
+              style={tw`bg-gold h-4 w-4 rounded-full items-center justify-center absolute top-1 right-1`}>
+              <Text style={tw`text-white text-[8px] text-center`}>12</Text>
+            </View>
+          </TouchableOpacity>
         </View>
         <Text style={tw`text-black text-2xl font-WorkMedium text-center`}>
           Henry William
