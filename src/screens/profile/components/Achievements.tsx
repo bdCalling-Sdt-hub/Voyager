@@ -65,7 +65,7 @@ const Achievements = () => {
         colors={['#E1A0F0', '#F8C1CF']}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}
-        style={tw`mt-8 rounded-2xl p-4 flex-row mb-4`}>
+        style={tw`mt-8 rounded-2xl p-4 flex-row`}>
         <View style={tw`w-4/12`}>
           <Image source={require('../../../assets/images/treasure-box.png')} />
         </View>

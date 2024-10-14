@@ -8,12 +8,14 @@ import {
   IconSettings,
 } from '../../assets/icons/Icons';
 import Achievements from './components/Achievements';
+import Visited from './components/Visited';
+import Friends from './components/Friends';
 
-const Profile = ({navigation}) => {
+const Profile = ({navigation}: any) => {
   const [activeTab, setActiveTab] = useState(0);
   return (
     <ScrollView style={tw`px-[4%] pt-2 bg-white h-full`}>
-      <View>
+      <View style={tw`mb-4`}>
         <View style={tw`flex-row items-start justify-between py-2`}>
           <TouchableOpacity style={[tw``]}>
             <View
@@ -71,7 +73,7 @@ const Profile = ({navigation}) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={tw`border-pink100 bg-pink100 border py-3 rounded-full flex-row items-center justify-center gap-3 w-full`}>
-            <Text style={tw`text-sm font-WorkSemibold text-white font-600`}>
+            <Text style={tw`text-sm font-WorkSemiBold text-white font-600`}>
               Upgrade to Premium
             </Text>
           </TouchableOpacity>
@@ -117,7 +119,13 @@ const Profile = ({navigation}) => {
           </TouchableOpacity>
         </View>
         {/* achievements */}
-        <Achievements />
+        {activeTab === 0 ? (
+          <Achievements />
+        ) : activeTab === 1 ? (
+          <Visited />
+        ) : activeTab === 2 ? (
+          <Friends />
+        ) : null}
       </View>
     </ScrollView>
   );

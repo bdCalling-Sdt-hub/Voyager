@@ -1,27 +1,11 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  Image,
-  TextInput,
-} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
 import React, {useState} from 'react';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
-import {
-  IconClose,
-  IconColoredTik,
-  IconFilledHeart,
-  IconFilter,
-  IconSearch,
-  IconTikWithCircle,
-} from '../../assets/icons/Icons';
+import {IconFilledHeart, IconSearch} from '../../assets/icons/Icons';
 import desticaions from '../../utils/json/destinations.json';
 import {NavigProps} from '../../utils/interface/NaviProps';
-import NormalModal from '../../components/modals/NormalModal';
-import {Checkbox, RadioButton, RadioGroup} from 'react-native-ui-lib';
 
 const Places = ({navigation, route}: NavigProps<null>) => {
   const [activePlace, setActivePlace] = useState('attractions');
