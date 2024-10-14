@@ -3,23 +3,28 @@
     "countries": [
       {
         "name": "Finland",
-        "location": "Country in Europe"
+        "location": "Country in Europe",
+        "color": "#FC5D88"
       },
       {
         "name": "Italy",
-        "location": "Country in Southern Europe"
+        "location": "Country in Southern Europe",
+        "color": "#FFA94D"
       },
       {
         "name": "Japan",
-        "location": "Country in East Asia"
+        "location": "Country in East Asia",
+        "color": "#8C78EA"
       },
       {
         "name": "Brazil",
-        "location": "Country in South America"
+        "location": "Country in South America",
+        "color": "#FC5D88"
       },
       {
         "name": "Australia",
-        "location": "Country in Oceania"
+        "location": "Country in Oceania",
+        "color": "#8C78EA"
       }
     ],
     "cities": [

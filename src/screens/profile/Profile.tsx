@@ -96,26 +96,38 @@ const Profile = ({navigation}: any) => {
           <TouchableOpacity
             style={tw`${
               activeTab === 1 ? 'border-b-[2px] border-b-violet100' : ''
-            }  pb-2`}
+            } flex-row items-center pb-2`}
             onPress={() => setActiveTab(1)}>
             <Text
               style={tw` ${
                 activeTab === 1 ? 'text-violet100' : 'text-gray100'
               } text-sm font-WorkBold font-700`}>
-              Visited
+              Visited{' '}
             </Text>
+            <View
+              style={tw`${
+                activeTab === 1 ? 'bg-violet100' : 'bg-gray100'
+              } px-1 py-0.5 rounded`}>
+              <Text style={tw`text-white text-[10px]`}>03</Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity
             style={tw`${
               activeTab === 2 ? 'border-b-[2px] border-b-violet100' : ''
-            }  pb-2`}
+            } flex-row items-center pb-2`}
             onPress={() => setActiveTab(2)}>
             <Text
               style={tw` ${
                 activeTab === 2 ? 'text-violet100' : 'text-gray100'
               } text-sm font-WorkBold font-700`}>
-              Friends
+              Friends{' '}
             </Text>
+            <View
+              style={tw`${
+                activeTab === 2 ? 'bg-violet100' : 'bg-gray100'
+              } px-1 py-0.5 rounded`}>
+              <Text style={tw`text-white text-[10px]`}>09</Text>
+            </View>
           </TouchableOpacity>
         </View>
         {/* achievements */}

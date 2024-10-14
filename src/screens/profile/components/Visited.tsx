@@ -12,7 +12,7 @@ const Visited = ({navigation}: any) => {
       showsVerticalScrollIndicator={false}>
       {destinationData?.data?.countries?.map((item: any, index: number) => (
         <TouchableOpacity
-          style={tw`flex-row items-center gap-4`}
+          style={tw`flex-row items-center gap-4 border-r-4 border-r-[${item?.color}]`}
           key={index}
           onPress={() => navigation?.navigate('DestinationDetails', {item})}>
           <Image
@@ -54,7 +54,7 @@ const Visited = ({navigation}: any) => {
               </View>
             </View>
           </View>
-          <SvgXml xml={IconFilledHeart} />
+          <SvgXml xml={IconFilledHeart} style={tw`mr-1.5`} />
         </TouchableOpacity>
       ))}
     </ScrollView>
