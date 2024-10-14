@@ -130,6 +130,45 @@ export const IconLogout = `<svg width="24" height="24" viewBox="0 0 24 24" fill=
 </svg>
 `;
 
+export const IconProfileSettings = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M21.0802 8.58003V15.42C21.0802 16.54 20.4802 17.58 19.5102 18.15L13.5702 21.58C12.6002 22.14 11.4002 22.14 10.4202 21.58L4.48016 18.15C3.51016 17.59 2.91016 16.55 2.91016 15.42V8.58003C2.91016 7.46003 3.51016 6.41999 4.48016 5.84999L10.4202 2.42C11.3902 1.86 12.5902 1.86 13.5702 2.42L19.5102 5.84999C20.4802 6.41999 21.0802 7.45003 21.0802 8.58003Z" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M11.9999 10.9998C13.2867 10.9998 14.3299 9.95662 14.3299 8.6698C14.3299 7.38298 13.2867 6.33984 11.9999 6.33984C10.7131 6.33984 9.66992 7.38298 9.66992 8.6698C9.66992 9.95662 10.7131 10.9998 11.9999 10.9998Z" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16 16.6603C16 14.8603 14.21 13.4004 12 13.4004C9.79 13.4004 8 14.8603 8 16.6603" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+export const IconTravelPreferences = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12.3701 8.88086H17.6201" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M6.37988 8.88086L7.12988 9.63086L9.37988 7.38086" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.3701 15.8809H17.6201" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M6.37988 15.8809L7.12988 16.6309L9.37988 14.3809" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+export const IconLock = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M6 10V8C6 4.69 7 2 12 2C17 2 18 4.69 18 8V10" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 18.5C13.3807 18.5 14.5 17.3807 14.5 16C14.5 14.6193 13.3807 13.5 12 13.5C10.6193 13.5 9.5 14.6193 9.5 16C9.5 17.3807 10.6193 18.5 12 18.5Z" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M17 22H7C3 22 2 21 2 17V15C2 11 3 10 7 10H17C21 10 22 11 22 15V17C22 21 21 22 17 22Z" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+export const IconCart = `<svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.45405 5.82432C1.23152 5.17526 1.71384 4.5 2.4 4.5L11.6126 4.5" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M12.5 5L13.4 3.8C13.7777 3.29639 14.3705 3 15 3V3" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M3 12H9.77924C10.2097 12 10.5918 11.7246 10.7279 11.3162L12.5 6" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round"/>
+<circle cx="4.5" cy="14" r="1.5" fill="#6C6E71"/>
+<circle cx="10.5" cy="14" r="1.5" fill="#6C6E71"/>
+</svg>
+`;
+
+export const IconDangerLogout = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="#FC5D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16 17L21 12L16 7" stroke="#FC5D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M21 12H9" stroke="#FC5D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
 export const IconLeftArrow = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M9.57 5.92999L3.5 12L9.57 18.07" stroke="#9BA5B2" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M20.4999 12H3.66992" stroke="#9BA5B2" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>

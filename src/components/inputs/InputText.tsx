@@ -32,7 +32,7 @@ const InputText = ({
   return (
     <View
       style={[
-        tw`flex-1 rounded-2xl px-4 bg-inputBg flex-row items-center gap-3 border border-inputBorder h-14`,
+        tw`flex-1 rounded-2xl px-4 bg-white flex-row items-center gap-3 border border-gray90 h-14`,
         containerStyle,
         focus && focusStyle,
       ]}>

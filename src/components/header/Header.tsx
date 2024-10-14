@@ -25,6 +25,8 @@ interface Props {
   IconRouteName?: string;
   onPressSearch?: () => void;
   isSearchVisible?: boolean;
+  hideFilterIcon?: boolean;
+  hideRightIcon?: boolean;
 }
 
 const activityType = [
@@ -47,6 +49,8 @@ const Header = ({
   IconRouteName,
   onPressSearch,
   isSearchVisible,
+  hideFilterIcon,
+  hideRightIcon,
 }: Props) => {
   const navigation: any = useNavigation();
   const [filterModal, setFilterModal] = useState(false);
@@ -103,14 +107,20 @@ const Header = ({
             {title}
           </Text>
         </View>
-        <TouchableOpacity
-          style={[
-            tw`border border-gray90 rounded-full h-10 w-10 flex items-center justify-center`,
-            IconContainer,
-          ]}
-          onPress={onPressSearch}>
-          <SvgXml xml={icon || IconSearch} />
-        </TouchableOpacity>
+        {!hideRightIcon ? (
+          <TouchableOpacity
+            style={[
+              tw`border border-gray90 rounded-full h-10 w-10 flex items-center justify-center`,
+              IconContainer,
+            ]}
+            onPress={onPressSearch}>
+            <SvgXml xml={icon || IconSearch} />
+          </TouchableOpacity>
+        ) : (
+          <View style={tw`opacity-0`}>
+            <SvgXml xml={IconSearch} />
+          </View>
+        )}
       </View>
       {isSearchVisible && (
         <View style={tw`bg-gray80 rounded-full flex-row items-center p-1`}>
@@ -120,11 +130,13 @@ const Header = ({
             <TextInput placeholder="Search" style={tw`w-[85%]`} />
           </View>
           <View>
-            <TouchableOpacity
-              style={tw`h-12 w-12 flex items-center justify-center rounded-full ml-2 bg-white`}
-              onPress={() => setFilterModal(true)}>
-              <SvgXml xml={IconFilter} />
-            </TouchableOpacity>
+            {!hideFilterIcon && (
+              <TouchableOpacity
+                style={tw`h-12 w-12 flex items-center justify-center rounded-full ml-2 bg-white`}
+                onPress={() => setFilterModal(true)}>
+                <SvgXml xml={IconFilter} />
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       )}
