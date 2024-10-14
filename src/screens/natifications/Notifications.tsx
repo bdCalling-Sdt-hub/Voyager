@@ -11,7 +11,7 @@ import notifications from '../../utils/json/notifications.json';
 const Notifications = ({navigation}: any) => {
   const title = 'Notifications';
   return (
-    <View style={tw`bg-white px-4 h-full`}>
+    <View style={tw`bg-white px-[4%] h-full`}>
       <Header
         title={title || 'Bucket List'}
         containerStyle={tw`mt-2`}

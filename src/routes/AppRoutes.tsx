@@ -8,6 +8,7 @@ import DestinationDetails from '../screens/home/components/DestinationDetails';
 import Places from '../screens/home/Places';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import Notifications from '../screens/natifications/Notifications';
+import Settings from '../screens/settings/Settings';
 
 const AppRoutes = () => {
   const Stack = createNativeStackNavigator();
@@ -24,6 +25,7 @@ const AppRoutes = () => {
             component={DestinationDetails}
           />
           <Stack.Screen name="Notifications" component={Notifications} />
+          <Stack.Screen name="Settings" component={Settings} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>

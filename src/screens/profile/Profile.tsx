@@ -17,11 +17,10 @@ const Profile = ({navigation}: any) => {
     <ScrollView style={tw`px-[4%] pt-2 bg-white h-full`}>
       <View style={tw`mb-4`}>
         <View style={tw`flex-row items-start justify-between py-2`}>
-          <TouchableOpacity style={[tw``]}>
-            <View
-              style={tw`h-12 w-12 rounded-full bg-white items-center justify-center border border-gray90`}>
-              <SvgXml xml={IconSettings} />
-            </View>
+          <TouchableOpacity
+            style={tw`h-12 w-12 rounded-full bg-white items-center justify-center border border-gray90`}
+            onPress={() => navigation?.navigate('Settings')}>
+            <SvgXml xml={IconSettings} />
           </TouchableOpacity>
           <View style={[tw``]}>
             <Image

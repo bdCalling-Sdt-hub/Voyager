@@ -79,7 +79,7 @@ const Header = ({
                 navigation?.goBack();
               }
             } else {
-              navigation?.navigate('Dashboard');
+              navigation?.goBack();
             }
           }}>
           {isIcon ? (

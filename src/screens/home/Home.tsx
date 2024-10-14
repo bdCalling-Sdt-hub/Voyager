@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  TextInput,
   ScrollView,
   TouchableOpacity,
   Image,
@@ -13,15 +12,8 @@ import tw from '../../lib/tailwind';
 import {
   IconColoredRightArrow,
   IconFilledHeart,
-  IconFilter,
-  IconHeart,
   IconSearch,
-  IconTikWhiteWithCircle,
-  IconTikWithCircle,
-  IconVerifiedTik,
-  IconWhiteFilledHeart,
   IconWhiteHeart,
-  IconWhiteSearch,
 } from '../../assets/icons/Icons';
 import {SvgXml} from 'react-native-svg';
 import personalized from '../../utils/json/personalized.json';

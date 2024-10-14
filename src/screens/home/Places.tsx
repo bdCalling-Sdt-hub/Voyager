@@ -28,12 +28,11 @@ const Places = ({navigation, route}: NavigProps<null>) => {
   return (
     <View style={tw`px-[4%] bg-white h-full`}>
       <Header
-        title={title || 'Bucket List'}
+        title="Bucket List"
         containerStyle={tw`mt-2`}
-        isIcon={true}
-        IconRouteName={'Home'}
         IconContainer={tw`${isSearchVisible ? 'bg-black' : ''}`}
         icon={IconSearch}
+        IconRouteName="Dashboard"
         onPressSearch={() => setSearchVisible(!isSearchVisible)}
         isSearchVisible={isSearchVisible}
       />

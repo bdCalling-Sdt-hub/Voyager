@@ -31,6 +31,7 @@ const Dashboard = () => {
         containerStyle={tw`mt-2`}
         IconContainer={tw`${isSearchVisible ? 'bg-black' : ''}`}
         icon={IconSearch}
+        IconRouteName="Dashboard"
         onPressSearch={() => setSearchVisible(!isSearchVisible)}
         isSearchVisible={isSearchVisible}
       />
