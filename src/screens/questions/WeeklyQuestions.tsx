@@ -1,5 +1,13 @@
-import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
-import React, {useMemo, useRef, useState} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+  TouchableWithoutFeedback,
+  Pressable,
+} from 'react-native';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
 import RangeSlider from '../../components/slider/RangeSlider';
@@ -13,8 +21,9 @@ import {
   IconSuccessTik,
   IconVerifiedTik,
 } from '../../assets/icons/Icons';
-import BottomSheet from '@gorhom/bottom-sheet';
+import BottomSheet, {BottomSheetBackdrop} from '@gorhom/bottom-sheet';
 import NormalModal from '../../components/modals/NormalModal';
+import {BottomSheetProvider} from '@gorhom/bottom-sheet/lib/typescript/contexts';
 
 interface SheetData {
   title?: string;
@@ -29,6 +38,7 @@ const WeeklyQuestions = () => {
   const bottomSheetRef = useRef(null);
 
   const [sheetData, setSheetData] = useState<SheetData | null>(null);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   // configure snap points
   const snapPoints = useMemo(() => ['50%'], []);
@@ -37,9 +47,23 @@ const WeeklyQuestions = () => {
   const handleExpand = (data: SheetData) => {
     bottomSheetRef.current?.expand();
     setSheetData(data);
+    setIsSheetOpen(true);
   };
 
-  console.log(sheetData);
+  const handleClose = () => {
+    setIsSheetOpen(false);
+  };
+
+  const renderBackdrop = props => {
+    if (!isSheetOpen) return null;
+    return (
+      <TouchableWithoutFeedback onPress={() => bottomSheetRef.current?.close()}>
+        <View
+          style={[props.style, tw`absolute inset-0 bg-black bg-opacity-50`]}
+        />
+      </TouchableWithoutFeedback>
+    );
+  };
 
   return (
     <>
@@ -416,34 +440,42 @@ const WeeklyQuestions = () => {
           </View>
         )}
       </ScrollView>
+      {/* {bottomSheetRef?.ref?.current && (
+        
+      )} */}
       <BottomSheet
+        backdropComponent={renderBackdrop}
         ref={bottomSheetRef}
+        onClose={handleClose}
         snapPoints={snapPoints}
         index={-1}
         enablePanDownToClose>
-        <View style={tw`px-4 py-2`}>
-          <View style={tw`items-center`}>
-            <Image source={sheetData?.image} style={tw`h-28 w-28`} />
+        <>
+          <View style={tw`px-4 py-2`}>
+            <View style={tw`items-center`}>
+              <Image source={sheetData?.image} style={tw`h-28 w-28`} />
+            </View>
+            <Text
+              style={tw`text-2xl text-center font-WorkBold text-black font-bold mt-6`}>
+              {sheetData?.title || 'Question Title'}
+            </Text>
+            <Text
+              style={tw`text-base text-gray70 font-WorkMedium text-center mt-2`}>
+              {sheetData?.subtitle}
+            </Text>
+            <View style={tw`items-center`}>
+              <TouchableOpacity
+                style={tw`bg-violet100 p-3 mt-6 flex-row gap-2 items-center justify-center w-5/12 rounded-full`}>
+                <SvgXml xml={IconShare} />
+                <Text style={tw`text-white text-sm font-WorkSemiBold`}>
+                  Share
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <Text
-            style={tw`text-2xl text-center font-WorkBold text-black font-bold mt-6`}>
-            {sheetData?.title || 'Question Title'}
-          </Text>
-          <Text
-            style={tw`text-base text-gray70 font-WorkMedium text-center mt-2`}>
-            {sheetData?.subtitle}
-          </Text>
-          <View style={tw`items-center`}>
-            <TouchableOpacity
-              style={tw`bg-violet100 p-3 mt-6 flex-row gap-2 items-center justify-center w-5/12 rounded-full`}>
-              <SvgXml xml={IconShare} />
-              <Text style={tw`text-white text-sm font-WorkSemiBold`}>
-                Share
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        </>
       </BottomSheet>
+
       <NormalModal
         visible={achievementsPopupVisible}
         setVisible={setAchievementsPopupVisible}
