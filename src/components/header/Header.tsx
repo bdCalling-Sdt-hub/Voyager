@@ -14,7 +14,7 @@ import NormalModal from '../modals/NormalModal';
 import {Checkbox, RadioButton, RadioGroup} from 'react-native-ui-lib';
 
 interface Props {
-  title: string;
+  title?: string;
   imageContainer?: any;
   titleContainer?: any;
   IconContainer?: any;
@@ -28,6 +28,7 @@ interface Props {
   hideFilterIcon?: boolean;
   hideRightIcon?: boolean;
   leftIcon?: any;
+  middleComponent?: any;
 }
 
 const activityType = [
@@ -53,6 +54,7 @@ const Header = ({
   hideFilterIcon,
   hideRightIcon,
   leftIcon,
+  middleComponent,
 }: Props) => {
   const navigation: any = useNavigation();
   const [filterModal, setFilterModal] = useState(false);
@@ -75,54 +77,60 @@ const Header = ({
           tw`flex-row items-center justify-between py-2`,
           containerStyle,
         ]}>
-        <TouchableOpacity
-          style={[tw``, imageContainer]}
-          onPress={() => {
-            if (IconRouteName) {
-              if (isIcon) {
-                navigation?.navigate(IconRouteName);
+        <View style={tw`w-1/6`}>
+          <TouchableOpacity
+            style={[tw``, imageContainer]}
+            onPress={() => {
+              if (IconRouteName) {
+                if (isIcon) {
+                  navigation?.navigate(IconRouteName);
+                } else {
+                  navigation?.goBack();
+                }
               } else {
                 navigation?.goBack();
               }
-            } else {
-              navigation?.goBack();
-            }
-          }}>
-          {isIcon ? (
-            <View
-              style={tw`h-12 w-12 rounded-full bg-white items-center justify-center border border-gray90`}>
-              <SvgXml xml={leftIcon || IconLeftArrow} />
-            </View>
-          ) : (
-            <Image
-              source={require('../../assets/images/user.png')}
-              style={tw`h-12 w-12 rounded-full`}
-            />
-          )}
-        </TouchableOpacity>
-        <View style={[tw``, titleContainer]}>
-          <Text
-            style={[
-              tw`text-black text-2xl font-WorkMedium capitalize`,
-              titleStyle,
-            ]}>
-            {title}
-          </Text>
-        </View>
-        {!hideRightIcon ? (
-          <TouchableOpacity
-            style={[
-              tw`border border-gray90 rounded-full h-10 w-10 flex items-center justify-center`,
-              IconContainer,
-            ]}
-            onPress={onPressSearch}>
-            <SvgXml xml={icon || IconSearch} />
+            }}>
+            {isIcon ? (
+              <View
+                style={tw`h-12 w-12 rounded-full bg-white items-center justify-center border border-gray90`}>
+                <SvgXml xml={leftIcon || IconLeftArrow} />
+              </View>
+            ) : (
+              <Image
+                source={require('../../assets/images/user.png')}
+                style={tw`h-12 w-12 rounded-full`}
+              />
+            )}
           </TouchableOpacity>
-        ) : (
-          <View style={tw`opacity-0`}>
-            <SvgXml xml={IconSearch} />
-          </View>
-        )}
+        </View>
+        <View style={[tw`w-4/6 items-center`, titleContainer]}>
+          {middleComponent || (
+            <Text
+              style={[
+                tw`text-black text-2xl font-WorkMedium capitalize`,
+                titleStyle,
+              ]}>
+              {title}
+            </Text>
+          )}
+        </View>
+        <View style={tw`w-1/6 items-end`}>
+          {!hideRightIcon ? (
+            <TouchableOpacity
+              style={[
+                tw`border border-gray90 rounded-full h-10 w-10 flex items-center justify-center`,
+                IconContainer,
+              ]}
+              onPress={onPressSearch}>
+              <SvgXml xml={icon || IconSearch} />
+            </TouchableOpacity>
+          ) : (
+            <View style={tw`opacity-0`}>
+              <SvgXml xml={IconSearch} />
+            </View>
+          )}
+        </View>
       </View>
       {isSearchVisible && (
         <View style={tw`bg-gray80 rounded-full flex-row items-center p-1`}>

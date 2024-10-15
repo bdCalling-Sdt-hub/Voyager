@@ -90,7 +90,7 @@ const Settings = ({title = 'Settings', navigation}: any) => {
             <TouchableOpacity
               style={tw`bg-white py-2 rounded-full justify-center items-center border-[2px] border-transparent px-4`}
               onPress={() => {
-                console.log('Navigate to Login Screen');
+                navigation?.navigate('Login');
                 setLogoutModalVisible(false);
               }}>
               <Text style={tw`text-violet100 font-WorkSemiBold text-sm`}>

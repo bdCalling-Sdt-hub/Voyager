@@ -1,0 +1,106 @@
+{
+  "users": [
+    {
+      "title": "Adventurer",
+      "coins": 200,
+      "avatar": "../../assets/images/avatar1.png"
+    },
+    {
+      "title": "Explorer",
+      "coins": 200,
+      "avatar": "../../assets/images/avatar2.png"
+    },
+    {
+      "title": "Wanderer",
+      "coins": 200,
+      "avatar": "../../assets/images/avatar3.png"
+    },
+    {
+      "title": "Jetsetter",
+      "coins": 300,
+      "avatar": "../../assets/images/avatar4.png"
+    },
+    {
+      "title": "Nomad",
+      "coins": 200,
+      "avatar": "../../assets/images/avatar5.png"
+    },
+    {
+      "title": "Globetrotter",
+      "coins": 300,
+      "avatar": "../../assets/images/avatar1.png"
+    },
+    {
+      "title": "Traveler",
+      "coins": 200,
+      "avatar": "../../assets/images/avatar2.png"
+    },
+    {
+      "title": "Voyager",
+      "coins": 300,
+      "avatar": "../../assets/images/avatar3.png"
+    },
+    {
+      "title": "Seeker",
+      "coins": 300,
+      "avatar": "../../assets/images/avatar4.png"
+    },
+    {
+      "title": "Pathfinder",
+      "coins": 200,
+      "avatar": "../../assets/images/avatar5.png"
+    }
+  ],
+  "countries": [
+    {
+      "title": "Canada",
+      "avatar": "'../../assets/images/avatar6.png'",
+      "coins": 50
+    },
+    {
+      "title": "France",
+      "avatar": "'../../assets/images/avatar7.png'",
+      "coins": 50
+    },
+    {
+      "title": "Japan",
+      "avatar": "'../../assets/images/avatar8.png'",
+      "coins": 150
+    },
+    {
+      "title": "Australia",
+      "avatar": "'../../assets/images/avatar9.png'",
+      "coins": 150
+    },
+    {
+      "title": "Italy",
+      "avatar": "'../../assets/images/avatar10.png'",
+      "coins": 150
+    },
+    {
+      "title": "Brazil",
+      "avatar": "'../../assets/images/avatar11.png'",
+      "coins": 150
+    },
+    {
+      "title": "South Africa",
+      "avatar": "'../../assets/images/avatar12.png'",
+      "coins": 100
+    },
+    {
+      "title": "India",
+      "avatar": "'../../assets/images/avatar13.png'",
+      "coins": 100
+    },
+    {
+      "title": "Mexico",
+      "avatar": "'../../assets/images/avatar8.png'",
+      "coins": 200
+    },
+    {
+      "title": "Egypt",
+      "avatar": "'../../assets/images/avatar11.png'",
+      "coins": 50
+    }
+  ]
+}

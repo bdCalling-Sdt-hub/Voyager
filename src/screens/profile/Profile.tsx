@@ -131,7 +131,7 @@ const Profile = ({navigation}: any) => {
         </View>
         {/* achievements */}
         {activeTab === 0 ? (
-          <Achievements />
+          <Achievements navigation={navigation} />
         ) : activeTab === 1 ? (
           <Visited />
         ) : activeTab === 2 ? (

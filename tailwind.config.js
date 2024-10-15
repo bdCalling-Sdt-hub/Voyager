@@ -53,6 +53,7 @@ module.exports = {
         dottedBorder: '#E9E9EA',
         radioBg: '#F4F2FD',
         tableBody: '#2C2C2C',
+        placeholderColor: '#9A9C9D',
       },
     },
   },
