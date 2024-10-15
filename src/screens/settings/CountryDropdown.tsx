@@ -48,8 +48,8 @@ const countries = [
   {label: 'Vietnam', value: 'VN'},
 ];
 
-const CountryDropdown = () => {
-  const [selectedCountry, setSelectedCountry] = useState(null);
+const CountryDropdown = ({placeholderText, searchPlaceholder}: any) => {
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
 
   const renderItem = (item: any) => {
     return (
@@ -69,7 +69,7 @@ const CountryDropdown = () => {
       {selectedCountry && (
         <Image
           source={{uri: getFlagUrl(selectedCountry)}}
-          style={tw`w-6 h-6 mr-3`}
+          style={tw`w-6 h-6 mr-3 ml-2`}
         />
       )}
       {/* Dropdown */}
@@ -78,12 +78,12 @@ const CountryDropdown = () => {
         data={countries}
         labelField="label"
         valueField="value"
-        placeholder="Select a country"
+        placeholder={placeholderText || 'Select a country'}
         value={selectedCountry}
         onChange={item => setSelectedCountry(item.value)}
         renderItem={renderItem}
         search
-        searchPlaceholder="Search country"
+        searchPlaceholder={searchPlaceholder || 'Search country'}
         placeholderStyle={tw`text-gray50 text-base font-WorkMedium font-500 pl-2`}
       />
     </View>

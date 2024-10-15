@@ -50,6 +50,7 @@ module.exports = {
         brown70: '#FFF6ED',
         violet80: '#DBD5F8',
         gold: '#E89A46',
+        dottedBorder: '#E9E9EA',
       },
     },
   },

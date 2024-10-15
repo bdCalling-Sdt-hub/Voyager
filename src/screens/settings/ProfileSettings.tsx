@@ -13,10 +13,10 @@ import {RadioButton, RadioGroup} from 'react-native-ui-lib';
 import NormalModal from '../../components/modals/NormalModal';
 import {SvgXml} from 'react-native-svg';
 
-const ProfileSettings = () => {
+const ProfileSettings = ({navigation}: any) => {
   const [bucketlistPrivacy, setBucketlistPrivacy] = useState('public');
   const [profilePrivacy, setProfilePrivacy] = useState('public');
-  const [avatarModalVisible, setAvatarModalVisible] = useState(true);
+  const [avatarModalVisible, setAvatarModalVisible] = useState(false);
   return (
     <View style={tw`h-full bg-white px-[4%] pb-2`}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -157,7 +157,11 @@ const ProfileSettings = () => {
           </View>
         </View>
       </ScrollView>
-      <TouchableOpacity style={tw`bg-violet100 rounded-full p-3 mt-2`}>
+      <TouchableOpacity
+        style={tw`bg-violet100 rounded-full p-3 mt-2`}
+        onPress={() => {
+          navigation?.navigate('Settings');
+        }}>
         <Text
           style={tw`text-center text-white text-base font-WorkMedium font-500`}>
           Update

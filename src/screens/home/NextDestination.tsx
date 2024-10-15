@@ -20,8 +20,6 @@ import {SvgXml} from 'react-native-svg';
 import desticaions from '../../utils/json/destinations.json';
 import {NavigProps} from '../../utils/interface/NaviProps';
 
-console.log(desticaions);
-
 const NextDestination = ({navigation, route}: NavigProps<null>) => {
   const {title} = route?.params || {};
   const destinationData = (() => {

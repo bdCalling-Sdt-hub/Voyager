@@ -37,14 +37,16 @@ const Settings = ({title = 'Settings', navigation}: any) => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={tw`flex-row items-center gap-4 p-4 border border-gray90 rounded-2xl`}>
+          style={tw`flex-row items-center gap-4 p-4 border border-gray90 rounded-2xl`}
+          onPress={() => navigation.navigate('Preferences')}>
           <SvgXml xml={IconTravelPreferences} />
           <Text style={tw`text-black text-base font-WorkMedium font-500`}>
             Travel Preferences
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={tw`flex-row items-center gap-4 p-4 border border-gray90 rounded-2xl`}>
+          style={tw`flex-row items-center gap-4 p-4 border border-gray90 rounded-2xl`}
+          onPress={() => navigation.navigate('AccountSettings')}>
           <SvgXml xml={IconLock} />
           <Text style={tw`text-black text-base font-WorkMedium font-500`}>
             Account Settings

@@ -21,7 +21,6 @@ import {NavigProps} from '../../utils/interface/NaviProps';
 
 const Home = ({navigation}: NavigProps<null>) => {
   const [isSearchVisible, setSearchVisible] = useState(false);
-  console.log(isSearchVisible);
   return (
     <ScrollView contentContainerStyle={tw`px-[4%] bg-white`}>
       <View>

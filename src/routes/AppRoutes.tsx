@@ -10,6 +10,8 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import Notifications from '../screens/natifications/Notifications';
 import Settings from '../screens/settings/Settings';
 import ProfileSettings from '../screens/settings/ProfileSettings';
+import Preferences from '../screens/settings/Preferences';
+import AccountSettings from '../screens/settings/AccountSettings';
 
 const AppRoutes = () => {
   const Stack = createNativeStackNavigator();
@@ -28,6 +30,8 @@ const AppRoutes = () => {
           <Stack.Screen name="Notifications" component={Notifications} />
           <Stack.Screen name="Settings" component={Settings} />
           <Stack.Screen name="ProfileSettings" component={ProfileSettings} />
+          <Stack.Screen name="Preferences" component={Preferences} />
+          <Stack.Screen name="AccountSettings" component={AccountSettings} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
