@@ -4,12 +4,19 @@ import tw from '../../lib/tailwind';
 import Header from '../../components/header/Header';
 import InputText from '../../components/inputs/InputText';
 import CountryDropdown from './CountryDropdown';
-import {IconFacebook, IconInstagram} from '../../assets/icons/Icons';
+import {
+  IconFacebook,
+  IconInstagram,
+  IconLightCamera,
+} from '../../assets/icons/Icons';
 import {RadioButton, RadioGroup} from 'react-native-ui-lib';
+import NormalModal from '../../components/modals/NormalModal';
+import {SvgXml} from 'react-native-svg';
 
 const ProfileSettings = () => {
   const [bucketlistPrivacy, setBucketlistPrivacy] = useState('public');
   const [profilePrivacy, setProfilePrivacy] = useState('public');
+  const [avatarModalVisible, setAvatarModalVisible] = useState(true);
   return (
     <View style={tw`h-full bg-white px-[4%] pb-2`}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -28,6 +35,11 @@ const ProfileSettings = () => {
                 source={require('../../assets/images/avatar1.png')}
                 style={tw`h-18 w-18 rounded-full`}
               />
+              <TouchableOpacity
+                style={tw`bg-violet100 w-8 h-8 items-center justify-center rounded-full absolute bottom-1 right-[-2]`}
+                onPress={() => setAvatarModalVisible(true)}>
+                <SvgXml xml={IconLightCamera} />
+              </TouchableOpacity>
             </TouchableOpacity>
             <Text
               style={tw`text-gray100 text-sm font-WorkRegular font-400 mt-2`}>
@@ -151,6 +163,106 @@ const ProfileSettings = () => {
           Update
         </Text>
       </TouchableOpacity>
+      <NormalModal
+        setVisible={setAvatarModalVisible}
+        visible={avatarModalVisible}
+        layerContainerStyle={tw`self-center items-center justify-center h-full w-[80%]`}
+        containerStyle={tw`bg-gray80 p-4 rounded-2xl`}>
+        <Text style={tw`text-black text-lg font-WorkSemiBold font-600`}>
+          Choose your avatar
+        </Text>
+
+        <View style={tw`flex-row flex-wrap mt-2 justify-between`}>
+          <View
+            style={tw`w-[48%] items-center bg-white p-4 rounded-2xl mb-2.5`}>
+            <Image
+              source={require('../../assets/images/avatar2.png')}
+              style={tw`w-14 h-14 rounded-full`}
+            />
+            <Text
+              style={tw`text-black text-base font-WorkMedium font-500 my-1`}>
+              Adventurer
+            </Text>
+
+            <TouchableOpacity
+              style={tw`flex-row items-center gap-2 border border-gold rounded-full py-0.5 px-2`}>
+              <Image
+                source={require('../../assets/images/coin.png')}
+                style={tw`h-7 w-7`}
+              />
+              <Text style={tw`text-black text-sm font-WorkMedium font-500`}>
+                300
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={tw`w-[48%] items-center bg-white p-4 rounded-2xl mb-2.5`}>
+            <Image
+              source={require('../../assets/images/avatar3.png')}
+              style={tw`w-14 h-14 rounded-full`}
+            />
+            <Text
+              style={tw`text-black text-base font-WorkMedium font-500 my-1`}>
+              Explorer
+            </Text>
+
+            <TouchableOpacity
+              style={tw`flex-row items-center gap-2 border border-gold rounded-full py-0.5 px-2`}>
+              <Image
+                source={require('../../assets/images/coin.png')}
+                style={tw`h-7 w-7`}
+              />
+              <Text style={tw`text-black text-sm font-WorkMedium font-500`}>
+                200
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={tw`w-[48%] items-center bg-white p-4 rounded-2xl mb-2.5`}>
+            <Image
+              source={require('../../assets/images/avatar4.png')}
+              style={tw`w-14 h-14 rounded-full`}
+            />
+            <Text
+              style={tw`text-black text-base font-WorkMedium font-500 my-1`}>
+              Wanderer
+            </Text>
+
+            <TouchableOpacity
+              style={tw`flex-row items-center gap-2 border border-gold rounded-full py-0.5 px-2`}>
+              <Image
+                source={require('../../assets/images/coin.png')}
+                style={tw`h-7 w-7`}
+              />
+              <Text style={tw`text-black text-sm font-WorkMedium font-500`}>
+                300
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={tw`w-[48%] items-center bg-white p-4 rounded-2xl mb-2.5`}>
+            <Image
+              source={require('../../assets/images/avatar5.png')}
+              style={tw`w-14 h-14 rounded-full`}
+            />
+            <Text
+              style={tw`text-black text-base font-WorkMedium font-500 my-1`}>
+              Jetsetter
+            </Text>
+
+            <TouchableOpacity
+              style={tw`flex-row items-center gap-2 border border-gold rounded-full py-0.5 px-2`}>
+              <Image
+                source={require('../../assets/images/coin.png')}
+                style={tw`h-7 w-7`}
+              />
+              <Text style={tw`text-black text-sm font-WorkMedium font-500`}>
+                400
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </NormalModal>
     </View>
   );
 };
