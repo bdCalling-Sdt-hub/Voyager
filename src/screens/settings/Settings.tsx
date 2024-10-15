@@ -53,7 +53,8 @@ const Settings = ({title = 'Settings', navigation}: any) => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={tw`flex-row items-center gap-4 p-4 border border-gray90 rounded-2xl`}>
+          style={tw`flex-row items-center gap-4 p-4 border border-gray90 rounded-2xl`}
+          onPress={() => navigation.navigate('Subscription')}>
           <SvgXml xml={IconCart} />
           <Text style={tw`text-black text-base font-WorkMedium font-500`}>
             Subscription & Billing

@@ -12,6 +12,7 @@ import Settings from '../screens/settings/Settings';
 import ProfileSettings from '../screens/settings/ProfileSettings';
 import Preferences from '../screens/settings/Preferences';
 import AccountSettings from '../screens/settings/AccountSettings';
+import Subscription from '../screens/settings/subscription/Subscription';
 
 const AppRoutes = () => {
   const Stack = createNativeStackNavigator();
@@ -32,6 +33,7 @@ const AppRoutes = () => {
           <Stack.Screen name="ProfileSettings" component={ProfileSettings} />
           <Stack.Screen name="Preferences" component={Preferences} />
           <Stack.Screen name="AccountSettings" component={AccountSettings} />
+          <Stack.Screen name="Subscription" component={Subscription} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
