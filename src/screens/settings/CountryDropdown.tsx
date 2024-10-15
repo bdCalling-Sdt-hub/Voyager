@@ -84,6 +84,7 @@ const CountryDropdown = () => {
         renderItem={renderItem}
         search
         searchPlaceholder="Search country"
+        placeholderStyle={tw`text-gray50 text-base font-WorkMedium font-500 pl-2`}
       />
     </View>
   );
