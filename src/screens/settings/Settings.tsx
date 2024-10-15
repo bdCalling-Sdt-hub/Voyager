@@ -11,9 +11,11 @@ import {
   IconTravelPreferences,
 } from '../../assets/icons/Icons';
 import {SvgXml} from 'react-native-svg';
+import NormalModal from '../../components/modals/NormalModal';
 
 const Settings = ({title = 'Settings', navigation}: any) => {
   const [isSearchVisible, setSearchVisible] = useState(false);
+  const [logoutModalVisible, setLogoutModalVisible] = useState(false);
   return (
     <View style={tw`px-[4%] bg-white h-full`}>
       <Header
@@ -61,13 +63,52 @@ const Settings = ({title = 'Settings', navigation}: any) => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={tw`flex-row items-center gap-4 p-4 border border-gray90 rounded-2xl`}>
+          style={tw`flex-row items-center gap-4 p-4 border border-gray90 rounded-2xl`}
+          onPress={() => setLogoutModalVisible(true)}>
           <SvgXml xml={IconDangerLogout} />
           <Text style={tw`text-black text-base font-WorkMedium font-500`}>
             Logout
           </Text>
         </TouchableOpacity>
       </View>
+      <NormalModal
+        visible={logoutModalVisible}
+        setVisible={setLogoutModalVisible}
+        layerContainerStyle={tw`self-center items-center justify-center h-full w-[80%]`}
+        containerStyle={tw`bg-white p-4 rounded-2xl`}>
+        <View>
+          <Text
+            style={tw`text-center text-black text-2xl font-WorkSemiBold font-600`}>
+            Log Out
+          </Text>
+          <Text
+            style={tw`text-gray60 text-center text-sm font-WorkRegular font-400 mt-2`}>
+            Are you sure do you want to logout?
+          </Text>
+
+          <View style={tw`flex-row gap-6 mt-5 justify-between`}>
+            <TouchableOpacity
+              style={tw`bg-white py-2 rounded-full justify-center items-center border-[2px] border-transparent px-4`}
+              onPress={() => {
+                console.log('Navigate to Login Screen');
+                setLogoutModalVisible(false);
+              }}>
+              <Text style={tw`text-violet100 font-WorkSemiBold text-sm`}>
+                Yes
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={tw`bg-violet100 py-2 rounded-full justify-center items-center border-[2px] border-violet100 px-4`}
+              onPress={() => {
+                setLogoutModalVisible(false);
+              }}>
+              <Text style={tw`text-white font-WorkSemiBold text-sm`}>
+                Not Now
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </NormalModal>
     </View>
   );
 };
