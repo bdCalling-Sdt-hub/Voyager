@@ -51,6 +51,8 @@ module.exports = {
         violet80: '#DBD5F8',
         gold: '#E89A46',
         dottedBorder: '#E9E9EA',
+        radioBg: '#F4F2FD',
+        tableBody: '#2C2C2C',
       },
     },
   },

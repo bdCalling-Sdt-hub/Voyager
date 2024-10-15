@@ -27,6 +27,7 @@ interface Props {
   isSearchVisible?: boolean;
   hideFilterIcon?: boolean;
   hideRightIcon?: boolean;
+  leftIcon?: any;
 }
 
 const activityType = [
@@ -51,6 +52,7 @@ const Header = ({
   isSearchVisible,
   hideFilterIcon,
   hideRightIcon,
+  leftIcon,
 }: Props) => {
   const navigation: any = useNavigation();
   const [filterModal, setFilterModal] = useState(false);
@@ -89,7 +91,7 @@ const Header = ({
           {isIcon ? (
             <View
               style={tw`h-12 w-12 rounded-full bg-white items-center justify-center border border-gray90`}>
-              <SvgXml xml={IconLeftArrow} />
+              <SvgXml xml={leftIcon || IconLeftArrow} />
             </View>
           ) : (
             <Image
