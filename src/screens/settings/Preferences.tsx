@@ -83,7 +83,7 @@ const Preferences = ({navigation}: any) => {
               Place Type
             </Text>
             <View style={tw`flex-row flex-wrap gap-3 mt-1`}>
-              {['historycal', 'Family_Friendly', 'architecture', 'biking'].map(
+              {['historycal', 'family_friendly', 'architecture', 'biking'].map(
                 type => (
                   <TouchableOpacity
                     key={type}

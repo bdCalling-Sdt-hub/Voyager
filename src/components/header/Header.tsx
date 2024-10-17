@@ -70,6 +70,16 @@ const Header = ({
     }
   };
 
+  const toggleVisitedStatus = (status: string) => {
+    if (visitedStatus.includes(status)) {
+      // If the status is already selected, remove it
+      setVisitedStatus(visitedStatus.filter(item => item !== status));
+    } else {
+      // If the status is not selected, add it
+      setVisitedStatus([...visitedStatus, status]);
+    }
+  };
+
   return (
     <>
       <View
@@ -117,18 +127,41 @@ const Header = ({
         </View>
         <View style={tw`w-1/6 items-end`}>
           {!hideRightIcon ? (
-            <TouchableOpacity
+            <>
+              {/* <TouchableOpacity
               style={[
                 tw`border border-gray90 rounded-full h-10 w-10 flex items-center justify-center`,
                 IconContainer,
               ]}
               onPress={onPressSearch}>
               <SvgXml xml={icon || IconSearch} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+
+              <View style={tw`flex-row items-center gap-2`}>
+                <Image
+                  source={require('../../assets/images/coin.png')}
+                  style={tw`h-7 w-7 rounded-full`}
+                />
+                <Text style={tw`text-gold text-lg font-WorkSemiBold font-600`}>
+                  400
+                </Text>
+              </View>
+            </>
           ) : (
-            <View style={tw`opacity-0`}>
-              <SvgXml xml={IconSearch} />
-            </View>
+            <>
+              <View style={tw`opacity-0`}>
+                <SvgXml xml={IconSearch} />
+              </View>
+              {/* <View style={tw`flex-row items-center gap-2`}>
+            <Image
+              source={require('../../assets/images/coin.png')}
+              style={tw`h-7 w-7 rounded-full`}
+            />
+            <Text style={tw`text-gold text-lg font-WorkSemiBold font-600`}>
+              400
+            </Text>
+          </View> */}
+            </>
           )}
         </View>
       </View>
@@ -196,50 +229,24 @@ const Header = ({
             <Text style={tw`text-lg text-black font-WorkMedium`}>
               Visited Status
             </Text>
-            <View style={tw`flex-row gap-3 mt-1`}>
-              <TouchableOpacity
-                style={tw`${
-                  visitedStatus === 'visited' ? 'bg-violet100' : 'bg-white'
-                } py-2 rounded-full justify-center items-center border-[2px] border-violet100 flex-1`}
-                onPress={() => setVisitedStatus('visited')}>
-                <Text
-                  style={tw`
-                  ${
-                    visitedStatus === 'visited'
-                      ? 'text-white'
-                      : 'text-violet100'
-                  } font-WorkMedium text-sm`}>
-                  Visited
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={tw`${
-                  visitedStatus === 'notVisited' ? 'bg-violet100' : 'bg-white'
-                } py-2 rounded-full justify-center items-center border-[2px] border-violet100 flex-1`}
-                onPress={() => setVisitedStatus('notVisited')}>
-                <Text
+            <View style={tw`flex-row flex-wrap gap-3 mt-1`}>
+              {['visited', 'not_visited', 'in_progress'].map(type => (
+                <TouchableOpacity
+                  key={type}
                   style={tw`${
-                    visitedStatus === 'notVisited'
-                      ? 'text-white'
-                      : 'text-violet100'
-                  } font-WorkMedium text-sm`}>
-                  Not Visited
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={tw`${
-                  visitedStatus === 'inProgress' ? 'bg-violet100' : 'bg-white'
-                } py-2 rounded-full justify-center items-center border-[2px] border-violet100 flex-1`}
-                onPress={() => setVisitedStatus('inProgress')}>
-                <Text
-                  style={tw`${
-                    visitedStatus === 'inProgress'
-                      ? 'text-white'
-                      : 'text-violet100'
-                  } font-WorkMedium text-sm`}>
-                  In Progress
-                </Text>
-              </TouchableOpacity>
+                    visitedStatus.includes(type) ? 'bg-violet100' : 'bg-white'
+                  } py-2 rounded-full justify-center items-center border-[2px] border-violet100 px-2`}
+                  onPress={() => toggleVisitedStatus(type)}>
+                  <Text
+                    style={tw`${
+                      visitedStatus.includes(type)
+                        ? 'text-white'
+                        : 'text-violet100'
+                    } font-WorkMedium text-sm capitalize`}>
+                    {type.replace('_', '-')}
+                  </Text>
+                </TouchableOpacity>
+              ))}
             </View>
           </View>
 

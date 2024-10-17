@@ -17,13 +17,12 @@ import {
   IconColoredRightArrow,
   IconFilledHeart,
   IconSearch,
-  IconTikWithCircle,
   IconVerifiedLocation,
 } from '../../assets/icons/Icons';
 
 const Dashboard = () => {
   const [activePlace, setActivePlace] = useState('attractions');
-  const [isSearchVisible, setSearchVisible] = useState(false);
+  const [isSearchVisible, setSearchVisible] = useState(true);
   return (
     <ScrollView style={tw`px-[4%] bg-white`} keyboardShouldPersistTaps="always">
       <Header
