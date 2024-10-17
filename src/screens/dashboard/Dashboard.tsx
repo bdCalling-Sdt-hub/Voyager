@@ -31,7 +31,7 @@ const Dashboard = () => {
           title="Dashbaord"
           containerStyle={tw`mt-2`}
           icon={IconSearch}
-          IconRouteName="Dashboard"
+          // IconRouteName="Dashboard"
           isSearchVisible={true}
         />
         {/* visited location card */}

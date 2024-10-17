@@ -12,7 +12,7 @@ const Visited = ({navigation}: any) => {
       showsVerticalScrollIndicator={false}>
       {destinationData?.data?.countries?.map((item: any, index: number) => (
         <TouchableOpacity
-          style={tw`flex-row items-center gap-4 border-r-4 border-r-[${item?.color}]`}
+          style={tw`flex-row items-center py-1 gap-4 rounded-2xl border-r-[2px] border-b-[2px] border-b-[${item?.color}] border-r-[${item?.color}]`}
           key={index}
           onPress={() => navigation?.navigate('DestinationDetails', {item})}>
           <Image

@@ -9,7 +9,7 @@ import {
 } from '../../assets/icons/Icons';
 import Achievements from './components/Achievements';
 import Visited from './components/Visited';
-import Friends from './components/Friends';
+import FriendsList from './components/FriendsList';
 
 const Profile = ({navigation}: any) => {
   const [activeTab, setActiveTab] = useState(0);
@@ -64,14 +64,16 @@ const Profile = ({navigation}: any) => {
         </View>
         <View style={tw`items-center mt-6 gap-y-4`}>
           <TouchableOpacity
-            style={tw`border-violet100 border py-3 rounded-full flex-row items-center justify-center gap-3 w-full`}>
+            style={tw`border-violet100 border py-3 rounded-full flex-row items-center justify-center gap-3 w-full`}
+            onPress={() => navigation?.navigate('Friends')}>
             <SvgXml xml={IconAdd} />
             <Text style={tw`text-sm font-WorkMedium text-violet100 font-500`}>
               Add Friends
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={tw`border-pink100 bg-pink100 border py-3 rounded-full flex-row items-center justify-center gap-3 w-full`}>
+            style={tw`border-pink100 bg-pink100 border py-3 rounded-full flex-row items-center justify-center gap-3 w-full`}
+            onPress={() => navigation?.navigate('Subscription')}>
             <Text style={tw`text-sm font-WorkSemiBold text-white font-600`}>
               Upgrade to Premium
             </Text>
@@ -135,7 +137,7 @@ const Profile = ({navigation}: any) => {
         ) : activeTab === 1 ? (
           <Visited />
         ) : activeTab === 2 ? (
-          <Friends />
+          <FriendsList navigation={navigation} />
         ) : null}
       </View>
     </ScrollView>

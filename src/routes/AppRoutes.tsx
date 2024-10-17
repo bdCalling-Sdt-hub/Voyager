@@ -23,6 +23,7 @@ import VerifyOTP from '../screens/authentication/VerifyOTP';
 import SetNewPassword from '../screens/authentication/SetNewPassword';
 import {AppProvider} from '../utils/context/AppContext';
 import Friends from '../screens/friends/Friends';
+import OthersProfile from '../screens/profile/OthersProfile';
 
 const AppRoutes = () => {
   const Stack = createNativeStackNavigator();
@@ -32,7 +33,7 @@ const AppRoutes = () => {
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{headerShown: false}}
-            initialRouteName="BottomRoutes">
+            initialRouteName="Login">
             <Stack.Screen name="BottomRoutes" component={BottomRoutes} />
             <Stack.Screen name="NextDestination" component={NextDestination} />
             <Stack.Screen
@@ -57,6 +58,7 @@ const AppRoutes = () => {
             <Stack.Screen name="VerifyOTP" component={VerifyOTP} />
             <Stack.Screen name="SetNewPassword" component={SetNewPassword} />
             <Stack.Screen name="Friends" component={Friends} />
+            <Stack.Screen name="OthersProfile" component={OthersProfile} />
           </Stack.Navigator>
         </NavigationContainer>
       </AppProvider>

@@ -1,10 +1,13 @@
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 import tw from '../../lib/tailwind';
 import Header from '../../components/header/Header';
 import {IconFilledNotification} from '../../assets/icons/Icons';
+import FriendsList from '../profile/components/FriendsList';
+import Request from './Request';
+import AddFriends from './AddFriends';
 
-const Friends = ({title = 'Friends'}) => {
+const Friends = ({title = 'Friends', navigation}: any) => {
   const [friendsOption, setFriendsOption] = useState('add_friends');
   return (
     <View style={tw`bg-white px-[4%] h-full`}>
@@ -54,6 +57,17 @@ const Friends = ({title = 'Friends'}) => {
           </Text>
         </TouchableOpacity>
       </View>
+
+      <ScrollView
+        style={tw`mt-4`}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="always">
+        {friendsOption === 'add_friends' && (
+          <AddFriends navigation={navigation} />
+        )}
+        {friendsOption === 'requests' && <Request />}
+        {friendsOption === 'friends' && <FriendsList />}
+      </ScrollView>
     </View>
   );
 };

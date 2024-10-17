@@ -76,7 +76,7 @@ const Login = ({navigation}: any) => {
         <TouchableOpacity
           style={tw`bg-violet100 rounded-full p-3 mt-2`}
           onPress={() => {
-            navigation?.navigate('Dashboard');
+            navigation?.navigate('BottomRoutes');
           }}>
           <Text
             style={tw`text-center text-white text-base font-WorkMedium font-500`}>

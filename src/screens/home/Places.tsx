@@ -4,7 +4,7 @@ import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
 import {IconFilledHeart, IconSearch} from '../../assets/icons/Icons';
-import desticaions from '../../utils/json/destinations.json';
+import destinations from '../../utils/json/destinations.json';
 import {NavigProps} from '../../utils/interface/NaviProps';
 
 const Places = ({navigation, route}: NavigProps<null>) => {
@@ -15,15 +15,31 @@ const Places = ({navigation, route}: NavigProps<null>) => {
   const destinationData = (() => {
     switch (activePlace) {
       case 'cities':
-        return desticaions?.data?.cities || null;
+        // setActiveColor('#FC5D88BF');
+        return destinations?.data?.cities || null;
       case 'countries':
-        return desticaions?.data?.countries || null;
+        // setActiveColor('#FFA94DBF');
+        return destinations?.data?.countries || null;
       case 'attractions':
-        return desticaions?.data?.attractions || null;
+        // setActiveColor('#8C78EABF');
+        return destinations?.data?.attractions || null;
       default:
         return null;
     }
   })();
+
+  const activeColor = () => {
+    switch (activePlace) {
+      case 'attractions':
+        return '#FC5D88BF';
+      case 'cities':
+        return '#FFA94DBF';
+      case 'countries':
+        return '#8C78EABF';
+      default:
+        return '#FC5D88BF';
+    }
+  };
 
   return (
     <View style={tw`px-[4%] bg-white h-full`}>
@@ -78,7 +94,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
         showsVerticalScrollIndicator={false}>
         {destinationData?.map((item: any, index: number) => (
           <TouchableOpacity
-            style={tw`flex-row items-center gap-4`}
+            style={tw`flex-row items-center p-1 gap-4 rounded-2xl border-r-[2px] border-b-[2px] border-b-[${activeColor()}] border-r-[${activeColor()}]`}
             key={index}
             onPress={() => navigation?.navigate('DestinationDetails', {item})}>
             <Image

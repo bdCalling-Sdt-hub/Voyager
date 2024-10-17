@@ -270,6 +270,13 @@ export const IconAdd = `<svg width="16" height="16" viewBox="0 0 16 16" fill="no
 </svg>
 `;
 
+export const IconWhiteAdd = `<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M5.83325 8H11.1666" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8.5 10.6663V5.33301" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M6.49992 14.6663H10.4999C13.8333 14.6663 15.1666 13.333 15.1666 9.99967V5.99967C15.1666 2.66634 13.8333 1.33301 10.4999 1.33301H6.49992C3.16659 1.33301 1.83325 2.66634 1.83325 5.99967V9.99967C1.83325 13.333 3.16659 14.6663 6.49992 14.6663Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
 export const IconLightCamera = `<svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M0.5 4.90909C0.5 4.08066 1.17157 3.40909 2 3.40909H4.70052C5.15939 3.40909 5.55937 3.09679 5.67066 2.65163L5.92452 1.6362C6.09146 0.968447 6.69143 0.5 7.37973 0.5H10.1818H12.9839C13.6722 0.5 14.2722 0.968446 14.4391 1.6362L14.693 2.65163C14.8043 3.09679 15.2042 3.40909 15.6631 3.40909H18.3636C19.1921 3.40909 19.8636 4.08066 19.8636 4.90909V14C19.8636 14.8284 19.1921 15.5 18.3636 15.5H2C1.17157 15.5 0.5 14.8284 0.5 14V4.90909Z" stroke="white"/>
 <circle cx="10.182" cy="8.72692" r="3.86364" stroke="white"/>

@@ -5,6 +5,7 @@ import Header from '../../components/header/Header';
 import LinearGradient from 'react-native-linear-gradient';
 import Avatar from './Avatar';
 import shop from '../../utils/json/shop.json';
+import PowersUps from './PowersUps';
 
 const Shop = () => {
   const [activePlace, setActivePlace] = useState('avatar');
@@ -15,8 +16,6 @@ const Shop = () => {
       return shop?.countries;
     }
   };
-
-  console.log(data());
   return (
     <View style={tw`h-full bg-white px-[4%] pb-2`}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -105,7 +104,11 @@ const Shop = () => {
         </View>
 
         <View>
-          <Avatar data={data()} />
+          {activePlace === 'power_ups' ? (
+            <PowersUps />
+          ) : (
+            <Avatar data={data()} />
+          )}
         </View>
       </ScrollView>
     </View>
