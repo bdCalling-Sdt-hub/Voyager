@@ -17,6 +17,10 @@ import PaymentMethod from '../screens/settings/subscription/PaymentMethod';
 import SubscriptionPlan from '../screens/settings/subscription/SubscriptionPlan';
 import Shop from '../screens/shop/Shop';
 import Login from '../screens/authentication/Login';
+import Registration from '../screens/authentication/Registration';
+import ForgotPassword from '../screens/authentication/ForgotPassword';
+import VerifyOTP from '../screens/authentication/VerifyOTP';
+import SetNewPassword from '../screens/authentication/SetNewPassword';
 
 const AppRoutes = () => {
   const Stack = createNativeStackNavigator();
@@ -42,6 +46,10 @@ const AppRoutes = () => {
           <Stack.Screen name="SubscriptionPlan" component={SubscriptionPlan} />
           <Stack.Screen name="Shop" component={Shop} />
           <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Registration" component={Registration} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+          <Stack.Screen name="VerifyOTP" component={VerifyOTP} />
+          <Stack.Screen name="SetNewPassword" component={SetNewPassword} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>

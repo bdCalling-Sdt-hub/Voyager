@@ -25,7 +25,7 @@ const Dashboard = () => {
   const [activePlace, setActivePlace] = useState('attractions');
   const [isSearchVisible, setSearchVisible] = useState(false);
   return (
-    <ScrollView style={tw`px-[4%] bg-white`}>
+    <ScrollView style={tw`px-[4%] bg-white`} keyboardShouldPersistTaps="always">
       <Header
         title="Dashbaord"
         containerStyle={tw`mt-2`}

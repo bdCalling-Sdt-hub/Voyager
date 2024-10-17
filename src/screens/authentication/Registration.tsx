@@ -14,7 +14,7 @@ import {
 import {Checkbox} from 'react-native-ui-lib';
 import {SvgXml} from 'react-native-svg';
 
-const Login = ({navigation}: any) => {
+const Registration = ({navigation}: any) => {
   const [isSecure, setIsSecure] = useState(true);
   const [isCheck, setIsCheck] = useState(false);
   return (
@@ -23,11 +23,18 @@ const Login = ({navigation}: any) => {
       keyboardShouldPersistTaps="always">
       <View style={tw`py-2 items-center`}>
         <Text style={[tw`text-black text-2xl font-WorkMedium capitalize`]}>
-          Welcome Back
+          Create Account
         </Text>
       </View>
 
       <View style={tw`gap-y-4 mt-8`}>
+        <View style={tw`h-14`}>
+          <InputText
+            svgFirstIcon={IconDarkUser}
+            placeholder="Enter your Full Name"
+            placeholderTextColor={'#9A9C9D'}
+          />
+        </View>
         <View style={tw`h-14`}>
           <InputText
             svgFirstIcon={IconEnvelop}
@@ -44,18 +51,6 @@ const Login = ({navigation}: any) => {
             svgSecondIcon={isSecure ? IconCloseEye : IconEye}
             onPress={() => setIsSecure(!isSecure)}
           />
-        </View>
-
-        <View style={tw`flex-row items-center justify-end`}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation?.navigate('ForgotPassword');
-            }}>
-            <Text
-              style={tw`text-violet100 text-sm font-WorkMedium font-500 underline`}>
-              Forgot Password?
-            </Text>
-          </TouchableOpacity>
         </View>
 
         <TouchableOpacity
@@ -76,11 +71,11 @@ const Login = ({navigation}: any) => {
         <TouchableOpacity
           style={tw`bg-violet100 rounded-full p-3 mt-2`}
           onPress={() => {
-            navigation?.navigate('Dashboard');
+            //   navigation?.navigate('PaymentMethod');
           }}>
           <Text
             style={tw`text-center text-white text-base font-WorkMedium font-500`}>
-            Log In
+            Sign Up
           </Text>
         </TouchableOpacity>
 
@@ -121,10 +116,12 @@ const Login = ({navigation}: any) => {
             Already have an account?{' '}
           </Text>
           <TouchableOpacity
-            onPress={() => navigation?.navigate('Registration')}>
+            onPress={() => {
+              navigation?.navigate('Login');
+            }}>
             <Text
-              style={tw`text-violet100 text-sm font-WorkSemiBold font-600 underline`}>
-              Sign Up
+              style={tw`text-violet100 font-sm font-WorkSemiBold font-600 underline`}>
+              Log In
             </Text>
           </TouchableOpacity>
         </View>
@@ -133,4 +130,4 @@ const Login = ({navigation}: any) => {
   );
 };
 
-export default Login;
+export default Registration;
