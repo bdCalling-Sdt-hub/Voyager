@@ -27,10 +27,9 @@ const Home = ({navigation}: NavigProps<null>) => {
         <Header
           title="Explore"
           containerStyle={tw`mt-2`}
-          IconContainer={tw`${isSearchVisible ? 'bg-black' : ''}`}
           icon={IconSearch}
-          onPressSearch={() => setSearchVisible(!isSearchVisible)}
-          isSearchVisible={isSearchVisible}
+          IconRouteName="Dashboard"
+          isSearchVisible={true}
         />
         <View>
           <View style={tw`mt-4`}>

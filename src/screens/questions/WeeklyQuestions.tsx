@@ -71,7 +71,13 @@ const WeeklyQuestions = () => {
   return (
     <>
       <ScrollView style={tw`px-[4%] bg-white`}>
-        <Header title="Quests" containerStyle={tw`mt-2`} />
+        <Header
+          title="Quests"
+          containerStyle={tw`mt-2`}
+          icon={IconSearch}
+          IconRouteName="Dashboard"
+          isSearchVisible={true}
+        />
         {/* visited location card */}
         <View style={tw``}>
           <View style={tw`flex-row bg-gray80 p-1 rounded-full`}>

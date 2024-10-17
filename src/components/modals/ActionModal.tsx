@@ -33,13 +33,13 @@ const ActionModal = ({
           style={[
             tw`absolute w-full h-full z-10`,
             {
-              backgroundColor: 'rgba(0,0,0,0.2)',
+              // backgroundColor: 'rgba(0,0,0,0.2)',
             },
           ]}>
           <Pressable
             onPress={e => e.stopPropagation()} // Prevent closing modal when clicking inside
             style={[
-              tw`absolute shadow-lg bg-white w-[55%] top-[8%] right-[4%] rounded-3xl px-5 py-4 pt-7 z-20 gap-3`,
+              tw`absolute shadow-lg bg-white w-[55%] top-[5%] left-[4%] rounded-3xl px-5 py-4 pt-7 z-20 gap-3`,
               containerStyle,
             ]}>
             {actionData?.map((item, index) => {
@@ -51,7 +51,7 @@ const ActionModal = ({
                         <View style={tw`pb-4 flex-row justify-between`}>
                           <Text
                             style={[
-                              tw`text-primaryBase font-LexDecaSemiBold text-sm`,
+                              tw`text-violet100 font-WorkBold text-sm`,
                               item.titleStyle,
                             ]}>
                             {item.title}

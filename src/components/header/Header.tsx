@@ -1,4 +1,12 @@
-import {View, Text, Image, TouchableOpacity, TextInput} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  TouchableWithoutFeedback,
+  Pressable,
+} from 'react-native';
 import React, {useState} from 'react';
 import tw from '../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
@@ -12,6 +20,8 @@ import {useNavigation} from '@react-navigation/native';
 import {NavigProps} from '../../utils/interface/NaviProps';
 import NormalModal from '../modals/NormalModal';
 import {Checkbox, RadioButton, RadioGroup} from 'react-native-ui-lib';
+import ActionModal from '../modals/ActionModal';
+import {useAppContext} from '../../utils/context/AppContext';
 
 interface Props {
   title?: string;
@@ -80,22 +90,25 @@ const Header = ({
     }
   };
 
+  const {showActionModal, setShowActionModal} = useAppContext();
+
   return (
     <>
       <View
         style={[
-          tw`flex-row items-center justify-between py-2`,
+          tw`flex-row items-center justify-between py-2 z-10`,
           containerStyle,
         ]}>
         <View style={tw`w-1/6`}>
-          <TouchableOpacity
+          <TouchableWithoutFeedback
             style={[tw``, imageContainer]}
             onPress={() => {
               if (IconRouteName) {
                 if (isIcon) {
                   navigation?.navigate(IconRouteName);
                 } else {
-                  navigation?.goBack();
+                  // navigation?.goBack();
+                  setShowActionModal(!showActionModal);
                 }
               } else {
                 navigation?.goBack();
@@ -107,12 +120,133 @@ const Header = ({
                 <SvgXml xml={leftIcon || IconLeftArrow} />
               </View>
             ) : (
-              <Image
-                source={require('../../assets/images/user.png')}
-                style={tw`h-12 w-12 rounded-full`}
-              />
+              <View>
+                <Image
+                  source={require('../../assets/images/user.png')}
+                  style={tw`h-12 w-12 rounded-full`}
+                />
+                <View
+                  style={tw`h-2 w-2 bg-red rounded-full absolute bottom-0 right-[30%]`}
+                />
+
+                {showActionModal && (
+                  <Pressable
+                    onPress={() => setShowActionModal(false)}
+                    style={tw`h-[800px] w-[500px] absolute`}>
+                    <View
+                      style={[
+                        tw`w-56 absolute top-13 left-0 p-4 bg-white  shadow-xl rounded-2xl`,
+                      ]}>
+                      <Pressable
+                        style={tw`w-full flex-row items-center justify-between`}>
+                        <View style={tw`flex-row items-center`}>
+                          <Image
+                            source={require('../../assets/images/level.png')}
+                          />
+                          <View>
+                            <Text
+                              style={tw`text-black text-base font-WorkBold font-700`}>
+                              5
+                            </Text>
+                            <Text
+                              style={tw`text-gray100 text-xs font-WorkMedium font-500`}>
+                              level
+                            </Text>
+                          </View>
+                        </View>
+                        <View style={tw`flex-row items-center`}>
+                          <Image
+                            source={require('../../assets/images/badges.png')}
+                          />
+                          <View>
+                            <Text
+                              style={tw`text-black text-base font-WorkBold font-700`}>
+                              12
+                            </Text>
+                            <Text
+                              style={tw`text-gray100 text-xs font-WorkMedium font-500`}>
+                              Badges
+                            </Text>
+                          </View>
+                        </View>
+                      </Pressable>
+
+                      <View style={tw`mt-2`}>
+                        <TouchableOpacity
+                          style={tw`py-2`}
+                          onPress={() => {
+                            navigation?.navigate('Profile');
+                            setShowActionModal(false);
+                          }}>
+                          <Text
+                            style={tw`text-black text-base font-WorkMedium font-500`}>
+                            Profile
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={tw`py-2`}
+                          onPress={() => {
+                            navigation?.navigate('Shop');
+                            setShowActionModal(false);
+                          }}>
+                          <Text
+                            style={tw`text-black text-base font-WorkMedium font-500`}>
+                            Collections
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={tw`py-2`}
+                          onPress={() => {
+                            navigation?.navigate('Friends');
+                            setShowActionModal(false);
+                          }}>
+                          <Text
+                            style={tw`text-black text-base font-WorkMedium font-500`}>
+                            Add Friend
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={tw`py-2 flex-row items-center justify-between`}
+                          onPress={() => {
+                            navigation?.navigate('Notifications');
+                            setShowActionModal(false);
+                          }}>
+                          <Text
+                            style={tw`text-black text-base font-WorkMedium font-500`}>
+                            Notifications
+                          </Text>
+                          <View style={tw`h-2 w-2 bg-red rounded-full`} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={tw`py-2`}
+                          onPress={() => {
+                            navigation?.navigate('Subscription');
+                            setShowActionModal(false);
+                          }}>
+                          <Text
+                            style={tw`text-black text-base font-WorkMedium font-500`}>
+                            Upgrade to premium
+                          </Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                          style={tw`py-2`}
+                          onPress={() => {
+                            navigation?.navigate('Settings');
+                            setShowActionModal(false);
+                          }}>
+                          <Text
+                            style={tw`text-black text-base font-WorkMedium font-500`}>
+                            Settings
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </Pressable>
+                )}
+              </View>
             )}
-          </TouchableOpacity>
+          </TouchableWithoutFeedback>
         </View>
         <View style={[tw`w-4/6 items-center`, titleContainer]}>
           {middleComponent || (
@@ -127,62 +261,44 @@ const Header = ({
         </View>
         <View style={tw`w-1/6 items-end`}>
           {!hideRightIcon ? (
-            <>
-              {/* <TouchableOpacity
+            <TouchableOpacity
               style={[
-                tw`border border-gray90 rounded-full h-10 w-10 flex items-center justify-center`,
+                tw`flex-row gap-1 items-center justify-center`,
                 IconContainer,
               ]}
               onPress={onPressSearch}>
-              <SvgXml xml={icon || IconSearch} />
-            </TouchableOpacity> */}
-
-              <View style={tw`flex-row items-center gap-2`}>
-                <Image
-                  source={require('../../assets/images/coin.png')}
-                  style={tw`h-7 w-7 rounded-full`}
-                />
-                <Text style={tw`text-gold text-lg font-WorkSemiBold font-600`}>
-                  400
-                </Text>
-              </View>
-            </>
+              <Image
+                source={require('../../assets/images/coin.png')}
+                style={tw`h-7 w-7`}
+              />
+              <Text style={tw`text-gold text-lg font-WorkSemiBold font-600`}>
+                400
+              </Text>
+            </TouchableOpacity>
           ) : (
-            <>
-              <View style={tw`opacity-0`}>
-                <SvgXml xml={IconSearch} />
-              </View>
-              {/* <View style={tw`flex-row items-center gap-2`}>
-            <Image
-              source={require('../../assets/images/coin.png')}
-              style={tw`h-7 w-7 rounded-full`}
-            />
-            <Text style={tw`text-gold text-lg font-WorkSemiBold font-600`}>
-              400
-            </Text>
-          </View> */}
-            </>
+            <View style={tw`opacity-0`}>
+              <SvgXml xml={IconSearch} />
+            </View>
           )}
         </View>
       </View>
-      {isSearchVisible && (
-        <View style={tw`bg-gray80 rounded-full flex-row items-center p-1`}>
-          <View
-            style={tw`bg-white rounded-full flex-row items-center gap-4 flex-1 pl-4`}>
-            <SvgXml xml={IconSearch} />
-            <TextInput placeholder="Search" style={tw`w-[85%]`} />
-          </View>
-          <View>
-            {!hideFilterIcon && (
-              <TouchableOpacity
-                style={tw`h-12 w-12 flex items-center justify-center rounded-full ml-2 bg-white`}
-                onPress={() => setFilterModal(true)}>
-                <SvgXml xml={IconFilter} />
-              </TouchableOpacity>
-            )}
-          </View>
+
+      <View style={tw`bg-gray80 rounded-full flex-row items-center p-1`}>
+        <View
+          style={tw`bg-white rounded-full flex-row items-center gap-4 flex-1 pl-4`}>
+          <SvgXml xml={IconSearch} />
+          <TextInput placeholder="Search" style={tw`w-[85%]`} />
         </View>
-      )}
+        <View>
+          {!hideFilterIcon && (
+            <TouchableOpacity
+              style={tw`h-12 w-12 flex items-center justify-center rounded-full ml-2 bg-white`}
+              onPress={() => setFilterModal(true)}>
+              <SvgXml xml={IconFilter} />
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
 
       <NormalModal
         visible={filterModal}

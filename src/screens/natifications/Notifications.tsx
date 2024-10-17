@@ -16,7 +16,6 @@ const Notifications = ({navigation}: any) => {
         title={title || 'Bucket List'}
         containerStyle={tw`mt-2`}
         isIcon={true}
-        IconRouteName={'Profile'}
         icon={IconFilledNotification}
       />
       {/* body */}

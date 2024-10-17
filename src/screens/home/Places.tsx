@@ -30,11 +30,9 @@ const Places = ({navigation, route}: NavigProps<null>) => {
       <Header
         title="Bucket List"
         containerStyle={tw`mt-2`}
-        IconContainer={tw`${isSearchVisible ? 'bg-black' : ''}`}
         icon={IconSearch}
         IconRouteName="Dashboard"
-        onPressSearch={() => setSearchVisible(!isSearchVisible)}
-        isSearchVisible={isSearchVisible}
+        isSearchVisible={true}
       />
 
       <View style={tw`flex-row bg-gray80 p-1 rounded-full mt-4`}>

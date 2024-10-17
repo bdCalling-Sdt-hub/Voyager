@@ -21,37 +21,45 @@ import Registration from '../screens/authentication/Registration';
 import ForgotPassword from '../screens/authentication/ForgotPassword';
 import VerifyOTP from '../screens/authentication/VerifyOTP';
 import SetNewPassword from '../screens/authentication/SetNewPassword';
+import {AppProvider} from '../utils/context/AppContext';
+import Friends from '../screens/friends/Friends';
 
 const AppRoutes = () => {
   const Stack = createNativeStackNavigator();
   return (
     <GestureHandlerRootView>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{headerShown: false}}
-          initialRouteName="BottomRoutes">
-          <Stack.Screen name="BottomRoutes" component={BottomRoutes} />
-          <Stack.Screen name="NextDestination" component={NextDestination} />
-          <Stack.Screen
-            name="DestinationDetails"
-            component={DestinationDetails}
-          />
-          <Stack.Screen name="Notifications" component={Notifications} />
-          <Stack.Screen name="Settings" component={Settings} />
-          <Stack.Screen name="ProfileSettings" component={ProfileSettings} />
-          <Stack.Screen name="Preferences" component={Preferences} />
-          <Stack.Screen name="AccountSettings" component={AccountSettings} />
-          <Stack.Screen name="Subscription" component={Subscription} />
-          <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
-          <Stack.Screen name="SubscriptionPlan" component={SubscriptionPlan} />
-          <Stack.Screen name="Shop" component={Shop} />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Registration" component={Registration} />
-          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-          <Stack.Screen name="VerifyOTP" component={VerifyOTP} />
-          <Stack.Screen name="SetNewPassword" component={SetNewPassword} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <AppProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{headerShown: false}}
+            initialRouteName="BottomRoutes">
+            <Stack.Screen name="BottomRoutes" component={BottomRoutes} />
+            <Stack.Screen name="NextDestination" component={NextDestination} />
+            <Stack.Screen
+              name="DestinationDetails"
+              component={DestinationDetails}
+            />
+            <Stack.Screen name="Notifications" component={Notifications} />
+            <Stack.Screen name="Settings" component={Settings} />
+            <Stack.Screen name="ProfileSettings" component={ProfileSettings} />
+            <Stack.Screen name="Preferences" component={Preferences} />
+            <Stack.Screen name="AccountSettings" component={AccountSettings} />
+            <Stack.Screen name="Subscription" component={Subscription} />
+            <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
+            <Stack.Screen
+              name="SubscriptionPlan"
+              component={SubscriptionPlan}
+            />
+            <Stack.Screen name="Shop" component={Shop} />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Registration" component={Registration} />
+            <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+            <Stack.Screen name="VerifyOTP" component={VerifyOTP} />
+            <Stack.Screen name="SetNewPassword" component={SetNewPassword} />
+            <Stack.Screen name="Friends" component={Friends} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AppProvider>
     </GestureHandlerRootView>
   );
 };
