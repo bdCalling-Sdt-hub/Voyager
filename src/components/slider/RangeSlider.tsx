@@ -18,7 +18,7 @@ const RangeSlider = ({color, containerStyle, value, trackColor}: any) => {
         trackStyle={tw`h-3.5 rounded-full`}
         disableActiveStyling={true}
       />
-      <View style={tw`w-2/15`}>
+      <View style={tw`w-2/12`}>
         <Text
           style={tw`ml-3 text-[${color}] font-WorkMedium text-base`}>{`${value}%`}</Text>
       </View>

@@ -79,7 +79,7 @@ const WeeklyQuestions = () => {
           isSearchVisible={true}
         />
         {/* visited location card */}
-        <View style={tw``}>
+        <View style={tw`mt-2`}>
           <View style={tw`flex-row bg-gray80 p-1 rounded-full`}>
             <TouchableOpacity
               style={tw`${
@@ -346,12 +346,22 @@ const WeeklyQuestions = () => {
                       </View>
                     </View>
                   </View>
-                  <RangeSlider
-                    color="#8C78EA"
-                    containerStyle={tw`mt-4`}
-                    value={35}
-                    trackColor="#E5D6FB"
-                  />
+                  {/* tresure progressbar */}
+                  <View style={tw`flex-row items-center justify-between mt-3`}>
+                    <View style={tw`bg-violet90 h-3.5 rounded-full w-10/12`}>
+                      <View
+                        style={tw`bg-violet100 w-[35%] h-full rounded-full items-end justify-center`}>
+                        <Image
+                          source={require('../../assets/images/tressure.png')}
+                          style={tw`h-8 w-8 absolute right-[-1]`}
+                        />
+                      </View>
+                    </View>
+                    <View style={tw`w-2/12`}>
+                      <Text
+                        style={tw`ml-3 text-violet100 text-base font-WorkMedium text-base`}>{`35%`}</Text>
+                    </View>
+                  </View>
                 </View>
                 <View style={tw`border border-gray90 p-4 rounded-2xl bg-white`}>
                   <View style={tw`flex-row items-center gap-3`}>
@@ -389,12 +399,22 @@ const WeeklyQuestions = () => {
                       </View>
                     </View>
                   </View>
-                  <RangeSlider
-                    color="#8C78EA"
-                    containerStyle={tw`mt-4`}
-                    value={10}
-                    trackColor="#E5D6FB"
-                  />
+                   {/* tresure progressbar */}
+                   <View style={tw`flex-row items-center justify-between mt-3`}>
+                    <View style={tw`bg-violet90 h-3.5 rounded-full w-10/12`}>
+                      <View
+                        style={tw`bg-violet100 w-[75%] h-full rounded-full items-end justify-center`}>
+                        <Image
+                          source={require('../../assets/images/tressure.png')}
+                          style={tw`h-8 w-8 absolute right-[-1]`}
+                        />
+                      </View>
+                    </View>
+                    <View style={tw`w-2/12`}>
+                      <Text
+                        style={tw`ml-3 text-violet100 text-base font-WorkMedium text-base`}>{`75%`}</Text>
+                    </View>
+                  </View>
                 </View>
 
                 <View>
