@@ -35,7 +35,7 @@ const Friends = ({title = 'Friends', navigation}: any) => {
         <TouchableOpacity
           style={tw`${
             friendsOption === 'requests' ? 'bg-violet100' : ''
-          } py-4 rounded-full flex-1 justify-center items-center`}
+          } py-4 rounded-full flex-1 justify-center items-center flex-row items-center gap-1`}
           onPress={() => setFriendsOption('requests')}>
           <Text
             style={tw`${
@@ -43,11 +43,12 @@ const Friends = ({title = 'Friends', navigation}: any) => {
             } text-xs font-WorkMedium`}>
             Request
           </Text>
+          <View style={tw`h-5 w-5 ${ friendsOption === 'requests' ? 'bg-white' : 'bg-gray100'} rounded-full text-center items-center justify-center`}><Text style={tw`text-xs ${ friendsOption === 'requests' ? 'text-violet100' : 'text-white'}`}>24</Text></View>
         </TouchableOpacity>
         <TouchableOpacity
           style={tw`${
             friendsOption === 'friends' ? 'bg-violet100' : ''
-          } py-4 rounded-full flex-1 justify-center items-center`}
+          } py-4 rounded-full flex-1 justify-center items-center flex-row items-center gap-1`}
           onPress={() => setFriendsOption('friends')}>
           <Text
             style={tw`${
@@ -55,6 +56,7 @@ const Friends = ({title = 'Friends', navigation}: any) => {
             }  text-xs font-WorkMedium`}>
             Friends
           </Text>
+          <View style={tw`h-5 w-5 ${ friendsOption === 'friends' ? 'bg-white' : 'bg-gray100'} rounded-full text-center items-center justify-center`}><Text style={tw`text-xs ${ friendsOption === 'friends' ? 'text-violet100' : 'text-white'}`}>07</Text></View>
         </TouchableOpacity>
       </View>
 

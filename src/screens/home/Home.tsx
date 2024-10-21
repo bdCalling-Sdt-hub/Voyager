@@ -30,6 +30,7 @@ const Home = ({navigation}: NavigProps<null>) => {
           icon={IconSearch}
           IconRouteName="Dashboard"
           isSearchVisible={true}
+          searchBarShow={true}
         />
         <View>
           <View style={tw`mt-4`}>

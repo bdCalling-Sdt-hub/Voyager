@@ -39,6 +39,7 @@ interface Props {
   hideRightIcon?: boolean;
   leftIcon?: any;
   middleComponent?: any;
+  searchBarShow?: boolean;
 }
 
 const activityType = [
@@ -65,6 +66,7 @@ const Header = ({
   hideRightIcon,
   leftIcon,
   middleComponent,
+  searchBarShow,
 }: Props) => {
   const navigation: any = useNavigation();
   const [filterModal, setFilterModal] = useState(false);
@@ -283,22 +285,25 @@ const Header = ({
         </View>
       </View>
 
-      <View style={tw`bg-gray80 rounded-full flex-row items-center p-1`}>
-        <View
-          style={tw`bg-white rounded-full flex-row items-center gap-4 flex-1 pl-4`}>
-          <SvgXml xml={IconSearch} />
-          <TextInput placeholder="Search" style={tw`w-[85%]`} />
-        </View>
-        <View>
-          {!hideFilterIcon && (
-            <TouchableOpacity
-              style={tw`h-12 w-12 flex items-center justify-center rounded-full ml-2 bg-white`}
-              onPress={() => setFilterModal(true)}>
-              <SvgXml xml={IconFilter} />
-            </TouchableOpacity>
-          )}
-        </View>
-      </View>
+{searchBarShow && (
+  <View style={tw`bg-gray80 rounded-full flex-row items-center p-1`}>
+  <View
+    style={tw`bg-white rounded-full flex-row items-center gap-4 flex-1 pl-4`}>
+    <SvgXml xml={IconSearch} />
+    <TextInput placeholder="Search" style={tw`w-[85%]`} />
+  </View>
+  <View>
+    {!hideFilterIcon && (
+      <TouchableOpacity
+        style={tw`h-12 w-12 flex items-center justify-center rounded-full ml-2 bg-white`}
+        onPress={() => setFilterModal(true)}>
+        <SvgXml xml={IconFilter} />
+      </TouchableOpacity>
+    )}
+  </View>
+</View>
+)}
+      
 
       <NormalModal
         visible={filterModal}

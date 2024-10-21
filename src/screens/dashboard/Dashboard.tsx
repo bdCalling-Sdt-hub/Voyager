@@ -33,6 +33,7 @@ const Dashboard = () => {
           icon={IconSearch}
           IconRouteName="Dashboard"
           isSearchVisible={true}
+          searchBarShow={true}
         />
         {/* visited location card */}
         <View style={tw`border border-gray90 p-4 rounded-2xl mt-4`}>

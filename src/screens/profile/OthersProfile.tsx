@@ -212,44 +212,47 @@ const OthersProfile = ({navigation}: any) => {
 
         {/* tabs */}
         <View>
-          <View style={tw`flex-row bg-gray80 p-1 rounded-full mt-4`}>
-            <TouchableOpacity
-              style={tw`${
-                activePlace === 'attractions' ? 'bg-violet100' : ''
-              } py-4 rounded-full flex-1 justify-center items-center`}
-              onPress={() => setActivePlace('attractions')}>
-              <Text
-                style={tw`${
-                  activePlace === 'attractions' ? 'text-white' : 'text-gray100'
-                } text-xs font-WorkMedium`}>
-                Attractions
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={tw`${
-                activePlace === 'cities' ? 'bg-violet100' : ''
-              } py-4 rounded-full flex-1 justify-center items-center`}
-              onPress={() => setActivePlace('cities')}>
-              <Text
-                style={tw`${
-                  activePlace === 'cities' ? 'text-white' : 'text-gray100'
-                } text-xs font-WorkMedium`}>
-                Cities
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={tw`${
-                activePlace === 'countries' ? 'bg-violet100' : ''
-              } py-4 rounded-full flex-1 justify-center items-center`}
-              onPress={() => setActivePlace('countries')}>
-              <Text
-                style={tw`${
-                  activePlace === 'countries' ? 'text-white' : 'text-gray100'
-                }  text-xs font-WorkMedium`}>
-                Countries
-              </Text>
-            </TouchableOpacity>
-          </View>
+        <View style={tw`flex-row bg-gray80 p-1 rounded-full mt-4`}>
+        <TouchableOpacity
+          style={tw`${
+            activePlace === 'attractions' ? 'bg-violet100' : ''
+          } py-2 rounded-full flex-1 justify-center items-center flex-row gap-1`}
+          onPress={() => setActivePlace('attractions')}>
+          <Text
+            style={tw`${
+              activePlace === 'attractions' ? 'text-white' : 'text-gray100'
+            } text-xs font-WorkMedium`}>
+            Attractions 
+          </Text>
+          <View style={tw`h-5 w-5 ${ activePlace === 'attractions' ? 'bg-white' : 'bg-gray100'} rounded-full text-center items-center justify-center`}><Text style={tw`text-xs ${ activePlace === 'attractions' ? 'text-violet100' : 'text-white'}`}>07</Text></View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={tw`${
+            activePlace === 'cities' ? 'bg-violet100' : ''
+          } py-4 rounded-full flex-1 justify-center items-center flex-row gap-1`}
+          onPress={() => setActivePlace('cities')}>
+          <Text
+            style={tw`${
+              activePlace === 'cities' ? 'text-white' : 'text-gray100'
+            } text-xs font-WorkMedium`}>
+            Cities
+          </Text>
+          <View style={tw`h-5 w-5 ${ activePlace === 'cities' ? 'bg-white' : 'bg-gray100'} rounded-full text-center items-center justify-center`}><Text style={tw`text-xs ${ activePlace === 'cities' ? 'text-violet100' : 'text-white'}`}>24</Text></View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={tw`${
+            activePlace === 'countries' ? 'bg-violet100' : ''
+          } py-4 rounded-full flex-1 justify-center items-center flex-row gap-1`}
+          onPress={() => setActivePlace('countries')}>
+          <Text
+            style={tw`${
+              activePlace === 'countries' ? 'text-white' : 'text-gray100'
+            }  text-xs font-WorkMedium`}>
+            Countries
+          </Text>
+          <View style={tw`h-5 w-5 ${ activePlace === 'countries' ? 'bg-white' : 'bg-gray100'} rounded-full text-center items-center justify-center`}><Text style={tw`text-xs ${ activePlace === 'countries' ? 'text-violet100' : 'text-white'}`}>07</Text></View>
+        </TouchableOpacity>
+      </View>
           <ScrollView
             contentContainerStyle={tw`gap-y-4 mt-6`}
             showsVerticalScrollIndicator={false}>
