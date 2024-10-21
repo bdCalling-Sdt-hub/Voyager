@@ -254,7 +254,7 @@ const Header = ({
           {middleComponent || (
             <Text
               style={[
-                tw`text-black text-2xl font-WorkMedium capitalize`,
+                tw`text-black text-[22px] font-WorkMedium capitalize`,
                 titleStyle,
               ]}>
               {title}
@@ -265,7 +265,7 @@ const Header = ({
           {!hideRightIcon ? (
             <TouchableOpacity
               style={[
-                tw`flex-row gap-1 items-center justify-center`,
+                tw`flex-row gap-1 items-center justify-center `,
                 IconContainer,
               ]}
               onPress={onPressSearch}>

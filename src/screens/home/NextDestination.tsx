@@ -38,28 +38,17 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
   return (
     <View style={tw`px-[4%] bg-white h-full`}>
       <View>
-        <Header
-          title={title}
+      <Header
+          title={title || 'Next Destination'}
           containerStyle={tw`mt-2`}
-          IconContainer={tw`bg-black`}
-          icon={IconWhiteSearch}
+          icon={IconSearch}
+          IconRouteName="Dashboard"
+          isSearchVisible={true}
+          searchBarShow={true}
         />
-        <View style={tw`bg-gray80 rounded-full flex-row items-center p-1`}>
-          <View
-            style={tw`bg-white rounded-full flex-row items-center gap-4 flex-1 pl-4`}>
-            <SvgXml xml={IconSearch} />
-            <TextInput placeholder="Search" />
-          </View>
-          <View>
-            <TouchableOpacity
-              style={tw`h-12 w-12 flex items-center justify-center rounded-full ml-2 bg-white`}>
-              <SvgXml xml={IconFilter} />
-            </TouchableOpacity>
-          </View>
-        </View>
       </View>
 
-      <ScrollView contentContainerStyle={tw`gap-y-4 mt-6`}>
+      <ScrollView contentContainerStyle={tw`gap-y-4 mt-6`} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="always">
         {destinationData?.map((item: any, index: number) => (
           <TouchableOpacity
             style={tw`flex-row items-center gap-4`}

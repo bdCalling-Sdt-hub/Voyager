@@ -16,7 +16,7 @@ import NormalModal from '../../components/modals/NormalModal';
 const SetNewPassword = ({navigation}: any) => {
   const [isSecureNewPass, setIsSecureNewPass] = useState(true);
   const [isSecureConfirmPass, setIsSecureConfirmPass] = useState(true);
-  const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(true);
+  const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   return (
     <View style={tw`bg-white h-full px-[4%] pb-2`}>
       <ScrollView
@@ -39,7 +39,7 @@ const SetNewPassword = ({navigation}: any) => {
             <View style={tw`flex-row items-center flex-shrink gap-2`}>
               <SvgXml xml={IconDot} />
               <Text style={tw`text-gray70 text-base font-WorkRegular font-400`}>
-                Use a mix of letters, numbers, and special
+              Use at least 8 characters
               </Text>
             </View>
             <View style={tw`flex-row items-center flex-shrink gap-2`}>

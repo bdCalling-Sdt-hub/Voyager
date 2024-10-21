@@ -35,7 +35,7 @@ const AccountSettings = ({navigation}: any) => {
         {/* body */}
         <View>
           {/* Language */}
-          <View style={tw`bg-gray80 rounded-2xl p-4 mt-6`}>
+          <View style={tw`bg-gray80 rounded-2xl p-4 mt-2`}>
             <Text
               style={tw`text-black text-base font-WorkSemiBold font-600 mb-3`}>
               Languages

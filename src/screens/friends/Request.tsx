@@ -2,7 +2,7 @@ import {View, Text, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import tw from '../../lib/tailwind';
 import users from '../../utils/json/users.json';
-const Request = () => {
+const Request = ({navigation}: any) => {
   return (
     <View style={tw`gap-y-2`}>
       {users?.map((item: any) => (
@@ -22,7 +22,7 @@ const Request = () => {
             {item?.isAcceptedRequest ? (
               <View style={tw`flex-row`}>
                 <TouchableOpacity
-                  style={tw`border-[2px] border-violet100 w-full pt-1 pb-2 justify-center rounded-full items-center`}>
+                  style={tw`border-[2px] border-violet100 w-full pt-1 pb-2 justify-center rounded-full items-center`} onPress={() => {navigation?.navigate('OthersProfile')}}>
                   <Text
                     style={tw`text-violet100 text-base font-000 font-WorkSemiBold`}>
                     View
