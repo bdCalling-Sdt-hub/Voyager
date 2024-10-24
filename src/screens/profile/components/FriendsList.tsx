@@ -11,6 +11,7 @@ const FriendsList = ({navigation}: any) => {
           key={item?.id}
           onPress={() => {
             navigation?.navigate('OthersProfile');
+            console.log("object")
           }}>
           <Image
             source={{

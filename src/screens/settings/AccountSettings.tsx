@@ -129,10 +129,10 @@ const AccountSettings = ({navigation}: any) => {
           <TouchableOpacity
             style={tw`bg-gray80 rounded-2xl p-4 mt-6`}
             onPress={() => {
-              console.log('Navigate to email verification screen');
+              navigation?.navigate('ForgotPassword');
             }}>
             <Text style={tw`text-violet100 text-base font-WorkMedium font-500`}>
-              Change Password
+              Update Password
             </Text>
           </TouchableOpacity>
         </View>

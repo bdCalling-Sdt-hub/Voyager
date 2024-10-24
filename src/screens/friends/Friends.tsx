@@ -68,7 +68,7 @@ const Friends = ({title = 'Friends', navigation}: any) => {
           <AddFriends navigation={navigation} />
         )}
         {friendsOption === 'requests' && <Request navigation={navigation} />}
-        {friendsOption === 'friends' && <FriendsList />}
+        {friendsOption === 'friends' && <FriendsList navigation={navigation} />}
       </ScrollView>
     </View>
   );
