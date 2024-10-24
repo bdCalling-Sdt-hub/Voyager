@@ -17,6 +17,8 @@ import {
 import {NavigProps} from '../../../utils/interface/NaviProps';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {ExpandableSection, Fader} from 'react-native-ui-lib';
+import Test from './Test';
+import Swiper from 'react-native-swiper';
 
 const DestinationDetails = ({navigation}: NavigProps<null>) => {
   const [expanded, setExpanded] = useState(false);
@@ -29,24 +31,55 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
 
   return (
     <View style={tw`bg-white h-full`}>
-      <View>
-        <Image
-          source={require('../../../assets/images/explore-card-2.png')}
-          style={tw`w-full h-66`}
-          resizeMode="cover"
-        />
-        <View
-          style={tw`bg-white h-10 w-10 rounded-full items-center justify-center absolute top-4 right-[4%]`}>
-          <SvgXml xml={IconLogout} />
-        </View>
-        <TouchableOpacity
-          style={tw`bg-white h-10 w-10 rounded-full items-center justify-center absolute top-4 left-[4%]`}
-          onPress={() => navigation?.goBack()}>
-          <SvgXml xml={IconLeftArrow} />
-        </TouchableOpacity>
-      </View>
+      <View style={tw`h-66`}>
+      <Swiper
+        
+          dot={<View style={tw`bg-white w-2 h-2 rounded-full mx-1`} />} // Dot styling
+          activeDot={
+            <View style={tw`bg-violet100 w-2 h-2 rounded-full mx-1`} />
+          }
+          paginationStyle={tw`bottom-2`} 
 
+          loop={false} 
+        >
+          <View style={tw`flex-1`}>
+            <Image
+              source={require('../../../assets/images/explore-card-3.png')}
+              style={tw`w-full h-66`}
+              resizeMode="cover"
+            />
+          </View>
+
+          <View style={tw`flex-1`}>
+            <Image
+              source={require('../../../assets/images/explore-card-2.png')} // Use a different image for the second slide if needed
+              style={tw`w-full h-66`}
+              resizeMode="cover"
+            />
+          </View>
+
+          <View style={tw`flex-1`}>
+            <Image
+              source={require('../../../assets/images/explore-card-1.png')} // Use a different image for the second slide if needed
+              style={tw`w-full h-66`}
+              resizeMode="cover"
+            />
+          </View>
+        </Swiper>
+        <>
+          <TouchableOpacity
+            style={tw`bg-white h-10 w-10 rounded-full items-center justify-center absolute top-4 right-[4%]`}>
+            <SvgXml xml={IconLogout} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={tw`bg-white h-10 w-10 rounded-full items-center justify-center absolute top-4 left-[4%]`}
+            onPress={() => navigation?.goBack()}>
+            <SvgXml xml={IconLeftArrow} />
+          </TouchableOpacity>
+        </>
+      </View>
       <ScrollView style={tw`px-[4%] pt-6`}>
+        
         <Text style={tw`text-black text-[20px] font-WorkMedium`}>
           The Book of Kells Experience
         </Text>

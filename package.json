@@ -27,6 +27,7 @@
     "react-native-screens": "^3.34.0",
     "react-native-svg": "^15.7.1",
     "react-native-svg-transformer": "^1.5.0",
+    "react-native-swiper": "^1.6.0",
     "react-native-ui-lib": "^7.32.0",
     "twrnc": "^4.5.1"
   },
