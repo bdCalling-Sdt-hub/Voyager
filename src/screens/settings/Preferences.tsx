@@ -39,7 +39,7 @@ const Preferences = ({navigation}: any) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <Header
           title={'Preferences for you'}
-          titleStyle={tw`text-center`}
+          titleStyle={tw``}
           containerStyle={tw`mt-2`}
           isIcon={true}
           hideRightIcon={true}

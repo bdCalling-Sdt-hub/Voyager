@@ -20,7 +20,7 @@ import {
   IconVerifiedLocation,
 } from '../../assets/icons/Icons';
 
-const Dashboard = () => {
+const Dashboard = ({navigation}: any) => {
   const [activePlace, setActivePlace] = useState('attractions');
   return (
     <>
@@ -180,11 +180,11 @@ const Dashboard = () => {
           </TouchableOpacity>
 
           {places.map(place => (
-            <View style={tw`flex-row items-center gap-2 mt-6`} key={place.id}>
+            <TouchableOpacity style={tw`flex-row items-center gap-2 mt-6`} key={place.id} onPress={() => {navigation?.navigate('DestinationDetails')}}>
               <View style={tw`w-11/12 flex-row items-center gap-4`}>
-                <View style={tw`w-4/12`}>
-                  <Image source={require('../../assets/images/place.png')} />
-                </View>
+                
+                  <Image style={tw`w-4/12 rounded-2xl`} source={require('../../assets/images/place.png')} />
+                
                 <View style={tw`flex-shrink`}>
                   <Text style={tw`text-black font-WorkSemiBold text-[20px]`}>
                     {place?.title}
@@ -197,7 +197,7 @@ const Dashboard = () => {
               <View>
                 <SvgXml xml={IconFilledHeart} />
               </View>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       </ScrollView>

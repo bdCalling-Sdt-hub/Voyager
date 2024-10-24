@@ -270,6 +270,16 @@ export const IconAdd = `<svg width="16" height="16" viewBox="0 0 16 16" fill="no
 </svg>
 `;
 
+export const IconBottomArrow = `<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 1L7 7L13 1" stroke="#8C78EA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+export const IconTopArrow = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M18 15L12 9L6 15" stroke="#8C78EA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
 export const IconWhiteAdd = `<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M5.83325 8H11.1666" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M8.5 10.6663V5.33301" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

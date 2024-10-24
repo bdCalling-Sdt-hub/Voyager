@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
 import tw from '../../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
 import {
+  IconBottomArrow,
   IconClock,
   IconColoredHeart,
   IconColoredLocation,
@@ -11,11 +12,21 @@ import {
   IconMuseum,
   IconTicket,
   IconTik,
+  IconTopArrow,
 } from '../../../assets/icons/Icons';
 import {NavigProps} from '../../../utils/interface/NaviProps';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import {ExpandableSection, Fader} from 'react-native-ui-lib';
 
 const DestinationDetails = ({navigation}: NavigProps<null>) => {
+  const [expanded, setExpanded] = useState(false);
+  const fullText =
+    'The Book of Kells Experience is housed in the Grand Library at Trinity College, Dublin. This exhibition features illuminated illustrations of the Christian Gospels dating back to 800 AD, offering a glimpse into Ireland’s medieval artistry and religious heritage.';
+
+  const words = fullText.split(' ');
+
+  const initialText = expanded ? fullText : words.slice(0, 25).join(' ');
+
   return (
     <View style={tw`bg-white h-full`}>
       <View>
@@ -63,12 +74,27 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
             <Text style={tw`text-gray100 text-xs font-WorkRegular`}>75 XP</Text>
           </View>
         </View>
-        <Text style={tw`text-sm font-WorkRegular text-black leading-6 mt-4`}>
-          The Book of Kells Experience is housed in the Grand Library at Trinity
-          College, Dublin. This exhibition features illuminated illustrations of
-          the Christian Gospels dating back to 800 AD, offering a glimpse into
-          Ireland’s medieval artistry and religious heritage.
-        </Text>
+        <View>
+          <Text style={tw`text-sm font-WorkRegular text-black leading-6`}>
+            {initialText}
+          </Text>
+          <Fader
+            visible={true}
+            position={Fader.position.BOTTOM}
+            size={130}
+            tintColor="#ffffff"
+          />
+          <TouchableOpacity
+            style={tw`flex-row gap-2 items-center justify-center mt-2`}
+            onPress={() => setExpanded(!expanded)}>
+            <Text
+              style={tw`text-violet100
+            `}>
+              {expanded ? 'See Less' : 'See More'}
+            </Text>
+            <SvgXml xml={!expanded ? IconBottomArrow : IconTopArrow} />
+          </TouchableOpacity>
+        </View>
 
         <View style={tw`bg-gray80 p-4 rounded-2xl mt-6`}>
           <View
