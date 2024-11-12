@@ -1,6 +1,6 @@
-import {Image, TouchableOpacity, View} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {SvgXml} from 'react-native-svg';
+import { Image, TouchableOpacity, View, Text } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { SvgXml } from 'react-native-svg';
 import tw from '../lib/tailwind';
 import {
   IconDashboard,
@@ -22,9 +22,9 @@ const Tab = createBottomTabNavigator();
 function BottomRoutes() {
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
+      screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarStyle: tw`h-16 bg-white shadow-none border border-white`,
+        tabBarStyle: tw`h-22 bg-white shadow-none border border-white`,
         tabBarItemStyle: {
           marginVertical: 10,
         },
@@ -32,10 +32,11 @@ function BottomRoutes() {
           fontFamily: 'NunitoSansBold',
           fontSize: 14,
           textTransform: 'capitalize',
+          color: '#6C6E71',
         },
         tabBarButton: props => <TouchableOpacity {...props} />,
-        tabBarIcon: ({focused}) => {
-          let icon: any;
+        tabBarIcon: ({ focused }) => {
+          let icon;
 
           switch (route.name) {
             case 'Dashboard':
@@ -47,7 +48,7 @@ function BottomRoutes() {
             case 'Places':
               icon = IconHeart;
               break;
-            case 'WeeklyQuestions':
+            case 'Quests':
               icon = IconTrophy;
               break;
             case 'Profile':
@@ -69,12 +70,15 @@ function BottomRoutes() {
             </View>
           );
         },
-        tabBarLabel: () => null, // Hides the title
-      })}>
+        tabBarLabel: ({ focused }) => (
+          focused ? null : <Text>{route.name}</Text>
+        ),
+      })}
+    >
       <Tab.Screen name="Dashboard" component={Dashboard} />
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Places" component={Places} />
-      <Tab.Screen name="WeeklyQuestions" component={WeeklyQuestions} />
+      <Tab.Screen name="Quests" component={WeeklyQuestions} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
