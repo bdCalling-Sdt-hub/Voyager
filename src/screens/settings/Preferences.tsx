@@ -1,39 +1,67 @@
-import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {ScrollView, Text, TouchableOpacity, View, Alert} from 'react-native';
 import React, {useState} from 'react';
 import tw from '../../lib/tailwind';
 import Header from '../../components/header/Header';
-import {Checkbox, RadioButton, RadioGroup} from 'react-native-ui-lib';
 
 const activityType = [
-  {id: 1, label: 'Adventure'},
-  {id: 2, label: 'Historical'},
-  {id: 3, label: 'Cultural'},
-  {id: 4, label: 'Nature'},
-  {id: 5, label: 'Relaxation'},
+  {id: 1, label: 'Mountains'},
+  {id: 2, label: 'Beaches'},
+  {id: 3, label: 'Forests'},
+  {id: 4, label: 'Deserts'},
+  {id: 5, label: 'Lakes'},
+  {id: 6, label: 'Rivers'},
+  {id: 7, label: 'Waterfalls'},
+  {id: 8, label: 'National Parks'},
+  {id: 9, label: 'Wildlife'},
+  {id: 10, label: 'Caves'},
+  {id: 11, label: 'Hiking'},
+  {id: 12, label: 'Camping'},
+  {id: 13, label: 'Skiing'},
+  {id: 14, label: 'Surfing'},
+  {id: 15, label: 'Scuba Diving'},
+  {id: 16, label: 'Rock Climbing'},
+  {id: 17, label: 'Road Trips'},
+  {id: 18, label: 'History'},
 ];
 
 const Preferences = ({navigation}: any) => {
-  const [locationType, setLocationType] = useState('');
-  const [visitedStatus, setVisitedStatus] = useState<string[]>([]);
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [selectedItems, setSelectedItems] = useState<number[]>([]); // Store IDs of selected items
 
-  const handleCheckboxChange = value => {
-    if (selectedItems.includes(value)) {
-      setSelectedItems(selectedItems.filter(item => item !== value));
+  const toggleSelection = (id: number) => {
+    if (selectedItems.includes(id)) {
+      // Remove the item if it's already selected
+      setSelectedItems(selectedItems.filter(item => item !== id));
+    } else if (selectedItems.length < 5) {
+      // Add the item if less than 5 are selected
+      setSelectedItems([...selectedItems, id]);
     } else {
-      setSelectedItems([...selectedItems, value]);
+      // Alert the user if they try to select more than 5 items
+      Alert.alert(
+        'Limit Reached',
+        'You can only select up to 5 preferences.',
+        [{text: 'OK'}],
+      );
     }
   };
 
-  const toggleVisitedStatus = (status: string) => {
-    if (visitedStatus.includes(status)) {
-      // If the status is already selected, remove it
-      setVisitedStatus(visitedStatus.filter(item => item !== status));
-    } else {
-      // If the status is not selected, add it
-      setVisitedStatus([...visitedStatus, status]);
-    }
+  const handleClearAll = () => {
+    setSelectedItems([]); // Clear all selections
   };
+
+  const handleContinue = () => {
+    if (selectedItems.length === 0) {
+      Alert.alert(
+        'No Selection',
+        'Please select at least one preference to continue.',
+        [{text: 'OK'}],
+      );
+      return;
+    }
+
+    // Proceed to the next step with the selected data
+    navigation?.navigate('Settings', {selectedItems});
+  };
+
   return (
     <View style={tw`h-full bg-white px-[4%] pb-2`}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -48,96 +76,54 @@ const Preferences = ({navigation}: any) => {
         {/* body */}
         <View>
           {/* header */}
-          <View style={tw`flex-row items-center justify-between w-full`}>
-            <Text style={tw`text-black text-base font-WorkSemiBold`}>
-              Your Preferences
+          <View style={tw``}>
+            <Text style={tw`text-black text-3xl font-WorkSemiBold`}>
+              Travel Interests
+            </Text>
+            <Text style={tw`text-gray70 text-sm font-WorkRegular`}>
+              Pick up to 5 attractions, cities, or countries you're excited
+              about visiting.
             </Text>
           </View>
 
-          {/* location type */}
-          <View style={tw`mt-2`}>
-            <Text style={tw`text-lg text-black font-WorkMedium`}>
-              Location Type
-            </Text>
-            <RadioGroup
-              onValueChange={(value: any) => setLocationType(value)}
-              style={tw`gap-y-3 mt-1`}>
-              <RadioButton label="Cities" value="cities" color="#8C78EA" />
-
-              <RadioButton
-                label="Attractions"
-                value="attractions"
-                color="#8C78EA"
-              />
-
-              <RadioButton
-                label="Countries"
-                value="countries"
-                color="#8C78EA"
-              />
-            </RadioGroup>
-          </View>
-
-          {/* visited Status */}
+          {/* Activity Selection */}
           <View style={tw`mt-5`}>
-            <Text style={tw`text-lg text-black font-WorkMedium`}>
-              Place Type
-            </Text>
             <View style={tw`flex-row flex-wrap gap-3 mt-1`}>
-              {['historycal', 'family_friendly', 'architecture', 'biking'].map(
-                type => (
-                  <TouchableOpacity
-                    key={type}
+              {activityType.map(type => (
+                <TouchableOpacity
+                  key={type.id}
+                  style={tw`${
+                    selectedItems.includes(type.id) ? 'bg-violet100' : 'bg-white'
+                  } py-2 rounded-full justify-center items-center border-[2px] border-violet100 px-4`}
+                  onPress={() => toggleSelection(type.id)}>
+                  <Text
                     style={tw`${
-                      visitedStatus.includes(type) ? 'bg-violet100' : 'bg-white'
-                    } py-2 rounded-full justify-center items-center border-[2px] border-violet100 px-2`}
-                    onPress={() => toggleVisitedStatus(type)}>
-                    <Text
-                      style={tw`${
-                        visitedStatus.includes(type)
-                          ? 'text-white'
-                          : 'text-violet100'
-                      } font-WorkMedium text-sm capitalize`}>
-                      {type.replace('_', '-')}
-                    </Text>
-                  </TouchableOpacity>
-                ),
-              )}
+                      selectedItems.includes(type.id)
+                        ? 'text-white'
+                        : 'text-violet100'
+                    } font-WorkMedium text-sm`}>
+                    {type.label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
             </View>
           </View>
-          {/* activity type */}
-          <View style={tw`gap-y-3 mt-5`}>
-            <Text style={tw`text-black text-base font-WorkSemiBold`}>
-              Activity Type
-            </Text>
 
-            {activityType.map(item => (
-              <Checkbox
-                key={item.id}
-                color={'#8C78EA'}
-                value={selectedItems.includes(item.label)}
-                label={item.label}
-                onValueChange={() => handleCheckboxChange(item.label)}
-              />
-            ))}
-          </View>
-
+          {/* Actions */}
           <View
             style={tw`flex-row gap-6 mt-5 justify-between border-t border-t-dotted border-t-dottedBorder pt-6`}>
             <TouchableOpacity
               style={tw`bg-white py-2 rounded-full justify-center items-center border-[2px] border-violet100 px-4`}
-              onPress={() => {}}>
+              onPress={handleClearAll}>
               <Text style={tw`text-violet100 font-WorkSemiBold text-sm`}>
                 Clear all
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={tw`bg-violet100 py-2 rounded-full justify-center items-center border-[2px] border-violet100 px-4`}
-              onPress={() => {
-                navigation?.navigate('Settings');
-              }}>
+              onPress={handleContinue}>
               <Text style={tw`text-white font-WorkSemiBold text-sm`}>
-                Save Profile
+                Continue {selectedItems.length}/5
               </Text>
             </TouchableOpacity>
           </View>

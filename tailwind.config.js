@@ -20,7 +20,6 @@ module.exports = {
         WorkLight: 'WorkSans-Light',
         WorkMedium: 'WorkSans-Medium',
         WorkRegular: 'WorkSans-Regular',
-        WorkRegular: 'WorkSans-Regular',
         WorkSemiBold: 'WorkSans-SemiBold',
         WorkThin: 'WorkSans-Thin',
       },
