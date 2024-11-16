@@ -28,7 +28,7 @@ const Dashboard = ({navigation}: any) => {
         style={tw`px-[4%] bg-white`}
         keyboardShouldPersistTaps="always">
         <Header
-          title="Dashbaord"
+          title="Dashboard"
           containerStyle={tw`mt-2`}
           icon={IconSearch}
           IconRouteName="Dashboard"

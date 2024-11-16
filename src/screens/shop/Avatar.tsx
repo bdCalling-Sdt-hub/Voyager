@@ -11,7 +11,7 @@ const Avatar = ({data}: any) => {
           style={tw`w-[48%] items-center bg-white p-4 rounded-2xl mb-2.5 border border-gray90`}>
           <Image
             source={require('../../assets/images/avatar3.png')}
-            style={tw`w-14 h-14 rounded-full`}
+            style={tw`w-20 h-20 rounded-full`}
           />
           <Text style={tw`text-black text-base font-WorkMedium font-500 my-1`}>
             {item?.title}

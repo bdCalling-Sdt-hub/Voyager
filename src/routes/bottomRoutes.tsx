@@ -30,7 +30,7 @@ function BottomRoutes() {
         },
         tabBarLabelStyle: {
           fontFamily: 'NunitoSansBold',
-          fontSize: 14,
+          fontSize: 8,
           textTransform: 'capitalize',
           color: '#6C6E71',
         },
