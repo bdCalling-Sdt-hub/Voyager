@@ -52,6 +52,15 @@ const Places = ({navigation, route}: NavigProps<null>) => {
         searchBarShow={true}
       />
 
+      <View style={tw`flex-row items-center my-4 gap-2`}>
+        <View style={tw`w-[20%]`}><Image source={require('../../assets/images/speedmeter.png')} style={tw`w-full h-14`} />
+        </View>
+        <View style={tw`w-[80%] flex-shrink`}>
+          <Text style={tw`text-black text-base font-WorkSemiBold`}>Bucket list is near limit (09/11)</Text>
+          <Text style={tw`text-gray100 text-sm  font-WorkRegular`}>Subscribe to premium or purchase a powerups to increase your limit now.</Text>
+        </View>
+      </View>
+
       <View style={tw`flex-row bg-gray80 p-1 rounded-full mt-4`}>
         <TouchableOpacity
           style={tw`${
@@ -98,7 +107,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
         showsVerticalScrollIndicator={false}>
         {destinationData?.map((item: any, index: number) => (
           <TouchableOpacity
-            style={tw`flex-row items-center p-1 gap-4 rounded-2xl border-r-[2px] border-b-[2px] border-b-[${activeColor()}] border-r-[${activeColor()}]`}
+            style={tw`flex-row items-center p-1 gap-4 rounded-2xl border-r border-b border-b-[${activeColor()}] border-r-[${activeColor()}]`}
             key={index}
             onPress={() => navigation?.navigate('DestinationDetails', {item})}>
             <Image

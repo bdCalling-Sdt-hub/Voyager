@@ -1,6 +1,6 @@
-import { Image, TouchableOpacity, View, Text } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { SvgXml } from 'react-native-svg';
+import {Image, TouchableOpacity, View, Text} from 'react-native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {SvgXml} from 'react-native-svg';
 import tw from '../lib/tailwind';
 import {
   IconDashboard,
@@ -22,7 +22,7 @@ const Tab = createBottomTabNavigator();
 function BottomRoutes() {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
+      screenOptions={({route}) => ({
         headerShown: false,
         tabBarStyle: tw`h-22 bg-white shadow-none border border-white`,
         tabBarItemStyle: {
@@ -35,7 +35,7 @@ function BottomRoutes() {
           color: '#6C6E71',
         },
         tabBarButton: props => <TouchableOpacity {...props} />,
-        tabBarIcon: ({ focused }) => {
+        tabBarIcon: ({focused}) => {
           let icon;
 
           switch (route.name) {
@@ -70,11 +70,9 @@ function BottomRoutes() {
             </View>
           );
         },
-        tabBarLabel: ({ focused }) => (
-          focused ? null : <Text>{route.name}</Text>
-        ),
-      })}
-    >
+        tabBarLabel: ({focused}) =>
+          focused ? null : <Text>{route.name}</Text>,
+      })}>
       <Tab.Screen name="Dashboard" component={Dashboard} />
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Places" component={Places} />
