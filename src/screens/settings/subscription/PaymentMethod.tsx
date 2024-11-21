@@ -12,7 +12,7 @@ import InputText from '../../../components/inputs/InputText';
 
 const PaymentMethod = ({navigation}: any) => {
   return (
-    <View style={tw`bg-white h-full px-[4%] pb-2`}>
+    <View style={tw`bg-white h-full px-[4%] pb-2 dark:bg-primaryDark`}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <Header
@@ -26,10 +26,10 @@ const PaymentMethod = ({navigation}: any) => {
         {/* body */}
         <View>
           <View
-            style={tw`h-12 bg-gray90 rounded-2xl items-center flex-row gap-2 justify-center`}>
+            style={tw`h-12 bg-gray90 dark:bg-darkBg rounded-2xl items-center flex-row gap-2 justify-center`}>
             <SvgXml xml={IconWarn} />
             <Text
-              style={tw`text-[#000000] text-sm font-WorkMedium font-500 py-1`}>
+              style={tw`text-black dark:text-white text-sm font-WorkMedium font-500 py-1`}>
               You won’t be charged until you pay.
             </Text>
           </View>
@@ -37,17 +37,18 @@ const PaymentMethod = ({navigation}: any) => {
           {/* Card Information */}
           <View style={tw`mt-4`}>
             <Text
-              style={tw`text-black text-[20px] font-WorkSemiBold font-600 mb-4`}>
+              style={tw`text-black dark:text-white text-[20px] font-WorkSemiBold font-600 mb-4`}>
               Card Information
             </Text>
             <View style={tw`gap-y-4`}>
               <View>
                 <Text
-                  style={tw`mb-1 text-[#000000] text-sm font-WorkMedium font-500`}>
+                  style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
                   Name on card
                 </Text>
                 <View style={tw`h-12`}>
                   <InputText
+                   fromUP={true}
                     placeholder="John Smith"
                     placeholderTextColor={'#BBBCBD'}
                     style={tw`text-black text-base font-WorkMedium font-500`}
@@ -60,7 +61,8 @@ const PaymentMethod = ({navigation}: any) => {
                   Card number
                 </Text>
                 <View style={tw`h-12`}>
-                  <InputText
+                  <InputText 
+                  fromUP={true}
                     placeholder="1234 1234 1234 1234"
                     placeholderTextColor={'#BBBCBD'}
                     style={tw`text-black text-base font-WorkMedium font-500`}
@@ -72,11 +74,12 @@ const PaymentMethod = ({navigation}: any) => {
               <View style={tw`flex-row items-center gap-4`}>
                 <View style={tw`flex-1`}>
                   <Text
-                    style={tw`mb-1 text-[#000000] text-sm font-WorkMedium font-500`}>
+                    style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
                     Expiration date
                   </Text>
                   <View style={tw`h-12`}>
                     <InputText
+                    fromUP={true}
                       placeholder="MM/YY"
                       placeholderTextColor={'#BBBCBD'}
                       style={tw`text-black text-base font-WorkMedium font-500`}
@@ -85,11 +88,12 @@ const PaymentMethod = ({navigation}: any) => {
                 </View>
                 <View style={tw`flex-1`}>
                   <Text
-                    style={tw`mb-1 text-[#000000] text-sm font-WorkMedium font-500`}>
+                    style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
                     Security code
                   </Text>
                   <View style={tw`h-12`}>
                     <InputText
+                    fromUP={true}
                       placeholder="CVC"
                       placeholderTextColor={'#BBBCBD'}
                       style={tw`text-black text-base font-WorkMedium font-500`}
@@ -102,17 +106,18 @@ const PaymentMethod = ({navigation}: any) => {
 
           <View style={tw`mt-4`}>
             <Text
-              style={tw`text-black text-[20px] font-WorkSemiBold font-600 mb-4`}>
+              style={tw`text-black dark:text-white text-[20px] font-WorkSemiBold font-600 mb-4`}>
               Billing Information
             </Text>
             <View style={tw`gap-y-4`}>
               <View>
                 <Text
-                  style={tw`mb-1 text-[#000000] text-sm font-WorkMedium font-500`}>
+                  style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
                   Street Address
                 </Text>
                 <View style={tw`h-12`}>
                   <InputText
+                  fromUP={true}
                     placeholder="Your Address"
                     placeholderTextColor={'#BBBCBD'}
                     style={tw`text-black text-base font-WorkMedium font-500`}
@@ -123,11 +128,12 @@ const PaymentMethod = ({navigation}: any) => {
               <View style={tw`flex-row items-center gap-4`}>
                 <View style={tw`flex-1`}>
                   <Text
-                    style={tw`mb-1 text-[#000000] text-sm font-WorkMedium font-500`}>
+                    style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
                     City
                   </Text>
                   <View style={tw`h-12`}>
                     <InputText
+                    fromUP={true}
                       placeholder="Enter City"
                       placeholderTextColor={'#BBBCBD'}
                       style={tw`text-black text-base font-WorkMedium font-500`}
@@ -136,11 +142,12 @@ const PaymentMethod = ({navigation}: any) => {
                 </View>
                 <View style={tw`flex-1`}>
                   <Text
-                    style={tw`mb-1 text-[#000000] text-sm font-WorkMedium font-500`}>
+                    style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
                     Region
                   </Text>
                   <View style={tw`h-12`}>
                     <InputText
+                    fromUP={true}
                       placeholder="Enter Region"
                       placeholderTextColor={'#BBBCBD'}
                       style={tw`text-black text-base font-WorkMedium font-500`}
@@ -151,11 +158,12 @@ const PaymentMethod = ({navigation}: any) => {
               <View style={tw`flex-row items-center gap-4`}>
                 <View style={tw`flex-1`}>
                   <Text
-                    style={tw`mb-1 text-[#000000] text-sm font-WorkMedium font-500`}>
+                    style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
                     Postal Code
                   </Text>
                   <View style={tw`h-12`}>
                     <InputText
+                    fromUP={true}
                       placeholder="1234"
                       placeholderTextColor={'#BBBCBD'}
                       style={tw`text-black text-base font-WorkMedium font-500`}
@@ -164,11 +172,12 @@ const PaymentMethod = ({navigation}: any) => {
                 </View>
                 <View style={tw`flex-1`}>
                   <Text
-                    style={tw`mb-1 text-[#000000] text-sm font-WorkMedium font-500`}>
+                    style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
                     Country
                   </Text>
                   <View style={tw`h-12`}>
                     <InputText
+                    fromUP={true}
                       placeholder="Enter Country"
                       placeholderTextColor={'#BBBCBD'}
                       style={tw`text-black text-base font-WorkMedium font-500`}

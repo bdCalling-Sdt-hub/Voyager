@@ -464,9 +464,9 @@ export const IconFooterDot = `<svg width="6" height="6" viewBox="0 0 6 6" fill="
 `;
 
 export const IconWarn = `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M1 11C1 5.47714 5.47715 1 11 1C16.5229 1 21 5.47714 21 11C21 16.5229 16.5229 21 11 21C5.47715 21 1 16.5229 1 11Z" stroke="#24272B"/>
-<path d="M11 5.75V13.25" stroke="#24272B" stroke-linecap="round"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M11 17C11.6213 17 12.125 16.496 12.125 15.875C12.125 15.254 11.6213 14.75 11 14.75C10.3787 14.75 9.875 15.254 9.875 15.875C9.875 16.496 10.3787 17 11 17Z" fill="#24272B"/>
+<path d="M1 11C1 5.47714 5.47715 1 11 1C16.5229 1 21 5.47714 21 11C21 16.5229 16.5229 21 11 21C5.47715 21 1 16.5229 1 11Z" stroke="#9BA5B2"/>
+<path d="M11 5.75V13.25" stroke="#9BA5B2" stroke-linecap="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M11 17C11.6213 17 12.125 16.496 12.125 15.875C12.125 15.254 11.6213 14.75 11 14.75C10.3787 14.75 9.875 15.254 9.875 15.875C9.875 16.496 10.3787 17 11 17Z" fill="#9BA5B2"/>
 </svg>
 `;
 
