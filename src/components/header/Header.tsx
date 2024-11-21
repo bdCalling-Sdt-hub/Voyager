@@ -43,6 +43,7 @@ interface Props {
   leftIcon?: any;
   middleComponent?: any;
   searchBarShow?: boolean;
+  hideDestination?: boolean;
 }
 
 const activityType = [
@@ -85,6 +86,7 @@ const Header = ({
   leftIcon,
   middleComponent,
   searchBarShow,
+  hideDestination
 }: Props) => {
   const navigation: any = useNavigation();
   const [filterModal, setFilterModal] = useState(false);
@@ -342,7 +344,7 @@ const Header = ({
             keyboardShouldPersistTaps="always"
             showsVerticalScrollIndicator={false}>
             {/* location type */}
-            <View style={tw`mt-2`}>
+            {!hideDestination && <View style={tw`mt-2`}>
               <Text style={tw`text-lg text-black font-WorkMedium`}>
                 Destination
               </Text>
@@ -363,7 +365,7 @@ const Header = ({
                   color="#8C78EA"
                 />
               </RadioGroup>
-            </View>
+            </View>}
 
             {/* Experience type */}
             <View style={tw`mt-5`}>

@@ -50,6 +50,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
         IconRouteName="Dashboard"
         isSearchVisible={true}
         searchBarShow={true}
+        hideDestination={true}
       />
 
       <View style={tw`flex-row items-center my-4 gap-2`}>
