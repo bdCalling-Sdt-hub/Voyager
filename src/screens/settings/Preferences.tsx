@@ -63,7 +63,7 @@ const Preferences = ({navigation}: any) => {
   };
 
   return (
-    <View style={tw`h-full bg-white px-[4%] pb-2`}>
+    <View style={tw`h-full bg-white px-[4%] pb-2 dark:bg-primaryDark`}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Header
           title={'Preferences for you'}
@@ -77,10 +77,10 @@ const Preferences = ({navigation}: any) => {
         <View>
           {/* header */}
           <View style={tw``}>
-            <Text style={tw`text-black text-3xl font-WorkSemiBold`}>
+            <Text style={tw`text-black dark:text-white text-3xl font-WorkSemiBold`}>
               Travel Interests
             </Text>
-            <Text style={tw`text-gray70 text-sm font-WorkRegular`}>
+            <Text style={tw`text-gray70 dark:text-white text-sm font-WorkRegular`}>
               Pick up to 5 attractions, cities, or countries you're excited
               about visiting.
             </Text>
@@ -93,7 +93,7 @@ const Preferences = ({navigation}: any) => {
                 <TouchableOpacity
                   key={type.id}
                   style={tw`${
-                    selectedItems.includes(type.id) ? 'bg-violet100' : 'bg-white'
+                    selectedItems.includes(type.id) ? 'bg-violet100' : 'bg-white dark:bg-primaryDark'
                   } py-2 rounded-full justify-center items-center border-[2px] border-violet100 px-4`}
                   onPress={() => toggleSelection(type.id)}>
                   <Text
@@ -111,9 +111,9 @@ const Preferences = ({navigation}: any) => {
 
           {/* Actions */}
           <View
-            style={tw`flex-row gap-6 mt-5 justify-between border-t border-t-dotted border-t-dottedBorder pt-6`}>
+            style={tw`flex-row gap-6 mt-5 justify-between border-t border-t-dotted border-t-dottedBorder dark:border-t-secDarkBg pt-6`}>
             <TouchableOpacity
-              style={tw`bg-white py-2 rounded-full justify-center items-center border-[2px] border-violet100 px-4`}
+              style={tw`bg-white dark:bg-primaryDark py-2 rounded-full justify-center items-center border-[2px] border-violet100 px-4`}
               onPress={handleClearAll}>
               <Text style={tw`text-violet100 font-WorkSemiBold text-sm`}>
                 Clear all
