@@ -49,15 +49,15 @@ const data = [
 
 const InvoiceHistory = ({navigation}: any) => {
   const renderItem = ({item}: {item: any}) => (
-    <View style={tw`flex-row justify-between py-2 border-b border-gray-200`}>
-      <Text style={tw`w-1/5 text-tableBody text-[9px]`}>{item.id}</Text>
-      <Text style={tw`w-1/5 text-tableBody text-[9px]`}>{item.date}</Text>
-      <Text style={tw`w-1/5 text-tableBody text-[9px]`}>{item.plan}</Text>
-      <Text style={tw`w-1/5 text-tableBody text-[9px]`}>{item.amount}</Text>
+    <View style={tw`flex-row justify-between py-2 border-b border-gray-200 dark:border-darkBg`}>
+      <Text style={tw`w-1/5 text-tableBody dark:text-white text-[9px]`}>{item.id}</Text>
+      <Text style={tw`w-1/5 text-tableBody dark:text-white text-[9px]`}>{item.date}</Text>
+      <Text style={tw`w-1/5 text-tableBody dark:text-white text-[9px]`}>{item.plan}</Text>
+      <Text style={tw`w-1/5 text-tableBody dark:text-white text-[9px]`}>{item.amount}</Text>
       <Text
         style={tw`w-1/5 text-center text-[9px] ${
           item.status === 'Paid'
-            ? 'text-[#89B09A] bg-[#F5F9F6]'
+            ? 'text-[#89B09A] bg-[#F5F9F6] dark:bg-darkBg'
             : 'text-[#E89A46] bg-[#FFF6ED]'
         } px-2 py-1 rounded-full`}>
         {item.status}
@@ -68,7 +68,7 @@ const InvoiceHistory = ({navigation}: any) => {
   return (
     <View>
       <View style={tw`p-4`}>
-        <Text style={tw`text-tableBody text-base font-WorkSemiBold font-600`}>
+        <Text style={tw`text-tableBody dark:text-white text-base font-WorkSemiBold font-600`}>
           Invoice
         </Text>
         <Text
@@ -77,7 +77,7 @@ const InvoiceHistory = ({navigation}: any) => {
         </Text>
         {/* Table Header */}
         <View
-          style={tw`flex-row justify-between py-2 border-b border-gray-300`}>
+          style={tw`flex-row justify-between py-2 border-b border-gray-300 dark:border-darkBg`}>
           <Text
             style={tw`w-1/5 text-gray100 text-[9px] font-WorkMedium font-500`}>
             Invoice ID

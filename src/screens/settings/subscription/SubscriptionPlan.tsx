@@ -8,7 +8,7 @@ import InvoiceHistory from './components/InvoiceHistory';
 const SubscriptionPlan = ({navigation}: any) => {
   const [myPlan, setMyPlan] = useState('my_subscription');
   return (
-    <View style={tw`bg-white h-full px-[4%] pb-2`}>
+    <View style={tw`bg-white h-full px-[4%] pb-2 dark:bg-primaryDark`}>
       <View>
         {/* Header */}
         <Header
@@ -18,7 +18,7 @@ const SubscriptionPlan = ({navigation}: any) => {
           hideRightIcon={true}
         />
 
-        <View style={tw`flex-row bg-gray80 p-1 rounded-full mb-4`}>
+        <View style={tw`flex-row bg-gray80 dark:bg-darkBg p-1 rounded-full mb-4`}>
           <TouchableOpacity
             style={tw`${
               myPlan === 'my_subscription' ? 'bg-violet100' : ''
