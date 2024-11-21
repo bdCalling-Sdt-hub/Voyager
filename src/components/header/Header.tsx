@@ -44,6 +44,7 @@ interface Props {
   leftIcon?: any;
   middleComponent?: any;
   searchBarShow?: boolean;
+  hideDestination?: boolean;
 }
 
 const activityType = [
@@ -86,6 +87,7 @@ const Header = ({
   leftIcon,
   middleComponent,
   searchBarShow,
+  hideDestination
 }: Props) => {
   const navigation: any = useNavigation();
   const [filterModal, setFilterModal] = useState(false);
@@ -315,7 +317,7 @@ const Header = ({
           <View>
             {!hideFilterIcon && (
               <TouchableOpacity
-                style={tw`h-12 w-12 flex items-center justify-center rounded-full ml-2 bg-white`}
+                style={tw`h-12 w-12 flex items-center justify-center rounded-full ml-2 bg-white dark:bg-secDarkBg`}
                 onPress={() => setFilterModal(true)}>
                 <SvgXml xml={IconFilter} />
               </TouchableOpacity>
@@ -329,7 +331,7 @@ const Header = ({
         setVisible={setFilterModal}
         disabled
         layerContainerStyle={tw`self-center items-center justify-center h-full w-[80%]`}
-        containerStyle={tw`bg-white p-4 rounded-2xl h-[80%]`}>
+        containerStyle={tw`bg-white dark:bg-darkBg p-4 rounded-2xl h-[80%]`}>
         <View style={tw`pb-6`}>
           {/* header */}
           <View style={tw`flex-row items-center justify-between w-full pb-1`}>
@@ -344,28 +346,31 @@ const Header = ({
             keyboardShouldPersistTaps="always"
             showsVerticalScrollIndicator={false}>
             {/* location type */}
-            <View style={tw`mt-2`}>
+            {!hideDestination && (<View style={tw`mt-2`}>
               <Text style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
                 Destination
               </Text>
               <RadioGroup
                 onValueChange={(value: any) => setLocationType(value)}
                 style={tw`gap-y-3 mt-1`}>
-                <RadioButton label="Cities" value="cities" color="#8C78EA" />
+                <RadioButton label="Cities" value="cities" labelStyle={tw`text-black dark:text-white`} color="#8C78EA" />
 
                 <RadioButton
                   label="Attractions"
                   value="attractions"
-                  color="#8C78EA"
+                  labelStyle={tw`text-black dark:text-white`}
+                  color='#8C78EA'
                 />
 
                 <RadioButton
                   label="Countries"
                   value="countries"
+                  labelStyle={tw`text-black dark:text-white`}
                   color="#8C78EA"
                 />
               </RadioGroup>
-            </View>
+            </View>)}
+            
 
             {/* Experience type */}
             <View style={tw`mt-5`}>
@@ -379,7 +384,7 @@ const Header = ({
                     style={tw`${
                       visitedStatus.includes(type?.label)
                         ? 'bg-violet100'
-                        : 'bg-white'
+                        : 'bg-white dark:bg-darkBg'
                     } py-2 flex-row gap-1 rounded-full justify-center items-center border-[2px] border-violet100 px-2`}
                     onPress={() => toggleVisitedStatus(type?.label)}>
                     <SvgXml xml={type?.icon} />
@@ -408,7 +413,7 @@ const Header = ({
                     style={tw`${
                       visitedStatus.includes(type?.label)
                         ? 'bg-violet100'
-                        : 'bg-white'
+                        : 'bg-white dark:bg-darkBg'
                     } py-2 flex-row gap-1 rounded-full justify-center items-center border-[2px] border-violet100 px-2`}
                     onPress={() => toggleVisitedStatus(type?.label)}>
                     <SvgXml xml={type?.icon} />
@@ -435,6 +440,7 @@ const Header = ({
                 <Checkbox
                   key={item.id}
                   color={'#8C78EA'}
+                  labelStyle={tw`text-black dark:text-white`}
                   value={selectedItems.includes(item.label)}
                   label={item.label}
                   onValueChange={() => handleCheckboxChange(item.label)}
@@ -444,7 +450,7 @@ const Header = ({
 
             <View style={tw`flex-row gap-6 mt-5`}>
               <TouchableOpacity
-                style={tw`bg-white py-2 rounded-full justify-center items-center border-[2px] border-violet100 flex-1`}
+                style={tw`bg-white dark:bg-darkBg py-2 rounded-full justify-center items-center border-[2px] border-violet100 flex-1`}
                 onPress={() => {}}>
                 <Text style={tw`text-violet100 font-WorkSemiBold text-sm`}>
                   Clear all

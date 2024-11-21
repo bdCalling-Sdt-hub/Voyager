@@ -42,7 +42,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
   };
 
   return (
-    <View style={tw`px-[4%] bg-white h-full`}>
+    <View style={tw`px-[4%] bg-white dark:bg-primaryDark h-full`}>
       <Header
         title="Bucket List"
         containerStyle={tw`mt-2`}
@@ -57,7 +57,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
         <View style={tw`w-[20%]`}><Image source={require('../../assets/images/speedmeter.png')} style={tw`w-full h-14`} />
         </View>
         <View style={tw`w-[80%] flex-shrink`}>
-          <Text style={tw`text-black text-base font-WorkSemiBold`}>Bucket list is near limit (09/11)</Text>
+          <Text style={tw`text-black dark:text-white text-base font-WorkSemiBold`}>Bucket list is near limit (09/11)</Text>
           <Text style={tw`text-gray100 text-sm  font-WorkRegular`}>Subscribe to premium or purchase a powerups to increase your limit now.</Text>
         </View>
       </View>
@@ -120,7 +120,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
               <View style={tw`gap-y-1`}>
                 <View style={tw``}>
                   <View style={tw`flex-row items-center`}>
-                    <Text style={tw`text-black font-WorkSemiBold text-[20px]`}>
+                    <Text style={tw`text-black dark:text-white font-WorkSemiBold text-[20px]`}>
                       {item?.name}
                     </Text>
                   </View>

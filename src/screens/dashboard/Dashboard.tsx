@@ -163,7 +163,7 @@ const Dashboard = ({navigation}: any) => {
           </View>
         </View>
 
-        <View style={tw`mt-8`}>
+        <View style={tw`mt-8 pb-2`}>
           <TouchableOpacity style={tw`flex-row items-center justify-between`}>
             <View style={tw`w-11/12`}>
               <Text
@@ -191,7 +191,8 @@ const Dashboard = ({navigation}: any) => {
                 />
 
                 <View style={tw`flex-shrink`}>
-                  <Text style={tw`text-black font-WorkSemiBold text-[20px] dark:text-white`}>
+                  <Text
+                    style={tw`text-black font-WorkSemiBold text-[20px] dark:text-white`}>
                     {place?.title}
                   </Text>
                   <Text style={tw`text-gray100 font-WorkRegular text-xs`}>

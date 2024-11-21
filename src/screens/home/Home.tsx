@@ -22,8 +22,8 @@ import {NavigProps} from '../../utils/interface/NaviProps';
 const Home = ({navigation}: NavigProps<null>) => {
   const [isSearchVisible, setSearchVisible] = useState(false);
   return (
-    <ScrollView contentContainerStyle={tw`px-[4%] bg-white`}>
-      <View>
+    <ScrollView contentContainerStyle={tw`px-[4%] bg-white bg-primaryDark`}>
+      <View style={tw`pb-2`}>
         <Header
           title="Explore"
           containerStyle={tw`mt-2`}
@@ -34,7 +34,8 @@ const Home = ({navigation}: NavigProps<null>) => {
         />
         <View>
           <View style={tw`mt-4`}>
-            <Text style={tw`text-black text-base font-WorkMedium`}>
+            <Text
+              style={tw`text-black dark:text-white text-base font-WorkMedium`}>
               Find Your Next Destination
             </Text>
           </View>
@@ -54,7 +55,7 @@ const Home = ({navigation}: NavigProps<null>) => {
                 source={require('../../assets/images/attractions-cards.png')}
               />
               <Text
-                style={tw`text-sm font-WorkMedium text-black text-center mt-2`}>
+                style={tw`text-sm font-WorkMedium text-black dark:text-white text-center mt-2`}>
                 Attractions
               </Text>
             </TouchableOpacity>
@@ -67,7 +68,7 @@ const Home = ({navigation}: NavigProps<null>) => {
               }}>
               <Image source={require('../../assets/images/cities-cards.png')} />
               <Text
-                style={tw`text-sm font-WorkMedium text-black text-center mt-2`}>
+                style={tw`text-sm font-WorkMedium text-black dark:text-white text-center mt-2`}>
                 Cities
               </Text>
             </TouchableOpacity>
@@ -82,7 +83,7 @@ const Home = ({navigation}: NavigProps<null>) => {
                 source={require('../../assets/images/countries-cards.png')}
               />
               <Text
-                style={tw`text-sm font-WorkMedium text-black text-center mt-2`}>
+                style={tw`text-sm font-WorkMedium text-black dark:text-white text-center mt-2`}>
                 Countries
               </Text>
             </TouchableOpacity>
@@ -96,7 +97,8 @@ const Home = ({navigation}: NavigProps<null>) => {
               navigation?.navigate('Places', {title: 'picks for you'});
             }}>
             <View style={tw``}>
-              <Text style={tw`text-black text-base font-WorkMedium`}>
+              <Text
+                style={tw`text-black dark:text-white text-base font-WorkMedium`}>
                 Personalized Picks
               </Text>
               <Text style={tw`text-gray100 font-WorkRegular text-sm mt-1`}>
@@ -128,7 +130,8 @@ const Home = ({navigation}: NavigProps<null>) => {
                   </View>
                   <View style={tw`bg-white p-3 w-full rounded-2xl`}>
                     <View style={tw`flex-row items-center`}>
-                      <Text style={tw`text-black text-sm font-WorkMedium`}>
+                      <Text
+                        style={tw`text-black dark:text-white text-sm font-WorkMedium`}>
                         {item.title}
                       </Text>
                     </View>
@@ -148,7 +151,8 @@ const Home = ({navigation}: NavigProps<null>) => {
               navigation?.navigate('Places', {title: 'top destinations'});
             }}>
             <View style={tw``}>
-              <Text style={tw`text-black text-base font-WorkMedium`}>
+              <Text
+                style={tw`text-black dark:text-white text-base font-WorkMedium`}>
                 Top Destinations
               </Text>
               <Text style={tw`text-gray100 font-WorkRegular text-sm mt-1`}>
@@ -182,7 +186,8 @@ const Home = ({navigation}: NavigProps<null>) => {
                   </View>
                   <View style={tw`bg-white p-3 w-full rounded-2xl`}>
                     <View style={tw`flex-row items-center`}>
-                      <Text style={tw`text-black text-sm font-WorkMedium`}>
+                      <Text
+                        style={tw`text-black dark:text-white text-sm font-WorkMedium`}>
                         {item.title}
                       </Text>
                     </View>
