@@ -14,6 +14,7 @@ interface InputTextProps
   fieldStyle?: any;
   Component?: React.ReactNode;
   focusStyle?: any;
+  fromUP?: boolean;
 }
 
 const InputText = ({
@@ -24,6 +25,7 @@ const InputText = ({
   fieldStyle,
   focusStyle,
   Component,
+  fromUP,
   editable,
   ...inputProps // Spread remaining props to pass to TextField
 }: InputTextProps) => {
@@ -32,7 +34,7 @@ const InputText = ({
   return (
     <View
       style={[
-        tw`flex-1 rounded-2xl px-4 bg-white dark:bg-primaryDark flex-row items-center gap-3 border border-gray90 dark:border-primaryDark h-14`,
+        tw`flex-1 rounded-2xl px-4 bg-white ${fromUP ? 'dark:bg-darkBg' : 'dark:bg-primaryDark'} flex-row items-center gap-3 border border-gray90 dark:border-primaryDark h-14`,
         containerStyle,
         focus && focusStyle,
       ]}>
