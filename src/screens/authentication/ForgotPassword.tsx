@@ -7,7 +7,7 @@ import {IconEnvelop} from '../../assets/icons/Icons';
 
 const ForgotPassword = ({navigation}: any) => {
   return (
-    <View style={tw`h-full bg-white px-[4%] pb-2`}>
+    <View style={tw`h-full bg-white px-[4%] pb-2 dark:bg-primaryDark`}>
       <ScrollView keyboardShouldPersistTaps="always">
         <Header
           title={'Forgot Password'}
@@ -18,13 +18,14 @@ const ForgotPassword = ({navigation}: any) => {
 
         {/* body */}
         <View style={tw`mt-8`}>
-          <Text style={tw`text-black text-2xl font-WorkSemiBold font-600`}>
+          <Text style={tw`text-black dark:text-white text-2xl font-WorkSemiBold font-600`}>
             Enter your E-mail address to get OPT
           </Text>
         </View>
 
         <View style={tw`h-14 mt-4`}>
           <InputText
+            fromUP={true}
             svgFirstIcon={IconEnvelop}
             placeholder="Enter your E-mail"
             placeholderTextColor={'#9A9C9D'}

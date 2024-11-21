@@ -18,7 +18,7 @@ const SetNewPassword = ({navigation}: any) => {
   const [isSecureConfirmPass, setIsSecureConfirmPass] = useState(true);
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   return (
-    <View style={tw`bg-white h-full px-[4%] pb-2`}>
+    <View style={tw`bg-white h-full px-[4%] pb-2 dark:bg-primaryDark`}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always">
@@ -31,27 +31,27 @@ const SetNewPassword = ({navigation}: any) => {
           leftIcon={IconClose}
         />
         <View style={tw`mt-8`}>
-          <Text style={tw`text-black text-2xl font-WorkSemiBold`}>
+          <Text style={tw`text-black dark:text-white text-2xl font-WorkSemiBold`}>
             To create a secure password
           </Text>
 
           <View style={tw`mt-4 gap-y-2`}>
             <View style={tw`flex-row items-center flex-shrink gap-2`}>
               <SvgXml xml={IconDot} />
-              <Text style={tw`text-gray70 text-base font-WorkRegular font-400`}>
+              <Text style={tw`text-gray70 dark:text-white text-base font-WorkRegular font-400`}>
               Use at least 8 characters
               </Text>
             </View>
             <View style={tw`flex-row items-center flex-shrink gap-2`}>
               <SvgXml xml={IconDot} />
-              <Text style={tw`text-gray70 text-base font-WorkRegular font-400`}>
+              <Text style={tw`text-gray70 dark:text-white text-base font-WorkRegular font-400`}>
                 Use a mix of letters, numbers, and special character (e.g. :
                 #$!%)
               </Text>
             </View>
             <View style={tw`flex-row items-center flex-shrink gap-2`}>
               <SvgXml xml={IconDot} />
-              <Text style={tw`text-gray70 text-base font-WorkRegular font-400`}>
+              <Text style={tw`text-gray70 dark:text-white text-base font-WorkRegular font-400`}>
                 Try combining words and symbols into a unique phrase
               </Text>
             </View>
@@ -61,6 +61,7 @@ const SetNewPassword = ({navigation}: any) => {
         <View style={tw`gap-y-4 mt-8`}>
           <View style={tw`h-14`}>
             <InputText
+              fromUP={true}
               placeholder="Create New Password"
               placeholderTextColor={'#9A9C9D'}
               secureTextEntry={isSecureNewPass}
@@ -70,6 +71,7 @@ const SetNewPassword = ({navigation}: any) => {
           </View>
           <View style={tw`h-14`}>
             <InputText
+            fromUP={true}
               placeholder="Confirm Password"
               placeholderTextColor={'#9A9C9D'}
               secureTextEntry={isSecureConfirmPass}
@@ -93,15 +95,15 @@ const SetNewPassword = ({navigation}: any) => {
         visible={isSuccessModalVisible}
         setVisible={setIsSuccessModalVisible}
         layerContainerStyle={tw`self-center items-center justify-center h-full w-[80%]`}
-        containerStyle={tw`bg-white p-4 rounded-2xl`}>
+        containerStyle={tw`bg-white dark:bg-primaryDark p-4 rounded-2xl`}>
         <View>
           <View style={tw`flex-row items-center gap-2 justify-center`}>
             <SvgXml xml={IconSuccesTik} />
-            <Text style={tw`text-black  text-base font-WorkSemiBold font-500`}>
+            <Text style={tw`text-black dark:text-white text-base font-WorkSemiBold font-500`}>
               You’re done!
             </Text>
           </View>
-          <Text style={tw`text-black text-sm font-WorkRegular font-400 text-center mt-1`}>
+          <Text style={tw`text-black dark:text-white text-sm font-WorkRegular font-400 text-center mt-1`}>
             Your password has successfully changed.
           </Text>
           <View style={tw`w-full`}>

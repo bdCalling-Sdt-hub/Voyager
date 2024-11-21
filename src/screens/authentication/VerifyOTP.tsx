@@ -88,7 +88,7 @@ const VerifyOTP = ({navigation}: any) => {
   };
 
   return (
-    <View style={tw`h-full bg-white px-[4%] pb-2`}>
+    <View style={tw`h-full bg-white px-[4%] pb-2 dark:bg-primaryDark`}>
       <ScrollView keyboardShouldPersistTaps="always">
         <Header
           title="Verify OTP"
@@ -100,10 +100,10 @@ const VerifyOTP = ({navigation}: any) => {
 
         {/* OTP Verification Info */}
         <View style={tw`mt-8`}>
-          <Text style={tw`text-black text-2xl font-WorkSemiBold`}>
+          <Text style={tw`text-black dark:text-white text-2xl font-WorkSemiBold`}>
             We just sent you an OTP
           </Text>
-          <Text style={tw`text-black text-base font-WorkMedium`}>
+          <Text style={tw`text-black dark:text-white text-base font-WorkMedium`}>
             To {maskedEmail}
           </Text>
         </View>
@@ -113,7 +113,7 @@ const VerifyOTP = ({navigation}: any) => {
           {otp.map((digit, index) => (
             <View
               key={index}
-              style={tw`flex-1 h-12 rounded-lg border bg-white border-[#D1D1D1] justify-center items-center`}>
+              style={tw`flex-1 h-12 rounded-lg border bg-white dark:bg-darkBg border-[#D1D1D1] dark:border-darkBg justify-center items-center`}>
               <TextInput
                 ref={el => (inputRefs.current[index] = el)}
                 value={digit}
@@ -141,7 +141,7 @@ const VerifyOTP = ({navigation}: any) => {
 
         {seconds === 0 ? (
           <View style={tw`flex-row items-center justify-center mt-4`}>
-            <Text style={tw`text-black text-base font-WorkRegular font-400`}>
+            <Text style={tw`text-black dark:text-white text-base font-WorkRegular font-400`}>
               Didn’t receive code?{' '}
             </Text>
             <TouchableOpacity onPress={handleResendOtp}>
@@ -153,7 +153,7 @@ const VerifyOTP = ({navigation}: any) => {
           </View>
         ) : (
           <View style={tw`flex-row items-center justify-center mt-4`}>
-            <Text style={tw`text-black text-base font-WorkRegular font-400`}>
+            <Text style={tw`text-black dark:text-white text-base font-WorkRegular font-400`}>
               OTP expires in{' '}
             </Text>
             <TouchableOpacity>
