@@ -1,4 +1,4 @@
-import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {ScrollView, Text, TouchableOpacity, useColorScheme, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import tw from '../../lib/tailwind';
 import Header from '../../components/header/Header';
@@ -7,7 +7,8 @@ import {RadioButton, RadioGroup, Switch} from 'react-native-ui-lib';
 import { useAppColorScheme } from 'twrnc';
 
 const AccountSettings = ({navigation}: any) => {
-  const [themeMode, setThemeMode] = useState('light');
+  const colorMode = useColorScheme();
+  const [themeMode, setThemeMode] = useState(colorMode);
   const [isPushNotificationEnabled, setIsPushNotificationEnabled] =
     useState(false);
   const [isEmailNotificationEnabled, setIsEmailNotificationEnabled] =
@@ -30,7 +31,6 @@ const AccountSettings = ({navigation}: any) => {
     setColorScheme(themeMode);
   }, [themeMode]);
 
-  console.log("chslkjsdaflkjsdf: ", themeMode)
 
 
   return (

@@ -1,6 +1,6 @@
-import {Image, TouchableOpacity, View, Text} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {SvgXml} from 'react-native-svg';
+import { Image, TouchableOpacity, View, Text } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { SvgXml } from 'react-native-svg';
 import tw from '../lib/tailwind';
 import {
   IconDashboard,
@@ -22,21 +22,19 @@ const Tab = createBottomTabNavigator();
 function BottomRoutes() {
   return (
     <Tab.Navigator
-      initialRouteName='Home'
-      screenOptions={({route}) => ({
+      initialRouteName="Home"
+      screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarStyle: tw`h-22 bg-white shadow-none border border-white`,
+        tabBarStyle: tw`h-20 bg-white dark:bg-primaryDark shadow-none border-t border-t-white dark:border-t-darkBg`,
         tabBarItemStyle: {
           marginVertical: 10,
         },
         tabBarLabelStyle: {
           fontFamily: 'NunitoSansBold',
-          fontSize: 8,
           textTransform: 'capitalize',
-          color: '#6C6E71',
         },
-        tabBarButton: props => <TouchableOpacity {...props} />,
-        tabBarIcon: ({focused}) => {
+        tabBarButton: (props) => <TouchableOpacity {...props} />,
+        tabBarIcon: ({ focused }) => {
           let icon;
 
           switch (route.name) {
@@ -66,14 +64,16 @@ function BottomRoutes() {
                 focused
                   ? 'bg-black h-12 w-12 rounded-full flex-row items-center justify-center'
                   : ''
-              }`}>
+              }`}
+            >
               <SvgXml xml={icon} />
             </View>
           );
         },
-        tabBarLabel: ({focused}) =>
-          focused ? null : <Text>{route.name}</Text>,
-      })}>
+        tabBarLabel: ({ focused }) =>
+          focused ? null : <Text style={tw`text-black dark:text-white text-xs`}>{route.name}</Text>,
+      })}
+    >
       <Tab.Screen name="Dashboard" component={Dashboard} />
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Places" component={Places} />
