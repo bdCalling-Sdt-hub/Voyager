@@ -25,6 +25,7 @@ import NormalModal from '../modals/NormalModal';
 import {Checkbox, RadioButton, RadioGroup} from 'react-native-ui-lib';
 import ActionModal from '../modals/ActionModal';
 import {useAppContext} from '../../utils/context/AppContext';
+import { useAppColorScheme } from 'twrnc';
 
 interface Props {
   title?: string;
@@ -43,7 +44,6 @@ interface Props {
   leftIcon?: any;
   middleComponent?: any;
   searchBarShow?: boolean;
-  hideDestination?: boolean;
 }
 
 const activityType = [
@@ -86,13 +86,13 @@ const Header = ({
   leftIcon,
   middleComponent,
   searchBarShow,
-  hideDestination
 }: Props) => {
   const navigation: any = useNavigation();
   const [filterModal, setFilterModal] = useState(false);
   const [locationType, setLocationType] = useState('');
   const [selectedItems, setSelectedItems] = useState([]);
   const [visitedStatus, setVisitedStatus] = useState<string>('');
+  const [colorScheme] = useAppColorScheme(tw);
 
   const handleCheckboxChange = value => {
     if (selectedItems.includes(value)) {
@@ -157,7 +157,7 @@ const Header = ({
                     style={tw`h-[800px] w-[500px] absolute`}>
                     <View
                       style={[
-                        tw`w-56 absolute top-13 left-0 p-4 bg-white  shadow-xl rounded-2xl`,
+                        tw`w-56 absolute top-13 left-0 p-4 bg-white dark:bg-secDarkBg  shadow-xl rounded-2xl`,
                       ]}>
                       <Pressable
                         style={tw`w-full flex-row items-center justify-between`}>
@@ -167,7 +167,7 @@ const Header = ({
                           />
                           <View>
                             <Text
-                              style={tw`text-black text-base font-WorkBold font-700`}>
+                              style={tw`text-black dark:text-white dark:text-white text-base font-WorkBold font-700`}>
                               5
                             </Text>
                             <Text
@@ -182,7 +182,7 @@ const Header = ({
                           />
                           <View>
                             <Text
-                              style={tw`text-black text-base font-WorkBold font-700`}>
+                              style={tw`text-black dark:text-white text-base font-WorkBold font-700`}>
                               12
                             </Text>
                             <Text
@@ -201,7 +201,7 @@ const Header = ({
                             setShowActionModal(false);
                           }}>
                           <Text
-                            style={tw`text-black text-base font-WorkMedium font-500`}>
+                            style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
                             Profile
                           </Text>
                         </TouchableOpacity>
@@ -212,7 +212,7 @@ const Header = ({
                             setShowActionModal(false);
                           }}>
                           <Text
-                            style={tw`text-black text-base font-WorkMedium font-500`}>
+                            style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
                             Collections
                           </Text>
                         </TouchableOpacity>
@@ -223,7 +223,7 @@ const Header = ({
                             setShowActionModal(false);
                           }}>
                           <Text
-                            style={tw`text-black text-base font-WorkMedium font-500`}>
+                            style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
                             Add Friend
                           </Text>
                         </TouchableOpacity>
@@ -234,7 +234,7 @@ const Header = ({
                             setShowActionModal(false);
                           }}>
                           <Text
-                            style={tw`text-black text-base font-WorkMedium font-500`}>
+                            style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
                             Notifications
                           </Text>
                           <View style={tw`h-2 w-2 bg-red rounded-full`} />
@@ -246,7 +246,7 @@ const Header = ({
                             setShowActionModal(false);
                           }}>
                           <Text
-                            style={tw`text-black text-base font-WorkMedium font-500`}>
+                            style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
                             Upgrade to premium
                           </Text>
                         </TouchableOpacity>
@@ -258,7 +258,7 @@ const Header = ({
                             setShowActionModal(false);
                           }}>
                           <Text
-                            style={tw`text-black text-base font-WorkMedium font-500`}>
+                            style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
                             Settings
                           </Text>
                         </TouchableOpacity>
@@ -274,7 +274,7 @@ const Header = ({
           {middleComponent || (
             <Text
               style={[
-                tw`text-black text-[22px] font-WorkMedium capitalize`,
+                tw`text-black dark:text-white dark:text-white text-[22px] font-WorkMedium capitalize`,
                 titleStyle,
               ]}>
               {title}
@@ -306,11 +306,11 @@ const Header = ({
       </View>
 
       {searchBarShow && (
-        <View style={tw`bg-gray80 rounded-full flex-row items-center p-1`}>
+        <View style={tw`bg-gray80 dark:bg-darkBg rounded-full flex-row items-center p-1`}>
           <View
-            style={tw`bg-white rounded-full flex-row items-center gap-4 flex-1 pl-4`}>
+            style={tw`bg-white dark:bg-secDarkBg rounded-full flex-row items-center gap-4 flex-1 pl-4`}>
             <SvgXml xml={IconSearch} />
-            <TextInput placeholder="Search" style={tw`w-[85%]`} />
+            <TextInput placeholder="Search" style={tw`w-[85%]`} placeholderTextColor={`${colorScheme === 'dark' ? '#9A9C9D' : '#000'}`}/>
           </View>
           <View>
             {!hideFilterIcon && (
@@ -333,7 +333,7 @@ const Header = ({
         <View style={tw`pb-6`}>
           {/* header */}
           <View style={tw`flex-row items-center justify-between w-full pb-1`}>
-            <Text style={tw`text-black text-base font-WorkSemiBold`}>
+            <Text style={tw`text-black dark:text-white text-base font-WorkSemiBold`}>
               Filters
             </Text>
             <TouchableOpacity onPress={() => setFilterModal(false)}>
@@ -344,8 +344,8 @@ const Header = ({
             keyboardShouldPersistTaps="always"
             showsVerticalScrollIndicator={false}>
             {/* location type */}
-            {!hideDestination && <View style={tw`mt-2`}>
-              <Text style={tw`text-lg text-black font-WorkMedium`}>
+            <View style={tw`mt-2`}>
+              <Text style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
                 Destination
               </Text>
               <RadioGroup
@@ -365,11 +365,11 @@ const Header = ({
                   color="#8C78EA"
                 />
               </RadioGroup>
-            </View>}
+            </View>
 
             {/* Experience type */}
             <View style={tw`mt-5`}>
-              <Text style={tw`text-lg text-black font-WorkMedium`}>
+              <Text style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
                 Experience type
               </Text>
               <View style={tw`flex-row flex-wrap gap-3 mt-1`}>
@@ -398,7 +398,7 @@ const Header = ({
 
             {/* Best travel time */}
             <View style={tw`mt-5`}>
-              <Text style={tw`text-lg text-black font-WorkMedium`}>
+              <Text style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
                 Best travel time
               </Text>
               <View style={tw`flex-row flex-wrap gap-3 mt-1`}>
@@ -427,7 +427,7 @@ const Header = ({
 
             {/* activity type */}
             <View style={tw`gap-y-3 mt-5`}>
-              <Text style={tw`text-black text-base font-WorkSemiBold`}>
+              <Text style={tw`text-black dark:text-white text-base font-WorkSemiBold`}>
                 Activity level
               </Text>
 

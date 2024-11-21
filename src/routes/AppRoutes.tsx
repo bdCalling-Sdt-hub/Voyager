@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from '../screens/home/Home';
@@ -25,9 +25,21 @@ import {AppProvider} from '../utils/context/AppContext';
 import Friends from '../screens/friends/Friends';
 import OthersProfile from '../screens/profile/OthersProfile';
 import UpdatePassword from '../screens/authentication/UpdatePassword';
+import { useDeviceContext, useAppColorScheme } from 'twrnc';
+import tw from '../lib/tailwind';
+import { useColorScheme } from 'react-native';
 
 const AppRoutes = () => {
   const Stack = createNativeStackNavigator();
+  const colorMode = useColorScheme();
+  console.log("color mode check: ", colorMode);
+  useDeviceContext(tw);
+  const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
+
+  useEffect(() => {
+    setColorScheme(colorMode);
+  }, [colorMode]);
+
   return (
     <GestureHandlerRootView>
       <AppProvider>
@@ -61,6 +73,7 @@ const AppRoutes = () => {
             <Stack.Screen name="Friends" component={Friends} />
             <Stack.Screen name="OthersProfile" component={OthersProfile} />
             <Stack.Screen name="UpdatePassword" component={UpdatePassword} />
+            
           </Stack.Navigator>
         </NavigationContainer>
       </AppProvider>

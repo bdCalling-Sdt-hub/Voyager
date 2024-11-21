@@ -49,7 +49,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({percentage}) => {
       </Svg>
       <View style={tw`absolute justify-center items-center`}>
         <Text
-          style={tw`text-xs font-WorkMedium text-black`}>{`${progress}%`}</Text>
+          style={tw`text-xs font-WorkMedium text-black dark:text-white`}>{`${progress}%`}</Text>
       </View>
     </View>
   );

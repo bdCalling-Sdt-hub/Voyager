@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  Image,
-  FlatList,
-} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
 import React, {useState} from 'react';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
@@ -22,10 +15,11 @@ import {
 
 const Dashboard = ({navigation}: any) => {
   const [activePlace, setActivePlace] = useState('attractions');
+
   return (
     <>
       <ScrollView
-        style={tw`px-[4%] bg-white`}
+        style={tw`px-[4%] bg-white dark:bg-primaryDark`}
         keyboardShouldPersistTaps="always">
         <Header
           title="Dashboard"
@@ -37,12 +31,13 @@ const Dashboard = ({navigation}: any) => {
           hideFilterIcon={true}
         />
         {/* visited location card */}
-        <View style={tw`border border-gray90 p-4 rounded-2xl mt-4`}>
-          <View style={tw`flex-row bg-gray80 p-1 rounded-full`}>
+        <View
+          style={tw`border border-gray90 dark:border-black p-4 rounded-2xl my-4`}>
+          <View style={tw`flex-row bg-gray80 dark:bg-darkBg p-1 rounded-full`}>
             <TouchableOpacity
               style={tw`${
                 activePlace === 'attractions' ? 'bg-violet100' : ''
-              } py-4 rounded-full flex-1 justify-center items-center`}
+              } py-3 rounded-full flex-1 justify-center items-center`}
               onPress={() => setActivePlace('attractions')}>
               <Text
                 style={tw`${
@@ -54,7 +49,7 @@ const Dashboard = ({navigation}: any) => {
             <TouchableOpacity
               style={tw`${
                 activePlace === 'cities' ? 'bg-violet100' : ''
-              } py-4 rounded-full flex-1 justify-center items-center`}
+              } py-3 rounded-full flex-1 justify-center items-center`}
               onPress={() => setActivePlace('cities')}>
               <Text
                 style={tw`${
@@ -66,7 +61,7 @@ const Dashboard = ({navigation}: any) => {
             <TouchableOpacity
               style={tw`${
                 activePlace === 'countries' ? 'bg-violet100' : ''
-              } py-4 rounded-full flex-1 justify-center items-center`}
+              } py-3 rounded-full flex-1 justify-center items-center`}
               onPress={() => setActivePlace('countries')}>
               <Text
                 style={tw`${
@@ -77,13 +72,14 @@ const Dashboard = ({navigation}: any) => {
             </TouchableOpacity>
           </View>
           <View
-            style={tw`bg-violet80 
+            style={tw`bg-violet80 dark:bg-darkBg 
             flex-row rounded-2xl items-center mt-4`}>
             <View style={tw`w-4/12`}>
               <CircularProgress percentage={70} />
             </View>
             <View style={tw`gap-y-2`}>
-              <Text style={tw`capitalize text-black text-sm font-WorkMedium`}>
+              <Text
+                style={tw`capitalize text-black dark:text-white text-sm font-WorkMedium`}>
                 {activePlace} Visited
               </Text>
               <Text
@@ -169,8 +165,9 @@ const Dashboard = ({navigation}: any) => {
 
         <View style={tw`mt-8`}>
           <TouchableOpacity style={tw`flex-row items-center justify-between`}>
-            <View style={tw``}>
-              <Text style={tw`text-black text-base font-WorkMedium`}>
+            <View style={tw`w-11/12`}>
+              <Text
+                style={tw`text-black dark:text-white text-base font-WorkMedium`}>
                 Make Progress on Your Bucket List{' '}
               </Text>
               <Text style={tw`text-gray100 font-WorkRegular text-sm mt-1`}>
@@ -181,13 +178,20 @@ const Dashboard = ({navigation}: any) => {
           </TouchableOpacity>
 
           {places.map(place => (
-            <TouchableOpacity style={tw`flex-row items-center gap-2 mt-6`} key={place.id} onPress={() => {navigation?.navigate('DestinationDetails')}}>
+            <TouchableOpacity
+              style={tw`flex-row items-center gap-2 mt-6`}
+              key={place.id}
+              onPress={() => {
+                navigation?.navigate('DestinationDetails');
+              }}>
               <View style={tw`w-11/12 flex-row items-center gap-4`}>
-                
-                  <Image style={tw`w-4/12 rounded-2xl`} source={require('../../assets/images/place.png')} />
-                
+                <Image
+                  style={tw`w-4/12 rounded-2xl`}
+                  source={require('../../assets/images/place.png')}
+                />
+
                 <View style={tw`flex-shrink`}>
-                  <Text style={tw`text-black font-WorkSemiBold text-[20px]`}>
+                  <Text style={tw`text-black font-WorkSemiBold text-[20px] dark:text-white`}>
                     {place?.title}
                   </Text>
                   <Text style={tw`text-gray100 font-WorkRegular text-xs`}>

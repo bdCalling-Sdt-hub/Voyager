@@ -1,12 +1,13 @@
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import tw from '../../lib/tailwind';
 import Header from '../../components/header/Header';
 import CountryDropdown from './CountryDropdown';
 import {RadioButton, RadioGroup, Switch} from 'react-native-ui-lib';
+import { useAppColorScheme } from 'twrnc';
 
 const AccountSettings = ({navigation}: any) => {
-  const [bucketlistPrivacy, setBucketlistPrivacy] = useState('light_mode');
+  const [themeMode, setThemeMode] = useState('light');
   const [isPushNotificationEnabled, setIsPushNotificationEnabled] =
     useState(false);
   const [isEmailNotificationEnabled, setIsEmailNotificationEnabled] =
@@ -22,8 +23,18 @@ const AccountSettings = ({navigation}: any) => {
 
   const handleInAppNotification = () =>
     setIsInAppNotificationEnabled(previousState => !previousState);
+
+  const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
+
+  useEffect(() => {
+    setColorScheme(themeMode);
+  }, [themeMode]);
+
+  console.log("chslkjsdaflkjsdf: ", themeMode)
+
+
   return (
-    <View style={tw`h-full bg-white px-[4%] pb-2`}>
+    <View style={tw`h-full bg-white dark:bg-primaryDark px-[4%] pb-2`}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Header
           title={'Account Settings'}
@@ -55,18 +66,18 @@ const AccountSettings = ({navigation}: any) => {
                   Theme
                 </Text>
                 <RadioGroup
-                  initialValue={bucketlistPrivacy}
-                  onValueChange={(value: any) => setBucketlistPrivacy(value)}
+                  initialValue={themeMode}
+                  onValueChange={(value: any) => setThemeMode(value)}
                   style={tw`gap-y-3 mt-1`}>
                   <RadioButton
                     label="Light Mode"
-                    value="light_mode"
+                    value="light"
                     color="#8C78EA"
                     labelStyle={tw`text-black text-sm font-WorkMedium font-500`}
                   />
                   <RadioButton
                     label="Dark Mode"
-                    value="dark_mode"
+                    value="dark"
                     color="#8C78EA"
                     labelStyle={tw`text-black text-sm font-WorkMedium font-500`}
                   />
