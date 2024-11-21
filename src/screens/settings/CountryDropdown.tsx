@@ -65,7 +65,7 @@ const CountryDropdown = ({placeholderText, searchPlaceholder}: any) => {
 
   return (
     <View
-      style={tw`flex-row items-center border border-gray90 bg-white h-12 rounded-2xl p-2`}>
+      style={tw`flex-row items-center border border-gray90 dark:border-primaryDark bg-white dark:bg-primaryDark h-12 rounded-2xl p-2`}>
       {selectedCountry && (
         <Image
           source={{uri: getFlagUrl(selectedCountry)}}
@@ -77,14 +77,17 @@ const CountryDropdown = ({placeholderText, searchPlaceholder}: any) => {
         style={tw`flex-1`}
         data={countries}
         labelField="label"
+        containerStyle={tw`dark:bg-darkBg`}
+        selectedTextStyle={tw`dark:text-white text-black text-base font-WorkMedium font-500`}
         valueField="value"
         placeholder={placeholderText || 'Select a country'}
         value={selectedCountry}
         onChange={item => setSelectedCountry(item.value)}
         renderItem={renderItem}
         search
+        activeColor='#141518'
         searchPlaceholder={searchPlaceholder || 'Search country'}
-        placeholderStyle={tw`text-gray50 text-base font-WorkMedium font-500 pl-2`}
+        placeholderStyle={tw`text-gray50 dark:text-gray100 text-base font-WorkMedium font-500 pl-2`}
       />
     </View>
   );

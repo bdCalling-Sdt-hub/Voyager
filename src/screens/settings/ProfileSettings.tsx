@@ -18,7 +18,7 @@ const ProfileSettings = ({navigation}: any) => {
   const [profilePrivacy, setProfilePrivacy] = useState('public');
   const [avatarModalVisible, setAvatarModalVisible] = useState(false);
   return (
-    <View style={tw`h-full bg-white px-[4%] pb-2`}>
+    <View style={tw`h-full bg-white dark:bg-primaryDark px-[4%] pb-2`}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Header
           title={'Profile Settings'}
@@ -48,7 +48,7 @@ const ProfileSettings = ({navigation}: any) => {
           </View>
 
           {/* General Information */}
-          <View style={tw`bg-gray80 rounded-2xl p-4 mt-6`}>
+          <View style={tw`bg-gray80 dark:bg-darkBg rounded-2xl p-4 mt-6`}>
             <Text
               style={tw`text-gray100 text-sm font-WorkMedium font-500 mb-3`}>
               General Information
@@ -58,8 +58,8 @@ const ProfileSettings = ({navigation}: any) => {
                 <InputText
                   placeholder="You Name"
                   defaultValue="Henry William"
-                  placeholderTextColor={'#BBBCBD'}
-                  style={tw`text-black text-base font-WorkMedium font-500`}
+                  placeholderTextColor={'#9ba5b2'}
+                  style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}
                 />
               </View>
               <CountryDropdown />
@@ -67,7 +67,7 @@ const ProfileSettings = ({navigation}: any) => {
           </View>
 
           {/* Social Links */}
-          <View style={tw`bg-gray80 rounded-2xl p-4 mt-6`}>
+          <View style={tw`bg-gray80 dark:bg-darkBg rounded-2xl p-4 mt-6`}>
             <Text
               style={tw`text-gray100 text-sm font-WorkMedium font-500 mb-3`}>
               Social Links
@@ -93,14 +93,14 @@ const ProfileSettings = ({navigation}: any) => {
           </View>
 
           {/* privacy */}
-          <View style={tw`bg-gray80 rounded-2xl p-4 mt-6`}>
+          <View style={tw`bg-gray80 dark:bg-darkBg rounded-2xl p-4 mt-6`}>
             <Text
               style={tw`text-gray100 text-sm font-WorkMedium font-500 mb-3`}>
               Privacy
             </Text>
             <View style={tw`gap-y-2`}>
               <View style={tw`mt-2`}>
-                <Text style={tw`text-lg text-black font-WorkMedium mb-2`}>
+                <Text style={tw`text-lg text-black dark:text-white font-WorkMedium mb-2`}>
                   Who can see your bucketlist?
                 </Text>
                 <RadioGroup
@@ -110,24 +110,24 @@ const ProfileSettings = ({navigation}: any) => {
                     label="Public"
                     value="public"
                     color="#8C78EA"
-                    labelStyle={tw`text-black text-sm font-WorkMedium font-500`}
+                    labelStyle={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}
                   />
                   <RadioButton
                     label="Friends Only"
                     value="friends_only"
                     color="#8C78EA"
-                    labelStyle={tw`text-black text-sm font-WorkMedium font-500`}
+                    labelStyle={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}
                   />
                   <RadioButton
                     label="Private"
                     value="private"
                     color="#8C78EA"
-                    labelStyle={tw`text-black text-sm font-WorkMedium font-500`}
+                    labelStyle={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}
                   />
                 </RadioGroup>
               </View>
               <View style={tw`mt-2`}>
-                <Text style={tw`text-lg text-black font-WorkMedium mb-2`}>
+                <Text style={tw`text-lg text-black dark:text-white font-WorkMedium mb-2`}>
                   Who can see your profile information?
                 </Text>
                 <RadioGroup
@@ -137,19 +137,19 @@ const ProfileSettings = ({navigation}: any) => {
                     label="Public"
                     value="public"
                     color="#8C78EA"
-                    labelStyle={tw`text-black text-sm font-WorkMedium font-500`}
+                    labelStyle={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}
                   />
                   <RadioButton
                     label="Friends Only"
                     value="friends_only"
                     color="#8C78EA"
-                    labelStyle={tw`text-black text-sm font-WorkMedium font-500`}
+                    labelStyle={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}
                   />
                   <RadioButton
                     label="Private"
                     value="private"
                     color="#8C78EA"
-                    labelStyle={tw`text-black text-sm font-WorkMedium font-500`}
+                    labelStyle={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}
                   />
                 </RadioGroup>
               </View>
@@ -194,7 +194,7 @@ const ProfileSettings = ({navigation}: any) => {
                 source={require('../../assets/images/coin.png')}
                 style={tw`h-7 w-7`}
               />
-              <Text style={tw`text-black text-sm font-WorkMedium font-500`}>
+              <Text style={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}>
                 300
               </Text>
             </TouchableOpacity>
@@ -216,7 +216,7 @@ const ProfileSettings = ({navigation}: any) => {
                 source={require('../../assets/images/coin.png')}
                 style={tw`h-7 w-7`}
               />
-              <Text style={tw`text-black text-sm font-WorkMedium font-500`}>
+              <Text style={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}>
                 200
               </Text>
             </TouchableOpacity>
@@ -238,7 +238,7 @@ const ProfileSettings = ({navigation}: any) => {
                 source={require('../../assets/images/coin.png')}
                 style={tw`h-7 w-7`}
               />
-              <Text style={tw`text-black text-sm font-WorkMedium font-500`}>
+              <Text style={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}>
                 300
               </Text>
             </TouchableOpacity>
@@ -260,7 +260,7 @@ const ProfileSettings = ({navigation}: any) => {
                 source={require('../../assets/images/coin.png')}
                 style={tw`h-7 w-7`}
               />
-              <Text style={tw`text-black text-sm font-WorkMedium font-500`}>
+              <Text style={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}>
                 400
               </Text>
             </TouchableOpacity>
