@@ -57,7 +57,7 @@ const PaymentMethod = ({navigation}: any) => {
               </View>
               <View>
                 <Text
-                  style={tw`mb-1 text-[#000000] text-sm font-WorkMedium font-500`}>
+                  style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
                   Card number
                 </Text>
                 <View style={tw`h-12`}>
