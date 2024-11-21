@@ -19,10 +19,10 @@ const Login = ({navigation}: any) => {
   const [isCheck, setIsCheck] = useState(false);
   return (
     <ScrollView
-      style={tw`px-[4%] bg-white h-full pt-3`}
+      style={tw`px-[4%] bg-white h-full pt-3 dark:bg-primaryDark`}
       keyboardShouldPersistTaps="always">
       <View style={tw`py-2 items-center`}>
-        <Text style={[tw`text-black text-2xl font-WorkMedium capitalize`]}>
+        <Text style={[tw`text-black dark:text-white text-2xl font-WorkMedium capitalize`]}>
           Welcome Back
         </Text>
       </View>
@@ -30,6 +30,7 @@ const Login = ({navigation}: any) => {
       <View style={tw`gap-y-4 mt-8`}>
         <View style={tw`h-14`}>
           <InputText
+          fromUP={true}
             svgFirstIcon={IconEnvelop}
             placeholder="Enter your E-mail"
             placeholderTextColor={'#9A9C9D'}
@@ -37,6 +38,7 @@ const Login = ({navigation}: any) => {
         </View>
         <View style={tw`h-14`}>
           <InputText
+          fromUP={true}
             svgFirstIcon={IconKey}
             placeholder="Create Password"
             placeholderTextColor={'#9A9C9D'}
@@ -94,30 +96,30 @@ const Login = ({navigation}: any) => {
         </View>
 
         <TouchableOpacity
-          style={tw`bg-transparent rounded-full p-3 mt-2 border border-gray90 flex-row items-center gap-3 justify-center`}
+          style={tw`bg-transparent rounded-full p-3 mt-2 border border-gray90 dark:border-darkBg flex-row items-center gap-3 justify-center`}
           onPress={() => {
             //   navigation?.navigate('PaymentMethod');
           }}>
           <SvgXml xml={IconFacebook} />
           <Text
-            style={tw`text-center text-black text-base font-WorkSemiBold font-600`}>
+            style={tw`text-center text-black dark:text-white text-base font-WorkSemiBold font-600`}>
             Continue with Facebook
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={tw`bg-transparent rounded-full p-3 mt-2 border border-gray90 flex-row items-center gap-3 justify-center`}
+          style={tw`bg-transparent rounded-full p-3 mt-2 border border-gray90 dark:border-darkBg flex-row items-center gap-3 justify-center`}
           onPress={() => {
             //   navigation?.navigate('PaymentMethod');
           }}>
           <SvgXml xml={IconGoogle} />
           <Text
-            style={tw`text-center text-black text-base font-WorkSemiBold font-600`}>
+            style={tw`text-center text-black dark:text-white text-base font-WorkSemiBold font-600`}>
             Continue with Google
           </Text>
         </TouchableOpacity>
         <View style={tw`flex-row items-center justify-center`}>
-          <Text style={tw`text-black text-sm font-WorkSemiBold font-600`}>
+          <Text style={tw`text-black dark:text-white text-sm font-WorkSemiBold font-600`}>
             Already have an account?{' '}
           </Text>
           <TouchableOpacity

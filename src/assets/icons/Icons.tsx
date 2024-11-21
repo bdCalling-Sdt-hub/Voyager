@@ -481,15 +481,15 @@ export const IconDarkUser = `<svg width="24" height="24" viewBox="0 0 24 24" fil
 `;
 
 export const IconEnvelop = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M2.25 7.5L11.289 12.3675C11.733 12.6075 12.267 12.6075 12.711 12.3675L21.75 7.5" stroke="#24272B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M2.25 7.5C2.25 5.8425 3.4973 4.5 5.03571 4.5H18.9643C20.5027 4.5 21.75 5.8425 21.75 7.5V16.5C21.75 18.1575 20.5027 19.5 18.9643 19.5H5.03571C3.4973 19.5 2.25 18.1575 2.25 16.5V7.5Z" stroke="#24272B" stroke-width="1.5"/>
+<path d="M2.25 7.5L11.289 12.3675C11.733 12.6075 12.267 12.6075 12.711 12.3675L21.75 7.5" stroke="#9BA5B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M2.25 7.5C2.25 5.8425 3.4973 4.5 5.03571 4.5H18.9643C20.5027 4.5 21.75 5.8425 21.75 7.5V16.5C21.75 18.1575 20.5027 19.5 18.9643 19.5H5.03571C3.4973 19.5 2.25 18.1575 2.25 16.5V7.5Z" stroke="#9BA5B2" stroke-width="1.5"/>
 </svg>
 `;
 
 export const IconKey = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M12 13.875C12 13.875 13.5 15 15 15C18.3137 15 21 12.3137 21 9C21 5.68629 18.3137 3 15 3C11.6863 3 9 5.68629 9 9C9 9.68172 9 11.25 9 11.25" stroke="#24272B" stroke-width="1.5" stroke-linecap="round"/>
-<circle cx="15.75" cy="8.25" r="1.5" stroke="#24272B" stroke-width="1.5"/>
-<path d="M9 11.25L3 17.7794L3 21H6.75L7.125 18.75H9.75V16.5H12L13.125 15" stroke="#24272B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 13.875C12 13.875 13.5 15 15 15C18.3137 15 21 12.3137 21 9C21 5.68629 18.3137 3 15 3C11.6863 3 9 5.68629 9 9C9 9.68172 9 11.25 9 11.25" stroke="#9BA5B2" stroke-width="1.5" stroke-linecap="round"/>
+<circle cx="15.75" cy="8.25" r="1.5" stroke="#9BA5B2" stroke-width="1.5"/>
+<path d="M9 11.25L3 17.7794L3 21H6.75L7.125 18.75H9.75V16.5H12L13.125 15" stroke="#9BA5B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
 
