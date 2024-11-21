@@ -46,9 +46,9 @@ const AccountSettings = ({navigation}: any) => {
         {/* body */}
         <View>
           {/* Language */}
-          <View style={tw`bg-gray80 rounded-2xl p-4 mt-2`}>
+          <View style={tw`bg-gray80 dark:bg-darkBg rounded-2xl p-4 mt-2`}>
             <Text
-              style={tw`text-black text-base font-WorkSemiBold font-600 mb-3`}>
+              style={tw`text-black dark:text-white text-base font-WorkSemiBold font-600 mb-3`}>
               Languages
             </Text>
             <CountryDropdown
@@ -58,11 +58,11 @@ const AccountSettings = ({navigation}: any) => {
           </View>
 
           {/* Theme */}
-          <View style={tw`bg-gray80 rounded-2xl p-4 mt-6`}>
+          <View style={tw`bg-gray80 dark:bg-darkBg rounded-2xl p-4 mt-6`}>
             <View style={tw`gap-y-2`}>
               <View style={tw`mt-2`}>
                 <Text
-                  style={tw`text-black text-base font-WorkSemiBold font-600 mb-3`}>
+                  style={tw`text-black dark:text-white text-base font-WorkSemiBold font-600 mb-3`}>
                   Theme
                 </Text>
                 <RadioGroup
@@ -73,13 +73,13 @@ const AccountSettings = ({navigation}: any) => {
                     label="Light Mode"
                     value="light"
                     color="#8C78EA"
-                    labelStyle={tw`text-black text-sm font-WorkMedium font-500`}
+                    labelStyle={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}
                   />
                   <RadioButton
                     label="Dark Mode"
                     value="dark"
                     color="#8C78EA"
-                    labelStyle={tw`text-black text-sm font-WorkMedium font-500`}
+                    labelStyle={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}
                   />
                 </RadioGroup>
               </View>
@@ -87,48 +87,48 @@ const AccountSettings = ({navigation}: any) => {
           </View>
 
           {/* Notification Settings */}
-          <View style={tw`bg-gray80 rounded-2xl p-4 mt-6`}>
+          <View style={tw`bg-gray80 dark:bg-darkBg rounded-2xl p-4 mt-6`}>
             <View style={tw`gap-y-2`}>
               <View>
                 <Text
-                  style={tw`text-black text-base font-WorkSemiBold font-600 mb-3`}>
+                  style={tw`text-black dark:text-white text-base font-WorkSemiBold font-600 mb-3`}>
                   Notification Settings
                 </Text>
                 <View style={tw`gap-y-4`}>
                   <View style={tw`flex-row items-center justify-between`}>
                     <Text
-                      style={tw`text-black text-base font-WorkRegular font-400`}>
+                      style={tw`text-black dark:text-white text-base font-WorkRegular font-400`}>
                       Push Notifications
                     </Text>
                     <Switch
                       value={isPushNotificationEnabled}
                       onValueChange={handlePushNotification}
                       onColor="#8C78EA"
-                      offColor="#E6E6E8"
+                      offColor={colorScheme === 'light' ? '#E6E6E8' : '#141518'}
                     />
                   </View>
                   <View style={tw`flex-row items-center justify-between`}>
                     <Text
-                      style={tw`text-black text-base font-WorkRegular font-400`}>
+                      style={tw`text-black dark:text-white text-base font-WorkRegular font-400`}>
                       E-mail Notifications
                     </Text>
                     <Switch
                       value={isEmailNotificationEnabled}
                       onValueChange={handleEmailNotification}
                       onColor="#8C78EA"
-                      offColor="#E6E6E8"
+                      offColor={colorScheme === 'light' ? '#E6E6E8' : '#141518'}
                     />
                   </View>
                   <View style={tw`flex-row items-center justify-between`}>
                     <Text
-                      style={tw`text-black text-base font-WorkRegular font-400`}>
+                      style={tw`text-black dark:text-white text-base font-WorkRegular font-400`}>
                       In-app Notifications
                     </Text>
                     <Switch
                       value={isInAppNotificationEnabled}
                       onValueChange={handleInAppNotification}
                       onColor="#8C78EA"
-                      offColor="#E6E6E8"
+                      offColor={colorScheme === 'light' ? '#E6E6E8' : '#141518'}
                     />
                   </View>
                 </View>
@@ -136,16 +136,6 @@ const AccountSettings = ({navigation}: any) => {
             </View>
           </View>
 
-          {/* Change Password */}
-          <TouchableOpacity
-            style={tw`bg-gray80 rounded-2xl p-4 mt-6`}
-            onPress={() => {
-              navigation?.navigate('ForgotPassword');
-            }}>
-            <Text style={tw`text-violet100 text-base font-WorkMedium font-500`}>
-              Update Password
-            </Text>
-          </TouchableOpacity>
         </View>
       </ScrollView>
       <TouchableOpacity
