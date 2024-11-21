@@ -83,20 +83,20 @@ const Settings = ({title = 'Settings', navigation}: any) => {
         visible={logoutModalVisible}
         setVisible={setLogoutModalVisible}
         layerContainerStyle={tw`self-center items-center justify-center h-full w-[80%]`}
-        containerStyle={tw`bg-white p-4 rounded-2xl`}>
+        containerStyle={tw`bg-white dark:bg-darkBg p-4 rounded-2xl`}>
         <View>
           <Text
-            style={tw`text-center text-black text-2xl font-WorkSemiBold font-600`}>
+            style={tw`text-center text-black dark:text-white text-2xl font-WorkSemiBold font-600`}>
             Log Out
           </Text>
           <Text
-            style={tw`text-gray60 text-center text-sm font-WorkRegular font-400 mt-2`}>
+            style={tw`text-gray60 dark:text-white text-center text-sm font-WorkRegular font-400 mt-2`}>
             Are you sure do you want to logout?
           </Text>
 
           <View style={tw`flex-row gap-6 mt-5 justify-between`}>
             <TouchableOpacity
-              style={tw`bg-white py-2 rounded-full justify-center items-center border-[2px] border-transparent px-4`}
+              style={tw`bg-white py-1 rounded-full justify-center items-center border-[2px] border-transparent px-4`}
               onPress={() => {
                 navigation?.navigate('Login');
                 setLogoutModalVisible(false);
@@ -106,7 +106,7 @@ const Settings = ({title = 'Settings', navigation}: any) => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={tw`bg-violet100 py-2 rounded-full justify-center items-center border-[2px] border-violet100 px-4`}
+              style={tw`bg-violet100 py-1 rounded-full justify-center items-center border-[2px] border-violet100 px-4`}
               onPress={() => {
                 setLogoutModalVisible(false);
               }}>

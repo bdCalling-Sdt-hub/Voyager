@@ -11,7 +11,7 @@ import notifications from '../../utils/json/notifications.json';
 const Notifications = ({navigation}: any) => {
   const title = 'Notifications';
   return (
-    <View style={tw`bg-white px-[4%] h-full`}>
+    <View style={tw`bg-white px-[4%] h-full dark:bg-primaryDark`}>
       <Header
         title={title || 'Bucket List'}
         containerStyle={tw`mt-2`}
@@ -21,7 +21,7 @@ const Notifications = ({navigation}: any) => {
       {/* body */}
       <ScrollView style={tw`mt-4`} showsVerticalScrollIndicator={false}>
         <View style={tw`flex-row items-center justify-between`}>
-          <Text style={tw`text-black text-sm font-WorkRegular font-400`}>
+          <Text style={tw`text-black dark:text-white text-sm font-WorkRegular font-400`}>
             Today
           </Text>
           <TouchableOpacity>
@@ -35,13 +35,13 @@ const Notifications = ({navigation}: any) => {
         <View style={tw`mt-4 gap-y-2`}>
           {/*add request notification */}
           <TouchableOpacity
-            style={tw`p-2 bg-gray80 rounded-3xl flex-row items-center gap-4`}>
+            style={tw`p-2 bg-gray80 dark:bg-darkBg rounded-3xl flex-row items-center gap-4`}>
             <Image
               source={require('../../assets/images/avatar1.png')}
               style={tw`w-16 h-16 rounded-full`}
             />
             <View style={tw`flex-shrink`}>
-              <Text style={tw`text-black text-base font-WorkRegular font-400`}>
+              <Text style={tw`text-black dark:text-white text-base font-WorkRegular font-400`}>
                 <Text style={tw`font-600 font-WorkSemiBold`}>Anika Marley</Text>{' '}
                 sent you an add Request
               </Text>
@@ -55,7 +55,7 @@ const Notifications = ({navigation}: any) => {
                 </TouchableOpacity>
                 <TouchableOpacity style={tw`rounded-3xl px-5 pt-1 pb-1.5`}>
                   <Text
-                    style={tw`text-black text-base font-600 font-WorkSemiBold`}>
+                    style={tw`text-black dark:text-white text-base font-600 font-WorkSemiBold`}>
                     Cancel
                   </Text>
                 </TouchableOpacity>
@@ -73,7 +73,7 @@ const Notifications = ({navigation}: any) => {
               />
               <View style={tw`flex-shrink`}>
                 <Text
-                  style={tw`text-black text-base font-WorkRegular font-400`}>
+                  style={tw`text-black dark:text-white text-base font-WorkRegular font-400`}>
                   <Text style={tw`font-600 font-WorkSemiBold`}>
                     {item?.title}
                   </Text>{' '}
