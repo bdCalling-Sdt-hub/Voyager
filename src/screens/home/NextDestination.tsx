@@ -36,7 +36,7 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
   })();
 
   return (
-    <View style={tw`px-[4%] bg-white h-full`}>
+    <View style={tw`px-[4%] bg-white h-full dark:bg-primaryDark`}>
       <View>
       <Header
           title={title || 'Next Destination'}
@@ -48,7 +48,8 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
         />
       </View>
 
-      <ScrollView contentContainerStyle={tw`gap-y-4 mt-6`} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="always">
+      <ScrollView contentContainerStyle={tw``} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="always">
+        <View style={tw`gap-y-4 mt-6`}>
         {destinationData?.map((item: any, index: number) => (
           <TouchableOpacity
             style={tw`flex-row items-center gap-4`}
@@ -60,7 +61,7 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
             />
             <View style={tw`gap-y-4`}>
               <View>
-                <Text style={tw`text-black font-WorkMedium text-base`}>
+                <Text style={tw`text-black dark:text-white font-WorkMedium text-base`}>
                   {item?.name}
                 </Text>
                 <Text style={tw`text-gray100 font-WorkRegular text-[10px]`}>
@@ -74,6 +75,7 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
             </View>
           </TouchableOpacity>
         ))}
+        </View>
       </ScrollView>
     </View>
   );

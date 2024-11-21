@@ -21,8 +21,10 @@ import {ExpandableSection, Fader} from 'react-native-ui-lib';
 import Test from './Test';
 import Swiper from 'react-native-swiper';
 import NormalModal from '../../../components/modals/NormalModal';
+import { useAppColorScheme } from 'twrnc';
 
 const DestinationDetails = ({navigation}: NavigProps<null>) => {
+  const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
   const [expanded, setExpanded] = useState(false);
   const [saveBucketListModalVisible, setSaveBucketListModalVisible] =
     useState(false);
@@ -36,10 +38,10 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
   const initialText = expanded ? fullText : words.slice(0, 25).join(' ');
 
   return (
-    <View style={tw`bg-white h-full`}>
+    <View style={tw`bg-white h-full dark:bg-primaryDark`}>
       <View style={tw`h-66`}>
         <Swiper
-          dot={<View style={tw`bg-white w-2 h-2 rounded-full mx-1`} />} // Dot styling
+          dot={<View style={tw`bg-white dark:bg-darkBg w-2 h-2 rounded-full mx-1`} />} // Dot styling
           activeDot={
             <View style={tw`bg-violet100 w-2 h-2 rounded-full mx-1`} />
           }
@@ -71,18 +73,18 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
         </Swiper>
         <>
           <TouchableOpacity
-            style={tw`bg-white h-10 w-10 rounded-full items-center justify-center absolute top-4 right-[4%]`}>
+            style={tw`bg-white dark:bg-darkBg h-10 w-10 rounded-full items-center justify-center absolute top-4 right-[4%]`}>
             <SvgXml xml={IconLogout} />
           </TouchableOpacity>
           <TouchableOpacity
-            style={tw`bg-white h-10 w-10 rounded-full items-center justify-center absolute top-4 left-[4%]`}
+            style={tw`bg-white dark:bg-darkBg h-10 w-10 rounded-full items-center justify-center absolute top-4 left-[4%]`}
             onPress={() => navigation?.goBack()}>
             <SvgXml xml={IconLeftArrow} />
           </TouchableOpacity>
         </>
       </View>
       <ScrollView style={tw`px-[4%] pt-6`}>
-        <Text style={tw`text-black text-[20px] font-WorkMedium`}>
+        <Text style={tw`text-black dark:text-white text-[20px] font-WorkMedium`}>
           The Book of Kells Experience
         </Text>
         <View style={tw`flex-row items-center gap-2 mt-2`}>
@@ -110,14 +112,14 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
           </View>
         </View>
         <View>
-          <Text style={tw`text-sm font-WorkRegular text-black leading-6`}>
+          <Text style={tw`text-sm font-WorkRegular text-black dark:text-white leading-6`}>
             {initialText}
           </Text>
           <Fader
             visible={true}
             position={Fader.position.BOTTOM}
             size={130}
-            tintColor="#ffffff"
+            tintColor={colorScheme === 'dark' ? '#141518' : '#ffffff'}
           />
           <TouchableOpacity
             style={tw`flex-row gap-2 items-center justify-center mt-2`}
@@ -131,9 +133,9 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
           </TouchableOpacity>
         </View>
 
-        <View style={tw`bg-gray80 p-4 rounded-2xl mt-6`}>
+        <View style={tw`bg-gray80 dark:bg-darkBg p-4 rounded-2xl mt-6`}>
           <View
-            style={tw`flex-row items-center gap-4 border-b border-b-gray90 py-4`}>
+            style={tw`flex-row items-center gap-4 border-b border-b-gray90 dark:border-secDarkBg py-4`}>
             <SvgXml xml={IconMuseum} style={tw`flex-shrink`} />
             <Text
               style={tw`text-sm text-gray100 font-WorkRegular leading-[20px] flex-wrap flex-1`}>
@@ -141,7 +143,7 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
             </Text>
           </View>
           <View
-            style={tw`flex-row items-center gap-4 border-b border-b-gray90 py-4`}>
+            style={tw`flex-row items-center gap-4 border-b border-b-gray90 dark:border-secDarkBg py-4`}>
             <SvgXml xml={IconClock} style={tw`flex-shrink`} />
             <Text
               style={tw`text-sm text-gray100 font-WorkRegular leading-[20px] flex-wrap flex-1`}>
@@ -161,7 +163,7 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
         </View>
 
         <View style={tw`mt-6`}>
-          <Text style={tw`text-black text-[20px] font-WorkMedium mb-6`}>
+          <Text style={tw`text-black dark:text-white text-[20px] font-WorkMedium mb-6`}>
             Location
           </Text>
           <MapView
