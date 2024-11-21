@@ -6,11 +6,14 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Pressable,
+  ScrollView,
 } from 'react-native';
 import React, {useState} from 'react';
 import tw from '../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
 import {
+  experiType1,
+  experiType2,
   IconClose,
   IconFilter,
   IconLeftArrow,
@@ -43,11 +46,26 @@ interface Props {
 }
 
 const activityType = [
-  {id: 1, label: 'Adventure'},
-  {id: 2, label: 'Historical'},
-  {id: 3, label: 'Cultural'},
-  {id: 4, label: 'Nature'},
-  {id: 5, label: 'Relaxation'},
+  {id: 1, label: 'Relax'},
+  {id: 2, label: 'Moderate'},
+  {id: 3, label: 'Active'},
+];
+
+const experienceType = [
+  {label: 'Adventure', icon: experiType1},
+  {label: 'Cultural', icon: experiType1},
+  {label: 'Relation', icon: experiType2},
+  {label: 'food', icon: experiType2},
+  {label: 'Nature', icon: experiType1},
+];
+
+const bestTravelTime = [
+  {label: 'Summer', icon: experiType2},
+  {label: 'Rainy', icon: experiType2},
+  {label: 'Winter', icon: experiType1},
+  {label: 'Autumn', icon: experiType1},
+  {label: 'Late-Autumn', icon: experiType2},
+  {label: 'Spring', icon: experiType2},
 ];
 
 const Header = ({
@@ -285,34 +303,34 @@ const Header = ({
         </View>
       </View>
 
-{searchBarShow && (
-  <View style={tw`bg-gray80 rounded-full flex-row items-center p-1`}>
-  <View
-    style={tw`bg-white rounded-full flex-row items-center gap-4 flex-1 pl-4`}>
-    <SvgXml xml={IconSearch} />
-    <TextInput placeholder="Search" style={tw`w-[85%]`} />
-  </View>
-  <View>
-    {!hideFilterIcon && (
-      <TouchableOpacity
-        style={tw`h-12 w-12 flex items-center justify-center rounded-full ml-2 bg-white`}
-        onPress={() => setFilterModal(true)}>
-        <SvgXml xml={IconFilter} />
-      </TouchableOpacity>
-    )}
-  </View>
-</View>
-)}
-      
+      {searchBarShow && (
+        <View style={tw`bg-gray80 rounded-full flex-row items-center p-1`}>
+          <View
+            style={tw`bg-white rounded-full flex-row items-center gap-4 flex-1 pl-4`}>
+            <SvgXml xml={IconSearch} />
+            <TextInput placeholder="Search" style={tw`w-[85%]`} />
+          </View>
+          <View>
+            {!hideFilterIcon && (
+              <TouchableOpacity
+                style={tw`h-12 w-12 flex items-center justify-center rounded-full ml-2 bg-white`}
+                onPress={() => setFilterModal(true)}>
+                <SvgXml xml={IconFilter} />
+              </TouchableOpacity>
+            )}
+          </View>
+        </View>
+      )}
 
       <NormalModal
         visible={filterModal}
         setVisible={setFilterModal}
+        disabled
         layerContainerStyle={tw`self-center items-center justify-center h-full w-[80%]`}
-        containerStyle={tw`bg-white p-4 rounded-2xl`}>
-        <View>
+        containerStyle={tw`bg-white p-4 rounded-2xl h-[80%]`}>
+        <View style={tw`pb-6`}>
           {/* header */}
-          <View style={tw`flex-row items-center justify-between w-full`}>
+          <View style={tw`flex-row items-center justify-between w-full pb-1`}>
             <Text style={tw`text-black text-base font-WorkSemiBold`}>
               Filters
             </Text>
@@ -320,90 +338,125 @@ const Header = ({
               <SvgXml xml={IconClose} />
             </TouchableOpacity>
           </View>
+          <ScrollView
+            keyboardShouldPersistTaps="always"
+            showsVerticalScrollIndicator={false}>
+            {/* location type */}
+            <View style={tw`mt-2`}>
+              <Text style={tw`text-lg text-black font-WorkMedium`}>
+                Destination
+              </Text>
+              <RadioGroup
+                onValueChange={(value: any) => setLocationType(value)}
+                style={tw`gap-y-3 mt-1`}>
+                <RadioButton label="Cities" value="cities" color="#8C78EA" />
 
-          {/* location type */}
-          <View style={tw`mt-2`}>
-            <Text style={tw`text-lg text-black font-WorkMedium`}>
-              Location Type
-            </Text>
-            <RadioGroup
-              onValueChange={(value: any) => setLocationType(value)}
-              style={tw`gap-y-3 mt-1`}>
-              <RadioButton label="Cities" value="cities" color="#8C78EA" />
+                <RadioButton
+                  label="Attractions"
+                  value="attractions"
+                  color="#8C78EA"
+                />
 
-              <RadioButton
-                label="Attractions"
-                value="attractions"
-                color="#8C78EA"
-              />
+                <RadioButton
+                  label="Countries"
+                  value="countries"
+                  color="#8C78EA"
+                />
+              </RadioGroup>
+            </View>
 
-              <RadioButton
-                label="Countries"
-                value="countries"
-                color="#8C78EA"
-              />
-            </RadioGroup>
-          </View>
-
-          {/* visited Status */}
-          <View style={tw`mt-5`}>
-            <Text style={tw`text-lg text-black font-WorkMedium`}>
-              Visited Status
-            </Text>
-            <View style={tw`flex-row flex-wrap gap-3 mt-1`}>
-              {['visited', 'not_visited', 'in_progress'].map(type => (
-                <TouchableOpacity
-                  key={type}
-                  style={tw`${
-                    visitedStatus.includes(type) ? 'bg-violet100' : 'bg-white'
-                  } py-2 rounded-full justify-center items-center border-[2px] border-violet100 px-2`}
-                  onPress={() => toggleVisitedStatus(type)}>
-                  <Text
+            {/* Experience type */}
+            <View style={tw`mt-5`}>
+              <Text style={tw`text-lg text-black font-WorkMedium`}>
+                Experience type
+              </Text>
+              <View style={tw`flex-row flex-wrap gap-3 mt-1`}>
+                {experienceType.map((type, index) => (
+                  <TouchableOpacity
+                    key={index}
                     style={tw`${
-                      visitedStatus.includes(type)
-                        ? 'text-white'
-                        : 'text-violet100'
-                    } font-WorkMedium text-sm capitalize`}>
-                    {type.replace('_', '-')}
-                  </Text>
-                </TouchableOpacity>
+                      visitedStatus.includes(type?.label)
+                        ? 'bg-violet100'
+                        : 'bg-white'
+                    } py-2 flex-row gap-1 rounded-full justify-center items-center border-[2px] border-violet100 px-2`}
+                    onPress={() => toggleVisitedStatus(type?.label)}>
+                    <SvgXml xml={type?.icon} />
+                    <Text
+                      style={tw`${
+                        visitedStatus.includes(type?.label)
+                          ? 'text-white'
+                          : 'text-violet100'
+                      } font-WorkMedium text-sm capitalize`}>
+                      {type?.label.replace('_', '-')}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+
+            {/* Best travel time */}
+            <View style={tw`mt-5`}>
+              <Text style={tw`text-lg text-black font-WorkMedium`}>
+                Best travel time
+              </Text>
+              <View style={tw`flex-row flex-wrap gap-3 mt-1`}>
+                {bestTravelTime.map((type, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={tw`${
+                      visitedStatus.includes(type?.label)
+                        ? 'bg-violet100'
+                        : 'bg-white'
+                    } py-2 flex-row gap-1 rounded-full justify-center items-center border-[2px] border-violet100 px-2`}
+                    onPress={() => toggleVisitedStatus(type?.label)}>
+                    <SvgXml xml={type?.icon} />
+                    <Text
+                      style={tw`${
+                        visitedStatus.includes(type?.label)
+                          ? 'text-white'
+                          : 'text-violet100'
+                      } font-WorkMedium text-sm capitalize`}>
+                      {type?.label.replace('_', '-')}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+
+            {/* activity type */}
+            <View style={tw`gap-y-3 mt-5`}>
+              <Text style={tw`text-black text-base font-WorkSemiBold`}>
+                Activity level
+              </Text>
+
+              {activityType.map(item => (
+                <Checkbox
+                  key={item.id}
+                  color={'#8C78EA'}
+                  value={selectedItems.includes(item.label)}
+                  label={item.label}
+                  onValueChange={() => handleCheckboxChange(item.label)}
+                />
               ))}
             </View>
-          </View>
 
-          {/* activity type */}
-          <View style={tw`gap-y-3 mt-5`}>
-            <Text style={tw`text-black text-base font-WorkSemiBold`}>
-              Activity Type
-            </Text>
-
-            {activityType.map(item => (
-              <Checkbox
-                key={item.id}
-                color={'#8C78EA'}
-                value={selectedItems.includes(item.label)}
-                label={item.label}
-                onValueChange={() => handleCheckboxChange(item.label)}
-              />
-            ))}
-          </View>
-
-          <View style={tw`flex-row gap-6 mt-5`}>
-            <TouchableOpacity
-              style={tw`bg-white py-2 rounded-full justify-center items-center border-[2px] border-violet100 flex-1`}
-              onPress={() => {}}>
-              <Text style={tw`text-violet100 font-WorkSemiBold text-sm`}>
-                Clear all
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={tw`bg-violet100 py-2 rounded-full justify-center items-center border-[2px] border-violet100 flex-1`}
-              onPress={() => setFilterModal(false)}>
-              <Text style={tw`text-white font-WorkSemiBold text-sm`}>
-                Apply Filters
-              </Text>
-            </TouchableOpacity>
-          </View>
+            <View style={tw`flex-row gap-6 mt-5`}>
+              <TouchableOpacity
+                style={tw`bg-white py-2 rounded-full justify-center items-center border-[2px] border-violet100 flex-1`}
+                onPress={() => {}}>
+                <Text style={tw`text-violet100 font-WorkSemiBold text-sm`}>
+                  Clear all
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={tw`bg-violet100 py-2 rounded-full justify-center items-center border-[2px] border-violet100 flex-1`}
+                onPress={() => setFilterModal(false)}>
+                <Text style={tw`text-white font-WorkSemiBold text-sm`}>
+                  Apply Filters
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
         </View>
       </NormalModal>
     </>

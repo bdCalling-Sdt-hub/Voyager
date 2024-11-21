@@ -11,6 +11,7 @@ interface NormalModalProps {
   containerStyle?: any;
   children?: React.ReactNode;
   overlay?: string;
+  disabled?: boolean
 }
 
 const NormalModal = ({
@@ -20,6 +21,7 @@ const NormalModal = ({
   children,
   layerContainerStyle,
   overlay,
+  disabled
 }: NormalModalProps) => {
   return (
     <Modal
@@ -29,7 +31,7 @@ const NormalModal = ({
       visible={visible}
       onBackgroundPress={() => setVisible && setVisible(!visible)}>
       <View style={layerContainerStyle}>
-        <Pressable style={[tw`bg-white w-full p-4`, containerStyle]}>
+        <Pressable style={[tw`bg-white w-full p-4`, containerStyle]} disabled={disabled}>
           {children}
         </Pressable>
       </View>

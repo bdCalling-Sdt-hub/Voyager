@@ -22,6 +22,7 @@ const Tab = createBottomTabNavigator();
 function BottomRoutes() {
   return (
     <Tab.Navigator
+      initialRouteName='Home'
       screenOptions={({route}) => ({
         headerShown: false,
         tabBarStyle: tw`h-22 bg-white shadow-none border border-white`,
