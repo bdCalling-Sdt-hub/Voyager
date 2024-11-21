@@ -17,7 +17,7 @@ const Shop = () => {
     }
   };
   return (
-    <View style={tw`h-full bg-white px-[4%] pb-2`}>
+    <View style={tw`h-full bg-white dark:bg-primaryDark px-[4%] pb-2`}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Header
           containerStyle={tw`mt-2`}
@@ -30,7 +30,8 @@ const Shop = () => {
                 source={require('../../assets/images/coin.png')}
                 style={tw`h-7 w-7`}
               />
-              <Text style={tw`text-black text-sm font-WorkMedium font-500`}>
+              <Text
+                style={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}>
                 300
               </Text>
             </TouchableOpacity>
@@ -62,7 +63,8 @@ const Shop = () => {
         </TouchableOpacity>
 
         {/* tabs */}
-        <View style={tw`flex-row bg-gray80 p-1 rounded-full mt-6`}>
+        <View
+          style={tw`flex-row bg-gray80 dark:bg-darkBg p-1 rounded-full mt-6`}>
           <TouchableOpacity
             style={tw`${
               activePlace === 'avatar' ? 'bg-violet100' : ''

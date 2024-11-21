@@ -8,12 +8,12 @@ const Avatar = ({data}: any) => {
     <View style={tw`flex-row flex-wrap mt-2 justify-between`}>
       {data?.map((item: any) => (
         <View
-          style={tw`w-[48%] items-center bg-white p-4 rounded-2xl mb-2.5 border border-gray90`}>
+          style={tw`w-[48%] items-center bg-white dark:bg-darkBg p-4 rounded-2xl mb-2.5 border border-gray90 dark:border-darkBg`}>
           <Image
             source={require('../../assets/images/avatar3.png')}
             style={tw`w-20 h-20 rounded-full`}
           />
-          <Text style={tw`text-black text-base font-WorkMedium font-500 my-1`}>
+          <Text style={tw`text-black dark:text-white text-base font-WorkMedium font-500 my-1`}>
             {item?.title}
           </Text>
 
@@ -23,7 +23,7 @@ const Avatar = ({data}: any) => {
               source={require('../../assets/images/coin.png')}
               style={tw`h-7 w-7`}
             />
-            <Text style={tw`text-black text-sm font-WorkMedium font-500`}>
+            <Text style={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}>
               {item?.coins}
             </Text>
           </TouchableOpacity>

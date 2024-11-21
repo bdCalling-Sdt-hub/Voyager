@@ -8,7 +8,7 @@ const PowersUps = () => {
     <View>
       {powerUpItems.map((_, index) => (
         <View style={tw`mt-6`} key={index}>
-          <View style={tw`border border-gray90 rounded-2xl p-4`}>
+          <View style={tw`border border-gray90 dark:border-darkBg rounded-2xl p-4`}>
             <View style={tw`flex-row items-center justify-between`}>
               <Image
                 source={require('../../assets/images/powerUps.png')}
@@ -16,7 +16,7 @@ const PowersUps = () => {
               />
               <View>
                 <Text
-                  style={tw`text-black text-base font-WorkSemiBold font-600`}>
+                  style={tw`text-black dark:text-white text-base font-WorkSemiBold font-600`}>
                   Boost XP & coins
                 </Text>
                 <Text
@@ -27,8 +27,8 @@ const PowersUps = () => {
               </View>
             </View>
             <TouchableOpacity
-              style={tw`flex-row items-center gap-2 border border-gray90 rounded-full py-1.5 px-2 justify-center mt-4`}>
-              <Text style={tw`text-black text-sm font-WorkBold font-700`}>
+              style={tw`flex-row items-center gap-2 border border-gray90 dark:border-darkBg rounded-full py-1.5 px-2 justify-center mt-4`}>
+              <Text style={tw`text-black dark:text-white text-sm font-WorkBold font-700`}>
                 Equip
               </Text>
               <Image source={require('../../assets/images/coin.png')} />

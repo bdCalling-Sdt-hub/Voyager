@@ -140,7 +140,7 @@ const Header = ({
             }}>
             {isIcon ? (
               <View
-                style={tw`h-12 w-12 rounded-full bg-white items-center justify-center border border-gray90`}>
+                style={tw`h-12 w-12 rounded-full bg-white dark:bg-darkBg items-center justify-center border border-gray90 dark:border-darkBg`}>
                 <SvgXml xml={leftIcon || IconLeftArrow} />
               </View>
             ) : (
