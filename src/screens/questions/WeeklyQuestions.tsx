@@ -70,7 +70,7 @@ const WeeklyQuestions = () => {
 
   return (
     <>
-      <ScrollView style={tw`px-[4%] bg-white`}>
+      <ScrollView style={tw`px-[4%] bg-white dark:bg-primaryDark`}>
         <Header
           title="Quests"
           containerStyle={tw`mt-2`}
@@ -80,11 +80,11 @@ const WeeklyQuestions = () => {
         />
         {/* visited location card */}
         <View style={tw`mt-2`}>
-          <View style={tw`flex-row bg-gray80 p-1 rounded-full`}>
+          <View style={tw`flex-row bg-gray80 dark:bg-darkBg p-1 rounded-full`}>
             <TouchableOpacity
               style={tw`${
                 activeQuest === 'quests' ? 'bg-violet100' : ''
-              } py-4 rounded-full flex-1 justify-center items-center`}
+              } py-3 rounded-full flex-1 justify-center items-center`}
               onPress={() => setActiveQuest('quests')}>
               <Text
                 style={tw`${
@@ -96,7 +96,7 @@ const WeeklyQuestions = () => {
             <TouchableOpacity
               style={tw`${
                 activeQuest === 'achievements' ? 'bg-violet100' : ''
-              } py-4 rounded-full flex-1 justify-center items-center`}
+              } py-3 rounded-full flex-1 justify-center items-center`}
               onPress={() => setActiveQuest('achievements')}>
               <Text
                 style={tw`${
@@ -111,15 +111,15 @@ const WeeklyQuestions = () => {
         {activeQuest === 'quests' ? (
           <View>
             <View
-              style={tw`bg-brown70 flex-row rounded-2xl items-center mt-4 py-3 pl-6 gap-4`}>
+              style={tw`bg-brown70 dark:bg-darkBg flex-row rounded-2xl items-center mt-4 py-3 pl-6 gap-4`}>
               <Image source={require('../../assets/images/time-stamp.png')} />
               <Text style={tw`text-brown100 text-base font-WorkMedium`}>
                 4 days left
               </Text>
             </View>
             <View
-              style={tw`border border-gray90 p-4 rounded-2xl bg-pink90 mt-4`}>
-              <Text style={tw`text-black text-base font-WorkMedium mb-2`}>
+              style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-pink90 dark:bg-darkBg mt-4`}>
+              <Text style={tw`text-black dark:text-white text-base font-WorkMedium mb-2`}>
                 Weekly Quests Progress
               </Text>
               <Text style={tw`text-xs font-WorkMedium`}>Completed 1/3</Text>
@@ -135,7 +135,7 @@ const WeeklyQuestions = () => {
             <View style={tw`mt-8`}>
               <View>
                 <View style={tw`flex-row items-center`}>
-                  <Text style={tw`text-black text-base font-WorkMedium`}>
+                  <Text style={tw`text-black dark:text-white text-base font-WorkMedium`}>
                     Incomplete
                   </Text>
                 </View>
@@ -143,7 +143,7 @@ const WeeklyQuestions = () => {
                 <View style={tw`gap-y-4 mt-6`}>
                   {quests?.quests?.map((item: any) => (
                     <View
-                      style={tw`flex-row items-center gap-3 border border-gray90 rounded-2xl p-4`}
+                      style={tw`flex-row items-center gap-3 border border-gray90 dark:border-darkBg rounded-2xl p-4`}
                       key={item?.id}>
                       <View style={tw``}>
                         <Image
@@ -152,7 +152,7 @@ const WeeklyQuestions = () => {
                       </View>
                       <View style={tw`flex-shrink gap-y-3`}>
                         <Text
-                          style={tw`text-black font-WorkRegular text-base `}>
+                          style={tw`text-black dark:text-white font-WorkRegular text-base `}>
                           {item?.question}
                         </Text>
 
@@ -184,15 +184,15 @@ const WeeklyQuestions = () => {
 
               <View style={tw`mt-6`}>
                 <View style={tw`flex-row items-center`}>
-                  <Text style={tw`text-black text-base font-WorkMedium`}>
+                  <Text style={tw`text-black dark:text-white text-base font-WorkMedium`}>
                     Completed
                   </Text>
                 </View>
 
-                <View style={tw`gap-y-4 mt-6`}>
+                <View style={tw`gap-y-4 mt-6 pb-2`}>
                   {quests?.quests?.map((item: any) => (
                     <View
-                      style={tw`flex-row items-center justify-between gap-3 border border-gray90 rounded-2xl p-4`}
+                      style={tw`flex-row items-center justify-between gap-3 border border-gray90 dark:border-darkBg rounded-2xl p-4`}
                       key={item?.id}>
                       <View style={tw``}>
                         <Image
@@ -201,7 +201,7 @@ const WeeklyQuestions = () => {
                       </View>
                       <View style={tw`flex-shrink gap-y-3`}>
                         <Text
-                          style={tw`text-black font-WorkRegular text-base `}>
+                          style={tw`text-black dark:text-white font-WorkRegular text-base `}>
                           {item?.question}
                         </Text>
 
@@ -237,7 +237,7 @@ const WeeklyQuestions = () => {
           <View style={tw`mt-6`}>
             <View style={tw`flex-row items-center justify-between gap-4`}>
               <View style={tw`flex-row items-center`}>
-                <Text style={tw`text-base text-black font-WorkMedium`}>
+                <Text style={tw`text-base text-black dark:text-white font-WorkMedium`}>
                   Badges Earned{' '}
                 </Text>
                 <View style={tw`flex-row items-center`}>
@@ -265,7 +265,7 @@ const WeeklyQuestions = () => {
                 <Image
                   source={require('../../assets/images/travel-expert.png')}
                 />
-                <Text style={tw`text-black text-[10px] font-WorkRegular`}>
+                <Text style={tw`text-black dark:text-white text-[10px] font-WorkRegular`}>
                   Travel Expert
                 </Text>
               </TouchableOpacity>
@@ -281,7 +281,7 @@ const WeeklyQuestions = () => {
                 <Image
                   source={require('../../assets/images/top-the-world.png')}
                 />
-                <Text style={tw`text-black text-[10px] font-WorkRegular`}>
+                <Text style={tw`text-black dark:text-white text-[10px] font-WorkRegular`}>
                   Top of the World
                 </Text>
               </TouchableOpacity>
@@ -297,7 +297,7 @@ const WeeklyQuestions = () => {
                 <Image
                   source={require('../../assets/images/cultural-explorer.png')}
                 />
-                <Text style={tw`text-black text-[10px] font-WorkRegular`}>
+                <Text style={tw`text-black dark:text-white text-[10px] font-WorkRegular`}>
                   Cultural Explorer
                 </Text>
               </TouchableOpacity>
@@ -305,19 +305,19 @@ const WeeklyQuestions = () => {
 
             <View>
               <View style={tw`flex-row items-center my-4`}>
-                <Text style={tw`text-black text-base font-WorkMedium`}>
+                <Text style={tw`text-black dark:text-white text-base font-WorkMedium`}>
                   Ongoing
                 </Text>
               </View>
               <View style={tw`gap-y-4`}>
-                <View style={tw`border border-gray90 p-4 rounded-2xl bg-white`}>
+                <View style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-white dark:bg-darkBg`}>
                   <View style={tw`flex-row items-center gap-3`}>
                     <Image
                       source={require('../../assets/images/city-hopper.png')}
                     />
                     <View>
                       <Text
-                        style={tw`text-black text-base font-WorkRegular mb-1`}>
+                        style={tw`text-black dark:text-white text-base font-WorkRegular mb-1`}>
                         City Hopper
                       </Text>
                       <Text
@@ -363,7 +363,7 @@ const WeeklyQuestions = () => {
                     </View>
                   </View>
                 </View>
-                <View style={tw`border border-gray90 p-4 rounded-2xl bg-white`}>
+                <View style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-white dark:bg-darkBg`}>
                   <View style={tw`flex-row items-center gap-3`}>
                     <Image
                       source={require('../../assets/images/beach-explorer.png')}
@@ -417,16 +417,16 @@ const WeeklyQuestions = () => {
                   </View>
                 </View>
 
-                <View>
+                <View style={tw`pb-2`}>
                   <View style={tw`flex-row items-center my-4`}>
-                    <Text style={tw`text-black text-base font-WorkMedium`}>
+                    <Text style={tw`text-black dark:text-white text-base font-WorkMedium`}>
                       Locked
                     </Text>
                   </View>
                   <View style={tw`gap-y-4`}>
                     {quests?.quests?.map((item: any) => (
                       <View
-                        style={tw`flex-row items-center gap-3 border border-gray90 rounded-2xl p-4`}
+                        style={tw`flex-row items-center gap-3 border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl p-4`}
                         key={item?.id}>
                         <View style={tw``}>
                           <Image
@@ -435,7 +435,7 @@ const WeeklyQuestions = () => {
                         </View>
                         <View style={tw`flex-shrink gap-y-3`}>
                           <Text
-                            style={tw`text-black font-WorkRegular text-base `}>
+                            style={tw`text-black dark:text-white font-WorkRegular text-base `}>
                             {item?.question}
                           </Text>
 
@@ -469,27 +469,27 @@ const WeeklyQuestions = () => {
           </View>
         )}
       </ScrollView>
-      {/* {bottomSheetRef?.ref?.current && (
-        
-      )} */}
+   
       <BottomSheet
         backdropComponent={renderBackdrop}
         ref={bottomSheetRef}
         onClose={handleClose}
         snapPoints={snapPoints}
         index={-1}
+        // handleIndicatorStyle={tw`bg-black`}
+        handleStyle={tw`bg-white dark:bg-darkBg`}
         enablePanDownToClose>
         <>
-          <View style={tw`px-4 py-2`}>
+          <View style={tw`px-4 flex-1 py-2 bg-white dark:bg-darkBg`}>
             <View style={tw`items-center`}>
-              <Image source={sheetData?.image} style={tw`h-28 w-28`} />
+              <Image source={sheetData?.image} style={tw`h-22 w-22`} />
             </View>
             <Text
-              style={tw`text-2xl text-center font-WorkBold text-black font-bold mt-6`}>
+              style={tw`text-2xl text-center font-WorkBold text-black dark:text-white font-bold mt-6`}>
               {sheetData?.title || 'Question Title'}
             </Text>
             <Text
-              style={tw`text-base text-gray70 font-WorkMedium text-center mt-2`}>
+              style={tw`text-base text-gray70 dark:text-white font-WorkMedium text-center mt-2`}>
               {sheetData?.subtitle}
             </Text>
             <View style={tw`items-center`}>

@@ -9,10 +9,11 @@ const Achievements = ({navigation}: any) => {
       <View style={tw`gap-y-4`}>
         <View style={tw`flex-row items-center gap-4`}>
           <View
-            style={tw`border border-gray90 rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
+            style={tw`border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
             <Image source={require('../../../assets/images/level.png')} />
             <View>
-              <Text style={tw`text-black text-[20px] font-WorkBold font-700`}>
+              <Text
+                style={tw`text-black dark:text-white text-[20px] font-WorkBold font-700`}>
                 5
               </Text>
               <Text style={tw`text-gray100 text-sm font-WorkMedium font-500`}>
@@ -21,10 +22,11 @@ const Achievements = ({navigation}: any) => {
             </View>
           </View>
           <View
-            style={tw`border border-gray90 rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
+            style={tw`border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
             <Image source={require('../../../assets/images/badges.png')} />
             <View>
-              <Text style={tw`text-black text-[20px] font-WorkBold font-700`}>
+              <Text
+                style={tw`text-black dark:text-white text-[20px] font-WorkBold font-700`}>
                 12
               </Text>
               <Text style={tw`text-gray100 text-sm font-WorkMedium font-500`}>
@@ -35,10 +37,11 @@ const Achievements = ({navigation}: any) => {
         </View>
         <View style={tw`flex-row items-center gap-4`}>
           <View
-            style={tw`border border-gray90 rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
+            style={tw`border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
             <Image source={require('../../../assets/images/coin.png')} />
             <View>
-              <Text style={tw`text-black text-[20px] font-WorkBold font-700`}>
+              <Text
+                style={tw`text-black dark:text-white text-[20px] font-WorkBold font-700`}>
                 400
               </Text>
               <Text style={tw`text-gray100 text-sm font-WorkMedium font-500`}>
@@ -47,7 +50,7 @@ const Achievements = ({navigation}: any) => {
             </View>
           </View>
           <View
-            style={tw`border border-gray90 rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
+            style={tw`border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
             <Image source={require('../../../assets/images/trophy.png')} />
             <View>
               <Text style={tw`text-black text-[20px] font-WorkBold font-700`}>

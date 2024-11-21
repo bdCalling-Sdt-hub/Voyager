@@ -143,8 +143,8 @@ const Dashboard = ({navigation}: any) => {
         </View>
 
         {/* weekly progress */}
-        <View style={tw`border border-gray90 p-4 rounded-2xl bg-pink80`}>
-          <Text style={tw`text-black text-base font-WorkMedium mb-2`}>
+        <View style={tw`border border-gray90 dark:border-darkBg dark:bg-darkBg p-4 rounded-2xl bg-pink80`}>
+          <Text style={tw`text-black dark:text-white text-base font-WorkMedium mb-2`}>
             Weekly Quests Progress
           </Text>
           <Text style={tw`text-xs font-WorkMedium`}>Completed 1/3</Text>
@@ -153,8 +153,8 @@ const Dashboard = ({navigation}: any) => {
           </View>
         </View>
 
-        <View style={tw`border border-gray90 p-4 rounded-2xl bg-blue80 mt-4`}>
-          <Text style={tw`text-black text-base font-WorkMedium mb-2`}>
+        <View style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-blue80 dark:bg-darkBg mt-4`}>
+          <Text style={tw`text-black dark:text-white text-base font-WorkMedium mb-2`}>
             Bucket List Progress
           </Text>
           <Text style={tw`text-xs font-WorkMedium`}>Visited 14/40</Text>

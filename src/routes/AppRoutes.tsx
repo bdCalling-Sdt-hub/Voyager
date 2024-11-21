@@ -37,7 +37,7 @@ const AppRoutes = () => {
   const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
 
   useEffect(() => {
-    setColorScheme(colorMode);
+    setColorScheme("light");
   }, [colorMode]);
 
   return (

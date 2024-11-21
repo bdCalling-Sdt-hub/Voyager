@@ -71,7 +71,7 @@ function BottomRoutes() {
           );
         },
         tabBarLabel: ({ focused }) =>
-          focused ? null : <Text style={tw`text-black dark:text-white text-xs`}>{route.name}</Text>,
+          focused ? null : <Text style={tw`text-black dark:text-white text-xs`}>{route.name === 'Home' ? 'Explore' : route.name}</Text>,
       })}
     >
       <Tab.Screen name="Dashboard" component={Dashboard} />

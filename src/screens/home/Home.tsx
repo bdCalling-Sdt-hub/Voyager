@@ -96,7 +96,7 @@ const Home = ({navigation}: NavigProps<null>) => {
             onPress={() => {
               navigation?.navigate('Places', {title: 'picks for you'});
             }}>
-            <View style={tw``}>
+            <View style={tw`w-11/12`}>
               <Text
                 style={tw`text-black dark:text-white text-base font-WorkMedium`}>
                 Personalized Picks
@@ -128,7 +128,7 @@ const Home = ({navigation}: NavigProps<null>) => {
                       xml={item?.isFav ? IconFilledHeart : IconWhiteHeart}
                     />
                   </View>
-                  <View style={tw`bg-white p-3 w-full rounded-2xl`}>
+                  <View style={tw`bg-white dark:bg-darkBg p-3 w-full rounded-2xl`}>
                     <View style={tw`flex-row items-center`}>
                       <Text
                         style={tw`text-black dark:text-white text-sm font-WorkMedium`}>
@@ -150,7 +150,7 @@ const Home = ({navigation}: NavigProps<null>) => {
             onPress={() => {
               navigation?.navigate('Places', {title: 'top destinations'});
             }}>
-            <View style={tw``}>
+            <View style={tw`w-11/12`}>
               <Text
                 style={tw`text-black dark:text-white text-base font-WorkMedium`}>
                 Top Destinations
@@ -184,7 +184,7 @@ const Home = ({navigation}: NavigProps<null>) => {
                       }
                     /> */}
                   </View>
-                  <View style={tw`bg-white p-3 w-full rounded-2xl`}>
+                  <View style={tw`bg-white dark:bg-darkBg p-3 w-full rounded-2xl`}>
                     <View style={tw`flex-row items-center`}>
                       <Text
                         style={tw`text-black dark:text-white text-sm font-WorkMedium`}>

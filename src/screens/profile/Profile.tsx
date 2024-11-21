@@ -14,7 +14,7 @@ import FriendsList from './components/FriendsList';
 const Profile = ({navigation}: any) => {
   const [activeTab, setActiveTab] = useState(0);
   return (
-    <ScrollView style={tw`px-[4%] pt-2 bg-white h-full`}>
+    <ScrollView style={tw`px-[4%] pt-2 bg-white dark:bg-primaryDark h-full`}>
       <View style={tw`mb-4`}>
         <View style={tw`flex-row items-start justify-between py-2`}>
           <TouchableOpacity
@@ -42,20 +42,36 @@ const Profile = ({navigation}: any) => {
             </View>
           </TouchableOpacity>
         </View>
-        <Text style={tw`text-black text-2xl font-WorkMedium text-center`}>
+        <Text
+          style={tw`text-black dark:text-white text-2xl font-WorkMedium text-center`}>
           Henry William
         </Text>
         <View style={tw`flex-row items-center mt-6`}>
           <View style={tw`items-center flex-1`}>
-            <Text style={tw`text-gray70 text-sm font-WorkMedium`}>Joined</Text>
-            <Text style={tw`text-black text-lg font-WorkSemiBold`}>2024</Text>
+            <Text
+              style={tw`text-gray70 dark:text-white text-sm font-WorkMedium`}>
+              Joined
+            </Text>
+            <Text
+              style={tw`text-black dark:text-white text-lg font-WorkSemiBold`}>
+              2024
+            </Text>
           </View>
           <View style={tw`items-center flex-1`}>
-            <Text style={tw`text-gray70 text-sm font-WorkMedium`}>Friends</Text>
-            <Text style={tw`text-black text-lg font-WorkSemiBold`}>10</Text>
+            <Text
+              style={tw`text-gray70 dark:text-white text-sm font-WorkMedium`}>
+              Friends
+            </Text>
+            <Text
+              style={tw`text-black dark:text-white text-lg font-WorkSemiBold`}>
+              10
+            </Text>
           </View>
           <View style={tw`items-center flex-1`}>
-            <Text style={tw`text-gray70 text-sm font-WorkMedium`}>Coutnry</Text>
+            <Text
+              style={tw`text-gray70 dark:text-white text-sm font-WorkMedium`}>
+              Coutnry
+            </Text>
             <Image
               source={{uri: 'https://flagsapi.com/US/flat/64.png'}}
               style={tw`h-5 w-7 mt-1`}
@@ -89,7 +105,7 @@ const Profile = ({navigation}: any) => {
             onPress={() => setActiveTab(0)}>
             <Text
               style={tw` ${
-                activeTab === 0 ? 'text-violet100' : 'text-gray100'
+                activeTab === 0 ? 'text-violet100' : 'text-gray100 dark:text-white'
               } text-sm font-WorkBold font-700`}>
               Achievements
             </Text>
@@ -101,13 +117,13 @@ const Profile = ({navigation}: any) => {
             onPress={() => setActiveTab(1)}>
             <Text
               style={tw` ${
-                activeTab === 1 ? 'text-violet100' : 'text-gray100'
+                activeTab === 1 ? 'text-violet100' : 'text-gray100 dark:text-white'
               } text-sm font-WorkBold font-700`}>
-              Visited{' '}
+              Visited {''}
             </Text>
             <View
               style={tw`${
-                activeTab === 1 ? 'bg-violet100' : 'bg-gray100'
+                activeTab === 1 ? 'bg-violet100' : 'bg-gray100 dark:bg-secDarkBg'
               } px-1 py-0.5 rounded`}>
               <Text style={tw`text-white text-[10px]`}>03</Text>
             </View>
@@ -119,13 +135,13 @@ const Profile = ({navigation}: any) => {
             onPress={() => setActiveTab(2)}>
             <Text
               style={tw` ${
-                activeTab === 2 ? 'text-violet100' : 'text-gray100'
+                activeTab === 2 ? 'text-violet100' : 'text-gray100 dark:text-white'
               } text-sm font-WorkBold font-700`}>
               Friends{' '}
             </Text>
             <View
               style={tw`${
-                activeTab === 2 ? 'bg-violet100' : 'bg-gray100'
+                activeTab === 2 ? 'bg-violet100' : 'bg-gray100 dark:bg-secDarkBg'
               } px-1 py-0.5 rounded`}>
               <Text style={tw`text-white text-[10px]`}>09</Text>
             </View>
