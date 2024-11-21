@@ -13,9 +13,10 @@ import {SvgXml} from 'react-native-svg';
 import InputText from '../../components/inputs/InputText';
 import NormalModal from '../../components/modals/NormalModal';
 
-const SetNewPassword = ({navigation}: any) => {
+const UpdatePassword = ({navigation}: any) => {
   const [isSecureNewPass, setIsSecureNewPass] = useState(true);
   const [isSecureConfirmPass, setIsSecureConfirmPass] = useState(true);
+  const [isSecureOldPass, setIsSecureOldPass] = useState(true);
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   return (
     <View style={tw`bg-white h-full px-[4%] pb-2`}>
@@ -24,7 +25,7 @@ const SetNewPassword = ({navigation}: any) => {
         keyboardShouldPersistTaps="always">
         {/* Header */}
         <Header
-          title={'Change Password'}
+          title={'Update Password'}
           containerStyle={tw`mt-2`}
           isIcon={true}
           hideRightIcon={true}
@@ -59,9 +60,18 @@ const SetNewPassword = ({navigation}: any) => {
         </View>
 
         <View style={tw`gap-y-4 mt-8`}>
+        <View style={tw`h-14`}>
+            <InputText
+              placeholder="Old Password"
+              placeholderTextColor={'#9A9C9D'}
+              secureTextEntry={isSecureOldPass}
+              svgSecondIcon={isSecureOldPass ? IconCloseEye : IconEye}
+              onPress={() => setIsSecureOldPass(!isSecureOldPass)}
+            />
+          </View>
           <View style={tw`h-14`}>
             <InputText
-              placeholder="Create New Password"
+              placeholder="New Password"
               placeholderTextColor={'#9A9C9D'}
               secureTextEntry={isSecureNewPass}
               svgSecondIcon={isSecureNewPass ? IconCloseEye : IconEye}
@@ -85,7 +95,7 @@ const SetNewPassword = ({navigation}: any) => {
             setIsSuccessModalVisible(true);
           }}>
           <Text style={tw`text-center text-white text-base font-WorkMedium`}>
-            Change Password
+            Update Password
           </Text>
         </TouchableOpacity>
       </ScrollView>
@@ -94,22 +104,22 @@ const SetNewPassword = ({navigation}: any) => {
         setVisible={setIsSuccessModalVisible}
         layerContainerStyle={tw`self-center items-center justify-center h-full w-[80%]`}
         containerStyle={tw`bg-white p-4 rounded-2xl`}>
-        <View>
-          <View style={tw`flex-row items-center gap-2 justify-center`}>
+        <View style={tw`items-center`}>
+          <View style={tw`flex-row items-center gap-2`}>
             <SvgXml xml={IconSuccesTik} />
             <Text style={tw`text-black  text-base font-WorkSemiBold font-500`}>
               You’re done!
             </Text>
           </View>
           <Text style={tw`text-black text-sm font-WorkRegular font-400 text-center mt-1`}>
-            Your password has successfully changed.
+            Your password has successfully updated.
           </Text>
           <View style={tw`w-full`}>
           <TouchableOpacity
             style={tw`bg-violet100 rounded-full p-2 mt-4`}
             onPress={() => {
               setIsSuccessModalVisible(false);
-              navigation.navigate('BottomRoutes');
+              navigation.goBack();
             }}>
             <Text style={tw`text-center text-white text-base font-WorkMedium`}>
               Done
@@ -122,4 +132,4 @@ const SetNewPassword = ({navigation}: any) => {
   );
 };
 
-export default SetNewPassword;
+export default UpdatePassword;

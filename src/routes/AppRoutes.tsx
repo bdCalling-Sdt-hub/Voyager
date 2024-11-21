@@ -24,6 +24,7 @@ import SetNewPassword from '../screens/authentication/SetNewPassword';
 import {AppProvider} from '../utils/context/AppContext';
 import Friends from '../screens/friends/Friends';
 import OthersProfile from '../screens/profile/OthersProfile';
+import UpdatePassword from '../screens/authentication/UpdatePassword';
 
 const AppRoutes = () => {
   const Stack = createNativeStackNavigator();
@@ -59,6 +60,7 @@ const AppRoutes = () => {
             <Stack.Screen name="SetNewPassword" component={SetNewPassword} />
             <Stack.Screen name="Friends" component={Friends} />
             <Stack.Screen name="OthersProfile" component={OthersProfile} />
+            <Stack.Screen name="UpdatePassword" component={UpdatePassword} />
           </Stack.Navigator>
         </NavigationContainer>
       </AppProvider>
