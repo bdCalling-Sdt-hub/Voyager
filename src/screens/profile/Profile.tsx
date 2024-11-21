@@ -18,7 +18,7 @@ const Profile = ({navigation}: any) => {
       <View style={tw`mb-4`}>
         <View style={tw`flex-row items-start justify-between py-2`}>
           <TouchableOpacity
-            style={tw`h-12 w-12 rounded-full bg-white items-center justify-center border border-gray90`}
+            style={tw`h-12 w-12 rounded-full bg-white dark:bg-darkBg items-center justify-center border border-gray90 dark:border-darkBg`}
             onPress={() => navigation?.navigate('Settings')}>
             <SvgXml xml={IconSettings} />
           </TouchableOpacity>
@@ -30,7 +30,7 @@ const Profile = ({navigation}: any) => {
           </View>
           <TouchableOpacity
             style={[
-              tw`border border-gray90 rounded-full h-10 w-10 flex items-center justify-center`,
+              tw`border border-gray90 dark:border-darkBg rounded-full h-10 w-10 flex items-center justify-center`,
             ]}
             onPress={() => {
               navigation?.navigate('Notifications');

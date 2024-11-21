@@ -125,7 +125,7 @@ export const IconShare = `<svg width="16" height="16" viewBox="0 0 16 16" fill="
 </svg>
 `;
 
-export const IconNotification = `<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
+export const IconNotification = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 26 26" fill="none">
   <path fill-rule="evenodd" clip-rule="evenodd" d="M2.05678 21C1.17278 21 0.684778 19.9 1.22778 19.21C2.56378 17.5 4.28778 14.86 4.28778 12.63C4.28778 9 4.85178 4.58 10.1938 3.36C10.9158 3.19 9.69378 1 12.6938 1C15.8318 1 14.4718 3.19 15.1938 3.36C20.5358 4.58 22.0998 9 22.0998 12.63C22.0998 14.91 23.5158 17.62 24.5698 19.33C25.0038 20.03 24.5068 21 23.6798 21H2.05678Z" stroke="#6C6E71" stroke-width="1.5"/>
   <path fill-rule="evenodd" clip-rule="evenodd" d="M8.90879 21.5C8.86979 21.22 9.08979 21 9.36579 21H16.3658C16.6418 21 16.8618 21.22 16.8228 21.5C16.6718 22.57 15.9838 25 12.8658 25C9.74779 25 9.05979 22.57 8.90879 21.5Z" stroke="#6C6E71" stroke-width="1.5"/>
 </svg>
