@@ -22,8 +22,8 @@ import {NavigProps} from '../../utils/interface/NaviProps';
 const Home = ({navigation}: NavigProps<null>) => {
   const [isSearchVisible, setSearchVisible] = useState(false);
   return (
-    <View style={tw`h-full`}>
-      <ScrollView contentContainerStyle={tw`px-[4%] bg-white dark:bg-primaryDark`}>
+    <View style={tw`h-screen px-[4%] bg-white dark:bg-primaryDark`}>
+      <ScrollView contentContainerStyle={tw``}>
         <View style={tw`pb-2`}>
           <Header
             title="Explore"
