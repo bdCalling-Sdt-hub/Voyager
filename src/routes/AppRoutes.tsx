@@ -30,6 +30,8 @@ import tw from '../lib/tailwind';
 import { useColorScheme } from 'react-native';
 import SinglePlace from '../screens/singlePlace/SinglePlace';
 import ProgressBucketlist from '../screens/progressBucketlist/ProgressBucketlist';
+import Faq from '../screens/policyAndAbout/Faq';
+import TermsAndConditions from '../screens/policyAndAbout/TermsAndConditions';
 
 const AppRoutes = () => {
   const Stack = createNativeStackNavigator();
@@ -64,6 +66,8 @@ const AppRoutes = () => {
             <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
             <Stack.Screen name="SinglePlace" component={SinglePlace} />
             <Stack.Screen name="ProgressBucketlist" component={ProgressBucketlist} />
+            <Stack.Screen name="Faq" component={Faq} />
+            <Stack.Screen name="TermsAndConditions" component={TermsAndConditions} />
             <Stack.Screen
               name="SubscriptionPlan"
               component={SubscriptionPlan}

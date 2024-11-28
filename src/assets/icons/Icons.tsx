@@ -176,6 +176,20 @@ export const IconCart = `<svg width="16" height="17" viewBox="0 0 16 17" fill="n
 </svg>
 `;
 
+export const IconFaq = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 8V13" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M11.9941 16H12.0031" stroke="#6C6E71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+export const IconTermsAndConditions = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 8V13" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M11.9941 16H12.0031" stroke="#6C6E71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
 export const IconDangerLogout = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="#FC5D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M16 17L21 12L16 7" stroke="#FC5D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -273,6 +287,12 @@ export const IconAdd = `<svg width="16" height="16" viewBox="0 0 16 16" fill="no
 export const IconBottomArrow = `<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M1 1L7 7L13 1" stroke="#8C78EA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
+`;
+
+export const IconBottomArrowDark = `<svg width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 1L4 4L7 1" stroke="#6C6E71" stroke-linecap="square"/>
+</svg>
+
 `;
 
 export const IconTopArrow = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

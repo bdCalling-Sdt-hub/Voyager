@@ -5,6 +5,7 @@ import tw from '../../lib/tailwind';
 import {
   IconCart,
   IconDangerLogout,
+  IconFaq,
   IconLock,
   IconProfileSettings,
   IconSearch,
@@ -70,6 +71,25 @@ const Settings = ({title = 'Settings', navigation}: any) => {
             Subscription & Billing
           </Text>
         </TouchableOpacity>
+<TouchableOpacity
+          style={tw`flex-row items-center gap-4 p-4 border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl`}
+          onPress={() => navigation.navigate('Faq')}>
+          <SvgXml xml={IconFaq} />
+          <Text style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
+            FAQs
+          </Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity
+          style={tw`flex-row items-center gap-4 p-4 border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl`}
+          onPress={() => navigation.navigate('TermsAndConditions')}>
+          <SvgXml xml={IconCart} />
+          <Text style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
+            Terms & Conditions
+          </Text>
+        </TouchableOpacity>
+
+        
         <TouchableOpacity
           style={tw`flex-row items-center gap-4 p-4 border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl`}
           onPress={() => setLogoutModalVisible(true)}>
