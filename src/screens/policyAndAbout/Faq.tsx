@@ -8,7 +8,7 @@ import {IconLeftArrow} from '../../assets/icons/Icons';
 
 const Faq = ({navigation}: any) => {
   return (
-    <View style={tw`flex-1 bg-white px-[4%] pt-2 dark:bg-primaryDark`}>
+    <View style={tw`flex-1 bg-white px-[4%] pt-4 dark:bg-primaryDark`}>
       <View style={tw`flex-row`}>
         <TouchableOpacity onPress={() => navigation.goBack()}
           style={tw`h-12 w-12 rounded-full bg-white dark:bg-darkBg items-center justify-center border border-gray90 dark:border-darkBg`}>

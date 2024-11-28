@@ -4,78 +4,44 @@ import React from 'react';
 
 import tw from '../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
-import { IconLeftArrow } from '../../assets/icons/Icons';
+import {IconLeftArrow} from '../../assets/icons/Icons';
 
 const TermsAndConditions = ({navigation}: any) => {
   return (
-    <View style={tw`flex-1 px-[4%] pb-[4%] bg-primaryBase`}>
-      <View style={tw`flex-row`}>
-        <TouchableOpacity style={tw`py-6`} onPress={() => navigation.goBack()}>
-          <SvgXml xml={IconLeftArrow} />
-        </TouchableOpacity>
-      </View>
-
+    <View style={tw`flex-1 px-[4%] pb-[4%] bg-white dark:bg-primaryDark`}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={tw`gap-1 border-b border-b-[#E7E7E7] pb-6`}>
-          <Text style={tw`text-secondaryDark font-LexDecaRegular text-base`}>
+        <View style={tw`flex-row mt-4 mb-2`}>
+          <TouchableOpacity onPress={() => navigation?.goBack()}
+            style={tw`h-12 w-12 rounded-full bg-white dark:bg-darkBg items-center justify-center border border-gray90 dark:border-darkBg`}>
+            <SvgXml xml={IconLeftArrow} />
+          </TouchableOpacity>
+        </View>
+        <View style={tw`gap-1 border-b border-b-gray90 pb-6 mb-4`}>
+          <Text style={tw`text-black font-WorkRegular text-base`}>
             AGREEMENT
           </Text>
-          <Text style={tw`text-primary200 font-LexDecaBold text-[32px]`}>
+          <Text style={tw`text-black font-WorkBold text-[32px]`}>
             Terms of Service
           </Text>
-          <Text style={tw`text-inputBg font-LexDecaRegular text-sm`}>
+          <Text style={tw`text-gray100 font-WorkRegular text-sm`}>
             Last updated on 5/12/2024
           </Text>
         </View>
 
-        <View style={tw` gap-2 my-6`}>
-          <Text style={tw`text-primary300 font-NunitoBold text-xl`}>
-            Clause 1
-          </Text>
-          <Text
-            style={tw`text-base font-LexDecaRegular text-offWhite mt-1 leading-6`}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra
-            condimentum eget purus in. Consectetur eget id morbi amet amet, in.
-            Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean
-            leo pharetra in sit semper et. Amet quam placerat sem.
-          </Text>
-        </View>
-        <View style={tw` gap-2 my-6`}>
-          <Text style={tw`text-primary300 font-NunitoBold text-xl`}>
-            Clause 2
-          </Text>
-          <Text
-            style={tw`text-base font-LexDecaRegular text-offWhite mt-1 leading-6`}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra
-            condimentum eget purus in. Consectetur eget id morbi amet amet, in.
-            Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean
-            leo pharetra in sit semper et. Amet quam placerat sem.
-          </Text>
-        </View>
-        <View style={tw`gap-2 my-6`}>
-          <Text style={tw`text-primary300 font-NunitoBold text-xl`}>
-            Clause 3
-          </Text>
-          <Text
-            style={tw`text-base font-LexDecaRegular text-offWhite mt-1 leading-6`}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra
-            condimentum eget purus in. Consectetur eget id morbi amet amet, in.
-            Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean
-            leo pharetra in sit semper et. Amet quam placerat sem.
-          </Text>
-        </View>
-        <View style={tw` gap-2 my-6`}>
-          <Text style={tw`text-primary300 font-NunitoBold text-xl`}>
-            Clause 4
-          </Text>
-          <Text
-            style={tw`text-base font-LexDecaRegular text-offWhite mt-1 leading-6`}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra
-            condimentum eget purus in. Consectetur eget id morbi amet amet, in.
-            Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean
-            leo pharetra in sit semper et. Amet quam placerat sem.
-          </Text>
-        </View>
+        {[...Array(8)].map((_, index) => (
+          <View style={tw` gap-2 mb-4`} key={index}>
+            <Text style={tw`text-black font-NunitoBold text-xl`}>
+              Clause {index + 1}
+            </Text>
+            <Text
+              style={tw`text-gray70 font-WorkRegular text-offWhite mt-1 leading-6`}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra
+              condimentum eget purus in. Consectetur eget id morbi amet amet,
+              in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse
+              aenean leo pharetra in sit semper et. Amet quam placerat sem.
+            </Text>
+          </View>
+        ))}
       </ScrollView>
 
       {/* <Button
