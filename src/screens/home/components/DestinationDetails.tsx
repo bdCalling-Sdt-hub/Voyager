@@ -115,12 +115,13 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
           <Text style={tw`text-sm font-WorkRegular text-black dark:text-white leading-6`}>
             {initialText}
           </Text>
-          <Fader
+          {!expanded && (<Fader
             visible={true}
             position={Fader.position.BOTTOM}
             size={130}
             tintColor={colorScheme === 'dark' ? '#141518' : '#ffffff'}
-          />
+          />)}
+          
           <TouchableOpacity
             style={tw`flex-row gap-2 items-center justify-center mt-2`}
             onPress={() => setExpanded(!expanded)}>
