@@ -32,6 +32,7 @@ import SinglePlace from '../screens/singlePlace/SinglePlace';
 import ProgressBucketlist from '../screens/progressBucketlist/ProgressBucketlist';
 import Faq from '../screens/policyAndAbout/Faq';
 import TermsAndConditions from '../screens/policyAndAbout/TermsAndConditions';
+import PicsForYour from '../screens/picsForYou/PicsForYour';
 
 const AppRoutes = () => {
   const Stack = createNativeStackNavigator();
@@ -68,6 +69,7 @@ const AppRoutes = () => {
             <Stack.Screen name="ProgressBucketlist" component={ProgressBucketlist} />
             <Stack.Screen name="Faq" component={Faq} />
             <Stack.Screen name="TermsAndConditions" component={TermsAndConditions} />
+            <Stack.Screen name="PicsForYour" component={PicsForYour} />
             <Stack.Screen
               name="SubscriptionPlan"
               component={SubscriptionPlan}

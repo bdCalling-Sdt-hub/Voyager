@@ -97,7 +97,7 @@ const Home = ({navigation}: NavigProps<null>) => {
             <TouchableOpacity
               style={tw`flex-row items-center justify-between`}
               onPress={() => {
-                navigation?.navigate('Places', {title: 'picks for you'});
+                navigation?.navigate('PicsForYour');
               }}>
               <View style={tw`w-11/12`}>
                 <Text
@@ -151,11 +151,12 @@ const Home = ({navigation}: NavigProps<null>) => {
           </View>
           <View style={tw`mt-6`}>
             <TouchableOpacity
+              disabled={true}
               style={tw`flex-row items-center justify-between`}
               onPress={() => {
                 navigation?.navigate('Places', {title: 'top destinations'});
               }}>
-              <View style={tw`w-11/12`}>
+              <View style={tw`w-full`}>
                 <Text
                   style={tw`text-black dark:text-white text-base font-WorkMedium`}>
                   Top Destinations
@@ -164,7 +165,7 @@ const Home = ({navigation}: NavigProps<null>) => {
                   Discover popular attractions around the globe
                 </Text>
               </View>
-              <SvgXml xml={IconColoredRightArrow} />
+              {/* <SvgXml xml={IconColoredRightArrow} /> */}
             </TouchableOpacity>
 
             <ScrollView
