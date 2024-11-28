@@ -45,6 +45,7 @@ interface Props {
   middleComponent?: any;
   searchBarShow?: boolean;
   hideDestination?: boolean;
+  rightComponent?: any;
 }
 
 const activityType = [
@@ -87,7 +88,8 @@ const Header = ({
   leftIcon,
   middleComponent,
   searchBarShow,
-  hideDestination
+  hideDestination,
+  rightComponent
 }: Props) => {
   const navigation: any = useNavigation();
   const [filterModal, setFilterModal] = useState(false);
@@ -284,13 +286,13 @@ const Header = ({
           )}
         </View>
         <View style={tw`w-1/6 items-end`}>
-          {!hideRightIcon ? (
+          {rightComponent || !hideRightIcon ? (
             <TouchableOpacity
               style={[
                 tw`flex-row gap-1 items-center justify-center `,
                 IconContainer,
               ]}
-              onPress={onPressSearch}>
+              onPress={() => navigation?.navigate('Shop')}>
               <Image
                 source={require('../../assets/images/coin.png')}
                 style={tw`h-7 w-7`}

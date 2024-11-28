@@ -23,7 +23,8 @@ const Shop = () => {
           containerStyle={tw`mt-2`}
           isIcon={true}
           hideRightIcon={true}
-          middleComponent={
+          title={'Shop'}
+          rightComponent={
             <TouchableOpacity
               style={tw`flex-row items-center gap-2 border border-gold rounded-full py-0.5 px-3`}>
               <Image
