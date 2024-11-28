@@ -17,7 +17,7 @@ const Faq = ({navigation}: any) => {
       </View>
 
       <View style={tw`px-[4%] gap-1 mt-4`}>
-        <Text style={tw`text-black font-WorkExtraBold text-2xl`}>
+        <Text style={tw`text-black dark:text-white font-WorkExtraBold text-2xl`}>
           Frequently Asked {'\n'}Questions
         </Text>
       </View>

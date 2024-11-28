@@ -17,24 +17,24 @@ const TermsAndConditions = ({navigation}: any) => {
           </TouchableOpacity>
         </View>
         <View style={tw`gap-1 border-b border-b-gray90 pb-6 mb-4`}>
-          <Text style={tw`text-black font-WorkRegular text-base`}>
+          <Text style={tw`text-black dark:text-white font-WorkRegular text-base`}>
             AGREEMENT
           </Text>
-          <Text style={tw`text-black font-WorkBold text-[32px]`}>
+          <Text style={tw`text-black dark:text-white font-WorkBold text-[32px]`}>
             Terms of Service
           </Text>
-          <Text style={tw`text-gray100 font-WorkRegular text-sm`}>
+          <Text style={tw`text-gray100 dark:text-white font-WorkRegular text-sm`}>
             Last updated on 5/12/2024
           </Text>
         </View>
 
         {[...Array(8)].map((_, index) => (
           <View style={tw` gap-2 mb-4`} key={index}>
-            <Text style={tw`text-black font-NunitoBold text-xl`}>
+            <Text style={tw`text-black dark:text-white font-NunitoBold text-xl`}>
               Clause {index + 1}
             </Text>
             <Text
-              style={tw`text-gray70 font-WorkRegular text-offWhite mt-1 leading-6`}>
+              style={tw`text-gray70 font-WorkRegular dark:text-white mt-1 leading-6`}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra
               condimentum eget purus in. Consectetur eget id morbi amet amet,
               in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse

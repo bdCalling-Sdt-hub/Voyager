@@ -15,7 +15,7 @@ const Expend = () => {
         expanded={expend}
         sectionHeader={
           <View style={tw`flex-row justify-between items-center`}>
-            <Text style={tw`text-black font-WorkBold text-base`}>
+            <Text style={tw`text-black dark:text-white font-WorkBold text-base`}>
               What is the purpose of this app?
             </Text>
             <SvgXml xml={IconBottomArrowDark} style={tw`pr-4`} />
