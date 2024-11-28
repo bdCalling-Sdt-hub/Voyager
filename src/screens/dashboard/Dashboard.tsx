@@ -143,7 +143,7 @@ const Dashboard = ({navigation}: any) => {
         </View>
 
         {/* weekly progress */}
-        <View style={tw`border border-gray90 dark:border-darkBg dark:bg-darkBg p-4 rounded-2xl bg-pink80`}>
+        <TouchableOpacity style={tw`border border-gray90 dark:border-darkBg dark:bg-darkBg p-4 rounded-2xl bg-pink80`} onPress={() => navigation.navigate('Quests', {screen: 'quests'})}>
           <Text style={tw`text-black dark:text-white text-base font-WorkMedium mb-2`}>
             Weekly Quests Progress
           </Text>
@@ -151,7 +151,7 @@ const Dashboard = ({navigation}: any) => {
           <View style={tw`mt-4`} pointerEvents="none">
             <RangeSlider color="#ff5c8d" value={33} />
           </View>
-        </View>
+        </TouchableOpacity>
 
         <View style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-blue80 dark:bg-darkBg mt-4`}>
           <Text style={tw`text-black dark:text-white text-base font-WorkMedium mb-2`}>

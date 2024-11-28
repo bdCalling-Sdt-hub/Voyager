@@ -7,7 +7,7 @@ import {
   TouchableWithoutFeedback,
   Pressable,
 } from 'react-native';
-import React, {useCallback, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
 import RangeSlider from '../../components/slider/RangeSlider';
@@ -24,16 +24,35 @@ import {
 import BottomSheet, {BottomSheetBackdrop} from '@gorhom/bottom-sheet';
 import NormalModal from '../../components/modals/NormalModal';
 import {BottomSheetProvider} from '@gorhom/bottom-sheet/lib/typescript/contexts';
+import {NavigProps} from '../../utils/interface/NaviProps';
+import { useFocusEffect } from '@react-navigation/native';
 
 interface SheetData {
   title?: string;
   subtitle?: string;
   image?: string;
 }
-const WeeklyQuestions = () => {
-  const [activeQuest, setActiveQuest] = React.useState('quests');
+const WeeklyQuestions = ({route}: NavigProps<null>) => {
+  const {screen} = route?.params || {};
+  const [activeQuest, setActiveQuest] = useState(screen || 'quests');
   const [achievementsPopupVisible, setAchievementsPopupVisible] =
     useState<boolean>(false);
+
+    useFocusEffect(
+      React.useCallback(() => {
+        if (screen) {
+          setActiveQuest(screen);
+          console.log("Screen focused, state updated with screen:", screen);
+        } else {
+          console.log("Screen focused, but no screen value found.");
+        }
+  
+        return () => {
+          console.log("Cleanup on screen unfocus");
+          setActiveQuest(activeQuest);
+        };
+      }, [screen])
+    ); 
 
   const bottomSheetRef = useRef(null);
 
@@ -119,7 +138,8 @@ const WeeklyQuestions = () => {
             </View>
             <View
               style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-pink90 dark:bg-darkBg mt-4`}>
-              <Text style={tw`text-black dark:text-white text-base font-WorkMedium mb-2`}>
+              <Text
+                style={tw`text-black dark:text-white text-base font-WorkMedium mb-2`}>
                 Weekly Quests Progress
               </Text>
               <Text style={tw`text-xs font-WorkMedium`}>Completed 1/3</Text>
@@ -135,7 +155,8 @@ const WeeklyQuestions = () => {
             <View style={tw`mt-8`}>
               <View>
                 <View style={tw`flex-row items-center`}>
-                  <Text style={tw`text-black dark:text-white text-base font-WorkMedium`}>
+                  <Text
+                    style={tw`text-black dark:text-white text-base font-WorkMedium`}>
                     Incomplete
                   </Text>
                 </View>
@@ -184,7 +205,8 @@ const WeeklyQuestions = () => {
 
               <View style={tw`mt-6`}>
                 <View style={tw`flex-row items-center`}>
-                  <Text style={tw`text-black dark:text-white text-base font-WorkMedium`}>
+                  <Text
+                    style={tw`text-black dark:text-white text-base font-WorkMedium`}>
                     Completed
                   </Text>
                 </View>
@@ -237,7 +259,8 @@ const WeeklyQuestions = () => {
           <View style={tw`mt-6`}>
             <View style={tw`flex-row items-center justify-between gap-4`}>
               <View style={tw`flex-row items-center`}>
-                <Text style={tw`text-base text-black dark:text-white font-WorkMedium`}>
+                <Text
+                  style={tw`text-base text-black dark:text-white font-WorkMedium`}>
                   Badges Earned{' '}
                 </Text>
                 <View style={tw`flex-row items-center`}>
@@ -265,7 +288,8 @@ const WeeklyQuestions = () => {
                 <Image
                   source={require('../../assets/images/travel-expert.png')}
                 />
-                <Text style={tw`text-black dark:text-white text-[10px] font-WorkRegular`}>
+                <Text
+                  style={tw`text-black dark:text-white text-[10px] font-WorkRegular`}>
                   Travel Expert
                 </Text>
               </TouchableOpacity>
@@ -281,7 +305,8 @@ const WeeklyQuestions = () => {
                 <Image
                   source={require('../../assets/images/top-the-world.png')}
                 />
-                <Text style={tw`text-black dark:text-white text-[10px] font-WorkRegular`}>
+                <Text
+                  style={tw`text-black dark:text-white text-[10px] font-WorkRegular`}>
                   Top of the World
                 </Text>
               </TouchableOpacity>
@@ -297,7 +322,8 @@ const WeeklyQuestions = () => {
                 <Image
                   source={require('../../assets/images/cultural-explorer.png')}
                 />
-                <Text style={tw`text-black dark:text-white text-[10px] font-WorkRegular`}>
+                <Text
+                  style={tw`text-black dark:text-white text-[10px] font-WorkRegular`}>
                   Cultural Explorer
                 </Text>
               </TouchableOpacity>
@@ -305,12 +331,14 @@ const WeeklyQuestions = () => {
 
             <View>
               <View style={tw`flex-row items-center my-4`}>
-                <Text style={tw`text-black dark:text-white text-base font-WorkMedium`}>
+                <Text
+                  style={tw`text-black dark:text-white text-base font-WorkMedium`}>
                   Ongoing
                 </Text>
               </View>
               <View style={tw`gap-y-4`}>
-                <View style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-white dark:bg-darkBg`}>
+                <View
+                  style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-white dark:bg-darkBg`}>
                   <View style={tw`flex-row items-center gap-3`}>
                     <Image
                       source={require('../../assets/images/city-hopper.png')}
@@ -363,7 +391,8 @@ const WeeklyQuestions = () => {
                     </View>
                   </View>
                 </View>
-                <View style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-white dark:bg-darkBg`}>
+                <View
+                  style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-white dark:bg-darkBg`}>
                   <View style={tw`flex-row items-center gap-3`}>
                     <Image
                       source={require('../../assets/images/beach-explorer.png')}
@@ -399,8 +428,8 @@ const WeeklyQuestions = () => {
                       </View>
                     </View>
                   </View>
-                   {/* tresure progressbar */}
-                   <View style={tw`flex-row items-center justify-between mt-3`}>
+                  {/* tresure progressbar */}
+                  <View style={tw`flex-row items-center justify-between mt-3`}>
                     <View style={tw`bg-violet90 h-3.5 rounded-full w-10/12`}>
                       <View
                         style={tw`bg-violet100 w-[75%] h-full rounded-full items-end justify-center`}>
@@ -419,7 +448,8 @@ const WeeklyQuestions = () => {
 
                 <View style={tw`pb-2`}>
                   <View style={tw`flex-row items-center my-4`}>
-                    <Text style={tw`text-black dark:text-white text-base font-WorkMedium`}>
+                    <Text
+                      style={tw`text-black dark:text-white text-base font-WorkMedium`}>
                       Locked
                     </Text>
                   </View>
@@ -469,7 +499,7 @@ const WeeklyQuestions = () => {
           </View>
         )}
       </ScrollView>
-   
+
       <BottomSheet
         backdropComponent={renderBackdrop}
         ref={bottomSheetRef}
