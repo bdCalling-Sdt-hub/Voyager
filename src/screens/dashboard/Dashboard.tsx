@@ -18,7 +18,7 @@ const Dashboard = ({navigation}: any) => {
 
   return (
     <>
-      <ScrollView
+      <ScrollView showsVerticalScrollIndicator={false}
         style={tw`px-[4%] bg-white dark:bg-primaryDark`}
         keyboardShouldPersistTaps="always">
         <Header
@@ -71,7 +71,7 @@ const Dashboard = ({navigation}: any) => {
               </Text>
             </TouchableOpacity>
           </View>
-          <View
+          <TouchableOpacity onPress={() => {navigation.navigate('SinglePlace', {title: activePlace})}}
             style={tw`bg-violet80 dark:bg-darkBg 
             flex-row rounded-2xl items-center mt-4`}>
             <View style={tw`w-4/12`}>
@@ -87,7 +87,7 @@ const Dashboard = ({navigation}: any) => {
                 45
               </Text>
             </View>
-          </View>
+          </TouchableOpacity>
           <View>
             <Text style={tw`text-gray100 text-xs font-WorkRegular mt-4 mb-2`}>
               Places you visited

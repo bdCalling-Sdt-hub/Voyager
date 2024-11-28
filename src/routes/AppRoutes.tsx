@@ -28,6 +28,7 @@ import UpdatePassword from '../screens/authentication/UpdatePassword';
 import { useDeviceContext, useAppColorScheme } from 'twrnc';
 import tw from '../lib/tailwind';
 import { useColorScheme } from 'react-native';
+import SinglePlace from '../screens/singlePlace/SinglePlace';
 
 const AppRoutes = () => {
   const Stack = createNativeStackNavigator();
@@ -60,6 +61,7 @@ const AppRoutes = () => {
             <Stack.Screen name="AccountSettings" component={AccountSettings} />
             <Stack.Screen name="Subscription" component={Subscription} />
             <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
+            <Stack.Screen name="SinglePlace" component={SinglePlace} />
             <Stack.Screen
               name="SubscriptionPlan"
               component={SubscriptionPlan}
