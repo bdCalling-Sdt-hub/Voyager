@@ -153,7 +153,8 @@ const Dashboard = ({navigation}: any) => {
           </View>
         </TouchableOpacity>
 
-        <View style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-blue80 dark:bg-darkBg mt-4`}>
+        {/* bucket list progress */}
+        <TouchableOpacity style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-blue80 dark:bg-darkBg mt-4`} onPress={() => navigation.navigate('Places')}>
           <Text style={tw`text-black dark:text-white text-base font-WorkMedium mb-2`}>
             Bucket List Progress
           </Text>
@@ -161,7 +162,7 @@ const Dashboard = ({navigation}: any) => {
           <View pointerEvents="none">
             <RangeSlider color="#32B1B4" containerStyle={tw`mt-4`} value={35} />
           </View>
-        </View>
+        </TouchableOpacity>
 
         <View style={tw`mt-8 pb-2`}>
           <TouchableOpacity style={tw`flex-row items-center justify-between`}>
