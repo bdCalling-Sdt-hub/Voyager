@@ -29,6 +29,7 @@ import { useDeviceContext, useAppColorScheme } from 'twrnc';
 import tw from '../lib/tailwind';
 import { useColorScheme } from 'react-native';
 import SinglePlace from '../screens/singlePlace/SinglePlace';
+import ProgressBucketlist from '../screens/progressBucketlist/ProgressBucketlist';
 
 const AppRoutes = () => {
   const Stack = createNativeStackNavigator();
@@ -62,6 +63,7 @@ const AppRoutes = () => {
             <Stack.Screen name="Subscription" component={Subscription} />
             <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
             <Stack.Screen name="SinglePlace" component={SinglePlace} />
+            <Stack.Screen name="ProgressBucketlist" component={ProgressBucketlist} />
             <Stack.Screen
               name="SubscriptionPlan"
               component={SubscriptionPlan}

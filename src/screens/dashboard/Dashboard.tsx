@@ -165,7 +165,7 @@ const Dashboard = ({navigation}: any) => {
         </TouchableOpacity>
 
         <View style={tw`mt-8 pb-2`}>
-          <TouchableOpacity style={tw`flex-row items-center justify-between`}>
+          <TouchableOpacity style={tw`flex-row items-center justify-between`} onPress={() => navigation.navigate('ProgressBucketlist')}>
             <View style={tw`w-11/12`}>
               <Text
                 style={tw`text-black dark:text-white text-base font-WorkMedium`}>
@@ -180,30 +180,30 @@ const Dashboard = ({navigation}: any) => {
 
           {places.map(place => (
             <TouchableOpacity
-              style={tw`flex-row items-center gap-2 mt-6`}
+              style={tw`flex-row items-center gap-2 rounded-2xl mt-6 p-1 ${place?.color ? `border-r border-b border-b-[${place?.color}] border-r-[${place?.color}]` : ''}`}
               key={place.id}
               onPress={() => {
                 navigation?.navigate('DestinationDetails');
               }}>
-              <View style={tw`w-11/12 flex-row items-center gap-4`}>
-                <Image
-                  style={tw`w-4/12 rounded-2xl`}
-                  source={require('../../assets/images/place.png')}
-                />
-
-                <View style={tw`flex-shrink`}>
-                  <Text
-                    style={tw`text-black font-WorkSemiBold text-[20px] dark:text-white`}>
+              <Image
+            source={{uri: place?.image_url}}
+            style={tw`rounded-2xl w-4/12 h-24`}
+          />
+          <View style={tw`flex-1 justify-between flex-row items-center gap-2`}>
+            <View style={tw`gap-y-1`}>
+              <View style={tw``}>
+                <View style={tw`flex-row items-center`}>
+                  <Text style={tw`text-black dark:text-white font-WorkSemiBold text-[20px]`}>
                     {place?.title}
                   </Text>
-                  <Text style={tw`text-gray100 font-WorkRegular text-xs`}>
-                    {place?.subtitle}
-                  </Text>
                 </View>
+                <Text style={tw`text-gray100 font-WorkRegular text-sm`}>
+                  {place?.subtitle || 'Location'}
+                </Text>
               </View>
-              <View>
-                <SvgXml xml={IconFilledHeart} />
-              </View>
+            </View>
+          </View>
+          <SvgXml xml={IconFilledHeart} style={tw`mr-1.5`} />
             </TouchableOpacity>
           ))}
         </View>

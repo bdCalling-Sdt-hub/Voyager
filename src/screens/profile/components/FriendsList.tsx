@@ -20,7 +20,7 @@ const FriendsList = ({navigation}: any) => {
             style={tw`w-16 h-16 rounded-full`}
           />
           <View style={tw`flex-shrink`}>
-            <Text style={tw`text-black text-base font-600 font-WorkSemiBold`}>
+            <Text style={tw`text-black dark:text-white text-base font-600 font-WorkSemiBold`}>
               {item?.name}
             </Text>
           </View>

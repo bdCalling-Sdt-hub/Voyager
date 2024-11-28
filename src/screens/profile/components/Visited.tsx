@@ -23,7 +23,7 @@ const Visited = ({navigation}: any) => {
             <View style={tw`gap-y-1`}>
               <View style={tw``}>
                 <View style={tw`flex-row items-center`}>
-                  <Text style={tw`text-black font-WorkSemiBold text-[20px]`}>
+                  <Text style={tw`text-black dark:text-white font-WorkSemiBold text-[20px]`}>
                     {item?.name}
                   </Text>
                 </View>
