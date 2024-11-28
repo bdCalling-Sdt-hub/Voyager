@@ -23,7 +23,7 @@ const Home = ({navigation}: NavigProps<null>) => {
   const [isSearchVisible, setSearchVisible] = useState(false);
   return (
     <View style={tw`h-screen px-[4%] bg-white dark:bg-primaryDark`}>
-      <ScrollView contentContainerStyle={tw``}>
+      <ScrollView contentContainerStyle={tw``} showsVerticalScrollIndicator={false}>
         <View style={tw`pb-2`}>
           <Header
             title="Explore"

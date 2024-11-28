@@ -89,7 +89,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
 
   return (
     <>
-      <ScrollView style={tw`px-[4%] bg-white dark:bg-primaryDark`}>
+      <ScrollView style={tw`px-[4%] bg-white dark:bg-primaryDark`} showsVerticalScrollIndicator={false}>
         <Header
           title="Quests"
           containerStyle={tw`mt-2`}

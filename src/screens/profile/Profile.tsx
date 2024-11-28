@@ -14,7 +14,7 @@ import FriendsList from './components/FriendsList';
 const Profile = ({navigation}: any) => {
   const [activeTab, setActiveTab] = useState(0);
   return (
-    <ScrollView style={tw`px-[4%] pt-2 bg-white dark:bg-primaryDark h-full`}>
+    <ScrollView style={tw`px-[4%] pt-2 bg-white dark:bg-primaryDark h-full`} showsVerticalScrollIndicator={false}>
       <View style={tw`mb-4`}>
         <View style={tw`flex-row items-start justify-between py-2`}>
           <TouchableOpacity
