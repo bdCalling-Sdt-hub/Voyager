@@ -16,7 +16,7 @@ const PicsForYour = ({navigation, route}: NavigProps<null>) => {
         containerStyle={tw`mt-2`}
         icon={IconSearch}
         isSearchVisible={true}
-        searchBarShow={false}
+        searchBarShow={true}
         hideDestination={true}
         isIcon={true}
       />
