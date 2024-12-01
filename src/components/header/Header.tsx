@@ -25,7 +25,7 @@ import NormalModal from '../modals/NormalModal';
 import {Checkbox, RadioButton, RadioGroup} from 'react-native-ui-lib';
 import ActionModal from '../modals/ActionModal';
 import {useAppContext} from '../../utils/context/AppContext';
-import { useAppColorScheme } from 'twrnc';
+import {useAppColorScheme} from 'twrnc';
 
 interface Props {
   title?: string;
@@ -89,7 +89,7 @@ const Header = ({
   middleComponent,
   searchBarShow,
   hideDestination,
-  rightComponent
+  rightComponent,
 }: Props) => {
   const navigation: any = useNavigation();
   const [filterModal, setFilterModal] = useState(false);
@@ -141,7 +141,8 @@ const Header = ({
               }
             }}>
             {isIcon ? (
-              <TouchableOpacity onPress={() => navigation?.goBack()}
+              <TouchableOpacity
+                onPress={() => navigation?.goBack()}
                 style={tw`h-12 w-12 rounded-full bg-white dark:bg-darkBg items-center justify-center border border-gray90 dark:border-darkBg`}>
                 <SvgXml xml={leftIcon || IconLeftArrow} />
               </TouchableOpacity>
@@ -310,11 +311,18 @@ const Header = ({
       </View>
 
       {searchBarShow && (
-        <View style={tw`bg-gray80 dark:bg-darkBg rounded-full flex-row items-center p-1`}>
+        <View
+          style={tw`bg-gray80 dark:bg-darkBg rounded-full flex-row items-center p-1`}>
           <View
             style={tw`bg-white dark:bg-secDarkBg rounded-full flex-row items-center gap-4 flex-1 pl-4`}>
             <SvgXml xml={IconSearch} />
-            <TextInput placeholder="Search" style={tw`w-[85%]`} placeholderTextColor={`${colorScheme === 'dark' ? '#9A9C9D' : '#000'}`}/>
+            <TextInput
+              placeholder="Search"
+              style={tw`w-[85%]`}
+              placeholderTextColor={`${
+                colorScheme === 'dark' ? '#9A9C9D' : '#000000'
+              }`}
+            />
           </View>
           <View>
             {!hideFilterIcon && (
@@ -337,7 +345,8 @@ const Header = ({
         <View style={tw`pb-6`}>
           {/* header */}
           <View style={tw`flex-row items-center justify-between w-full pb-1`}>
-            <Text style={tw`text-black dark:text-white text-base font-WorkSemiBold`}>
+            <Text
+              style={tw`text-black dark:text-white text-base font-WorkSemiBold`}>
               Filters
             </Text>
             <TouchableOpacity onPress={() => setFilterModal(false)}>
@@ -348,35 +357,43 @@ const Header = ({
             keyboardShouldPersistTaps="always"
             showsVerticalScrollIndicator={false}>
             {/* location type */}
-            {!hideDestination && (<View style={tw`mt-2`}>
-              <Text style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
-                Destination
-              </Text>
-              <RadioGroup
-                onValueChange={(value: any) => setLocationType(value)}
-                style={tw`gap-y-3 mt-1`}>
-                <RadioButton label="Cities" value="cities" labelStyle={tw`text-black dark:text-white`} color="#8C78EA" />
+            {!hideDestination && (
+              <View style={tw`mt-2`}>
+                <Text
+                  style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
+                  Destination
+                </Text>
+                <RadioGroup
+                  onValueChange={(value: any) => setLocationType(value)}
+                  style={tw`gap-y-3 mt-1`}>
+                  <RadioButton
+                    label="Cities"
+                    value="cities"
+                    labelStyle={tw`text-black dark:text-white`}
+                    color="#8C78EA"
+                  />
 
-                <RadioButton
-                  label="Attractions"
-                  value="attractions"
-                  labelStyle={tw`text-black dark:text-white`}
-                  color='#8C78EA'
-                />
+                  <RadioButton
+                    label="Attractions"
+                    value="attractions"
+                    labelStyle={tw`text-black dark:text-white`}
+                    color="#8C78EA"
+                  />
 
-                <RadioButton
-                  label="Countries"
-                  value="countries"
-                  labelStyle={tw`text-black dark:text-white`}
-                  color="#8C78EA"
-                />
-              </RadioGroup>
-            </View>)}
-            
+                  <RadioButton
+                    label="Countries"
+                    value="countries"
+                    labelStyle={tw`text-black dark:text-white`}
+                    color="#8C78EA"
+                  />
+                </RadioGroup>
+              </View>
+            )}
 
             {/* Experience type */}
             <View style={tw`mt-5`}>
-              <Text style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
+              <Text
+                style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
                 Experience type
               </Text>
               <View style={tw`flex-row flex-wrap gap-3 mt-1`}>
@@ -405,7 +422,8 @@ const Header = ({
 
             {/* Best travel time */}
             <View style={tw`mt-5`}>
-              <Text style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
+              <Text
+                style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
                 Best travel time
               </Text>
               <View style={tw`flex-row flex-wrap gap-3 mt-1`}>
@@ -434,7 +452,8 @@ const Header = ({
 
             {/* activity type */}
             <View style={tw`gap-y-3 mt-5`}>
-              <Text style={tw`text-black dark:text-white text-base font-WorkSemiBold`}>
+              <Text
+                style={tw`text-black dark:text-white text-base font-WorkSemiBold`}>
                 Activity level
               </Text>
 

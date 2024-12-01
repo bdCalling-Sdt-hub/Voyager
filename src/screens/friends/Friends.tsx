@@ -10,7 +10,7 @@ import AddFriends from './AddFriends';
 const Friends = ({title = 'Friends', navigation}: any) => {
   const [friendsOption, setFriendsOption] = useState('add_friends');
   return (
-    <View style={tw`bg-white px-[4%] h-full`}>
+    <View style={tw`bg-white dark:bg-primaryDark px-[4%] h-full`}>
       <Header
         title={title || 'Bucket List'}
         containerStyle={tw`mt-2`}
@@ -19,7 +19,7 @@ const Friends = ({title = 'Friends', navigation}: any) => {
         hideFilterIcon={true}
       />
 
-      <View style={tw`flex-row bg-gray80 p-1 rounded-full mt-4`}>
+      <View style={tw`flex-row bg-gray80 dark:bg-darkBg p-1 rounded-full mt-4`}>
         <TouchableOpacity
           style={tw`${
             friendsOption === 'add_friends' ? 'bg-violet100' : ''

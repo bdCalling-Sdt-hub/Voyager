@@ -10,7 +10,7 @@ const AddFriends = ({navigation}: any) => {
     <View style={tw`flex-row flex-wrap mt-2 justify-between`}>
       {users?.map((item: any) => (
         <TouchableOpacity
-          style={tw`w-[48%] items-center bg-white p-4 rounded-2xl mb-2.5 border border-gray90`}
+          style={tw`w-[48%] dark:bg-darkBg dark:border-darkBg items-center bg-white p-4 rounded-2xl mb-2.5 border border-gray90`}
           key={item?.id}
           onPress={() => {
             navigation?.navigate('OthersProfile');
@@ -22,7 +22,7 @@ const AddFriends = ({navigation}: any) => {
             source={require('../../assets/images/avatar5.png')}
             style={tw`w-14 h-14 rounded-full`}
           />
-          <Text style={tw`text-black text-sm font-WorkMedium font-500 my-1`}>
+          <Text style={tw`text-black dark:text-white text-sm font-WorkMedium font-500 my-1`}>
             {item?.name}
           </Text>
 
