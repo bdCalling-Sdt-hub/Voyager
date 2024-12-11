@@ -32,7 +32,7 @@ const Login = ({navigation}: any) => {
           <InputText
           fromUP={true}
             svgFirstIcon={IconEnvelop}
-            placeholder="Enter your E-mail"
+            placeholder="Email"
             placeholderTextColor={'#9A9C9D'}
           />
         </View>
@@ -40,7 +40,7 @@ const Login = ({navigation}: any) => {
           <InputText
           fromUP={true}
             svgFirstIcon={IconKey}
-            placeholder="Create Password"
+            placeholder="Password"
             placeholderTextColor={'#9A9C9D'}
             secureTextEntry={isSecure}
             svgSecondIcon={isSecure ? IconCloseEye : IconEye}
@@ -59,21 +59,6 @@ const Login = ({navigation}: any) => {
             </Text>
           </TouchableOpacity>
         </View>
-
-        <TouchableOpacity
-          onPress={() => {
-            {
-              setIsCheck(!isCheck);
-            }
-          }}
-          style={tw`flex-row items-center gap-2`}>
-          <Checkbox color={isCheck ? '#8C78EA' : '#EFEFEF'} value={isCheck} />
-          <Text style={tw`text-xs font-WorkRegular font-400`}>
-            Agree to{' '}
-            <Text style={tw`text-violet100`}>Terms and Conditions</Text> and
-            Privacy Policy
-          </Text>
-        </TouchableOpacity>
 
         <TouchableOpacity
           style={tw`bg-violet100 rounded-full p-3 mt-2`}
@@ -120,15 +105,13 @@ const Login = ({navigation}: any) => {
         </TouchableOpacity>
         <View style={tw`flex-row items-center justify-center`}>
           <Text style={tw`text-black dark:text-white text-sm font-WorkSemiBold font-600`}>
-            Already have an account?{' '}
+            New to VoyaBear?{' '}
           </Text>
-          <TouchableOpacity
-            onPress={() => navigation?.navigate('Registration')}>
+          
             <Text
-              style={tw`text-violet100 text-sm font-WorkSemiBold font-600 underline`}>
-              Sign Up
+              style={tw`text-violet100 text-sm font-WorkSemiBold font-600 underline`} onPress={() => navigation?.navigate('Registration')}>
+              Create Account
             </Text>
-          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>

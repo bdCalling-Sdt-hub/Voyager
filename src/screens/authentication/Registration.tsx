@@ -16,7 +16,7 @@ import {SvgXml} from 'react-native-svg';
 
 const Registration = ({navigation}: any) => {
   const [isSecure, setIsSecure] = useState(true);
-  const [isCheck, setIsCheck] = useState(false);
+  const [isCheck, setIsCheck] = useState(true);
   return (
     <ScrollView
       style={tw`px-[4%] bg-white h-full pt-3`}
