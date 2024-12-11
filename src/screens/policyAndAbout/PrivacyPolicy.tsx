@@ -60,12 +60,6 @@ const PrivacyPolicy = ({navigation}: any) => {
           </Text>
         </View>
       </ScrollView>
-
-      {/* <Button
-        title="Accept & Continue"
-        containerStyle={tw` border-primary mt-4`}
-        onPress={() => navigation.navigate('Settings')}
-      /> */}
     </View>
   );
 };
