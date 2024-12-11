@@ -53,15 +53,15 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
   return (
     <View style={tw`px-[4%] bg-white h-full dark:bg-primaryDark`}>
       <View>
-      <Header
-        title={title ||"Next Destination"}
-        containerStyle={tw`mt-2`}
-        icon={IconSearch}
-        isSearchVisible={true}
-        searchBarShow={true}
-        hideDestination={true}
-        isIcon={true}
-      />
+        <Header
+          title={title || 'Next Destination'}
+          containerStyle={tw`mt-2`}
+          icon={IconSearch}
+          isSearchVisible={true}
+          searchBarShow={true}
+          hideDestination={true}
+          isIcon={true}
+        />
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>

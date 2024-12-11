@@ -4,6 +4,7 @@ import tw from '../../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
 import {
   IconBottomArrow,
+  IconBrowse,
   IconClock,
   IconColoredHeart,
   IconColoredLocation,
@@ -21,10 +22,11 @@ import {ExpandableSection, Fader} from 'react-native-ui-lib';
 import Test from './Test';
 import Swiper from 'react-native-swiper';
 import NormalModal from '../../../components/modals/NormalModal';
-import { useAppColorScheme } from 'twrnc';
+import {useAppColorScheme} from 'twrnc';
 
 const DestinationDetails = ({navigation}: NavigProps<null>) => {
-  const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
+  const [colorScheme, toggleColorScheme, setColorScheme] =
+    useAppColorScheme(tw);
   const [expanded, setExpanded] = useState(false);
   const [saveBucketListModalVisible, setSaveBucketListModalVisible] =
     useState(false);
@@ -41,7 +43,11 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
     <View style={tw`bg-white h-full dark:bg-primaryDark`}>
       <View style={tw`h-66`}>
         <Swiper
-          dot={<View style={tw`bg-white dark:bg-darkBg w-2 h-2 rounded-full mx-1`} />} // Dot styling
+          dot={
+            <View
+              style={tw`bg-white dark:bg-darkBg w-2 h-2 rounded-full mx-1`}
+            />
+          } // Dot styling
           activeDot={
             <View style={tw`bg-violet100 w-2 h-2 rounded-full mx-1`} />
           }
@@ -84,44 +90,68 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
         </>
       </View>
       <ScrollView style={tw`px-[4%] pt-6`}>
-        <Text style={tw`text-black dark:text-white text-[20px] font-WorkMedium`}>
-          The Book of Kells Experience
-        </Text>
-        <View style={tw`flex-row items-center gap-2 mt-2`}>
-          <SvgXml xml={IconColoredLocation} />
-          <Text style={tw`text-gray100 font-WorkRegular text-sm`}>
-            Dublin, Ireland
-          </Text>
-        </View>
-        <View style={tw`flex-row gap-4 mt-2`}>
-          <View style={tw`flex-row items-center gap-1 flex-shrink`}>
-            <Image
-              source={require('../../../assets/images/coin.png')}
-              style={tw`h-6 w-6`}
-            />
-            <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
-              50 coins
+        <View style={tw`flex-row items-center`}>
+          <View style={tw`w-6/10`}>
+            <Text
+              style={tw`text-black dark:text-white text-[20px] font-WorkMedium`}>
+              The Book of Kells Experience
             </Text>
           </View>
-          <View style={tw`flex-row items-center gap-1 flex-shrink`}>
-            <Image
-              source={require('../../../assets/images/trophy.png')}
-              style={tw`h-6 w-6`}
-            />
-            <Text style={tw`text-gray100 text-xs font-WorkRegular`}>75 XP</Text>
+          <View style={tw`w-4/10`}>
+            <View style={tw`flex-row gap-4 mt-2`}>
+              <View style={tw`flex-row items-center gap-1 flex-shrink`}>
+                <Image
+                  source={require('../../../assets/images/coin.png')}
+                  style={tw`h-6 w-6`}
+                />
+                <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
+                  50 coins
+                </Text>
+              </View>
+              <View style={tw`flex-row items-center gap-1 flex-shrink`}>
+                <Image
+                  source={require('../../../assets/images/trophy.png')}
+                  style={tw`h-6 w-6`}
+                />
+                <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
+                  75 XP
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
+
+        <View style={tw`flex-row items-center justify-between pb-4 mb-4 border-b border-b-gray90`}>
+          <View style={tw`flex-row items-center gap-2 mt-2`}>
+            <SvgXml xml={IconColoredLocation} />
+            <Text style={tw`text-gray100 font-WorkRegular text-sm`}>
+              Dublin, Ireland
+            </Text>
+          </View>
+
+          <TouchableOpacity style={tw`flex-row items-center gap-1`}>
+            <Text
+              style={tw`text-violet100 font-WorkMedium text-sm border-b border-b-violet100`}>
+              Browse Activities
+            </Text>
+            <SvgXml xml={IconBrowse} />
+          </TouchableOpacity>
+        </View>
+
         <View>
-          <Text style={tw`text-sm font-WorkRegular text-black dark:text-white leading-6`}>
+          <Text
+            style={tw`text-sm font-WorkRegular text-black dark:text-white leading-6`}>
             {initialText}
           </Text>
-          {!expanded && (<Fader
-            visible={true}
-            position={Fader.position.BOTTOM}
-            size={130}
-            tintColor={colorScheme === 'dark' ? '#141518' : '#ffffff'}
-          />)}
-          
+          {!expanded && (
+            <Fader
+              visible={true}
+              position={Fader.position.BOTTOM}
+              size={130}
+              tintColor={colorScheme === 'dark' ? '#141518' : '#ffffff'}
+            />
+          )}
+
           <TouchableOpacity
             style={tw`flex-row gap-2 items-center justify-center mt-2`}
             onPress={() => setExpanded(!expanded)}>
@@ -164,7 +194,8 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
         </View>
 
         <View style={tw`mt-6`}>
-          <Text style={tw`text-black dark:text-white text-[20px] font-WorkMedium mb-6`}>
+          <Text
+            style={tw`text-black dark:text-white text-[20px] font-WorkMedium mb-6`}>
             Location
           </Text>
           <MapView
@@ -194,7 +225,10 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
             Bucket List
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {setSaveBucketListModalVisible(true)}}
+        <TouchableOpacity
+          onPress={() => {
+            setSaveBucketListModalVisible(true);
+          }}
           style={tw`border-violet100 bg-violet100 border py-3 rounded-full flex-row items-center justify-center gap-3 flex-1`}>
           <SvgXml xml={IconTik} />
           <Text style={tw`text-sm font-WorkRegular text-white`}>Visited</Text>
@@ -208,7 +242,8 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
         layerContainerStyle={tw`self-center items-center justify-center h-full w-[80%]`}
         containerStyle={tw`bg-white p-4 rounded-2xl`}>
         <View style={tw`flex-col items-center justify-between`}>
-          <Text style={tw`text-2xl text-black font-WorkBold font-bold mt-2 text-center`}>
+          <Text
+            style={tw`text-2xl text-black font-WorkBold font-bold mt-2 text-center`}>
             Added to bucket list successfully
           </Text>
           <Text
@@ -265,7 +300,6 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
           </TouchableOpacity>
         </View>
       </NormalModal>
-
     </View>
   );
 };
