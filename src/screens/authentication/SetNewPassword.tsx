@@ -111,7 +111,7 @@ const SetNewPassword = ({navigation}: any) => {
             style={tw`bg-violet100 rounded-full p-2 mt-4`}
             onPress={() => {
               setIsSuccessModalVisible(false);
-              navigation.navigate('BottomRoutes');
+              navigation.navigate('TravelPreferences');
             }}>
             <Text style={tw`text-center text-white text-base font-WorkMedium`}>
               Done

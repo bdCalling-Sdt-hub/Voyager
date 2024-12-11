@@ -24,7 +24,7 @@ const activityType = [
   {id: 18, label: 'History'},
 ];
 
-const Preferences = ({navigation}: any) => {
+const TravelPreferences = ({navigation}: any) => {
   const [selectedItems, setSelectedItems] = useState<number[]>([]); // Store IDs of selected items
 
   const toggleSelection = (id: number) => {
@@ -36,20 +36,18 @@ const Preferences = ({navigation}: any) => {
       setSelectedItems([...selectedItems, id]);
     } else {
       // Alert the user if they try to select more than 5 items
-      Alert.alert(
-        'Limit Reached',
-        'You can only select up to 5 preferences.',
-        [{text: 'OK'}],
-      );
+      Alert.alert('Limit Reached', 'You can only select up to 5 preferences.', [
+        {text: 'OK'},
+      ]);
     }
   };
 
   const handleClearAll = () => {
-    setSelectedItems([]); // Clear all selections
+    setSelectedItems([]);
   };
 
   const handleContinue = () => {
-    navigation?.navigate('Settings', {selectedItems});
+    navigation?.navigate('BottomRoutes');
   };
 
   return (
@@ -65,10 +63,12 @@ const Preferences = ({navigation}: any) => {
         <View>
           {/* header */}
           <View style={tw``}>
-            <Text style={tw`text-black dark:text-white text-3xl font-WorkSemiBold`}>
+            <Text
+              style={tw`text-black dark:text-white text-3xl font-WorkSemiBold`}>
               Travel Interests
             </Text>
-            <Text style={tw`text-gray70 dark:text-white text-sm font-WorkRegular`}>
+            <Text
+              style={tw`text-gray70 dark:text-white text-sm font-WorkRegular`}>
               Pick up to 5 attractions, cities, or countries you're excited
               about visiting.
             </Text>
@@ -81,7 +81,9 @@ const Preferences = ({navigation}: any) => {
                 <TouchableOpacity
                   key={type.id}
                   style={tw`${
-                    selectedItems.includes(type.id) ? 'bg-violet100' : 'bg-white dark:bg-primaryDark'
+                    selectedItems.includes(type.id)
+                      ? 'bg-violet100'
+                      : 'bg-white dark:bg-primaryDark'
                   } py-2 rounded-full justify-center items-center border-[2px] border-violet100 px-4`}
                   onPress={() => toggleSelection(type.id)}>
                   <Text
@@ -124,4 +126,4 @@ const Preferences = ({navigation}: any) => {
   );
 };
 
-export default Preferences;
+export default TravelPreferences;

@@ -35,6 +35,7 @@ import TermsAndConditions from '../screens/policyAndAbout/TermsAndConditions';
 import PicsForYour from '../screens/picsForYou/PicsForYour';
 import Splash from '../screens/splash/Splash';
 import PrivacyPolicy from '../screens/policyAndAbout/PrivacyPolicy';
+import TravelPreferences from '../screens/authentication/TravelPreference';
 
 const AppRoutes = () => {
   const Stack = createNativeStackNavigator();
@@ -94,6 +95,7 @@ const AppRoutes = () => {
             <Stack.Screen name="UpdatePassword" component={UpdatePassword} />
             <Stack.Screen name="Splash" component={Splash} />
             <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+            <Stack.Screen name="TravelPreferences" component={TravelPreferences} />
           </Stack.Navigator>
         </NavigationContainer>
       </AppProvider>
