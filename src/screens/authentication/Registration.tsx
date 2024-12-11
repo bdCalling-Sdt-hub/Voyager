@@ -23,7 +23,7 @@ const Registration = ({navigation}: any) => {
       keyboardShouldPersistTaps="always">
       <View style={tw`py-2 items-center`}>
         <Text style={[tw`text-black text-2xl font-WorkMedium capitalize`]}>
-          Create Account
+          Welcome to Voyabear
         </Text>
       </View>
 
@@ -31,21 +31,21 @@ const Registration = ({navigation}: any) => {
         <View style={tw`h-14`}>
           <InputText
             svgFirstIcon={IconDarkUser}
-            placeholder="Enter your Full Name"
+            placeholder="Full Name"
             placeholderTextColor={'#9A9C9D'}
           />
         </View>
         <View style={tw`h-14`}>
           <InputText
             svgFirstIcon={IconEnvelop}
-            placeholder="Enter your E-mail"
+            placeholder="Email"
             placeholderTextColor={'#9A9C9D'}
           />
         </View>
         <View style={tw`h-14`}>
           <InputText
             svgFirstIcon={IconKey}
-            placeholder="Create Password"
+            placeholder="Password"
             placeholderTextColor={'#9A9C9D'}
             secureTextEntry={isSecure}
             svgSecondIcon={isSecure ? IconCloseEye : IconEye}
@@ -62,9 +62,10 @@ const Registration = ({navigation}: any) => {
           style={tw`flex-row items-center gap-2`}>
           <Checkbox color={isCheck ? '#8C78EA' : '#EFEFEF'} value={isCheck} />
           <Text style={tw`text-xs font-WorkRegular font-400`}>
-            Agree to{' '}
-            <Text style={tw`text-violet100`}>Terms and Conditions</Text> and
-            Privacy Policy
+            I agree to the
+            <Text style={tw`text-violet100`} onPress={() => {navigation?.navigate('TermsAndConditions');}}>
+              Terms and Conditions{' '}
+            </Text> and <Text style={tw`text-violet100`} onPress={() => {navigation?.navigate('PrivacyPolicy');}}>Privacy Policy</Text>
           </Text>
         </TouchableOpacity>
 
@@ -120,7 +121,7 @@ const Registration = ({navigation}: any) => {
               navigation?.navigate('Login');
             }}>
             <Text
-              style={tw`text-violet100 font-sm font-WorkSemiBold font-600 underline`}>
+              style={tw`text-violet100 font-normal font-WorkSemiBold font-600 underline`}>
               Log In
             </Text>
           </TouchableOpacity>

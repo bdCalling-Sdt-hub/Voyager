@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from '../screens/home/Home';
@@ -25,24 +25,27 @@ import {AppProvider} from '../utils/context/AppContext';
 import Friends from '../screens/friends/Friends';
 import OthersProfile from '../screens/profile/OthersProfile';
 import UpdatePassword from '../screens/authentication/UpdatePassword';
-import { useDeviceContext, useAppColorScheme } from 'twrnc';
+import {useDeviceContext, useAppColorScheme} from 'twrnc';
 import tw from '../lib/tailwind';
-import { useColorScheme } from 'react-native';
+import {useColorScheme} from 'react-native';
 import SinglePlace from '../screens/singlePlace/SinglePlace';
 import ProgressBucketlist from '../screens/progressBucketlist/ProgressBucketlist';
 import Faq from '../screens/policyAndAbout/Faq';
 import TermsAndConditions from '../screens/policyAndAbout/TermsAndConditions';
 import PicsForYour from '../screens/picsForYou/PicsForYour';
+import Splash from '../screens/splash/Splash';
+import PrivacyPolicy from '../screens/policyAndAbout/PrivacyPolicy';
 
 const AppRoutes = () => {
   const Stack = createNativeStackNavigator();
   const colorMode = useColorScheme();
-  console.log("color mode check: ", colorMode);
+  console.log('color mode check: ', colorMode);
   useDeviceContext(tw);
-  const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
+  const [colorScheme, toggleColorScheme, setColorScheme] =
+    useAppColorScheme(tw);
 
   useEffect(() => {
-    setColorScheme("light");
+    setColorScheme('light');
   }, [colorMode]);
 
   return (
@@ -51,7 +54,7 @@ const AppRoutes = () => {
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{headerShown: false}}
-            initialRouteName="Login">
+            initialRouteName="Splash">
             <Stack.Screen name="BottomRoutes" component={BottomRoutes} />
             <Stack.Screen name="NextDestination" component={NextDestination} />
             <Stack.Screen
@@ -66,9 +69,15 @@ const AppRoutes = () => {
             <Stack.Screen name="Subscription" component={Subscription} />
             <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
             <Stack.Screen name="SinglePlace" component={SinglePlace} />
-            <Stack.Screen name="ProgressBucketlist" component={ProgressBucketlist} />
+            <Stack.Screen
+              name="ProgressBucketlist"
+              component={ProgressBucketlist}
+            />
             <Stack.Screen name="Faq" component={Faq} />
-            <Stack.Screen name="TermsAndConditions" component={TermsAndConditions} />
+            <Stack.Screen
+              name="TermsAndConditions"
+              component={TermsAndConditions}
+            />
             <Stack.Screen name="PicsForYour" component={PicsForYour} />
             <Stack.Screen
               name="SubscriptionPlan"
@@ -83,7 +92,8 @@ const AppRoutes = () => {
             <Stack.Screen name="Friends" component={Friends} />
             <Stack.Screen name="OthersProfile" component={OthersProfile} />
             <Stack.Screen name="UpdatePassword" component={UpdatePassword} />
-            
+            <Stack.Screen name="Splash" component={Splash} />
+            <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
           </Stack.Navigator>
         </NavigationContainer>
       </AppProvider>

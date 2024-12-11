@@ -15,7 +15,6 @@ module.exports = {
         WorkBold: 'WorkSans-Bold',
         WorkExtraBold: 'WorkSans-ExtraBold',
         WorkBold: 'WorkSans',
-        WorkBold: 'WorkSans',
         WorkExtraLight: 'WorkSans-ExtraLight',
         WorkLight: 'WorkSans-Light',
         WorkMedium: 'WorkSans-Medium',

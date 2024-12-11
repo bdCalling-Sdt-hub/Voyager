@@ -4,10 +4,7 @@ import React from 'react';
 import {SvgXml} from 'react-native-svg';
 import {ExpandableSection} from 'react-native-ui-lib';
 
-import {
-  IconBottomArrow,
-  IconBottomArrowDark,
-} from '../../../assets/icons/Icons';
+import {IconBottomArrowDark} from '../../../assets/icons/Icons';
 import tw from '../../../lib/tailwind';
 
 const Expend = () => {

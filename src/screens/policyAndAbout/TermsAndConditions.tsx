@@ -30,7 +30,7 @@ const TermsAndConditions = ({navigation}: any) => {
 
         {[...Array(8)].map((_, index) => (
           <View style={tw` gap-2 mb-4`} key={index}>
-            <Text style={tw`text-black dark:text-white font-NunitoBold text-xl`}>
+            <Text style={tw`text-black dark:text-white font-WorkBold text-xl`}>
               Clause {index + 1}
             </Text>
             <Text
