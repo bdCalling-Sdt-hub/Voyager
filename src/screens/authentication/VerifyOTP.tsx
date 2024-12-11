@@ -100,12 +100,10 @@ const VerifyOTP = ({navigation}: any) => {
 
         {/* OTP Verification Info */}
         <View style={tw`mt-8`}>
-          <Text style={tw`text-black dark:text-white text-2xl font-WorkSemiBold`}>
-            We just sent you an OTP
+          <Text style={tw`text-black dark:text-white text-lg font-WorkMedium`}>
+          Enter the code sent To {maskedEmail}
           </Text>
-          <Text style={tw`text-black dark:text-white text-base font-WorkMedium`}>
-            To {maskedEmail}
-          </Text>
+          
         </View>
 
         {/* OTP Input Fields */}
