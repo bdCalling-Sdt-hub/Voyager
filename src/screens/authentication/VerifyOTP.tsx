@@ -101,9 +101,8 @@ const VerifyOTP = ({navigation}: any) => {
         {/* OTP Verification Info */}
         <View style={tw`mt-8`}>
           <Text style={tw`text-black dark:text-white text-lg font-WorkMedium`}>
-          Enter the code sent To {maskedEmail}
+            Enter the code sent To {maskedEmail}
           </Text>
-          
         </View>
 
         {/* OTP Input Fields */}
@@ -139,7 +138,8 @@ const VerifyOTP = ({navigation}: any) => {
 
         {seconds === 0 ? (
           <View style={tw`flex-row items-center justify-center mt-4`}>
-            <Text style={tw`text-black dark:text-white text-base font-WorkRegular font-400`}>
+            <Text
+              style={tw`text-black dark:text-white text-base font-WorkRegular font-400`}>
               Didn’t receive code?{' '}
             </Text>
             <TouchableOpacity onPress={handleResendOtp}>
@@ -151,7 +151,8 @@ const VerifyOTP = ({navigation}: any) => {
           </View>
         ) : (
           <View style={tw`flex-row items-center justify-center mt-4`}>
-            <Text style={tw`text-black dark:text-white text-base font-WorkRegular font-400`}>
+            <Text
+              style={tw`text-black dark:text-white text-base font-WorkRegular font-400`}>
               OTP expires in{' '}
             </Text>
             <TouchableOpacity>
