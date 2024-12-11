@@ -18,8 +18,8 @@ const ForgotPassword = ({navigation}: any) => {
 
         {/* body */}
         <View style={tw`mt-8`}>
-          <Text style={tw`text-black dark:text-white text-2xl font-WorkSemiBold font-600`}>
-            Enter your E-mail address to get OPT
+          <Text style={tw`text-black dark:text-white text-lg font-WorkMedium font-600`}>
+          We will send an OTP to your registered email
           </Text>
         </View>
 
@@ -27,7 +27,7 @@ const ForgotPassword = ({navigation}: any) => {
           <InputText
             fromUP={true}
             svgFirstIcon={IconEnvelop}
-            placeholder="Enter your E-mail"
+            placeholder="Email"
             placeholderTextColor={'#9A9C9D'}
           />
         </View>
