@@ -95,7 +95,7 @@ const SetNewPassword = ({navigation}: any) => {
         visible={isSuccessModalVisible}
         setVisible={setIsSuccessModalVisible}
         layerContainerStyle={tw`self-center items-center justify-center h-full w-[80%]`}
-        containerStyle={tw`bg-white dark:bg-primaryDark p-4 rounded-2xl`}>
+        containerStyle={tw`bg-white dark:bg-primaryDark p-8 rounded-2xl`}>
         <View>
           <View style={tw`flex-row items-center gap-2 justify-center`}>
             <SvgXml xml={IconSuccesTik} />
