@@ -19,10 +19,13 @@ const Registration = ({navigation}: any) => {
   const [isCheck, setIsCheck] = useState(true);
   return (
     <ScrollView
-      style={tw`px-[4%] bg-white h-full pt-3`}
+      style={tw`px-[4%] bg-white dark:bg-primaryDark h-full pt-3`}
       keyboardShouldPersistTaps="always">
       <View style={tw`py-2 items-center`}>
-        <Text style={[tw`text-black text-2xl font-WorkMedium capitalize`]}>
+        <Text
+          style={[
+            tw`text-black dark:text-white text-2xl font-WorkMedium capitalize`,
+          ]}>
           Welcome to Voyabear
         </Text>
       </View>
@@ -31,6 +34,7 @@ const Registration = ({navigation}: any) => {
         <View style={tw`h-14`}>
           <InputText
             svgFirstIcon={IconDarkUser}
+            fromUP={true}
             placeholder="Full Name"
             placeholderTextColor={'#9A9C9D'}
           />
@@ -39,6 +43,7 @@ const Registration = ({navigation}: any) => {
           <InputText
             svgFirstIcon={IconEnvelop}
             placeholder="Email"
+            fromUP={true}
             placeholderTextColor={'#9A9C9D'}
           />
         </View>
@@ -46,6 +51,7 @@ const Registration = ({navigation}: any) => {
           <InputText
             svgFirstIcon={IconKey}
             placeholder="Password"
+            fromUP={true}
             placeholderTextColor={'#9A9C9D'}
             secureTextEntry={isSecure}
             svgSecondIcon={isSecure ? IconCloseEye : IconEye}
@@ -61,18 +67,31 @@ const Registration = ({navigation}: any) => {
           }}
           style={tw`flex-row items-center gap-2`}>
           <Checkbox color={isCheck ? '#8C78EA' : '#EFEFEF'} value={isCheck} />
-          <Text style={tw`text-xs font-WorkRegular font-400`}>
-            I agree to the
-            <Text style={tw`text-violet100`} onPress={() => {navigation?.navigate('TermsAndConditions');}}>
+          <Text
+            style={tw`text-xs text-black dark:text-white font-WorkRegular font-400`}>
+            I agree to the{' '}
+            <Text
+              style={tw`text-violet100`}
+              onPress={() => {
+                navigation?.navigate('TermsAndConditions');
+              }}>
               Terms and Conditions{' '}
-            </Text> and <Text style={tw`text-violet100`} onPress={() => {navigation?.navigate('PrivacyPolicy');}}>Privacy Policy</Text>
+            </Text>{' '}
+            and{' '}
+            <Text
+              style={tw`text-violet100`}
+              onPress={() => {
+                navigation?.navigate('PrivacyPolicy');
+              }}>
+              Privacy Policy
+            </Text>
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={tw`bg-violet100 rounded-full p-3 mt-2`}
           onPress={() => {
-              navigation?.navigate('VerifyOTP');
+            navigation?.navigate('VerifyOTP');
           }}>
           <Text
             style={tw`text-center text-white text-base font-WorkMedium font-500`}>
@@ -83,7 +102,7 @@ const Registration = ({navigation}: any) => {
         <View style={tw`flex-row items-center`}>
           <View style={tw`bg-gray90 flex-1 h-[1px]`} />
           <Text
-            style={tw`mx-2 text-[#000000] text-xs font-WorkRegular font-400`}>
+            style={tw`mx-2 text-black dark:text-white text-xs font-WorkRegular font-400`}>
             or
           </Text>
           <View style={tw`bg-gray90 flex-1 h-[1px]`} />
@@ -91,12 +110,10 @@ const Registration = ({navigation}: any) => {
 
         <TouchableOpacity
           style={tw`bg-transparent rounded-full p-3 mt-2 border border-gray90 flex-row items-center gap-3 justify-center`}
-          onPress={() => {
-            //   navigation?.navigate('PaymentMethod');
-          }}>
+          onPress={() => {}}>
           <SvgXml xml={IconFacebook} />
           <Text
-            style={tw`text-center text-black text-base font-WorkSemiBold font-600`}>
+            style={tw`text-center text-black dark:text-white text-base font-WorkSemiBold font-600`}>
             Continue with Facebook
           </Text>
         </TouchableOpacity>
@@ -108,12 +125,13 @@ const Registration = ({navigation}: any) => {
           }}>
           <SvgXml xml={IconGoogle} />
           <Text
-            style={tw`text-center text-black text-base font-WorkSemiBold font-600`}>
+            style={tw`text-center text-black dark:text-white text-base font-WorkSemiBold font-600`}>
             Continue with Google
           </Text>
         </TouchableOpacity>
         <View style={tw`flex-row items-center justify-center`}>
-          <Text style={tw`text-black text-sm font-WorkSemiBold font-600`}>
+          <Text
+            style={tw`text-black dark:text-white text-sm font-WorkSemiBold font-600`}>
             Already have an account?{' '}
           </Text>
           <TouchableOpacity

@@ -22,7 +22,10 @@ const Login = ({navigation}: any) => {
       style={tw`px-[4%] bg-white h-full pt-3 dark:bg-primaryDark`}
       keyboardShouldPersistTaps="always">
       <View style={tw`py-2 items-center`}>
-        <Text style={[tw`text-black dark:text-white text-2xl font-WorkMedium capitalize`]}>
+        <Text
+          style={[
+            tw`text-black dark:text-white text-2xl font-WorkMedium capitalize`,
+          ]}>
           Welcome Back
         </Text>
       </View>
@@ -30,7 +33,7 @@ const Login = ({navigation}: any) => {
       <View style={tw`gap-y-4 mt-8`}>
         <View style={tw`h-14`}>
           <InputText
-          fromUP={true}
+            fromUP={true}
             svgFirstIcon={IconEnvelop}
             placeholder="Email"
             placeholderTextColor={'#9A9C9D'}
@@ -38,7 +41,7 @@ const Login = ({navigation}: any) => {
         </View>
         <View style={tw`h-14`}>
           <InputText
-          fromUP={true}
+            fromUP={true}
             svgFirstIcon={IconKey}
             placeholder="Password"
             placeholderTextColor={'#9A9C9D'}
@@ -104,14 +107,16 @@ const Login = ({navigation}: any) => {
           </Text>
         </TouchableOpacity>
         <View style={tw`flex-row items-center justify-center`}>
-          <Text style={tw`text-black dark:text-white text-sm font-WorkSemiBold font-600`}>
+          <Text
+            style={tw`text-black dark:text-white text-sm font-WorkSemiBold font-600`}>
             New to VoyaBear?{' '}
           </Text>
-          
-            <Text
-              style={tw`text-violet100 text-sm font-WorkSemiBold font-600 underline`} onPress={() => navigation?.navigate('Registration')}>
-              Create Account
-            </Text>
+
+          <Text
+            style={tw`text-violet100 text-sm font-WorkSemiBold font-600 underline`}
+            onPress={() => navigation?.navigate('Registration')}>
+            Create Account
+          </Text>
         </View>
       </View>
     </ScrollView>
