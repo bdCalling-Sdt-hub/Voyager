@@ -53,11 +53,11 @@ const Achievements = ({navigation}: any) => {
             style={tw`border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
             <Image source={require('../../../assets/images/trophy.png')} />
             <View>
-              <Text style={tw`text-black text-[20px] font-WorkBold font-700`}>
+              <Text style={tw`text-black dark:text-white text-[20px] font-WorkBold font-700`}>
                 550
               </Text>
               <Text style={tw`text-gray100 text-sm font-WorkMedium font-500`}>
-                Points
+                Souvenirs
               </Text>
             </View>
           </View>

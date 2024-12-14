@@ -164,7 +164,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                 <View style={tw`gap-y-4 mt-6`}>
                   {quests?.quests?.map((item: any) => (
                     <View
-                      style={tw`flex-row items-center gap-3 border border-gray90 dark:border-darkBg rounded-2xl p-4`}
+                      style={tw`flex-row items-center gap-3 border border-gray90 dark:bg-darkBg dark:border-darkBg rounded-2xl p-4`}
                       key={item?.id}>
                       <View style={tw``}>
                         <Image
@@ -214,7 +214,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                 <View style={tw`gap-y-4 mt-6 pb-2`}>
                   {quests?.quests?.map((item: any) => (
                     <View
-                      style={tw`flex-row items-center justify-between gap-3 border border-gray90 dark:border-darkBg rounded-2xl p-4`}
+                      style={tw`flex-row items-center justify-between gap-3 border dark:bg-darkBg border-gray90 dark:border-darkBg rounded-2xl p-4`}
                       key={item?.id}>
                       <View style={tw``}>
                         <Image

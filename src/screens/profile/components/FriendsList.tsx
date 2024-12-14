@@ -7,11 +7,11 @@ const FriendsList = ({navigation}: any) => {
     <View style={tw`gap-y-2`}>
       {users?.map((item: any) => (
         <TouchableOpacity
-          style={tw`px-2 py-1 rounded-3xl border border-gray80 flex-row items-center gap-4`}
+          style={tw`px-2 py-1 rounded-3xl border border-gray80 dark:bg-darkBg dark:border-darkBg flex-row items-center gap-4`}
           key={item?.id}
           onPress={() => {
             navigation?.navigate('OthersProfile');
-            console.log("object")
+            console.log('object');
           }}>
           <Image
             source={{
@@ -20,7 +20,8 @@ const FriendsList = ({navigation}: any) => {
             style={tw`w-16 h-16 rounded-full`}
           />
           <View style={tw`flex-shrink`}>
-            <Text style={tw`text-black dark:text-white text-base font-600 font-WorkSemiBold`}>
+            <Text
+              style={tw`text-black dark:text-white text-base font-600 font-WorkSemiBold`}>
               {item?.name}
             </Text>
           </View>

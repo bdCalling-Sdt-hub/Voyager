@@ -18,7 +18,8 @@ const Dashboard = ({navigation}: any) => {
 
   return (
     <>
-      <ScrollView showsVerticalScrollIndicator={false}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
         style={tw`px-[4%] bg-white dark:bg-primaryDark`}
         keyboardShouldPersistTaps="always">
         <Header
@@ -71,7 +72,10 @@ const Dashboard = ({navigation}: any) => {
               </Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={() => {navigation.navigate('SinglePlace', {title: activePlace})}}
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('SinglePlace', {title: activePlace});
+            }}
             style={tw`bg-violet80 dark:bg-darkBg 
             flex-row rounded-2xl items-center mt-4`}>
             <View style={tw`w-4/12`}>
@@ -96,13 +100,15 @@ const Dashboard = ({navigation}: any) => {
               horizontal
               contentContainerStyle={tw`flex-row items-center gap-2`}
               showsHorizontalScrollIndicator={false}>
-              <View>
+              <TouchableOpacity  onPress={() => {
+                navigation?.navigate('DestinationDetails');
+              }}>
                 <Image source={require('../../assets/images/city-1.png')} />
                 <SvgXml
                   xml={IconVerifiedLocation}
                   style={tw`absolute bottom-2 right-2`}
                 />
-              </View>
+              </TouchableOpacity>
               <View>
                 <Image source={require('../../assets/images/city-2.png')} />
                 <SvgXml
@@ -143,8 +149,11 @@ const Dashboard = ({navigation}: any) => {
         </View>
 
         {/* weekly progress */}
-        <TouchableOpacity style={tw`border border-gray90 dark:border-darkBg dark:bg-darkBg p-4 rounded-2xl bg-pink80`} onPress={() => navigation.navigate('Quests', {screen: 'quests'})}>
-          <Text style={tw`text-black dark:text-white text-base font-WorkMedium mb-2`}>
+        <TouchableOpacity
+          style={tw`border border-gray90 dark:border-darkBg dark:bg-darkBg p-4 rounded-2xl bg-pink80`}
+          onPress={() => navigation.navigate('Quests', {screen: 'quests'})}>
+          <Text
+            style={tw`text-black dark:text-white text-base font-WorkMedium mb-2`}>
             Weekly Quests Progress
           </Text>
           <Text style={tw`text-xs font-WorkMedium`}>Completed 1/3</Text>
@@ -154,8 +163,11 @@ const Dashboard = ({navigation}: any) => {
         </TouchableOpacity>
 
         {/* bucket list progress */}
-        <TouchableOpacity style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-blue80 dark:bg-darkBg mt-4`} onPress={() => navigation.navigate('Places')}>
-          <Text style={tw`text-black dark:text-white text-base font-WorkMedium mb-2`}>
+        <TouchableOpacity
+          style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-blue80 dark:bg-darkBg mt-4`}
+          onPress={() => navigation.navigate('Places')}>
+          <Text
+            style={tw`text-black dark:text-white text-base font-WorkMedium mb-2`}>
             Bucket List Progress
           </Text>
           <Text style={tw`text-xs font-WorkMedium`}>Visited 14/40</Text>
@@ -165,7 +177,9 @@ const Dashboard = ({navigation}: any) => {
         </TouchableOpacity>
 
         <View style={tw`mt-8 pb-2`}>
-          <TouchableOpacity style={tw`flex-row items-center justify-between`} onPress={() => navigation.navigate('ProgressBucketlist')}>
+          <TouchableOpacity
+            style={tw`flex-row items-center justify-between`}
+            onPress={() => navigation.navigate('ProgressBucketlist')}>
             <View style={tw`w-11/12`}>
               <Text
                 style={tw`text-black dark:text-white text-base font-WorkMedium`}>
@@ -180,30 +194,36 @@ const Dashboard = ({navigation}: any) => {
 
           {places.map(place => (
             <TouchableOpacity
-              style={tw`flex-row items-center gap-2 rounded-2xl mt-6 p-1 ${place?.color ? `border-r border-b border-b-[${place?.color}] border-r-[${place?.color}]` : ''}`}
+              style={tw`flex-row items-center gap-2 rounded-2xl mt-6 p-1 ${
+                place?.color
+                  ? `border-r border-b border-b-[${place?.color}] border-r-[${place?.color}]`
+                  : ''
+              }`}
               key={place.id}
               onPress={() => {
                 navigation?.navigate('DestinationDetails');
               }}>
               <Image
-            source={{uri: place?.image_url}}
-            style={tw`rounded-2xl w-4/12 h-24`}
-          />
-          <View style={tw`flex-1 justify-between flex-row items-center gap-2`}>
-            <View style={tw`gap-y-1`}>
-              <View style={tw``}>
-                <View style={tw`flex-row items-center`}>
-                  <Text style={tw`text-black dark:text-white font-WorkSemiBold text-[20px]`}>
-                    {place?.title}
-                  </Text>
+                source={{uri: place?.image_url}}
+                style={tw`rounded-2xl w-4/12 h-24`}
+              />
+              <View
+                style={tw`flex-1 justify-between flex-row items-center gap-2`}>
+                <View style={tw`gap-y-1`}>
+                  <View style={tw``}>
+                    <View style={tw`flex-row items-center`}>
+                      <Text
+                        style={tw`text-black dark:text-white font-WorkSemiBold text-[20px]`}>
+                        {place?.title}
+                      </Text>
+                    </View>
+                    <Text style={tw`text-gray100 font-WorkRegular text-sm`}>
+                      {place?.subtitle || 'Location'}
+                    </Text>
+                  </View>
                 </View>
-                <Text style={tw`text-gray100 font-WorkRegular text-sm`}>
-                  {place?.subtitle || 'Location'}
-                </Text>
               </View>
-            </View>
-          </View>
-          <SvgXml xml={IconFilledHeart} style={tw`mr-1.5`} />
+              <SvgXml xml={IconFilledHeart} style={tw`mr-1.5`} />
             </TouchableOpacity>
           ))}
         </View>

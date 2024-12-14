@@ -46,6 +46,7 @@ const Profile = ({navigation}: any) => {
           style={tw`text-black dark:text-white text-2xl font-WorkMedium text-center`}>
           Henry William
         </Text>
+        <Text style={tw`text-center text-gray70`}>hanry_william2024</Text>
         <View style={tw`flex-row items-center mt-6`}>
           <View style={tw`items-center flex-1`}>
             <Text
@@ -70,7 +71,7 @@ const Profile = ({navigation}: any) => {
           <View style={tw`items-center flex-1`}>
             <Text
               style={tw`text-gray70 dark:text-white text-sm font-WorkMedium`}>
-              Coutnry
+              Country
             </Text>
             <Image
               source={{uri: 'https://flagsapi.com/US/flat/64.png'}}

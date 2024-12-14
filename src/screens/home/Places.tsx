@@ -53,7 +53,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
         hideDestination={true}
       />
 
-      <TouchableOpacity style={tw`flex-row items-center my-4 gap-2 border border-gray90 p-4 rounded-2xl`} onPress={() => {navigation?.navigate('Subscription')}}>
+      <TouchableOpacity style={tw`flex-row items-center my-4 gap-2 border border-gray90 dark:border-darkBg p-4 rounded-2xl`} onPress={() => {navigation?.navigate('Subscription')}}>
         <View style={tw`w-[20%]`}>
           <Image
             source={require('../../assets/images/speedmeter.png')}

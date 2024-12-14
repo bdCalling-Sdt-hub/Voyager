@@ -54,19 +54,15 @@ const TravelPreferences = ({navigation}: any) => {
     <View style={tw`h-full bg-white px-[4%] pb-2 dark:bg-primaryDark`}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Header
-          title={'Preferences for you'}
+          title={'Travel Interests'}
           titleStyle={tw``}
-          containerStyle={tw`mt-2`}
+          containerStyle={tw`mt-2 mb-2`}
           isIcon={true}
           hideRightIcon={true}
         />
         <View>
           {/* header */}
           <View style={tw``}>
-            <Text
-              style={tw`text-black dark:text-white text-3xl font-WorkSemiBold`}>
-              Travel Interests
-            </Text>
             <Text
               style={tw`text-gray70 dark:text-white text-sm font-WorkRegular`}>
               Pick up to 5 attractions, cities, or countries you're excited
