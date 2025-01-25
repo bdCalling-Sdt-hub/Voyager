@@ -91,11 +91,17 @@ const Registration = ({navigation}: any) => {
               placeholder="Username"
               placeholderTextColor={'#9A9C9D'}
               onChangeText={text => setUserName(text)}
+              style={tw`lowercase`}
             />
           </View>
           {data?.data[0]?.user_name !== undefined && (
             <Text style={tw`text-sm text-red font-WorkRegular`}>
               This username is already taken
+            </Text>
+          )}
+          {username.includes(' ') && (
+            <Text style={tw`text-sm text-red font-WorkRegular`}>
+              Username should not contain spaces
             </Text>
           )}
         </View>
@@ -169,7 +175,8 @@ const Registration = ({navigation}: any) => {
             !fullName ||
             !email ||
             !password ||
-            data?.data[0]?.user_name !== undefined
+            data?.data[0]?.user_name !== undefined ||
+            username.includes(' ')
               ? 'opacity-70'
               : 'opacity-100'
           }`}
@@ -178,7 +185,8 @@ const Registration = ({navigation}: any) => {
             !email ||
             !password ||
             !fullName ||
-            data?.data[0]?.user_name !== undefined
+            data?.data[0]?.user_name !== undefined ||
+            username.includes(' ')
           }
           onPress={handleRegister}>
           <Text

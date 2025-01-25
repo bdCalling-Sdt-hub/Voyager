@@ -27,7 +27,7 @@ const InputText = ({
   Component,
   fromUP,
   editable,
-  ...inputProps // Spread remaining props to pass to TextField
+  ...inputProps
 }: InputTextProps) => {
   const [focus, setFocus] = React.useState(false);
 
@@ -49,7 +49,7 @@ const InputText = ({
           tw`${inputProps?.floatingPlaceholder ? 'pb-4' : 'p-0'}`,
           fieldStyle,
         ]}
-        {...inputProps} // Spread props here
+        {...inputProps}
       />
       {Component}
       {svgSecondIcon && (
