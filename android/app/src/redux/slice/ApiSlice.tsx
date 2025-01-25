@@ -4,16 +4,15 @@ export const AuthSlice = api.injectEndpoints({
   endpoints: builder => ({
     // login
     login: builder.mutation({
-        query: (data) => {
-          console.log('Login data:', data);
-          return {
-            url: `/login`,
-            method: 'POST',
-            body: data,
-          };
-        },
-      }),
-      
+      query: data => {
+        console.log('Login data:', data);
+        return {
+          url: `/login`,
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
 
     // signUp
     signUp: builder.mutation({
@@ -23,7 +22,19 @@ export const AuthSlice = api.injectEndpoints({
         body: data,
       }),
     }),
+
+    // get username
+    getUserName: builder.query({
+        query: (data) => {
+            console.log("response check: ", data)
+            console.log(`/get-username?query=${data}`)
+          return {
+            url: `/get-username?query=${data}`,
+          };
+        },
+      }),
+      
   }),
 });
 
-export const {useLoginMutation, useSignUpMutation} = AuthSlice;
+export const {useLoginMutation, useSignUpMutation, useGetUserNameQuery} = AuthSlice;

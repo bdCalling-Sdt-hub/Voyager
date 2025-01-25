@@ -1,5 +1,5 @@
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
-import React, {useState} from 'react';
+import {View, Text, TouchableOpacity, ScrollView, Alert} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import tw from '../../lib/tailwind';
 import InputText from '../../components/inputs/InputText';
 import {
@@ -13,10 +13,61 @@ import {
 } from '../../assets/icons/Icons';
 import {Checkbox} from 'react-native-ui-lib';
 import {SvgXml} from 'react-native-svg';
+import {
+  useGetUserNameQuery,
+  useSignUpMutation,
+} from '../../../android/app/src/redux/slice/ApiSlice';
+import {LStorage} from '../utils/utils';
 
 const Registration = ({navigation}: any) => {
+  // state
   const [isSecure, setIsSecure] = useState(true);
   const [isCheck, setIsCheck] = useState(true);
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isConfirmSecure, setIsConfirmSecure] = useState(true);
+  const [username, setUserName] = useState('');
+
+  // RTK Query Hooks
+  const [signUp, {isLoading}] = useSignUpMutation();
+  const {data, refetch} = useGetUserNameQuery(username, {skip: !username});
+
+  // Refetch data whenever fullName changes
+  useEffect(() => {
+    if (username) {
+      refetch();
+    }
+  }, [username, refetch]);
+
+  console.log('response check', data?.data[0]?.user_name);
+
+  // handlers
+  const handleRegister = async () => {
+    try {
+      const response = await signUp({full_name: fullName, user_name: username, email, password, c_password: confirmPassword});
+      const token = response?.data?.data?.token;
+      console.log('response: ', response);
+
+      if (!token) {
+        return Alert.alert(
+          'Sign Up Failed',
+          'No token returned from the server.',
+        );
+      }
+
+      LStorage.setString('userToken', token);
+
+      if (LStorage.getString('userToken') === token) {
+        navigation?.navigate('VerifyOTP');
+      } else {
+        Alert.alert('Storage Error', 'Failed to store token.');
+      }
+    } catch (err: any) {
+      Alert.alert('Sign Up Failed', err?.message || 'An error occurred.');
+    }
+  };
   return (
     <ScrollView
       style={tw`px-[4%] bg-white dark:bg-primaryDark h-full pt-3`}
@@ -37,7 +88,24 @@ const Registration = ({navigation}: any) => {
             fromUP={true}
             placeholder="Full Name"
             placeholderTextColor={'#9A9C9D'}
+            onChangeText={text => setFullName(text)}
           />
+        </View>
+        <View>
+          <View style={tw`h-14`}>
+            <InputText
+              svgFirstIcon={IconDarkUser}
+              fromUP={true}
+              placeholder="Username"
+              placeholderTextColor={'#9A9C9D'}
+              onChangeText={text => setUserName(text)}
+            />
+          </View>
+          {data?.data[0]?.user_name !== undefined && (
+            <Text style={tw`text-sm text-red font-WorkRegular`}>
+              This username is already taken
+            </Text>
+          )}
         </View>
         <View style={tw`h-14`}>
           <InputText
@@ -45,6 +113,7 @@ const Registration = ({navigation}: any) => {
             placeholder="Email"
             fromUP={true}
             placeholderTextColor={'#9A9C9D'}
+            onChangeText={text => setEmail(text)}
           />
         </View>
         <View style={tw`h-14`}>
@@ -56,6 +125,20 @@ const Registration = ({navigation}: any) => {
             secureTextEntry={isSecure}
             svgSecondIcon={isSecure ? IconCloseEye : IconEye}
             onPress={() => setIsSecure(!isSecure)}
+            onChangeText={text => setPassword(text)}
+          />
+        </View>
+
+        <View style={tw`h-14`}>
+          <InputText
+            svgFirstIcon={IconKey}
+            placeholder="Confirm Password"
+            fromUP={true}
+            placeholderTextColor={'#9A9C9D'}
+            secureTextEntry={isConfirmSecure}
+            svgSecondIcon={isConfirmSecure ? IconCloseEye : IconEye}
+            onPress={() => setIsConfirmSecure(!isConfirmSecure)}
+            onChangeText={text => setConfirmPassword(text)}
           />
         </View>
 
@@ -89,10 +172,23 @@ const Registration = ({navigation}: any) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={tw`bg-violet100 rounded-full p-3 mt-2`}
-          onPress={() => {
-            navigation?.navigate('VerifyOTP');
-          }}>
+          style={tw`bg-violet100 rounded-full p-3 mt-2 ${
+            !isCheck ||
+            !fullName ||
+            !email ||
+            !password ||
+            data?.data[0]?.user_name !== undefined
+              ? 'opacity-70'
+              : 'opacity-100'
+          }`}
+          disabled={
+            !isCheck ||
+            !email ||
+            !password ||
+            !fullName ||
+            data?.data[0]?.user_name !== undefined
+          }
+          onPress={handleRegister}>
           <Text
             style={tw`text-center text-white text-base font-WorkMedium font-500`}>
             Sign Up

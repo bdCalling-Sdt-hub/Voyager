@@ -25,6 +25,7 @@ const Login = ({navigation}: any) => {
   // RTK Query Hooks
   const [login, {isLoading}] = useLoginMutation();
 
+  // handlers
   const handleLogin = async () => {
     try {
       const response = await login({email, password});
