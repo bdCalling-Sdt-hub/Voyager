@@ -45,6 +45,17 @@ export const AuthSlice = api.injectEndpoints({
         };
       },
     }),
+
+    // resend OTP
+    resendOTP: builder.mutation({
+      query: data => ({
+        url: `/resend-otp`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+
+
   }),
 });
 
@@ -53,4 +64,5 @@ export const {
   useSignUpMutation,
   useGetUserNameQuery,
   useVerifyOTPMutation,
+  useResendOTPMutation,
 } = AuthSlice;

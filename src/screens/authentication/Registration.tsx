@@ -55,7 +55,7 @@ const Registration = ({navigation}: any) => {
       });
 
       console.log('response: ', response);
-      navigation?.navigate('VerifyOTP');
+      navigation?.navigate('VerifyOTP', {email: email});
     } catch (err: any) {
       Alert.alert('Sign Up Failed', err?.m0essage || 'An error occurred.');
     }

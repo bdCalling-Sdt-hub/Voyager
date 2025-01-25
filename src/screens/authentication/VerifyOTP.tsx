@@ -11,14 +11,18 @@ import {
 import React, {useEffect, useState, useRef} from 'react';
 import tw from '../../lib/tailwind';
 import Header from '../../components/header/Header';
-import {useVerifyOTPMutation} from '../../../android/app/src/redux/slice/ApiSlice';
+import {
+  useResendOTPMutation,
+  useVerifyOTPMutation,
+} from '../../../android/app/src/redux/slice/ApiSlice';
 import {LStorage} from '../utils/utils';
 
-const VerifyOTP = ({navigation}: any) => {
+const VerifyOTP = ({navigation, route}: any) => {
   const [otp, setOtp] = useState<string[]>(['', '', '', '', '', '']);
   const [seconds, setSeconds] = useState(119);
   const [isActive, setIsActive] = useState(true);
   const inputRefs = useRef<(TextInput | null)[]>([]);
+  const {email} = route.params;
 
   // Masking the email address
   const maskInput = (input: string): string => {
@@ -32,11 +36,11 @@ const VerifyOTP = ({navigation}: any) => {
     }
   };
 
-  const userEmail = 'muhammadmridulhosenkibria@gmail.com';
-  const maskedEmail = maskInput(userEmail);
+  const maskedEmail = maskInput(email);
 
   // rtk query hooks
   const [verifyOTP, {isLoading}] = useVerifyOTPMutation();
+  const [resendOTP] = useResendOTPMutation();
 
   const handleChange = (value: string, index: number) => {
     const updatedOtp = [...otp];
@@ -73,12 +77,6 @@ const VerifyOTP = ({navigation}: any) => {
     }
     return () => clearInterval(interval!);
   }, [isActive, seconds]);
-
-  // Handle "Send again"
-  const handleResendOtp = () => {
-    setSeconds(119);
-    setIsActive(true);
-  };
 
   const formatSecondsToMinutes = (totalSeconds: number): string => {
     const minutes = Math.floor(totalSeconds / 60); // Calculate the minutes
@@ -119,7 +117,19 @@ const VerifyOTP = ({navigation}: any) => {
     }
   };
 
-  console.log(otp.join(''));
+  const handleResendOtp = async () => {
+    try {
+      const response = await resendOTP({
+        email,
+      });
+
+      console.log('response: ', response);
+      setSeconds(119);
+      setIsActive(true);
+    } catch (err: any) {
+      Alert.alert('Sign Up Failed', err?.m0essage || 'An error occurred.');
+    }
+  };
 
   return (
     <View style={tw`h-full bg-white px-[4%] pb-2 dark:bg-primaryDark`}>
@@ -163,7 +173,10 @@ const VerifyOTP = ({navigation}: any) => {
 
         {/* Submit OTP Button */}
         <TouchableOpacity
-          style={tw`bg-violet100 rounded-full p-3 mt-4`}
+          disabled={otp.join('')?.length !== 6}
+          style={tw`bg-violet100 rounded-full p-3 mt-4 ${
+            otp.join('')?.length === 6 ? '' : 'opacity-80'
+          }`}
           onPress={handleVerifyOtp}>
           <Text style={tw`text-center text-white text-base font-WorkMedium`}>
             Verify OTP
