@@ -58,7 +58,7 @@ const AppRoutes = () => {
           <NavigationContainer>
             <Stack.Navigator
               screenOptions={{headerShown: false}}
-              initialRouteName="Login">
+              initialRouteName="Registration">
               <Stack.Screen name="BottomRoutes" component={BottomRoutes} />
               <Stack.Screen
                 name="NextDestination"

@@ -6,10 +6,13 @@ import {
   TextInput,
   NativeSyntheticEvent,
   TextInputKeyPressEventData,
+  Alert,
 } from 'react-native';
 import React, {useEffect, useState, useRef} from 'react';
 import tw from '../../lib/tailwind';
 import Header from '../../components/header/Header';
+import {useVerifyOTPMutation} from '../../../android/app/src/redux/slice/ApiSlice';
+import {LStorage} from '../utils/utils';
 
 const VerifyOTP = ({navigation}: any) => {
   const [otp, setOtp] = useState<string[]>(['', '', '', '', '', '']);
@@ -31,6 +34,9 @@ const VerifyOTP = ({navigation}: any) => {
 
   const userEmail = 'muhammadmridulhosenkibria@gmail.com';
   const maskedEmail = maskInput(userEmail);
+
+  // rtk query hooks
+  const [verifyOTP, {isLoading}] = useVerifyOTPMutation();
 
   const handleChange = (value: string, index: number) => {
     const updatedOtp = [...otp];
@@ -74,18 +80,46 @@ const VerifyOTP = ({navigation}: any) => {
     setIsActive(true);
   };
 
-  // Handle "Verify OTP"
-  const handleVerifyOtp = () => {
-    setIsActive(false);
-    setSeconds(0);
-    navigation?.navigate('SetNewPassword');
-  };
-
   const formatSecondsToMinutes = (totalSeconds: number): string => {
     const minutes = Math.floor(totalSeconds / 60); // Calculate the minutes
     const seconds = totalSeconds % 60; // Calculate the remaining seconds
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
+
+  // handlers
+  const handleVerifyOtp = async () => {
+    try {
+      const response = await verifyOTP({otp: otp.join('')});
+      const token = response?.data?.message;
+      console.log('Response: ', response);
+      console.log('Token: ', token);
+
+      if (!token) {
+        return Alert.alert(
+          'Otp Verification Failed',
+          'No token returned from the server.',
+        );
+      }
+
+      LStorage.setString('userToken', token);
+
+      if (LStorage.getString('userToken') === token) {
+        navigation?.navigate('BottomRoutes');
+        setIsActive(false);
+        setSeconds(0);
+        // navigation?.navigate('SetNewPassword');
+      } else {
+        Alert.alert('Storage Error', 'Failed to store token.');
+      }
+    } catch (err: any) {
+      Alert.alert(
+        'Otp Verification Failed',
+        err?.message || 'An error occurred.',
+      );
+    }
+  };
+
+  console.log(otp.join(''));
 
   return (
     <View style={tw`h-full bg-white px-[4%] pb-2 dark:bg-primaryDark`}>

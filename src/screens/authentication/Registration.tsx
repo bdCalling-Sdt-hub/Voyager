@@ -46,26 +46,18 @@ const Registration = ({navigation}: any) => {
   // handlers
   const handleRegister = async () => {
     try {
-      const response = await signUp({full_name: fullName, user_name: username, email, password, c_password: confirmPassword});
-      const token = response?.data?.data?.token;
+      const response = await signUp({
+        full_name: fullName,
+        user_name: username,
+        email,
+        password,
+        c_password: confirmPassword,
+      });
+
       console.log('response: ', response);
-
-      if (!token) {
-        return Alert.alert(
-          'Sign Up Failed',
-          'No token returned from the server.',
-        );
-      }
-
-      LStorage.setString('userToken', token);
-
-      if (LStorage.getString('userToken') === token) {
-        navigation?.navigate('VerifyOTP');
-      } else {
-        Alert.alert('Storage Error', 'Failed to store token.');
-      }
+      navigation?.navigate('VerifyOTP');
     } catch (err: any) {
-      Alert.alert('Sign Up Failed', err?.message || 'An error occurred.');
+      Alert.alert('Sign Up Failed', err?.m0essage || 'An error occurred.');
     }
   };
   return (

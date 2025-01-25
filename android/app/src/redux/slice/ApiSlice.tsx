@@ -25,16 +25,32 @@ export const AuthSlice = api.injectEndpoints({
 
     // get username
     getUserName: builder.query({
-        query: (data) => {
-            console.log("response check: ", data)
-            console.log(`/get-username?query=${data}`)
-          return {
-            url: `/get-username?query=${data}`,
-          };
-        },
-      }),
-      
+      query: data => {
+        console.log('response check: ', data);
+        console.log(`/get-username?query=${data}`);
+        return {
+          url: `/get-username?query=${data}`,
+        };
+      },
+    }),
+
+    // verify OTP
+    verifyOTP: builder.mutation({
+      query: data => {
+        console.log('from rtk: ', data);
+        return {
+          url: `/verify-otp`,
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
   }),
 });
 
-export const {useLoginMutation, useSignUpMutation, useGetUserNameQuery} = AuthSlice;
+export const {
+  useLoginMutation,
+  useSignUpMutation,
+  useGetUserNameQuery,
+  useVerifyOTPMutation,
+} = AuthSlice;
