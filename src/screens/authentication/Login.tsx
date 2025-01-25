@@ -1,22 +1,55 @@
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Alert} from 'react-native';
 import React, {useState} from 'react';
 import tw from '../../lib/tailwind';
 import InputText from '../../components/inputs/InputText';
 import {
   IconCloseEye,
-  IconDarkUser,
   IconEnvelop,
   IconEye,
   IconFacebook,
   IconGoogle,
   IconKey,
 } from '../../assets/icons/Icons';
-import {Checkbox} from 'react-native-ui-lib';
 import {SvgXml} from 'react-native-svg';
+import {useLoginMutation} from '../../../android/app/src/redux/slice/ApiSlice';
+import {LStorage} from '../utils/utils';
 
 const Login = ({navigation}: any) => {
+  // state
   const [isSecure, setIsSecure] = useState(true);
-  const [isCheck, setIsCheck] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  console.log('the email: ', email, 'the password: ', password);
+
+  // RTK Query Hooks
+  const [login, {isLoading}] = useLoginMutation();
+
+  const handleLogin = async () => {
+    try {
+      const response = await login({email, password});
+      const token = response?.data?.data?.token;
+      console.log(response);
+
+      if (!token) {
+        return Alert.alert(
+          'Login Failed',
+          'No token returned from the server.',
+        );
+      }
+
+      LStorage.setString('userToken', token);
+
+      if (LStorage.getString('userToken') === token) {
+        navigation?.navigate('BottomRoutes');
+      } else {
+        Alert.alert('Storage Error', 'Failed to store token.');
+      }
+    } catch (err: any) {
+      Alert.alert('Login Failed', err?.message || 'An error occurred.');
+    }
+  };
+
   return (
     <ScrollView
       style={tw`px-[4%] bg-white h-full pt-3 dark:bg-primaryDark`}
@@ -37,6 +70,7 @@ const Login = ({navigation}: any) => {
             svgFirstIcon={IconEnvelop}
             placeholder="Email"
             placeholderTextColor={'#9A9C9D'}
+            onChangeText={text => setEmail(text)}
           />
         </View>
         <View style={tw`h-14`}>
@@ -48,6 +82,7 @@ const Login = ({navigation}: any) => {
             secureTextEntry={isSecure}
             svgSecondIcon={isSecure ? IconCloseEye : IconEye}
             onPress={() => setIsSecure(!isSecure)}
+            onChangeText={text => setPassword(text)}
           />
         </View>
 
@@ -65,9 +100,7 @@ const Login = ({navigation}: any) => {
 
         <TouchableOpacity
           style={tw`bg-violet100 rounded-full p-3 mt-2`}
-          onPress={() => {
-            navigation?.navigate('BottomRoutes');
-          }}>
+          onPress={handleLogin}>
           <Text
             style={tw`text-center text-white text-base font-WorkMedium font-500`}>
             Log In

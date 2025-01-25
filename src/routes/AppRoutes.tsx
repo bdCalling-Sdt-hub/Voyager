@@ -36,6 +36,8 @@ import PicsForYour from '../screens/picsForYou/PicsForYour';
 import Splash from '../screens/splash/Splash';
 import PrivacyPolicy from '../screens/policyAndAbout/PrivacyPolicy';
 import TravelPreferences from '../screens/authentication/TravelPreference';
+import {Provider} from 'react-redux';
+import store from '../../android/app/src/redux/store';
 
 const AppRoutes = () => {
   const Stack = createNativeStackNavigator();
@@ -50,56 +52,70 @@ const AppRoutes = () => {
   }, [colorMode]);
 
   return (
-    <GestureHandlerRootView>
-      <AppProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{headerShown: false}}
-            initialRouteName="Splash">
-            <Stack.Screen name="BottomRoutes" component={BottomRoutes} />
-            <Stack.Screen name="NextDestination" component={NextDestination} />
-            <Stack.Screen
-              name="DestinationDetails"
-              component={DestinationDetails}
-            />
-            <Stack.Screen name="Notifications" component={Notifications} />
-            <Stack.Screen name="Settings" component={Settings} />
-            <Stack.Screen name="ProfileSettings" component={ProfileSettings} />
-            <Stack.Screen name="Preferences" component={Preferences} />
-            <Stack.Screen name="AccountSettings" component={AccountSettings} />
-            <Stack.Screen name="Subscription" component={Subscription} />
-            <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
-            <Stack.Screen name="SinglePlace" component={SinglePlace} />
-            <Stack.Screen
-              name="ProgressBucketlist"
-              component={ProgressBucketlist}
-            />
-            <Stack.Screen name="Faq" component={Faq} />
-            <Stack.Screen
-              name="TermsAndConditions"
-              component={TermsAndConditions}
-            />
-            <Stack.Screen name="PicsForYour" component={PicsForYour} />
-            <Stack.Screen
-              name="SubscriptionPlan"
-              component={SubscriptionPlan}
-            />
-            <Stack.Screen name="Shop" component={Shop} />
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Registration" component={Registration} />
-            <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-            <Stack.Screen name="VerifyOTP" component={VerifyOTP} />
-            <Stack.Screen name="SetNewPassword" component={SetNewPassword} />
-            <Stack.Screen name="Friends" component={Friends} />
-            <Stack.Screen name="OthersProfile" component={OthersProfile} />
-            <Stack.Screen name="UpdatePassword" component={UpdatePassword} />
-            <Stack.Screen name="Splash" component={Splash} />
-            <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
-            <Stack.Screen name="TravelPreferences" component={TravelPreferences} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </AppProvider>
-    </GestureHandlerRootView>
+    <Provider store={store}>
+      <GestureHandlerRootView>
+        <AppProvider>
+          <NavigationContainer>
+            <Stack.Navigator
+              screenOptions={{headerShown: false}}
+              initialRouteName="Login">
+              <Stack.Screen name="BottomRoutes" component={BottomRoutes} />
+              <Stack.Screen
+                name="NextDestination"
+                component={NextDestination}
+              />
+              <Stack.Screen
+                name="DestinationDetails"
+                component={DestinationDetails}
+              />
+              <Stack.Screen name="Notifications" component={Notifications} />
+              <Stack.Screen name="Settings" component={Settings} />
+              <Stack.Screen
+                name="ProfileSettings"
+                component={ProfileSettings}
+              />
+              <Stack.Screen name="Preferences" component={Preferences} />
+              <Stack.Screen
+                name="AccountSettings"
+                component={AccountSettings}
+              />
+              <Stack.Screen name="Subscription" component={Subscription} />
+              <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
+              <Stack.Screen name="SinglePlace" component={SinglePlace} />
+              <Stack.Screen
+                name="ProgressBucketlist"
+                component={ProgressBucketlist}
+              />
+              <Stack.Screen name="Faq" component={Faq} />
+              <Stack.Screen
+                name="TermsAndConditions"
+                component={TermsAndConditions}
+              />
+              <Stack.Screen name="PicsForYour" component={PicsForYour} />
+              <Stack.Screen
+                name="SubscriptionPlan"
+                component={SubscriptionPlan}
+              />
+              <Stack.Screen name="Shop" component={Shop} />
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="Registration" component={Registration} />
+              <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+              <Stack.Screen name="VerifyOTP" component={VerifyOTP} />
+              <Stack.Screen name="SetNewPassword" component={SetNewPassword} />
+              <Stack.Screen name="Friends" component={Friends} />
+              <Stack.Screen name="OthersProfile" component={OthersProfile} />
+              <Stack.Screen name="UpdatePassword" component={UpdatePassword} />
+              <Stack.Screen name="Splash" component={Splash} />
+              <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+              <Stack.Screen
+                name="TravelPreferences"
+                component={TravelPreferences}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </AppProvider>
+      </GestureHandlerRootView>
+    </Provider>
   );
 };
 
