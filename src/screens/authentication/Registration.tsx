@@ -114,6 +114,7 @@ const Registration = ({navigation}: any) => {
             onChangeText={text => setEmail(text)}
           />
         </View>
+
         <View style={tw`h-14`}>
           <InputText
             svgFirstIcon={IconKey}
@@ -127,17 +128,26 @@ const Registration = ({navigation}: any) => {
           />
         </View>
 
-        <View style={tw`h-14`}>
-          <InputText
-            svgFirstIcon={IconKey}
-            placeholder="Confirm Password"
-            fromUP={true}
-            placeholderTextColor={'#9A9C9D'}
-            secureTextEntry={isConfirmSecure}
-            svgSecondIcon={isConfirmSecure ? IconCloseEye : IconEye}
-            onPress={() => setIsConfirmSecure(!isConfirmSecure)}
-            onChangeText={text => setConfirmPassword(text)}
-          />
+        <View>
+          <View style={tw`h-14`}>
+            <InputText
+              svgFirstIcon={IconKey}
+              placeholder="Confirm Password"
+              fromUP={true}
+              placeholderTextColor={'#9A9C9D'}
+              secureTextEntry={isConfirmSecure}
+              svgSecondIcon={isConfirmSecure ? IconCloseEye : IconEye}
+              onPress={() => setIsConfirmSecure(!isConfirmSecure)}
+              onChangeText={text => setConfirmPassword(text)}
+            />
+          </View>
+          {password !== confirmPassword &&
+            password !== '' &&
+            confirmPassword !== '' && (
+              <Text style={tw`text-sm text-red font-WorkRegular`}>
+                Passwords do not match
+              </Text>
+            )}
         </View>
 
         <TouchableOpacity
@@ -176,7 +186,8 @@ const Registration = ({navigation}: any) => {
             !email ||
             !password ||
             data?.data[0]?.user_name !== undefined ||
-            username.includes(' ')
+            username.includes(' ') ||
+            password !== confirmPassword
               ? 'opacity-70'
               : 'opacity-100'
           }`}
@@ -186,7 +197,8 @@ const Registration = ({navigation}: any) => {
             !password ||
             !fullName ||
             data?.data[0]?.user_name !== undefined ||
-            username.includes(' ')
+            username.includes(' ') ||
+            password !== confirmPassword
           }
           onPress={handleRegister}>
           <Text
