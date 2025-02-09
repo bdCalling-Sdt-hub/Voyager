@@ -18,17 +18,25 @@ import {
 import {SvgXml} from 'react-native-svg';
 import personalized from '../../utils/json/personalized.json';
 import {NavigProps} from '../../utils/interface/NaviProps';
-import { useGetAttractionsQuery } from '../../../android/app/src/redux/slice/ApiSlice';
+import {
+  useGetAttractionsQuery,
+  useGetCityQuery,
+  useGetCountryQuery,
+} from '../../../android/app/src/redux/slice/ApiSlice';
 
 const Home = ({navigation}: NavigProps<null>) => {
   const [isSearchVisible, setSearchVisible] = useState(false);
 
   // rkt query hooks
   const {data: attractions} = useGetAttractionsQuery({});
-  console.log("attractions: ", attractions?.data?.data);
+  const {data: cities} = useGetCityQuery({});
+  const {data: countries} = useGetCountryQuery({});
+  console.log('attractions: ', attractions?.data?.data);
   return (
     <View style={tw`h-full px-[4%] bg-white dark:bg-primaryDark`}>
-      <ScrollView contentContainerStyle={tw``} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={tw``}
+        showsVerticalScrollIndicator={false}>
         <View style={tw`pb-2`}>
           <Header
             title="Explore"
@@ -71,6 +79,7 @@ const Home = ({navigation}: NavigProps<null>) => {
                 onPress={() => {
                   navigation?.navigate('NextDestination', {
                     title: 'cities',
+                    data: cities?.data?.data,
                   });
                 }}>
                 <Image
@@ -86,6 +95,7 @@ const Home = ({navigation}: NavigProps<null>) => {
                 onPress={() => {
                   navigation?.navigate('NextDestination', {
                     title: 'countries',
+                    data: countries?.data?.data,
                   });
                 }}>
                 <Image

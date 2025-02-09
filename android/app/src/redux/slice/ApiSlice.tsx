@@ -88,6 +88,20 @@ export const AuthSlice = api.injectEndpoints({
       }),
     }),
 
+    // get city
+    getCity: builder.query({
+      query: () => ({
+        url: `/get-city`,
+      }),
+    }),
+
+    // get country
+    getCountry: builder.query({
+      query: () => ({
+        url: `/get-country`,
+      }),
+    }),
+
   }),
 });
 
@@ -101,4 +115,6 @@ export const {
   useGetAttractionsQuery,
   useChangePasswordMutation,
   useValidateTokenQuery,
+  useGetCityQuery,
+  useGetCountryQuery,
 } = AuthSlice;

@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
 import tw from '../../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
 import {
@@ -23,6 +30,7 @@ import Test from './Test';
 import Swiper from 'react-native-swiper';
 import NormalModal from '../../../components/modals/NormalModal';
 import {useAppColorScheme} from 'twrnc';
+import {baseUrl} from '../../utils/exports';
 
 const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
   const {item} = route?.params || {};
@@ -39,6 +47,7 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
 
   const initialText = expanded ? fullText : words.slice(0, 25).join(' ');
 
+  console.log('data: ', item);
   return (
     <View style={tw`bg-white h-full dark:bg-primaryDark`}>
       <View style={tw`h-66`}>
@@ -53,29 +62,15 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
           }
           paginationStyle={tw`bottom-2`}
           loop={false}>
-          <View style={tw`flex-1`}>
-            <Image
-              source={require('../../../assets/images/explore-card-3.png')}
-              style={tw`w-full h-66`}
-              resizeMode="cover"
-            />
-          </View>
-
-          <View style={tw`flex-1`}>
-            <Image
-              source={require('../../../assets/images/explore-card-2.png')} // Use a different image for the second slide if needed
-              style={tw`w-full h-66`}
-              resizeMode="cover"
-            />
-          </View>
-
-          <View style={tw`flex-1`}>
-            <Image
-              source={require('../../../assets/images/explore-card-1.png')} // Use a different image for the second slide if needed
-              style={tw`w-full h-66`}
-              resizeMode="cover"
-            />
-          </View>
+          {item?.images?.map((image: any, index: number) => (
+            <View style={tw`flex-1`} key={index}>
+              <Image
+                source={{uri: baseUrl + image}}
+                style={tw`w-full h-66`}
+                resizeMode="cover"
+              />
+            </View>
+          ))}
         </Swiper>
         <>
           <TouchableOpacity
@@ -132,7 +127,12 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
 
           <TouchableOpacity style={tw`flex-row items-center gap-1`}>
             <Text
-              style={tw`text-violet100 font-WorkMedium text-sm border-b border-b-violet100`}>
+              style={tw`text-violet100 font-WorkMedium text-sm border-b border-b-violet100`}
+              onPress={() =>
+                Linking.openURL(
+                  `https://www.google.com/maps?q=${item?.latitude},${item?.longitude}n `,
+                )
+              }>
               Browse Activities
             </Text>
             <SvgXml xml={IconBrowse} />
@@ -210,8 +210,8 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
             provider={PROVIDER_GOOGLE}
             style={tw`w-full h-[300px]`}
             // initialRegion={{
-            //   latitude: 37.78825,
-            //   longitude: -122.4324,
+            //   latitude: Number(item?.latitude),
+            //   longitude: Number(item?.longitude),
             //   latitudeDelta: 0.0922,
             //   longitudeDelta: 0.0421,
             // }}
@@ -221,8 +221,8 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
                 latitude: Number(item?.latitude),
                 longitude: Number(item?.longitude),
               }}
-              title="Marker Title"
-              description="Marker Description"
+              title={item?.location}
+              description={item?.description}
             />
           </MapView>
         </View>
