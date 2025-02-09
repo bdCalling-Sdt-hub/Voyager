@@ -20,7 +20,6 @@ const Login = ({navigation}: any) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  console.log('the email: ', email, 'the password: ', password);
 
   // RTK Query Hooks
   const [login, {isLoading}] = useLoginMutation();

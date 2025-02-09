@@ -5,7 +5,6 @@ export const AuthSlice = api.injectEndpoints({
     // login
     login: builder.mutation({
       query: data => {
-        console.log('Login data:', data);
         return {
           url: `/login`,
           method: 'POST',
@@ -55,6 +54,39 @@ export const AuthSlice = api.injectEndpoints({
       }),
     }),
 
+    // forget password
+    forgetPassword: builder.mutation({
+      query: data => ({
+        url: `/forgot-password`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+
+    // Change Password
+    changePassword: builder.mutation({
+      query: data => {
+        return {
+          url: `/create-password`,
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
+
+    // explore get attractions
+    getAttractions: builder.query({
+      query: () => ({
+        url: `/get-attraction`,
+      }),
+    }),
+
+    // token validation check
+    validateToken: builder.query({
+      query: () => ({
+        url: `/validate-token`,
+      }),
+    }),
 
   }),
 });
@@ -65,4 +97,8 @@ export const {
   useGetUserNameQuery,
   useVerifyOTPMutation,
   useResendOTPMutation,
+  useForgetPasswordMutation,
+  useGetAttractionsQuery,
+  useChangePasswordMutation,
+  useValidateTokenQuery,
 } = AuthSlice;

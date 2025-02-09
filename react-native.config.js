@@ -5,3 +5,5 @@ module.exports = {
   },
   assets: ['./src/assets/fonts/WorkSans'],
 };
+
+// npx react-native asset 

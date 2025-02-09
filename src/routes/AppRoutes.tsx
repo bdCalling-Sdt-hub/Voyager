@@ -42,7 +42,6 @@ import store from '../../android/app/src/redux/store';
 const AppRoutes = () => {
   const Stack = createNativeStackNavigator();
   const colorMode = useColorScheme();
-  console.log('color mode check: ', colorMode);
   useDeviceContext(tw);
   const [colorScheme, toggleColorScheme, setColorScheme] =
     useAppColorScheme(tw);
@@ -58,7 +57,7 @@ const AppRoutes = () => {
           <NavigationContainer>
             <Stack.Navigator
               screenOptions={{headerShown: false}}
-              initialRouteName="Registration">
+              initialRouteName="Splash">
               <Stack.Screen name="BottomRoutes" component={BottomRoutes} />
               <Stack.Screen
                 name="NextDestination"

@@ -22,7 +22,7 @@ import desticaions from '../../utils/json/destinations.json';
 import {NavigProps} from '../../utils/interface/NaviProps';
 
 const NextDestination = ({navigation, route}: NavigProps<null>) => {
-  const {title} = route?.params || {};
+  const {title, data} = route?.params || {};
   console.log('title', title);
   const destinationData = (() => {
     switch (title) {
@@ -66,7 +66,7 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={tw`gap-y-4 mt-4 pb-2`}>
-          {destinationData?.map((item: any, index: number) => (
+          {data?.map((item: any, index: number) => (
             <TouchableOpacity
               style={tw`flex-row items-center p-1 gap-4 rounded-2xl border-r border-b border-b-[${activeColor()}] border-r-[${activeColor()}]`}
               key={index}
@@ -98,7 +98,7 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
                         style={tw`h-6 w-6`}
                       />
                       <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
-                        50 coins
+                        {item?.coins} coins
                       </Text>
                     </View>
 
@@ -108,7 +108,7 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
                         style={tw`h-6 w-6`}
                       />
                       <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
-                        100 XP
+                        {item?.xp} XP
                       </Text>
                     </View>
                   </View>

@@ -1,7 +1,6 @@
 import {BaseQueryFn, createApi} from '@reduxjs/toolkit/query/react';
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
-import { LStorage } from '../../../../../src/screens/utils/utils';
-
+import {LStorage} from '../../../../../src/screens/utils/utils';
 
 interface BaseQueryArgs extends AxiosRequestConfig {
   url: string;
@@ -9,7 +8,6 @@ interface BaseQueryArgs extends AxiosRequestConfig {
   body?: any;
   headers?: Record<string, string>;
 }
-
 
 const baseQueryWithRath: BaseQueryFn<BaseQueryArgs, unknown, unknown> = async (
   args,
@@ -65,8 +63,7 @@ export const api = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithRath,
   endpoints: () => ({}),
-  tagTypes: [
-  ],
+  tagTypes: [],
 });
 
 export const imageUrl = 'http://167.172.240.116';

@@ -22,7 +22,9 @@ const VerifyOTP = ({navigation, route}: any) => {
   const [seconds, setSeconds] = useState(119);
   const [isActive, setIsActive] = useState(true);
   const inputRefs = useRef<(TextInput | null)[]>([]);
-  const {email} = route.params;
+  const {email, from} = route.params;
+
+  console.log("email from verify otp: ", email);
 
   // Masking the email address
   const maskInput = (input: string): string => {
@@ -102,7 +104,11 @@ const VerifyOTP = ({navigation, route}: any) => {
       LStorage.setString('userToken', token);
 
       if (LStorage.getString('userToken') === token) {
-        navigation?.navigate('BottomRoutes');
+        if(from === 'forgot'){
+          navigation?.navigate('SetNewPassword', {email: email});
+        }else{
+          navigation?.navigate('BottomRoutes');
+        }
         setIsActive(false);
         setSeconds(0);
         // navigation?.navigate('SetNewPassword');

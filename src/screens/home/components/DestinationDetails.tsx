@@ -24,7 +24,8 @@ import Swiper from 'react-native-swiper';
 import NormalModal from '../../../components/modals/NormalModal';
 import {useAppColorScheme} from 'twrnc';
 
-const DestinationDetails = ({navigation}: NavigProps<null>) => {
+const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
+  const {item} = route?.params || {};
   const [colorScheme, toggleColorScheme, setColorScheme] =
     useAppColorScheme(tw);
   const [expanded, setExpanded] = useState(false);
@@ -32,8 +33,7 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
     useState(false);
   const [addOnBucketListModalVisible, setAddOnBucketListModalVisible] =
     useState(false);
-  const fullText =
-    'The Book of Kells Experience is housed in the Grand Library at Trinity College, Dublin. This exhibition features illuminated illustrations of the Christian Gospels dating back to 800 AD, offering a glimpse into Ireland’s medieval artistry and religious heritage.';
+  const fullText = item?.description || 'N/A';
 
   const words = fullText.split(' ');
 
@@ -94,7 +94,7 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
           <View style={tw`w-6/10`}>
             <Text
               style={tw`text-black dark:text-white text-[20px] font-WorkMedium`}>
-              The Book of Kells Experience
+              {item?.name || 'N/A'}
             </Text>
           </View>
           <View style={tw`w-4/10`}>
@@ -105,7 +105,7 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
                   style={tw`h-6 w-6`}
                 />
                 <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
-                  50 coins
+                  {item?.coins || 'N/A'}coins
                 </Text>
               </View>
               <View style={tw`flex-row items-center gap-1 flex-shrink`}>
@@ -114,18 +114,19 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
                   style={tw`h-6 w-6`}
                 />
                 <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
-                  75 XP
+                  {item?.xp || 'N/A'} XP
                 </Text>
               </View>
             </View>
           </View>
         </View>
 
-        <View style={tw`flex-row items-center justify-between pb-4 mb-4 border-b border-b-gray90`}>
+        <View
+          style={tw`flex-row items-center justify-between pb-4 mb-4 border-b border-b-gray90`}>
           <View style={tw`flex-row items-center gap-2 mt-2`}>
             <SvgXml xml={IconColoredLocation} />
             <Text style={tw`text-gray100 font-WorkRegular text-sm`}>
-              Dublin, Ireland
+              {item?.city || 'N/A'}, {item?.country || 'N/A'}
             </Text>
           </View>
 
@@ -170,26 +171,33 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
             <SvgXml xml={IconMuseum} style={tw`flex-shrink`} />
             <Text
               style={tw`text-sm text-gray100 font-WorkRegular leading-[20px] flex-wrap flex-1`}>
-              Historical Landmark, Cultural Attraction, Museum Exhibit
+              {item?.location || 'N/A'}
             </Text>
           </View>
           <View
             style={tw`flex-row items-center gap-4 border-b border-b-gray90 dark:border-secDarkBg py-4`}>
             <SvgXml xml={IconClock} style={tw`flex-shrink`} />
-            <Text
-              style={tw`text-sm text-gray100 font-WorkRegular leading-[20px] flex-wrap flex-1`}>
-              Mon to Sat: 8:30 AM – 7:00 PM{'\n'}
-              Sun: 9:30 AM – 6:30 PM
-            </Text>
+            <View>
+              {item?.visit_hours?.map((hour: any, index: number) => (
+                <Text
+                  style={tw`text-sm text-gray100 font-WorkRegular leading-[20px] flex-wrap flex-1`}
+                  key={index}>
+                  {hour || 'N/A'}
+                </Text>
+              ))}
+            </View>
           </View>
           <View style={tw`flex-row items-center gap-4 py-4`}>
             <SvgXml xml={IconTicket} style={tw`flex-shrink`} />
-            <Text
-              style={tw`text-sm text-gray100 font-WorkRegular leading-[20px] flex-wrap flex-1`}>
-              €18.50 euros per adult{'\n'}
-              €14 euros for youths 13-17{'\n'}
-              €10 euros for children 6-12{'\n'}
-            </Text>
+            <View>
+              {item?.prices?.map((price: any, index: number) => (
+                <Text
+                  style={tw`text-sm text-gray100 font-WorkRegular leading-[20px] flex-wrap flex-1`}
+                  key={index}>
+                  {price || 'N/A'}
+                </Text>
+              ))}
+            </View>
           </View>
         </View>
 
@@ -201,14 +209,18 @@ const DestinationDetails = ({navigation}: NavigProps<null>) => {
           <MapView
             provider={PROVIDER_GOOGLE}
             style={tw`w-full h-[300px]`}
-            initialRegion={{
-              latitude: 37.78825,
-              longitude: -122.4324,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}>
+            // initialRegion={{
+            //   latitude: 37.78825,
+            //   longitude: -122.4324,
+            //   latitudeDelta: 0.0922,
+            //   longitudeDelta: 0.0421,
+            // }}
+          >
             <Marker
-              coordinate={{latitude: 37.78825, longitude: -122.4324}}
+              coordinate={{
+                latitude: Number(item?.latitude),
+                longitude: Number(item?.longitude),
+              }}
               title="Marker Title"
               description="Marker Description"
             />
