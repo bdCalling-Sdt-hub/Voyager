@@ -1,41 +1,33 @@
 import {
   View,
   Text,
-  ScrollView,
+  FlatList,
   TouchableOpacity,
-  TextInput,
   Image,
 } from 'react-native';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import tw from '../../lib/tailwind';
 import Header from '../../components/header/Header';
 import {
   IconFilledHeart,
-  IconFilter,
-  IconHeart,
   IconSearch,
-  IconTikWithCircle,
-  IconWhiteSearch,
 } from '../../assets/icons/Icons';
-import {SvgXml} from 'react-native-svg';
+import { SvgXml } from 'react-native-svg';
 import desticaions from '../../utils/json/destinations.json';
-import {NavigProps} from '../../utils/interface/NaviProps';
+import { NavigProps } from '../../utils/interface/NaviProps';
+import { useGetAttractionsQuery, useGetCityQuery, useGetCountryQuery } from '../../../android/app/src/redux/slice/ApiSlice';
 
-const NextDestination = ({navigation, route}: NavigProps<null>) => {
-  const {title, data} = route?.params || {};
-  console.log('title', title);
-  const destinationData = (() => {
-    switch (title) {
-      case 'cities':
-        return desticaions?.data?.cities || null;
-      case 'countries':
-        return desticaions?.data?.countries || null;
-      case 'attractions':
-        return desticaions?.data?.attractions || null;
-      default:
-        return null;
-    }
-  })();
+const NextDestination = ({ navigation, route }: NavigProps<null>) => {
+  const { title } = route?.params || {};
+  const [destinationData, setDestinationData] = useState([]);
+
+  const fetchMoreData = () => {
+    // এখানে নতুন ডাটা যোগ করার জন্য API কল বা লোকাল ডাটা ব্যবহার করা যেতে পারে
+    console.log("Fetching more data...");
+    setTimeout(() => {
+      setDestinationData(prevData => [...prevData, ...prevData]); // ডাটা ডুপ্লিকেট করে দেখানোর জন্য
+    }, 1500);
+  };
 
   const activeColor = () => {
     switch (title) {
@@ -50,75 +42,83 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
     }
   };
 
+  // rkt query hooks
+  const {data: attractions} = useGetAttractionsQuery({});
+    const {data: cities} = useGetCityQuery({});
+    const {data: countries} = useGetCountryQuery({});
+
+  const data = (() => {
+    switch (title) {
+      case 'attractions':
+        return attractions?.data?.data;
+      case 'cities':
+        return cities?.data?.data;
+      case 'countries':
+        return countries?.data?.data;
+      default:
+        return attractions?.data?.data;
+    }
+  })();
+
+  console.log("data: ", data)
+
   return (
     <View style={tw`px-[4%] bg-white h-full dark:bg-primaryDark`}>
-      <View>
-        <Header
-          title={title || 'Next Destination'}
-          containerStyle={tw`mt-2`}
-          icon={IconSearch}
-          isSearchVisible={true}
-          searchBarShow={true}
-          hideDestination={true}
-          isIcon={true}
-        />
-      </View>
+      <Header
+        title={title || 'Next Destination'}
+        containerStyle={tw`mt-2`}
+        icon={IconSearch}
+        isSearchVisible={true}
+        searchBarShow={true}
+        hideDestination={true}
+        isIcon={true}
+      />
 
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={tw`gap-y-4 mt-4 pb-2`}>
-          {data?.map((item: any, index: number) => (
-            <TouchableOpacity
-              style={tw`flex-row items-center p-1 gap-4 rounded-2xl border-r border-b border-b-[${activeColor()}] border-r-[${activeColor()}]`}
-              key={index}
-              onPress={() =>
-                navigation?.navigate('DestinationDetails', {item})
-              }>
-              <Image
-                source={require('../../assets/images/explore-card-2.png')}
-                style={tw`rounded-2xl w-4/12 h-24`}
-              />
-              <View
-                style={tw`flex-1 justify-between flex-row items-center gap-2`}>
-                <View style={tw`gap-y-1`}>
-                  <View style={tw``}>
-                    <View style={tw`flex-row items-center`}>
-                      <Text
-                        style={tw`text-black dark:text-white font-WorkSemiBold text-[20px]`}>
-                        {item?.name}
-                      </Text>
-                    </View>
-                    <Text style={tw`text-gray100 font-WorkRegular text-sm`}>
-                      {item?.location || 'Location'}
+      <FlatList
+        data={data}
+        keyExtractor={(item, index) => index.toString()}
+        showsVerticalScrollIndicator={false}
+        onEndReached={fetchMoreData}
+        onEndReachedThreshold={0.5}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={tw`flex-row items-center p-1 gap-4 rounded-2xl border-r border-b border-b-[${activeColor()}] border-r-[${activeColor()}]`}
+            onPress={() => navigation?.navigate('DestinationDetails', { item })}
+          >
+            <Image
+              source={require('../../assets/images/explore-card-2.png')}
+              style={tw`rounded-2xl w-4/12 h-24`}
+            />
+            <View style={tw`flex-1 justify-between flex-row items-center gap-2`}>
+              <View style={tw`gap-y-1`}>
+                <View>
+                  <Text style={tw`text-black dark:text-white font-WorkSemiBold text-[20px]`}>
+                    {item?.name}
+                  </Text>
+                  <Text style={tw`text-gray100 font-WorkRegular text-sm`}>
+                    {item?.location || 'Location'}
+                  </Text>
+                </View>
+                <View style={tw`flex-row gap-4`}>
+                  <View style={tw`flex-row items-center gap-1 flex-shrink`}>
+                    <Image source={require('../../assets/images/coin.png')} style={tw`h-6 w-6`} />
+                    <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
+                      {item?.coins} coins
                     </Text>
                   </View>
-                  <View style={tw`flex-row gap-4`}>
-                    <View style={tw`flex-row items-center gap-1 flex-shrink`}>
-                      <Image
-                        source={require('../../assets/images/coin.png')}
-                        style={tw`h-6 w-6`}
-                      />
-                      <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
-                        {item?.coins} coins
-                      </Text>
-                    </View>
-
-                    <View style={tw`flex-row items-center gap-1 flex-shrink`}>
-                      <Image
-                        source={require('../../assets/images/trophy.png')}
-                        style={tw`h-6 w-6`}
-                      />
-                      <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
-                        {item?.xp} XP
-                      </Text>
-                    </View>
+                  <View style={tw`flex-row items-center gap-1 flex-shrink`}>
+                    <Image source={require('../../assets/images/trophy.png')} style={tw`h-6 w-6`} />
+                    <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
+                      {item?.xp} XP
+                    </Text>
                   </View>
                 </View>
               </View>
-              <SvgXml xml={IconFilledHeart} />
-            </TouchableOpacity>
-          ))}
-        </View>
-      </ScrollView>
+            </View>
+            <SvgXml xml={IconFilledHeart} />
+          </TouchableOpacity>
+        )}
+      />
     </View>
   );
 };

@@ -25,13 +25,7 @@ import {
 } from '../../../android/app/src/redux/slice/ApiSlice';
 
 const Home = ({navigation}: NavigProps<null>) => {
-  const [isSearchVisible, setSearchVisible] = useState(false);
 
-  // rkt query hooks
-  const {data: attractions} = useGetAttractionsQuery({});
-  const {data: cities} = useGetCityQuery({});
-  const {data: countries} = useGetCountryQuery({});
-  console.log('attractions: ', attractions?.data?.data);
   return (
     <View style={tw`h-full px-[4%] bg-white dark:bg-primaryDark`}>
       <ScrollView
@@ -62,8 +56,7 @@ const Home = ({navigation}: NavigProps<null>) => {
                 style={tw`flex-1`}
                 onPress={() => {
                   navigation?.navigate('NextDestination', {
-                    title: 'attractions',
-                    data: attractions?.data?.data,
+                    title: 'attractions'
                   });
                 }}>
                 <Image
@@ -78,8 +71,7 @@ const Home = ({navigation}: NavigProps<null>) => {
                 style={tw`flex-1`}
                 onPress={() => {
                   navigation?.navigate('NextDestination', {
-                    title: 'cities',
-                    data: cities?.data?.data,
+                    title: 'cities'
                   });
                 }}>
                 <Image
@@ -94,8 +86,7 @@ const Home = ({navigation}: NavigProps<null>) => {
                 style={tw`flex-1`}
                 onPress={() => {
                   navigation?.navigate('NextDestination', {
-                    title: 'countries',
-                    data: countries?.data?.data,
+                    title: 'countries'
                   });
                 }}>
                 <Image
