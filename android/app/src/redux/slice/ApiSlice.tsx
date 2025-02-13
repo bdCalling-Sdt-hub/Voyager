@@ -117,6 +117,13 @@ export const AuthSlice = api.injectEndpoints({
       }),
     }),
 
+    // get top destination
+    getTopDestination: builder.query({
+      query: () => ({
+        url: `/destination`,
+      }),
+    }),
+
   }),
 });
 
@@ -134,4 +141,5 @@ export const {
   useGetCountryQuery,
   useGetProfileQuery,
   useGetPersonalizedQuery,
+  useGetTopDestinationQuery,
 } = AuthSlice;

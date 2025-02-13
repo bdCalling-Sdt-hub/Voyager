@@ -18,7 +18,7 @@ import {
 import {SvgXml} from 'react-native-svg';
 import personalized from '../../utils/json/personalized.json';
 import {NavigProps} from '../../utils/interface/NaviProps';
-import { useGetPersonalizedQuery } from '../../../android/app/src/redux/slice/ApiSlice';
+import { useGetPersonalizedQuery, useGetTopDestinationQuery } from '../../../android/app/src/redux/slice/ApiSlice';
 import { personalizedPicksTypes } from '../utils/types';
 
 
@@ -27,6 +27,7 @@ const Home = ({navigation}: NavigProps<null>) => {
 
   // rtk query hooks
   const {data: personalizedPicks} = useGetPersonalizedQuery({});
+  const {data: topDestination} = useGetTopDestinationQuery({});
 
 
   return (
