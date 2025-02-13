@@ -1,6 +1,7 @@
 import {api} from './BaseApi';
 
 export const AuthSlice = api.injectEndpoints({
+  overrideExisting: true,
   endpoints: builder => ({
     // login
     login: builder.mutation({
@@ -102,6 +103,20 @@ export const AuthSlice = api.injectEndpoints({
       }),
     }),
 
+    // get profile
+    getProfile: builder.query({
+      query: () => ({
+        url: `/profile`,
+      }),
+    }),
+
+    // get personalized picks
+    getPersonalized: builder.query({
+      query: () => ({
+        url: `/personalized`,
+      }),
+    }),
+
   }),
 });
 
@@ -117,4 +132,6 @@ export const {
   useValidateTokenQuery,
   useGetCityQuery,
   useGetCountryQuery,
+  useGetProfileQuery,
+  useGetPersonalizedQuery,
 } = AuthSlice;

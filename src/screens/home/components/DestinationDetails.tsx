@@ -209,12 +209,12 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
           <MapView
             provider={PROVIDER_GOOGLE}
             style={tw`w-full h-[300px]`}
-            // initialRegion={{
-            //   latitude: Number(item?.latitude),
-            //   longitude: Number(item?.longitude),
-            //   latitudeDelta: 0.0922,
-            //   longitudeDelta: 0.0421,
-            // }}
+            initialRegion={{
+              latitude: Number(item?.latitude),
+              longitude: Number(item?.longitude),
+              latitudeDelta: Math.abs(Number(item?.latitude)) * 0.001, // Adjust as needed
+              longitudeDelta: Math.abs(Number(item?.longitude)) * 0.001, // Adjust as needed
+            }}
           >
             <Marker
               coordinate={{

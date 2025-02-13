@@ -34,7 +34,9 @@ const Login = ({navigation}: any) => {
       if (!token) {
         return Alert.alert(
           'Login Failed',
-          'No token returned from the server.',
+          // 'No token returned from the server.'
+          'Username or Password is incorrect.'
+          ,
         );
       }
 
@@ -103,7 +105,7 @@ const Login = ({navigation}: any) => {
           onPress={handleLogin}>
           <Text
             style={tw`text-center text-white text-base font-WorkMedium font-500`}>
-            Log In
+            {isLoading ? 'Logging in...' : 'Log In'}
           </Text>
         </TouchableOpacity>
 

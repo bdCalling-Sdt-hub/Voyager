@@ -18,13 +18,16 @@ import {
 import {SvgXml} from 'react-native-svg';
 import personalized from '../../utils/json/personalized.json';
 import {NavigProps} from '../../utils/interface/NaviProps';
-import {
-  useGetAttractionsQuery,
-  useGetCityQuery,
-  useGetCountryQuery,
-} from '../../../android/app/src/redux/slice/ApiSlice';
+import { useGetPersonalizedQuery } from '../../../android/app/src/redux/slice/ApiSlice';
+import { personalizedPicksTypes } from '../utils/types';
+
+
 
 const Home = ({navigation}: NavigProps<null>) => {
+
+  // rtk query hooks
+  const {data: personalizedPicks} = useGetPersonalizedQuery({});
+
 
   return (
     <View style={tw`h-full px-[4%] bg-white dark:bg-primaryDark`}>
@@ -122,12 +125,12 @@ const Home = ({navigation}: NavigProps<null>) => {
               horizontal
               contentContainerStyle={tw`gap-4`}
               showsHorizontalScrollIndicator={false}>
-              {personalized.map(item => (
+              {personalizedPicks?.data?.map((item: personalizedPicksTypes, index: number) => (
                 <TouchableOpacity
                   style={tw`rounded-2xl overflow-hidden mt-6`}
-                  key={item.id}
+                  key={index}
                   onPress={() => {
-                    navigation?.navigate('DestinationDetails');
+                    navigation?.navigate('DestinationDetails', {item});
                   }}>
                   <ImageBackground
                     source={require('../../assets/images/explore-card-1.png')}
@@ -135,7 +138,7 @@ const Home = ({navigation}: NavigProps<null>) => {
                     style={tw`h-[260px] w-82 justify-between items-center rounded-2xl p-4`}>
                     <View style={tw`gap-y-3 items-end w-full`}>
                       <SvgXml
-                        xml={item?.isFav ? IconFilledHeart : IconWhiteHeart}
+                        xml={item?.name ? IconFilledHeart : IconWhiteHeart}
                       />
                     </View>
                     <View
@@ -143,12 +146,12 @@ const Home = ({navigation}: NavigProps<null>) => {
                       <View style={tw`flex-row items-center`}>
                         <Text
                           style={tw`text-black dark:text-white text-sm font-WorkMedium`}>
-                          {item.title}
+                          {item?.name}
                         </Text>
                       </View>
                       <Text
                         style={tw`text-gray100 font-WorkRegular text-[10px]`}>
-                        {item.subtitle}
+                        {item?.description}
                       </Text>
                     </View>
                   </ImageBackground>
