@@ -12,9 +12,15 @@ import {
   IconSearch,
   IconVerifiedLocation,
 } from '../../assets/icons/Icons';
+import {useAppDashboardQuery} from '../../../android/app/src/redux/slice/ApiSlice';
 
 const Dashboard = ({navigation}: any) => {
   const [activePlace, setActivePlace] = useState('attractions');
+
+  // rtk query hooks
+  const {data: appDashboard} = useAppDashboardQuery({});
+
+  console.log('the dashboard data: ', appDashboard?.data);
 
   return (
     <>
@@ -86,9 +92,12 @@ const Dashboard = ({navigation}: any) => {
                 style={tw`capitalize text-black dark:text-white text-sm font-WorkMedium`}>
                 {activePlace} Visited
               </Text>
-              <Text
-                style={tw`capitalize text-violet100 text-2xl font-WorkSemiBold`}>
-                45
+              <Text style={tw`text-violet100 text-2xl font-WorkSemiBold`}>
+                {activePlace === 'attractions'
+                  ? appDashboard?.data?.totalAttractionVisited
+                  : activePlace === 'cities'
+                  ? appDashboard?.data?.totalCityVisited
+                  : appDashboard?.data?.totalCountryVisited}
               </Text>
             </View>
           </TouchableOpacity>
@@ -100,9 +109,10 @@ const Dashboard = ({navigation}: any) => {
               horizontal
               contentContainerStyle={tw`flex-row items-center gap-2`}
               showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity  onPress={() => {
-                navigation?.navigate('DestinationDetails');
-              }}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation?.navigate('DestinationDetails');
+                }}>
                 <Image source={require('../../assets/images/city-1.png')} />
                 <SvgXml
                   xml={IconVerifiedLocation}

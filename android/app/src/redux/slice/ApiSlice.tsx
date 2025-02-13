@@ -124,6 +124,13 @@ export const AuthSlice = api.injectEndpoints({
       }),
     }),
 
+    // app dashboard
+    appDashboard: builder.query({
+      query: () => ({
+        url: `/app-dashboard`,
+      }),
+    }),
+
   }),
 });
 
@@ -142,4 +149,5 @@ export const {
   useGetProfileQuery,
   useGetPersonalizedQuery,
   useGetTopDestinationQuery,
+  useAppDashboardQuery,
 } = AuthSlice;
