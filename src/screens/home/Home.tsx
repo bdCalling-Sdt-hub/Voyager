@@ -20,6 +20,7 @@ import personalized from '../../utils/json/personalized.json';
 import {NavigProps} from '../../utils/interface/NaviProps';
 import { useGetPersonalizedQuery, useGetTopDestinationQuery } from '../../../android/app/src/redux/slice/ApiSlice';
 import { personalizedPicksTypes } from '../utils/types';
+import { baseUrl } from '../utils/exports';
 
 
 
@@ -134,7 +135,7 @@ const Home = ({navigation}: NavigProps<null>) => {
                     navigation?.navigate('DestinationDetails', {item});
                   }}>
                   <ImageBackground
-                    source={require('../../assets/images/explore-card-1.png')}
+                    source={{uri: baseUrl + item?.images[0]}}
                     resizeMode="cover"
                     style={tw`h-[260px] w-82 justify-between items-center rounded-2xl p-4`}>
                     <View style={tw`gap-y-3 items-end w-full`}>
