@@ -12,15 +12,22 @@ import {
   IconSearch,
   IconVerifiedLocation,
 } from '../../assets/icons/Icons';
-import {useAppDashboardQuery} from '../../../android/app/src/redux/slice/ApiSlice';
+import {useAppDashboardQuery, useGetWeeklyQuestProgressQuery} from '../../../android/app/src/redux/slice/ApiSlice';
+import { getCompletionPercentage } from '../../utils/functions/functions';
 
 const Dashboard = ({navigation}: any) => {
   const [activePlace, setActivePlace] = useState('attractions');
 
   // rtk query hooks
   const {data: appDashboard} = useAppDashboardQuery({});
+  const {data: weeklyQuest} = useGetWeeklyQuestProgressQuery({});
 
-  console.log('the dashboard data: ', appDashboard?.data);
+  const getWeeklyQuestProgress = getCompletionPercentage(weeklyQuest?.data?.completedCount, weeklyQuest?.data?.total_quest);
+
+
+
+
+  console.log('weekly quest: ', weeklyQuest?.data);
 
   return (
     <>
@@ -168,7 +175,7 @@ const Dashboard = ({navigation}: any) => {
           </Text>
           <Text style={tw`text-xs font-WorkMedium`}>Completed 1/3</Text>
           <View style={tw`mt-4`} pointerEvents="none">
-            <RangeSlider color="#ff5c8d" value={33} />
+            <RangeSlider color="#ff5c8d" value={getWeeklyQuestProgress} />
           </View>
         </TouchableOpacity>
 

@@ -131,6 +131,13 @@ export const AuthSlice = api.injectEndpoints({
       }),
     }),
 
+    // get weekly quest progress
+    getWeeklyQuestProgress: builder.query({
+      query: () => ({
+        url: `/dashboard-weekly-quest-progress`,
+      }),
+    }),
+
   }),
 });
 
@@ -150,4 +157,5 @@ export const {
   useGetPersonalizedQuery,
   useGetTopDestinationQuery,
   useAppDashboardQuery,
+  useGetWeeklyQuestProgressQuery
 } = AuthSlice;
