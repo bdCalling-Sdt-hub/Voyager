@@ -22,12 +22,14 @@ const Dashboard = ({navigation}: any) => {
   const {data: appDashboard} = useAppDashboardQuery({});
   const {data: weeklyQuest} = useGetWeeklyQuestProgressQuery({});
 
-  const getWeeklyQuestProgress = getCompletionPercentage(weeklyQuest?.data?.completedCount, weeklyQuest?.data?.total_quest);
+  const weeklyQuestProgress = getCompletionPercentage(
+    weeklyQuest?.data?.completedCount ?? 0,
+    weeklyQuest?.data?.total_quest ?? 0
+);
 
 
 
-
-  console.log('weekly quest: ', weeklyQuest?.data);
+  console.log('weekly quest: ', weeklyQuestProgress);
 
   return (
     <>
@@ -175,7 +177,7 @@ const Dashboard = ({navigation}: any) => {
           </Text>
           <Text style={tw`text-xs font-WorkMedium`}>Completed 1/3</Text>
           <View style={tw`mt-4`} pointerEvents="none">
-            <RangeSlider color="#ff5c8d" value={getWeeklyQuestProgress} />
+            <RangeSlider color="#ff5c8d" value={weeklyQuestProgress} />
           </View>
         </TouchableOpacity>
 
