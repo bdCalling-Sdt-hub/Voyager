@@ -137,6 +137,15 @@ export const AuthSlice = api.injectEndpoints({
         url: `/dashboard-weekly-quest-progress`,
       }),
     }),
+
+    // update password
+    updatePassword: builder.mutation({
+      query: data => ({
+        url: `/update-password`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
     
 
   }),
@@ -158,5 +167,6 @@ export const {
   useGetPersonalizedQuery,
   useGetTopDestinationQuery,
   useAppDashboardQuery,
-  useGetWeeklyQuestProgressQuery
+  useGetWeeklyQuestProgressQuery,
+  useUpdatePasswordMutation
 } = AuthSlice;

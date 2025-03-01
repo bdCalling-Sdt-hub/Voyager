@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import React, {useState} from 'react';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
@@ -17,6 +17,7 @@ import NormalModal from '../../components/modals/NormalModal';
 const Settings = ({title = 'Settings', navigation}: any) => {
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
+
   return (
     <View style={tw`px-[4%] bg-white dark:bg-primaryDark h-full`}>
       <Header
@@ -35,7 +36,8 @@ const Settings = ({title = 'Settings', navigation}: any) => {
           style={tw`flex-row items-center gap-4 p-4 border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl`}
           onPress={() => navigation.navigate('ProfileSettings')}>
           <SvgXml xml={IconProfileSettings} />
-          <Text style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
+          <Text
+            style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
             Profile Settings
           </Text>
         </TouchableOpacity>
@@ -43,7 +45,8 @@ const Settings = ({title = 'Settings', navigation}: any) => {
           style={tw`flex-row items-center gap-4 p-4 border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl`}
           onPress={() => navigation.navigate('Preferences')}>
           <SvgXml xml={IconTravelPreferences} />
-          <Text style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
+          <Text
+            style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
             Travel Preferences
           </Text>
         </TouchableOpacity>
@@ -51,7 +54,8 @@ const Settings = ({title = 'Settings', navigation}: any) => {
           style={tw`flex-row items-center gap-4 p-4 border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl`}
           onPress={() => navigation.navigate('AccountSettings')}>
           <SvgXml xml={IconLock} />
-          <Text style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
+          <Text
+            style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
             Account Settings
           </Text>
         </TouchableOpacity>
@@ -59,7 +63,8 @@ const Settings = ({title = 'Settings', navigation}: any) => {
           style={tw`flex-row items-center gap-4 p-4 border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl`}
           onPress={() => navigation.navigate('UpdatePassword')}>
           <SvgXml xml={IconLock} />
-          <Text style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
+          <Text
+            style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
             Update Password
           </Text>
         </TouchableOpacity>
@@ -67,34 +72,37 @@ const Settings = ({title = 'Settings', navigation}: any) => {
           style={tw`flex-row items-center gap-4 p-4 border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl`}
           onPress={() => navigation.navigate('Subscription')}>
           <SvgXml xml={IconCart} />
-          <Text style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
+          <Text
+            style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
             Subscription & Billing
           </Text>
         </TouchableOpacity>
-<TouchableOpacity
+        <TouchableOpacity
           style={tw`flex-row items-center gap-4 p-4 border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl`}
           onPress={() => navigation.navigate('Faq')}>
           <SvgXml xml={IconFaq} />
-          <Text style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
+          <Text
+            style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
             FAQs
           </Text>
         </TouchableOpacity>
-        
+
         <TouchableOpacity
           style={tw`flex-row items-center gap-4 p-4 border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl`}
           onPress={() => navigation.navigate('TermsAndConditions')}>
           <SvgXml xml={IconCart} />
-          <Text style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
+          <Text
+            style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
             Terms & Conditions
           </Text>
         </TouchableOpacity>
 
-        
         <TouchableOpacity
           style={tw`flex-row items-center gap-4 p-4 border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl`}
           onPress={() => setLogoutModalVisible(true)}>
           <SvgXml xml={IconDangerLogout} />
-          <Text style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
+          <Text
+            style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
             Logout
           </Text>
         </TouchableOpacity>
