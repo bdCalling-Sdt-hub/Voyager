@@ -160,7 +160,7 @@ const Profile = ({navigation}: any) => {
         {activeTab === 0 ? (
           <Achievements navigation={navigation} />
         ) : activeTab === 1 ? (
-          <Visited />
+          <Visited navigation={navigation} />
         ) : activeTab === 2 ? (
           <FriendsList navigation={navigation} />
         ) : null}

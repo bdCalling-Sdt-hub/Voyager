@@ -32,3 +32,45 @@ export interface personalizedPicksTypes {
     updated_at: string;
   }
   
+
+  //  visited types
+  interface Category {
+    id: number;
+    name: string;
+}
+
+export interface visitedTypes {
+    id: number;
+    type: string;
+    name: string;
+    latitude: string;
+    longitude: string;
+    location: string;
+    description: string;
+    attraction_id: number;
+    must_visit_spots: string[];
+    category: Category;
+    subcategories: string[];
+    address: string;
+    country: string;
+    city: string;
+    age: string;
+    prices: string[];
+    visit_hours: string[];
+    top_activities: string[];
+    short_description_about_fun_fact: string;
+    short_description_about_secret_tips: string;
+    unique_features: string[];
+    best_visit_times: string[];
+    activity_levels: string[];
+    keywords: string[];
+    xp: number;
+    coins: number;
+    images: string[];
+    status: null | string;
+    visited: number;
+    visit_status: string;
+    bucketlist_status: null | string;
+    created_at: string;
+    updated_at: string;
+}

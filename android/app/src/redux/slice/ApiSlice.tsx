@@ -162,6 +162,13 @@ export const AuthSlice = api.injectEndpoints({
         url: `/get-shopbanner`,
       }),
     }),
+
+    // get visited
+    getVisited: builder.query({
+      query: () => ({
+        url: `/get-visited`,
+      }),
+    }),
     
 
   }),
@@ -188,5 +195,6 @@ export const {
 
   // profile queries
   useGetAchievementsQuery,
-  useGetShopBannerQuery
+  useGetShopBannerQuery,
+  useGetVisitedQuery
 } = AuthSlice;

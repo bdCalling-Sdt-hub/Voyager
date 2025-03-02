@@ -4,17 +4,28 @@ import destinationData from '../../../utils/json/destinations.json';
 import tw from '../../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
 import {IconFilledHeart} from '../../../assets/icons/Icons';
+import {useGetVisitedQuery} from '../../../../android/app/src/redux/slice/ApiSlice';
+import {visitedTypes} from '../../utils/types';
+import {getColorByTitle} from '../../../utils/functions/functions';
 
 const Visited = ({navigation}: any) => {
+  const {data} = useGetVisitedQuery({});
+
+  const visitedData = data?.data?.paginated_data?.data;
+
   return (
     <ScrollView
       contentContainerStyle={tw`gap-y-4 mt-6`}
       showsVerticalScrollIndicator={false}>
-      {destinationData?.data?.countries?.map((item: any, index: number) => (
+      {visitedData?.map((item: visitedTypes, index: number) => (
         <TouchableOpacity
-          style={tw`flex-row items-center py-1 gap-4 rounded-2xl border-r border-b border-b-[${item?.color}] border-r-[${item?.color}]`}
+          style={tw`flex-row items-center py-1 gap-4 rounded-2xl border-r border-b border-b-[${getColorByTitle(
+            item?.type,
+          )}] border-r-[${getColorByTitle(item?.type)}]`}
           key={index}
-          onPress={() => navigation?.navigate('DestinationDetails', {item})}>
+          onPress={() => {
+            navigation?.navigate('DestinationDetails', {item});
+          }}>
           <Image
             source={require('../../../assets/images/explore-card-2.png')}
             style={tw`rounded-2xl w-4/12 h-24`}
@@ -23,7 +34,8 @@ const Visited = ({navigation}: any) => {
             <View style={tw`gap-y-1`}>
               <View style={tw``}>
                 <View style={tw`flex-row items-center`}>
-                  <Text style={tw`text-black dark:text-white font-WorkSemiBold text-[20px]`}>
+                  <Text
+                    style={tw`text-black dark:text-white font-WorkSemiBold text-[20px]`}>
                     {item?.name}
                   </Text>
                 </View>
@@ -38,7 +50,7 @@ const Visited = ({navigation}: any) => {
                     style={tw`h-6 w-6`}
                   />
                   <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
-                    50 coins
+                    {item?.coins} coins
                   </Text>
                 </View>
 
@@ -48,7 +60,7 @@ const Visited = ({navigation}: any) => {
                     style={tw`h-6 w-6`}
                   />
                   <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
-                    100 XP
+                    {item?.xp} XP
                   </Text>
                 </View>
               </View>
