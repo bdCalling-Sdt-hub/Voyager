@@ -169,6 +169,27 @@ export const AuthSlice = api.injectEndpoints({
         url: `/get-visited`,
       }),
     }),
+
+    // get friends
+    getFriends: builder.query({
+      query: () => ({
+        url: `/user-friends?per_page=10&page=1`,
+      }),
+    }),
+
+    // other user profile data by id
+    getOthersProfile: builder.query({
+      query: ({id}) => ({
+        url: `/user-friend-profile?friend_id=${id}`,
+      }),
+    }),
+
+    // get user friend attractions
+    getUserFriendAttractions: builder.query({
+      query: ({id}) => ({
+        url: `/user-friend-attraction?friend_id=${id}&per_page=10`,
+      }),
+    }),
     
 
   }),
@@ -196,5 +217,8 @@ export const {
   // profile queries
   useGetAchievementsQuery,
   useGetShopBannerQuery,
-  useGetVisitedQuery
+  useGetVisitedQuery,
+  useGetFriendsQuery,
+  useGetOthersProfileQuery,
+  useGetUserFriendAttractionsQuery
 } = AuthSlice;

@@ -11,10 +11,34 @@ import {
   IconWhiteAdd,
 } from '../../assets/icons/Icons';
 import destinations from '../../utils/json/destinations.json';
+import {
+  useGetOthersProfileQuery,
+  useGetUserFriendAttractionsQuery,
+} from '../../../android/app/src/redux/slice/ApiSlice';
 
-const OthersProfile = ({navigation}: any) => {
+const OthersProfile = ({navigation, route}: any) => {
+  const {id} = route?.params || {};
   const [activePlace, setActivePlace] = useState('attractions');
   const [isReqSend, setIsReqSend] = useState(false);
+
+  // rtk query hooks
+  const {data} = useGetOthersProfileQuery({id});
+  const {data: userAttractions} = useGetUserFriendAttractionsQuery({id});
+  const {
+    attractions,
+    badges,
+    cities,
+    coins,
+    countries,
+    full_name,
+    level,
+    mutual_friends_count,
+    points,
+    total_friends,
+  } = data?.data || {};
+
+  const attractionsData = userAttractions?.data?.attractions;
+  console.log('other profile attractions check: ', attractionsData);
 
   const destinationData = (() => {
     switch (activePlace) {
@@ -64,8 +88,9 @@ const OthersProfile = ({navigation}: any) => {
             <SvgXml xml={IconNotification} />
           </View>
         </View>
-        <Text style={tw`text-black dark:text-white text-2xl font-WorkMedium text-center`}>
-          Midul Hosen
+        <Text
+          style={tw`text-black dark:text-white text-2xl font-WorkMedium text-center`}>
+          {full_name || 'N/A'}
         </Text>
         <View style={tw`items-center`}>
           <Image
@@ -75,16 +100,34 @@ const OthersProfile = ({navigation}: any) => {
         </View>
         <View style={tw`flex-row items-center mt-6`}>
           <View style={tw`items-center flex-1`}>
-            <Text style={tw`text-gray70 dark:text-white text-sm font-WorkMedium`}>Joined</Text>
-            <Text style={tw`text-black dark:text-white text-lg font-WorkSemiBold`}>2024</Text>
+            <Text
+              style={tw`text-gray70 dark:text-white text-sm font-WorkMedium`}>
+              Joined
+            </Text>
+            <Text
+              style={tw`text-black dark:text-white text-lg font-WorkSemiBold`}>
+              2024
+            </Text>
           </View>
           <View style={tw`items-center flex-1`}>
-            <Text style={tw`text-gray70 dark:text-white text-sm font-WorkMedium`}>Friends</Text>
-            <Text style={tw`text-black dark:text-white text-lg font-WorkSemiBold`}>10</Text>
+            <Text
+              style={tw`text-gray70 dark:text-white text-sm font-WorkMedium`}>
+              Friends
+            </Text>
+            <Text
+              style={tw`text-black dark:text-white text-lg font-WorkSemiBold`}>
+              {total_friends || 'N/A'}
+            </Text>
           </View>
           <View style={tw`items-center flex-1`}>
-            <Text style={tw`text-gray70 dark:text-white text-sm font-WorkMedium`}>Mutual</Text>
-            <Text style={tw`text-black dark:text-white text-lg font-WorkSemiBold`}>8</Text>
+            <Text
+              style={tw`text-gray70 dark:text-white text-sm font-WorkMedium`}>
+              Mutual
+            </Text>
+            <Text
+              style={tw`text-black dark:text-white text-lg font-WorkSemiBold`}>
+              {mutual_friends_count || 'N/A'}
+            </Text>
           </View>
         </View>
         <View style={tw`items-center mt-6 gap-y-4`}>
@@ -114,66 +157,68 @@ const OthersProfile = ({navigation}: any) => {
         </View>
 
         <View style={tw`gap-y-4 mt-6`}>
-        <View style={tw`flex-row items-center gap-4`}>
-          <View
-            style={tw`border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
-            <Image source={require('../../assets/images/level.png')} />
-            <View>
-              <Text
-                style={tw`text-black dark:text-white text-[20px] font-WorkBold font-700`}>
-                5
-              </Text>
-              <Text style={tw`text-gray100 text-sm font-WorkMedium font-500`}>
-                Level
-              </Text>
+          <View style={tw`flex-row items-center gap-4`}>
+            <View
+              style={tw`border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
+              <Image source={require('../../assets/images/level.png')} />
+              <View>
+                <Text
+                  style={tw`text-black dark:text-white text-[20px] font-WorkBold font-700`}>
+                  {level || 'N/A'}
+                </Text>
+                <Text style={tw`text-gray100 text-sm font-WorkMedium font-500`}>
+                  Level
+                </Text>
+              </View>
+            </View>
+            <View
+              style={tw`border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
+              <Image source={require('../../assets/images/badges.png')} />
+              <View>
+                <Text
+                  style={tw`text-black dark:text-white text-[20px] font-WorkBold font-700`}>
+                  {badges?.toString() || 'N/A'}
+                </Text>
+                <Text style={tw`text-gray100 text-sm font-WorkMedium font-500`}>
+                  Badges
+                </Text>
+              </View>
             </View>
           </View>
-          <View
-            style={tw`border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
-            <Image source={require('../../assets/images/badges.png')} />
-            <View>
-              <Text
-                style={tw`text-black dark:text-white text-[20px] font-WorkBold font-700`}>
-                12
-              </Text>
-              <Text style={tw`text-gray100 text-sm font-WorkMedium font-500`}>
-                Badges
-              </Text>
+          <View style={tw`flex-row items-center gap-4`}>
+            <View
+              style={tw`border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
+              <Image source={require('../../assets/images/coin.png')} />
+              <View>
+                <Text
+                  style={tw`text-black dark:text-white text-[20px] font-WorkBold font-700`}>
+                  {coins?.toString() || 'N/A'}
+                </Text>
+                <Text style={tw`text-gray100 text-sm font-WorkMedium font-500`}>
+                  Coins
+                </Text>
+              </View>
+            </View>
+            <View
+              style={tw`border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
+              <Image source={require('../../assets/images/trophy.png')} />
+              <View>
+                <Text
+                  style={tw`text-black dark:text-white text-[20px] font-WorkBold font-700`}>
+                  {points?.toString() || 'N/A'}
+                </Text>
+                <Text style={tw`text-gray100 text-sm font-WorkMedium font-500`}>
+                  Points
+                </Text>
+              </View>
             </View>
           </View>
         </View>
-        <View style={tw`flex-row items-center gap-4`}>
-          <View
-            style={tw`border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
-            <Image source={require('../../assets/images/coin.png')} />
-            <View>
-              <Text
-                style={tw`text-black dark:text-white text-[20px] font-WorkBold font-700`}>
-                400
-              </Text>
-              <Text style={tw`text-gray100 text-sm font-WorkMedium font-500`}>
-                Coins
-              </Text>
-            </View>
-          </View>
-          <View
-            style={tw`border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
-            <Image source={require('../../assets/images/trophy.png')} />
-            <View>
-              <Text style={tw`text-black text-[20px] font-WorkBold font-700`}>
-                550
-              </Text>
-              <Text style={tw`text-gray100 text-sm font-WorkMedium font-500`}>
-                Points
-              </Text>
-            </View>
-          </View>
-        </View>
-      </View>
 
         <View style={tw`my-4`}>
           <View>
-            <Text style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
+            <Text
+              style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
               Travel Stats
             </Text>
             <Text style={tw`text-gray100 text-sm font-WorkRegular font-400`}>
@@ -183,39 +228,46 @@ const OthersProfile = ({navigation}: any) => {
 
           <View style={tw`gap-y-2`}>
             <View style={tw`flex-row gap-2 mt-3`}>
-              <View style={tw`bg-[#FFEFF3] dark:bg-darkBg p-4 rounded-2xl flex-1`}>
-                <Text style={tw`text-black dark:text-white text-sm font-WorkRegular font-400`}>
+              <View
+                style={tw`bg-[#FFEFF3] dark:bg-darkBg p-4 rounded-2xl flex-1`}>
+                <Text
+                  style={tw`text-black dark:text-white text-sm font-WorkRegular font-400`}>
                   Attractions
                 </Text>
                 <Text
                   style={tw`text-black dark:text-white text-2xl font-WorkSemiBold font-600`}>
-                  7
+                  {attractions?.toString() || 'N/A'}
                 </Text>
               </View>
-              <View style={tw`bg-[#FFF6ED] dark:bg-darkBg p-4 rounded-2xl flex-1`}>
-                <Text style={tw`text-black dark:text-white text-sm font-WorkRegular font-400`}>
+              <View
+                style={tw`bg-[#FFF6ED] dark:bg-darkBg p-4 rounded-2xl flex-1`}>
+                <Text
+                  style={tw`text-black dark:text-white text-sm font-WorkRegular font-400`}>
                   Cities
                 </Text>
                 <Text
                   style={tw`text-black dark:text-white text-2xl font-WorkSemiBold font-600`}>
-                  14
+                  {cities?.toString() || 'N/A'}
                 </Text>
               </View>
             </View>
             <View style={tw`flex-row`}>
-              <View style={tw`bg-[#F4F2FD] dark:bg-darkBg p-4 rounded-2xl flex-1`}>
-                <Text style={tw`text-black dark:text-white text-sm font-WorkRegular font-400`}>
+              <View
+                style={tw`bg-[#F4F2FD] dark:bg-darkBg p-4 rounded-2xl flex-1`}>
+                <Text
+                  style={tw`text-black dark:text-white text-sm font-WorkRegular font-400`}>
                   Countries
                 </Text>
                 <Text
                   style={tw`text-black dark:text-white text-2xl font-WorkSemiBold font-600`}>
-                  12
+                  {countries?.toString() || 'N/A'}
                 </Text>
               </View>
             </View>
 
             <View style={tw`mt-2`}>
-              <Text style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
+              <Text
+                style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>
                 Shared Adventures
               </Text>
               <Text style={tw`text-gray100 text-sm font-WorkRegular font-400`}>
@@ -228,101 +280,136 @@ const OthersProfile = ({navigation}: any) => {
 
         {/* tabs */}
         <View>
-        <View style={tw`flex-row bg-gray80 dark:bg-darkBg p-1 rounded-full mt-4`}>
-        <TouchableOpacity
-          style={tw`${
-            activePlace === 'attractions' ? 'bg-violet100' : ''
-          } py-2 rounded-full flex-1 justify-center items-center flex-row gap-1`}
-          onPress={() => setActivePlace('attractions')}>
-          <Text
-            style={tw`${
-              activePlace === 'attractions' ? 'text-white' : 'text-gray100'
-            } text-xs font-WorkMedium`}>
-            Attractions 
-          </Text>
-          <View style={tw`h-5 w-5 ${ activePlace === 'attractions' ? 'bg-white' : 'bg-gray100'} rounded-full text-center items-center justify-center`}><Text style={tw`text-xs ${ activePlace === 'attractions' ? 'text-violet100' : 'text-white'}`}>07</Text></View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={tw`${
-            activePlace === 'cities' ? 'bg-violet100' : ''
-          } py-4 rounded-full flex-1 justify-center items-center flex-row gap-1`}
-          onPress={() => setActivePlace('cities')}>
-          <Text
-            style={tw`${
-              activePlace === 'cities' ? 'text-white' : 'text-gray100'
-            } text-xs font-WorkMedium`}>
-            Cities
-          </Text>
-          <View style={tw`h-5 w-5 ${ activePlace === 'cities' ? 'bg-white' : 'bg-gray100'} rounded-full text-center items-center justify-center`}><Text style={tw`text-xs ${ activePlace === 'cities' ? 'text-violet100' : 'text-white'}`}>24</Text></View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={tw`${
-            activePlace === 'countries' ? 'bg-violet100' : ''
-          } py-4 rounded-full flex-1 justify-center items-center flex-row gap-1`}
-          onPress={() => setActivePlace('countries')}>
-          <Text
-            style={tw`${
-              activePlace === 'countries' ? 'text-white' : 'text-gray100'
-            }  text-xs font-WorkMedium`}>
-            Countries
-          </Text>
-          <View style={tw`h-5 w-5 ${ activePlace === 'countries' ? 'bg-white' : 'bg-gray100'} rounded-full text-center items-center justify-center`}><Text style={tw`text-xs ${ activePlace === 'countries' ? 'text-violet100' : 'text-white'}`}>07</Text></View>
-        </TouchableOpacity>
-      </View>
+          <View
+            style={tw`flex-row bg-gray80 dark:bg-darkBg p-1 rounded-full mt-4`}>
+            <TouchableOpacity
+              style={tw`${
+                activePlace === 'attractions' ? 'bg-violet100' : ''
+              } py-2 rounded-full flex-1 justify-center items-center flex-row gap-1`}
+              onPress={() => setActivePlace('attractions')}>
+              <Text
+                style={tw`${
+                  activePlace === 'attractions' ? 'text-white' : 'text-gray100'
+                } text-xs font-WorkMedium`}>
+                Attractions
+              </Text>
+              <View
+                style={tw`h-5 w-5 ${
+                  activePlace === 'attractions' ? 'bg-white' : 'bg-gray100'
+                } rounded-full text-center items-center justify-center`}>
+                <Text
+                  style={tw`text-xs ${
+                    activePlace === 'attractions'
+                      ? 'text-violet100'
+                      : 'text-white'
+                  }`}>
+                  {attractionsData?.count.toString() || 'N/A'}
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={tw`${
+                activePlace === 'cities' ? 'bg-violet100' : ''
+              } py-4 rounded-full flex-1 justify-center items-center flex-row gap-1`}
+              onPress={() => setActivePlace('cities')}>
+              <Text
+                style={tw`${
+                  activePlace === 'cities' ? 'text-white' : 'text-gray100'
+                } text-xs font-WorkMedium`}>
+                Cities
+              </Text>
+              <View
+                style={tw`h-5 w-5 ${
+                  activePlace === 'cities' ? 'bg-white' : 'bg-gray100'
+                } rounded-full text-center items-center justify-center`}>
+                <Text
+                  style={tw`text-xs ${
+                    activePlace === 'cities' ? 'text-violet100' : 'text-white'
+                  }`}>
+                  24
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={tw`${
+                activePlace === 'countries' ? 'bg-violet100' : ''
+              } py-4 rounded-full flex-1 justify-center items-center flex-row gap-1`}
+              onPress={() => setActivePlace('countries')}>
+              <Text
+                style={tw`${
+                  activePlace === 'countries' ? 'text-white' : 'text-gray100'
+                }  text-xs font-WorkMedium`}>
+                Countries
+              </Text>
+              <View
+                style={tw`h-5 w-5 ${
+                  activePlace === 'countries' ? 'bg-white' : 'bg-gray100'
+                } rounded-full text-center items-center justify-center`}>
+                <Text
+                  style={tw`text-xs ${
+                    activePlace === 'countries'
+                      ? 'text-violet100'
+                      : 'text-white'
+                  }`}>
+                  07
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
           <ScrollView
             contentContainerStyle={tw`gap-y-4 mt-6`}
             showsVerticalScrollIndicator={false}>
-            {destinationData?.map((item: any, index: number) => (
-            <TouchableOpacity
-              style={tw`flex-row items-center p-1 gap-4 rounded-2xl border-r border-b border-b-[${activeColor()}] border-r-[${activeColor()}]`}
-              key={index}
-              onPress={() =>
-                navigation?.navigate('DestinationDetails', {item})
-              }>
-              <Image
-                source={require('../../assets/images/explore-card-2.png')}
-                style={tw`rounded-2xl w-4/12 h-24`}
-              />
-              <View
-                style={tw`flex-1 justify-between flex-row items-center gap-2`}>
-                <View style={tw`gap-y-1`}>
-                  <View style={tw``}>
-                    <View style={tw`flex-row items-center`}>
-                      <Text
-                        style={tw`text-black dark:text-white font-WorkSemiBold text-[20px]`}>
-                        {item?.name}
+            {attractionsData?.data?.map((item: any, index: number) => (
+              <TouchableOpacity
+                style={tw`flex-row items-center p-1 gap-4 rounded-2xl border-r border-b border-b-[${activeColor()}] border-r-[${activeColor()}]`}
+                key={index}
+                onPress={() =>
+                  navigation?.navigate('DestinationDetails', {item})
+                }>
+                <Image
+                  source={require('../../assets/images/explore-card-2.png')}
+                  style={tw`rounded-2xl w-4/12 h-24`}
+                />
+                <View
+                  style={tw`flex-1 justify-between flex-row items-center gap-2`}>
+                  <View style={tw`gap-y-1`}>
+                    <View style={tw``}>
+                      <View style={tw`flex-row items-center`}>
+                        <Text
+                          style={tw`text-black dark:text-white font-WorkSemiBold text-[20px]`}>
+                          {item?.name}
+                        </Text>
+                      </View>
+                      <Text style={tw`text-gray100 font-WorkRegular text-sm`}>
+                        {item?.location || 'Location'}
                       </Text>
                     </View>
-                    <Text style={tw`text-gray100 font-WorkRegular text-sm`}>
-                      {item?.location || 'Location'}
-                    </Text>
-                  </View>
-                  <View style={tw`flex-row gap-4`}>
-                    <View style={tw`flex-row items-center gap-1 flex-shrink`}>
-                      <Image
-                        source={require('../../assets/images/coin.png')}
-                        style={tw`h-6 w-6`}
-                      />
-                      <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
-                        50 coins
-                      </Text>
-                    </View>
+                    <View style={tw`flex-row gap-4`}>
+                      <View style={tw`flex-row items-center gap-1 flex-shrink`}>
+                        <Image
+                          source={require('../../assets/images/coin.png')}
+                          style={tw`h-6 w-6`}
+                        />
+                        <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
+                          50 coins
+                        </Text>
+                      </View>
 
-                    <View style={tw`flex-row items-center gap-1 flex-shrink`}>
-                      <Image
-                        source={require('../../assets/images/trophy.png')}
-                        style={tw`h-6 w-6`}
-                      />
-                      <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
-                        100 XP
-                      </Text>
+                      <View style={tw`flex-row items-center gap-1 flex-shrink`}>
+                        <Image
+                          source={require('../../assets/images/trophy.png')}
+                          style={tw`h-6 w-6`}
+                        />
+                        <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
+                          100 XP
+                        </Text>
+                      </View>
                     </View>
                   </View>
                 </View>
-              </View>
-              <SvgXml xml={IconFilledHeart} />
-            </TouchableOpacity>
-          ))}
+                <SvgXml xml={IconFilledHeart} />
+              </TouchableOpacity>
+            ))}
           </ScrollView>
         </View>
       </View>
