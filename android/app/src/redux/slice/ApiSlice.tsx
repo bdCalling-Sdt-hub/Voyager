@@ -146,6 +146,22 @@ export const AuthSlice = api.injectEndpoints({
         body: data,
       }),
     }),
+
+    // profile queries
+
+    // get achievements
+    getAchievements: builder.query({
+      query: () => ({
+        url: `/get-achivevement`,
+      }),
+    }),
+
+    // shop banner
+    getShopBanner: builder.query({
+      query: () => ({
+        url: `/get-shopbanner`,
+      }),
+    }),
     
 
   }),
@@ -168,5 +184,9 @@ export const {
   useGetTopDestinationQuery,
   useAppDashboardQuery,
   useGetWeeklyQuestProgressQuery,
-  useUpdatePasswordMutation
+  useUpdatePasswordMutation,
+
+  // profile queries
+  useGetAchievementsQuery,
+  useGetShopBannerQuery
 } = AuthSlice;
