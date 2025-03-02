@@ -10,9 +10,17 @@ import {
 import Achievements from './components/Achievements';
 import Visited from './components/Visited';
 import FriendsList from './components/FriendsList';
+import {useGetProfileQuery} from '../../../android/app/src/redux/slice/ApiSlice';
+import { baseUrl } from '../utils/exports';
 
 const Profile = ({navigation}: any) => {
   const [activeTab, setActiveTab] = useState(0);
+
+  // rtk query hooks
+  const {data: profileData, isLoading, error} = useGetProfileQuery({});
+  const {full_name, email, image, user_name, signup_date} = profileData?.data || {};
+
+  console.log("profile data: ", profileData?.data)
   return (
     <ScrollView style={tw`px-[4%] pt-2 bg-white dark:bg-primaryDark h-full`} showsVerticalScrollIndicator={false}>
       <View style={tw`mb-4`}>
@@ -24,7 +32,7 @@ const Profile = ({navigation}: any) => {
           </TouchableOpacity>
           <View style={[tw``]}>
             <Image
-              source={require('../../assets/images/user.png')}
+              source={{uri: baseUrl + image}}
               style={tw`h-24 w-24 rounded-full`}
             />
           </View>
@@ -44,9 +52,9 @@ const Profile = ({navigation}: any) => {
         </View>
         <Text
           style={tw`text-black dark:text-white text-2xl font-WorkMedium text-center`}>
-          Henry William
+          {full_name || "N/A"}
         </Text>
-        <Text style={tw`text-center text-gray70`}>hanry_william2024</Text>
+        <Text style={tw`text-center text-gray70`}>{user_name || "N/A"}</Text>
         <View style={tw`flex-row items-center mt-6`}>
           <View style={tw`items-center flex-1`}>
             <Text
@@ -55,7 +63,7 @@ const Profile = ({navigation}: any) => {
             </Text>
             <Text
               style={tw`text-black dark:text-white text-lg font-WorkSemiBold`}>
-              2024
+            {signup_date?.slice(0, 4) || "N/A"}
             </Text>
           </View>
           <View style={tw`items-center flex-1`}>
