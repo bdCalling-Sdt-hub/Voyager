@@ -6,27 +6,42 @@ import {SvgXml} from 'react-native-svg';
 import {IconFilledHeart, IconSearch} from '../../assets/icons/Icons';
 import destinations from '../../utils/json/destinations.json';
 import {NavigProps} from '../../utils/interface/NaviProps';
+import {
+  useGetBucketListAttractionsQuery,
+  useGetBucketListBannerQuery,
+  useGetBucketListCitiesQuery,
+  useGetBucketListCountriesQuery,
+} from '../../../android/app/src/redux/slice/ApiSlice';
+import {baseUrl} from '../utils/exports';
 
 const Places = ({navigation, route}: NavigProps<null>) => {
   const [activePlace, setActivePlace] = useState('attractions');
-  const [isSearchVisible, setSearchVisible] = useState(false);
-  const {title}: any = route?.params || '';
+
+  // rtk query hooks
+  const {data: bucketListCountries} = useGetBucketListCountriesQuery({});
+  const {data: bucketListCities} = useGetBucketListCitiesQuery({});
+  const {data: bucketListAttractions} = useGetBucketListAttractionsQuery({});
+  const {data: bucketListBanner} = useGetBucketListBannerQuery({});
+
+  console.log('Bucketlist banner: ', bucketListBanner?.data);
 
   const destinationData = (() => {
     switch (activePlace) {
       case 'cities':
         // setActiveColor('#FC5D88BF');
-        return destinations?.data?.cities || null;
+        return bucketListCities?.data?.cities?.data || null;
       case 'countries':
         // setActiveColor('#FFA94DBF');
-        return destinations?.data?.countries || null;
+        return bucketListCountries?.data?.countries?.data || null;
       case 'attractions':
         // setActiveColor('#8C78EABF');
-        return destinations?.data?.attractions || null;
+        return bucketListAttractions?.data?.attractions?.data || null;
       default:
         return null;
     }
   })();
+
+  const abc = 'attractions';
 
   const activeColor = () => {
     switch (activePlace) {
@@ -53,24 +68,39 @@ const Places = ({navigation, route}: NavigProps<null>) => {
         hideDestination={true}
       />
 
-      <TouchableOpacity style={tw`flex-row items-center my-4 gap-2 border border-gray90 dark:border-darkBg p-4 rounded-2xl`} onPress={() => {navigation?.navigate('Subscription')}}>
-        <View style={tw`w-[20%]`}>
-          <Image
-            source={require('../../assets/images/speedmeter.png')}
-            style={tw`w-full h-14`}
-          />
-        </View>
-        <View style={tw`w-[80%] flex-shrink`}>
-          <Text
-            style={tw`text-black dark:text-white text-base font-WorkSemiBold`}>
-            Bucket list is near limit (09/11)
-          </Text>
-          <Text style={tw`text-gray100 text-sm  font-WorkRegular`}>
-            Subscribe to premium or purchase a powerups to increase your limit
-            now.
-          </Text>
-        </View>
-      </TouchableOpacity>
+      {bucketListBanner?.data?.freeBucketList?.user_types === 'Free' && (
+        <TouchableOpacity
+          style={tw`flex-row items-center my-4 gap-2 border border-gray90 dark:border-darkBg p-4 rounded-2xl`}
+          onPress={() => {
+            navigation?.navigate('Subscription');
+          }}>
+          <View style={tw`w-[20%]`}>
+            <Image
+              source={
+                bucketListBanner?.data?.freeBucketList?.photos[0]
+                  ? {
+                      uri:
+                        baseUrl +
+                        bucketListBanner?.data?.freeBucketList?.photos[0],
+                    }
+                  : require('../../assets/images/speedmeter.png')
+              }
+              style={tw`w-full h-14`}
+            />
+          </View>
+          <View style={tw`w-[80%] flex-shrink`}>
+            <Text
+              style={tw`text-black dark:text-white text-base font-WorkSemiBold`}>
+              Bucket list is near limit (
+              {bucketListBanner?.data?.usedBucket || 0}/
+              {bucketListBanner?.data?.freeBucketList?.bucketlist_space || 0})
+            </Text>
+            <Text style={tw`text-gray100 text-sm  font-WorkRegular`}>
+              {bucketListBanner?.data?.freeBucketList?.short_description}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      )}
 
       <View style={tw`flex-row bg-gray80 dark:bg-darkBg p-1 rounded-full mt-4`}>
         <TouchableOpacity
@@ -163,11 +193,11 @@ const Places = ({navigation, route}: NavigProps<null>) => {
                     <View style={tw`flex-row items-center`}>
                       <Text
                         style={tw`text-black dark:text-white font-WorkSemiBold text-[20px]`}>
-                        {item?.name}
+                        {item?.city?.name}
                       </Text>
                     </View>
                     <Text style={tw`text-gray100 font-WorkRegular text-sm`}>
-                      {item?.location || 'Location'}
+                      {item?.city?.location || 'Location'}
                     </Text>
                   </View>
                   <View style={tw`flex-row gap-4`}>

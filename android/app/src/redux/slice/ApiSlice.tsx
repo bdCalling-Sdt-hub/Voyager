@@ -214,6 +214,13 @@ export const AuthSlice = api.injectEndpoints({
       }),
     }),
 
+    // bucketlist banner
+    getBucketListBanner: builder.query({
+      query: () => ({
+        url: `/user-bucket`,
+      }),
+    }),
+
   }),
 });
 
@@ -248,4 +255,5 @@ export const {
   useGetBucketListAttractionsQuery,
   useGetBucketListCitiesQuery,
   useGetBucketListCountriesQuery,
+  useGetBucketListBannerQuery
 } = AuthSlice;
