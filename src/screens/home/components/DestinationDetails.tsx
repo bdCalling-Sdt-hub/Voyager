@@ -15,7 +15,6 @@ import {
   IconClock,
   IconColoredHeart,
   IconColoredLocation,
-  IconCongrats,
   IconLeftArrow,
   IconLogout,
   IconMuseum,
@@ -25,12 +24,13 @@ import {
 } from '../../../assets/icons/Icons';
 import {NavigProps} from '../../../utils/interface/NaviProps';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import {ExpandableSection, Fader} from 'react-native-ui-lib';
+import {Fader} from 'react-native-ui-lib';
 import Test from './Test';
 import Swiper from 'react-native-swiper';
 import NormalModal from '../../../components/modals/NormalModal';
 import {useAppColorScheme} from 'twrnc';
 import {baseUrl} from '../../utils/exports';
+import { useAddToBucketListMutation } from '../../../../android/app/src/redux/slice/ApiSlice';
 
 const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
   const {item} = route?.params || {};
@@ -46,6 +46,9 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
   const words = fullText.split(' ');
 
   const initialText = expanded ? fullText : words.slice(0, 25).join(' ');
+
+  // rtk query hooks
+  const [addToBucketList, {isLoading}] = useAddToBucketListMutation();
 
   console.log('data: ', item);
   return (

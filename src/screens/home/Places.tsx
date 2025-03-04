@@ -23,7 +23,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
   const {data: bucketListAttractions} = useGetBucketListAttractionsQuery({});
   const {data: bucketListBanner} = useGetBucketListBannerQuery({});
 
-  console.log('Bucketlist banner: ', bucketListBanner?.data);
+  console.log('Bucketlist banner: ', bucketListCountries?.data);
 
   const destinationData = (() => {
     switch (activePlace) {
@@ -41,7 +41,6 @@ const Places = ({navigation, route}: NavigProps<null>) => {
     }
   })();
 
-  const abc = 'attractions';
 
   const activeColor = () => {
     switch (activePlace) {
@@ -180,7 +179,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
               style={tw`flex-row items-center p-1 gap-4 rounded-2xl border-r border-b border-b-[${activeColor()}] border-r-[${activeColor()}]`}
               key={index}
               onPress={() =>
-                navigation?.navigate('DestinationDetails', {item})
+                navigation?.navigate('DestinationDetails', {item: item?.data})
               }>
               <Image
                 source={require('../../assets/images/explore-card-2.png')}
@@ -193,11 +192,11 @@ const Places = ({navigation, route}: NavigProps<null>) => {
                     <View style={tw`flex-row items-center`}>
                       <Text
                         style={tw`text-black dark:text-white font-WorkSemiBold text-[20px]`}>
-                        {item?.city?.name}
+                        {item?.data?.name}
                       </Text>
                     </View>
                     <Text style={tw`text-gray100 font-WorkRegular text-sm`}>
-                      {item?.city?.location || 'Location'}
+                      {item?.data?.location || 'Location'}
                     </Text>
                   </View>
                   <View style={tw`flex-row gap-4`}>

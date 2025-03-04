@@ -221,6 +221,14 @@ export const AuthSlice = api.injectEndpoints({
       }),
     }),
 
+    // add to bucket list
+    addToBucketList: builder.mutation({
+      query: ({id}) => ({
+        url: `/add-to-bucketlist?id=${id}`,
+        method: 'POST',
+      }),
+    }),
+
   }),
 });
 
@@ -255,5 +263,8 @@ export const {
   useGetBucketListAttractionsQuery,
   useGetBucketListCitiesQuery,
   useGetBucketListCountriesQuery,
-  useGetBucketListBannerQuery
+  useGetBucketListBannerQuery,
+
+  // add to bucket list queries
+  useAddToBucketListMutation,
 } = AuthSlice;
