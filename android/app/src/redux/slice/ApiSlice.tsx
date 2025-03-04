@@ -190,7 +190,29 @@ export const AuthSlice = api.injectEndpoints({
         url: `/user-friend-attraction?friend_id=${id}&per_page=10`,
       }),
     }),
+
+    // goals queries
+
+    // bucketlist attractions
+    getBucketListAttractions: builder.query({
+      query: () => ({
+        url: `/attraction-bucklist`,
+      }),
+    }),
+
+    // bucketlist cities
+    getBucketListCities: builder.query({
+      query: () => ({
+        url: `/city-bucklist`,
+      }),
+    }),
     
+    // bucketlist countries
+    getBucketListCountries: builder.query({
+      query: () => ({
+        url: `/country-bucklist`,
+      }),
+    }),
 
   }),
 });
@@ -220,5 +242,10 @@ export const {
   useGetVisitedQuery,
   useGetFriendsQuery,
   useGetOthersProfileQuery,
-  useGetUserFriendAttractionsQuery
+  useGetUserFriendAttractionsQuery,
+
+  // goals queries
+  useGetBucketListAttractionsQuery,
+  useGetBucketListCitiesQuery,
+  useGetBucketListCountriesQuery,
 } = AuthSlice;

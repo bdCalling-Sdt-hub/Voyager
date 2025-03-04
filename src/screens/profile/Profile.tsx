@@ -20,7 +20,6 @@ const Profile = ({navigation}: any) => {
   const {data: profileData, isLoading, error} = useGetProfileQuery({});
   const {full_name, email, image, user_name, signup_date} = profileData?.data || {};
 
-  console.log("profile data: ", profileData?.data)
   return (
     <ScrollView style={tw`px-[4%] pt-2 bg-white dark:bg-primaryDark h-full`} showsVerticalScrollIndicator={false}>
       <View style={tw`mb-4`}>
