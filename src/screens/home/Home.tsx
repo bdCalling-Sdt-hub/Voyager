@@ -30,7 +30,7 @@ const Home = ({navigation}: NavigProps<null>) => {
   const {data: personalizedPicks} = useGetPersonalizedQuery({});
   const {data: topDestination} = useGetTopDestinationQuery({});
 
-
+  console.log("top destination: ", topDestination);
   return (
     <View style={tw`h-full px-[4%] bg-white dark:bg-primaryDark`}>
       <ScrollView
@@ -163,11 +163,8 @@ const Home = ({navigation}: NavigProps<null>) => {
           </View>
           <View style={tw`mt-6`}>
             <TouchableOpacity
-              disabled={true}
               style={tw`flex-row items-center justify-between`}
-              onPress={() => {
-                navigation?.navigate('Places', {title: 'top destinations'});
-              }}>
+             >
               <View style={tw`w-full`}>
                 <Text
                   style={tw`text-black dark:text-white text-base font-WorkMedium`}>
@@ -184,17 +181,17 @@ const Home = ({navigation}: NavigProps<null>) => {
               horizontal
               contentContainerStyle={tw`gap-4`}
               showsHorizontalScrollIndicator={false}>
-              {personalized.map(item => (
+              {topDestination?.data?.map(item => (
                 <TouchableOpacity
                   style={tw`rounded-2xl overflow-hidden mt-6`}
-                  key={item.id}>
+                  key={item?.details?.id}>
                   <ImageBackground
                     source={require('../../assets/images/sky-tower.png')}
                     resizeMode="cover"
                     style={tw`h-[260px] w-82 justify-between items-center rounded-2xl p-4`}>
                     <View style={tw`gap-y-3 items-end w-full`}>
                       <SvgXml
-                        xml={item?.isFav ? IconFilledHeart : IconWhiteHeart}
+                        xml={IconFilledHeart}
                       />
                       {/* <SvgXml
                       xml={
@@ -207,12 +204,12 @@ const Home = ({navigation}: NavigProps<null>) => {
                       <View style={tw`flex-row items-center`}>
                         <Text
                           style={tw`text-black dark:text-white text-sm font-WorkMedium`}>
-                          {item.title}
+                          {item?.details?.city}
                         </Text>
                       </View>
                       <Text
                         style={tw`text-gray100 font-WorkRegular text-[10px]`}>
-                        {item.subtitle}
+                        {item?.details?.description}
                       </Text>
                     </View>
                   </ImageBackground>

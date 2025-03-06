@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Linking,
+  Alert,
 } from 'react-native';
 import tw from '../../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
@@ -25,17 +26,16 @@ import {
 import {NavigProps} from '../../../utils/interface/NaviProps';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {Fader} from 'react-native-ui-lib';
-import Test from './Test';
 import Swiper from 'react-native-swiper';
 import NormalModal from '../../../components/modals/NormalModal';
 import {useAppColorScheme} from 'twrnc';
 import {baseUrl} from '../../utils/exports';
-import { useAddToBucketListMutation } from '../../../../android/app/src/redux/slice/ApiSlice';
+import {useAddToBucketListMutation} from '../../../../android/app/src/redux/slice/ApiSlice';
+import SocialShareButton from '../../settings/SocialShareButton';
 
 const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
   const {item} = route?.params || {};
-  const [colorScheme, toggleColorScheme, setColorScheme] =
-    useAppColorScheme(tw);
+  const [colorScheme] = useAppColorScheme(tw);
   const [expanded, setExpanded] = useState(false);
   const [saveBucketListModalVisible, setSaveBucketListModalVisible] =
     useState(false);
@@ -50,7 +50,18 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
   // rtk query hooks
   const [addToBucketList, {isLoading}] = useAddToBucketListMutation();
 
-  console.log('data: ', item);
+  const handleBucketList = async () => {
+    try {
+      const response = await addToBucketList({id: item?.id});
+
+      console.log('reponse check of add bucket list: ', response);
+    } catch (err: any) {
+      Alert.alert('Login Failed', err?.message || 'An error occurred.');
+    }
+  };
+
+  // console.log('data: ', item?.id);
+  // console.log("Item: ", item);
   return (
     <View style={tw`bg-white h-full dark:bg-primaryDark`}>
       <View style={tw`h-66`}>
@@ -217,8 +228,7 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
               longitude: Number(item?.longitude),
               latitudeDelta: Math.abs(Number(item?.latitude)) * 0.001, // Adjust as needed
               longitudeDelta: Math.abs(Number(item?.longitude)) * 0.001, // Adjust as needed
-            }}
-          >
+            }}>
             <Marker
               coordinate={{
                 latitude: Number(item?.latitude),
@@ -234,7 +244,7 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
       <View style={tw`flex-row items-center gap-4 pb-4 pt-2 px-[4%]`}>
         <TouchableOpacity
           style={tw`border-violet100 border py-3 rounded-full flex-row items-center justify-center gap-3 flex-1`}
-          onPress={() => setAddOnBucketListModalVisible(true)}>
+          onPress={handleBucketList}>
           <SvgXml xml={IconColoredHeart} />
           <Text style={tw`text-sm font-WorkRegular text-violet100`}>
             Bucket List

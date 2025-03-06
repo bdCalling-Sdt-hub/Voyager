@@ -29,7 +29,6 @@ const Login = ({navigation}: any) => {
     try {
       const response = await login({email, password});
       const token = response?.data?.data?.token;
-      console.log(response);
 
       if (!token) {
         return Alert.alert(

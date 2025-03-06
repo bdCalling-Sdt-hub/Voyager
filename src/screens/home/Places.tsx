@@ -23,8 +23,6 @@ const Places = ({navigation, route}: NavigProps<null>) => {
   const {data: bucketListAttractions} = useGetBucketListAttractionsQuery({});
   const {data: bucketListBanner} = useGetBucketListBannerQuery({});
 
-  console.log('Bucketlist banner: ', bucketListCountries?.data);
-
   const destinationData = (() => {
     switch (activePlace) {
       case 'cities':

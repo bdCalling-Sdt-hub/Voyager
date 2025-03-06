@@ -13,6 +13,7 @@ import {
 } from '../../assets/icons/Icons';
 import {SvgXml} from 'react-native-svg';
 import NormalModal from '../../components/modals/NormalModal';
+import SocialShareButton from './SocialShareButton';
 
 const Settings = ({title = 'Settings', navigation}: any) => {
   const [isSearchVisible, setSearchVisible] = useState(false);

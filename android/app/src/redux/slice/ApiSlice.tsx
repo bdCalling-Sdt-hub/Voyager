@@ -223,10 +223,13 @@ export const AuthSlice = api.injectEndpoints({
 
     // add to bucket list
     addToBucketList: builder.mutation({
-      query: ({id}) => ({
-        url: `/add-to-bucketlist?id=${id}`,
-        method: 'POST',
-      }),
+      query: ({id}) => {
+        console.log("bucket list id check from rtk: ", id);
+        return{
+          url: `/add-to-bucketlist?id=${id}`,
+          method: 'POST',
+        }
+      },
     }),
 
   }),
