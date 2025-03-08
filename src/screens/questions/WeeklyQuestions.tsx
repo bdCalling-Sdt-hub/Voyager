@@ -48,7 +48,6 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
         }
   
         return () => {
-          console.log("Cleanup on screen unfocus");
           setActiveQuest(activeQuest);
         };
       }, [screen])

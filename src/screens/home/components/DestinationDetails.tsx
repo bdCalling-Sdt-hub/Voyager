@@ -51,17 +51,21 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
   const [addToBucketList, {isLoading}] = useAddToBucketListMutation();
 
   const handleBucketList = async () => {
+    const data = {type: item?.type, bucketlist_status: 'bucketlisted'}
     try {
-      const response = await addToBucketList({id: item?.id});
-
+      const response = await addToBucketList({id: item?.id, data});
       console.log('reponse check of add bucket list: ', response);
+      if(response?.error?.success === false){
+        Alert.alert('Adding to bucket list failed', response?.error?.message || 'An error occurred.');
+        return;
+      }
     } catch (err: any) {
       Alert.alert('Login Failed', err?.message || 'An error occurred.');
     }
   };
 
   // console.log('data: ', item?.id);
-  // console.log("Item: ", item);
+  console.log("Item: ", item);
   return (
     <View style={tw`bg-white h-full dark:bg-primaryDark`}>
       <View style={tw`h-66`}>
@@ -247,7 +251,7 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
           onPress={handleBucketList}>
           <SvgXml xml={IconColoredHeart} />
           <Text style={tw`text-sm font-WorkRegular text-violet100`}>
-            Bucket List
+            {isLoading ? "Adding..." : "Bucket List"}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity

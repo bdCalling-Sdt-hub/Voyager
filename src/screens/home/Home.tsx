@@ -30,7 +30,6 @@ const Home = ({navigation}: NavigProps<null>) => {
   const {data: personalizedPicks} = useGetPersonalizedQuery({});
   const {data: topDestination} = useGetTopDestinationQuery({});
 
-  console.log("top destination: ", topDestination);
   return (
     <View style={tw`h-full px-[4%] bg-white dark:bg-primaryDark`}>
       <ScrollView

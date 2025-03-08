@@ -60,7 +60,6 @@ const NextDestination = ({ navigation, route }: NavigProps<null>) => {
     }
   })();
 
-  console.log("data: ", data)
 
   return (
     <View style={tw`px-[4%] bg-white h-full dark:bg-primaryDark`}>
