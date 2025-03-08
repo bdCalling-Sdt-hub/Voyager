@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
+  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 import Header from '../../components/header/Header';
@@ -18,17 +19,41 @@ import {
 import {SvgXml} from 'react-native-svg';
 import personalized from '../../utils/json/personalized.json';
 import {NavigProps} from '../../utils/interface/NaviProps';
-import { useGetPersonalizedQuery, useGetTopDestinationQuery } from '../../../android/app/src/redux/slice/ApiSlice';
-import { personalizedPicksTypes } from '../utils/types';
-import { baseUrl } from '../utils/exports';
-
-
+import {
+  useGetPersonalizedQuery,
+  useGetTopDestinationQuery,
+  useLocationVisitMutation,
+} from '../../../android/app/src/redux/slice/ApiSlice';
+import {personalizedPicksTypes} from '../utils/types';
+import {baseUrl} from '../utils/exports';
 
 const Home = ({navigation}: NavigProps<null>) => {
-
   // rtk query hooks
   const {data: personalizedPicks} = useGetPersonalizedQuery({});
   const {data: topDestination} = useGetTopDestinationQuery({});
+  const [locationVisit] = useLocationVisitMutation();
+
+  // handlers
+  const handleVisitLocation = async (item: any) => {
+    const data = {type: item?.type, visited: '1'};
+    try {
+      const response = await locationVisit({id: item?.id, data});
+      if (response?.error?.success === false) {
+        Alert.alert(
+          'Adding to bucket list failed',
+          response?.error?.message || 'An error occurred.',
+        );
+        return;
+      } else {
+        navigation?.navigate('DestinationDetails', {item});
+      }
+    } catch (err: any) {
+      Alert.alert(
+        'Visit Location Failed',
+        err?.message || 'An error occurred.',
+      );
+    }
+  };
 
   return (
     <View style={tw`h-full px-[4%] bg-white dark:bg-primaryDark`}>
@@ -60,7 +85,7 @@ const Home = ({navigation}: NavigProps<null>) => {
                 style={tw`flex-1`}
                 onPress={() => {
                   navigation?.navigate('NextDestination', {
-                    title: 'attractions'
+                    title: 'attractions',
                   });
                 }}>
                 <Image
@@ -75,7 +100,7 @@ const Home = ({navigation}: NavigProps<null>) => {
                 style={tw`flex-1`}
                 onPress={() => {
                   navigation?.navigate('NextDestination', {
-                    title: 'cities'
+                    title: 'cities',
                   });
                 }}>
                 <Image
@@ -90,7 +115,7 @@ const Home = ({navigation}: NavigProps<null>) => {
                 style={tw`flex-1`}
                 onPress={() => {
                   navigation?.navigate('NextDestination', {
-                    title: 'countries'
+                    title: 'countries',
                   });
                 }}>
                 <Image
@@ -126,44 +151,45 @@ const Home = ({navigation}: NavigProps<null>) => {
               horizontal
               contentContainerStyle={tw`gap-4`}
               showsHorizontalScrollIndicator={false}>
-              {personalizedPicks?.data?.map((item: personalizedPicksTypes, index: number) => (
-                <TouchableOpacity
-                  style={tw`rounded-2xl overflow-hidden mt-6`}
-                  key={index}
-                  onPress={() => {
-                    navigation?.navigate('DestinationDetails', {item});
-                  }}>
-                  <ImageBackground
-                    source={{uri: baseUrl + item?.images[0]}}
-                    resizeMode="cover"
-                    style={tw`h-[260px] w-82 justify-between items-center rounded-2xl p-4`}>
-                    <View style={tw`gap-y-3 items-end w-full`}>
-                      <SvgXml
-                        xml={item?.name ? IconFilledHeart : IconWhiteHeart}
-                      />
-                    </View>
-                    <View
-                      style={tw`bg-white dark:bg-darkBg p-3 w-full rounded-2xl`}>
-                      <View style={tw`flex-row items-center`}>
+              {personalizedPicks?.data?.map(
+                (item: personalizedPicksTypes, index: number) => (
+                  <TouchableOpacity
+                    style={tw`rounded-2xl overflow-hidden mt-6`}
+                    key={index}
+                    // onPress={() => {
+                    //   navigation?.navigate('DestinationDetails', {item});
+                    // }}
+                    onPress={() => handleVisitLocation(item)}>
+                    <ImageBackground
+                      source={{uri: baseUrl + item?.images[0]}}
+                      resizeMode="cover"
+                      style={tw`h-[260px] w-82 justify-between items-center rounded-2xl p-4`}>
+                      <View style={tw`gap-y-3 items-end w-full`}>
+                        <SvgXml
+                          xml={item?.name ? IconFilledHeart : IconWhiteHeart}
+                        />
+                      </View>
+                      <View
+                        style={tw`bg-white dark:bg-darkBg p-3 w-full rounded-2xl`}>
+                        <View style={tw`flex-row items-center`}>
+                          <Text
+                            style={tw`text-black dark:text-white text-sm font-WorkMedium`}>
+                            {item?.name}
+                          </Text>
+                        </View>
                         <Text
-                          style={tw`text-black dark:text-white text-sm font-WorkMedium`}>
-                          {item?.name}
+                          style={tw`text-gray100 font-WorkRegular text-[10px]`}>
+                          {item?.description}
                         </Text>
                       </View>
-                      <Text
-                        style={tw`text-gray100 font-WorkRegular text-[10px]`}>
-                        {item?.description}
-                      </Text>
-                    </View>
-                  </ImageBackground>
-                </TouchableOpacity>
-              ))}
+                    </ImageBackground>
+                  </TouchableOpacity>
+                ),
+              )}
             </ScrollView>
           </View>
           <View style={tw`mt-6`}>
-            <TouchableOpacity
-              style={tw`flex-row items-center justify-between`}
-             >
+            <TouchableOpacity style={tw`flex-row items-center justify-between`}>
               <View style={tw`w-full`}>
                 <Text
                   style={tw`text-black dark:text-white text-base font-WorkMedium`}>
@@ -189,9 +215,7 @@ const Home = ({navigation}: NavigProps<null>) => {
                     resizeMode="cover"
                     style={tw`h-[260px] w-82 justify-between items-center rounded-2xl p-4`}>
                     <View style={tw`gap-y-3 items-end w-full`}>
-                      <SvgXml
-                        xml={IconFilledHeart}
-                      />
+                      <SvgXml xml={IconFilledHeart} />
                       {/* <SvgXml
                       xml={
                         item?.isVerified ? IconVerifiedTik : IconTikWithCircle

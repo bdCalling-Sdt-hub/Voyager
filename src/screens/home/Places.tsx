@@ -38,7 +38,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
         navigation?.navigate('DestinationDetails', {item})
       }
     } catch (err: any) {
-      Alert.alert('Login Failed', err?.message || 'An error occurred.');
+      Alert.alert('Visit Location Failed', err?.message || 'An error occurred.');
     }
   };
 

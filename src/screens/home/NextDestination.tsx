@@ -63,17 +63,13 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
   })();
 
   // rtk query hooks
-  const [locationVisit, {isLoading}] = useLocationVisitMutation();
+  const [locationVisit] = useLocationVisitMutation();
 
   // handlers
   const handleVisitLocation = async (item: any) => {
     const data = {type: item?.type, visited: '1'};
     try {
       const response = await locationVisit({id: item?.id, data});
-      console.log(
-        'reponse check of visit location from next destination: ',
-        response,
-      );
       if (response?.error?.success === false) {
         Alert.alert(
           'Adding to bucket list failed',
@@ -84,7 +80,7 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
         navigation?.navigate('DestinationDetails', {item});
       }
     } catch (err: any) {
-      Alert.alert('Login Failed', err?.message || 'An error occurred.');
+      Alert.alert('Visit Location Failed', err?.message || 'An error occurred.');
     }
   };
 
