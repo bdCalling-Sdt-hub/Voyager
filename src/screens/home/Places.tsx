@@ -195,9 +195,6 @@ const Places = ({navigation, route}: NavigProps<null>) => {
             <TouchableOpacity
               style={tw`flex-row items-center p-1 gap-4 rounded-2xl border-r border-b border-b-[${activeColor()}] border-r-[${activeColor()}]`}
               key={index}
-              // onPress={() =>
-              //   navigation?.navigate('DestinationDetails', {item: item?.data})
-              // }
               onPress={() => handleVisitLocation(item?.data)}
               >
               <Image
