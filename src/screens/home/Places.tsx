@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Image, Alert} from 'react-native';
 import React, {useState} from 'react';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
@@ -11,6 +11,7 @@ import {
   useGetBucketListBannerQuery,
   useGetBucketListCitiesQuery,
   useGetBucketListCountriesQuery,
+  useLocationVisitMutation,
 } from '../../../android/app/src/redux/slice/ApiSlice';
 import {baseUrl} from '../utils/exports';
 
@@ -22,6 +23,24 @@ const Places = ({navigation, route}: NavigProps<null>) => {
   const {data: bucketListCities} = useGetBucketListCitiesQuery({});
   const {data: bucketListAttractions} = useGetBucketListAttractionsQuery({});
   const {data: bucketListBanner} = useGetBucketListBannerQuery({});
+  const [locationVisit, {isLoading}] = useLocationVisitMutation();
+
+  // handlers
+  const handleVisitLocation = async (item: any) => {
+    const data = {type: item?.type, visited: '1'}
+    try {
+      const response = await locationVisit({id: item?.id, data});
+      console.log('reponse check of visit location: ', response);
+      if(response?.error?.success === false){
+        Alert.alert('Adding to bucket list failed', response?.error?.message || 'An error occurred.');
+        return;
+      }else{
+        navigation?.navigate('DestinationDetails', {item})
+      }
+    } catch (err: any) {
+      Alert.alert('Login Failed', err?.message || 'An error occurred.');
+    }
+  };
 
   const destinationData = (() => {
     switch (activePlace) {
@@ -176,9 +195,11 @@ const Places = ({navigation, route}: NavigProps<null>) => {
             <TouchableOpacity
               style={tw`flex-row items-center p-1 gap-4 rounded-2xl border-r border-b border-b-[${activeColor()}] border-r-[${activeColor()}]`}
               key={index}
-              onPress={() =>
-                navigation?.navigate('DestinationDetails', {item: item?.data})
-              }>
+              // onPress={() =>
+              //   navigation?.navigate('DestinationDetails', {item: item?.data})
+              // }
+              onPress={() => handleVisitLocation(item?.data)}
+              >
               <Image
                 source={require('../../assets/images/explore-card-2.png')}
                 style={tw`rounded-2xl w-4/12 h-24`}

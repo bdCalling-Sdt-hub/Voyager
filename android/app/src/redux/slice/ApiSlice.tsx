@@ -224,9 +224,20 @@ export const AuthSlice = api.injectEndpoints({
     // add to bucket list
     addToBucketList: builder.mutation({
       query: ({id, data}) => {
-        console.log("bucket list id check from rtk: ", id);
         return{
           url: `/add-to-bucketlist?id=${id}`,
+          method: 'POST',
+          body: data,
+        }
+      },
+    }),
+
+    // location visit
+    locationVisit: builder.mutation({
+      query: ({id, data}) => {
+        console.log("location visit id check from rtk: ", id);
+        return{
+          url: `visited?id=${id}&_method=PUT`,
           method: 'POST',
           body: data,
         }
@@ -271,4 +282,5 @@ export const {
 
   // add to bucket list queries
   useAddToBucketListMutation,
+  useLocationVisitMutation,
 } = AuthSlice;

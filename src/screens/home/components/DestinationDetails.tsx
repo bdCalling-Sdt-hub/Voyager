@@ -60,7 +60,7 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
         return;
       }
     } catch (err: any) {
-      Alert.alert('Login Failed', err?.message || 'An error occurred.');
+      Alert.alert('Adding to bucket list Failed', err?.message || 'An error occurred.');
     }
   };
 
