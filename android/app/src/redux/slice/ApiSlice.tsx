@@ -230,6 +230,7 @@ export const AuthSlice = api.injectEndpoints({
           body: data,
         }
       },
+      invalidatesTags: ['bucketlistAdded'],
     }),
 
     // location visit
@@ -242,6 +243,27 @@ export const AuthSlice = api.injectEndpoints({
           body: data,
         }
       },
+    }),
+
+    // get bucket list check
+    getBucketListCheck: builder.query({
+      query: ({ id, type }) => {
+        return {
+          url: `/get-bucket?id=${id}&type=${type}`,
+        };
+      },
+      providesTags: ['bucketlistAdded'],
+    }),
+
+    // remove from bucket list
+    removeFromBucketList: builder.mutation({
+      query: ({id}) => {
+        return{
+          url: `/remove-user-bucketlist?id=${id}`,
+          method: 'DELETE',
+        }
+      },
+      invalidatesTags: ['bucketlistAdded'],
     }),
 
   }),
@@ -283,4 +305,6 @@ export const {
   // add to bucket list queries
   useAddToBucketListMutation,
   useLocationVisitMutation,
+  useGetBucketListCheckQuery,
+  useRemoveFromBucketListMutation
 } = AuthSlice;

@@ -30,7 +30,11 @@ import Swiper from 'react-native-swiper';
 import NormalModal from '../../../components/modals/NormalModal';
 import {useAppColorScheme} from 'twrnc';
 import {baseUrl} from '../../utils/exports';
-import {useAddToBucketListMutation} from '../../../../android/app/src/redux/slice/ApiSlice';
+import {
+  useAddToBucketListMutation,
+  useGetBucketListCheckQuery,
+  useRemoveFromBucketListMutation,
+} from '../../../../android/app/src/redux/slice/ApiSlice';
 import SocialShareButton from '../../settings/SocialShareButton';
 
 const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
@@ -49,23 +53,56 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
 
   // rtk query hooks
   const [addToBucketList, {isLoading}] = useAddToBucketListMutation();
+  const [removeFromBucketList, {isLoading: isLoadingRemove}] =
+    useRemoveFromBucketListMutation();
+  const {data: bucketListCheck} = useGetBucketListCheckQuery({
+    id: item?.id,
+    type: item?.type,
+  });
 
   const handleBucketList = async () => {
-    const data = {type: item?.type, bucketlist_status: 'bucketlisted'}
+    const data = {type: item?.type, bucketlist_status: 'bucketlisted'};
     try {
       const response = await addToBucketList({id: item?.id, data});
-      console.log('reponse check of add bucket list: ', response);
-      if(response?.error?.success === false){
-        Alert.alert('Adding to bucket list failed', response?.error?.message || 'An error occurred.');
+      if (response?.error?.success === false) {
+        Alert.alert(
+          'Adding to bucket list failed',
+          response?.error?.message || 'An error occurred.',
+        );
+        return;
+      }
+      setSaveBucketListModalVisible(true);
+    } catch (err: any) {
+      Alert.alert(
+        'Adding to bucket list Failed',
+        err?.message || 'An error occurred.',
+      );
+    }
+  };
+
+  const handleRemoveBucketList = async () => {
+    try {
+      const response = await removeFromBucketList({
+        id: bucketListCheck?.data?.id,
+      });
+      console.log('reponse check of remove bucket list: ', response);
+      if (response?.error?.success === false) {
+        Alert.alert(
+          'Removing from bucket list failed',
+          response?.error?.message || 'An error occurred.',
+        );
         return;
       }
     } catch (err: any) {
-      Alert.alert('Adding to bucket list Failed', err?.message || 'An error occurred.');
+      Alert.alert(
+        'Removing from bucket list Failed',
+        err?.message || 'An error occurred.',
+      );
     }
   };
 
   // console.log('data: ', item?.id);
-  console.log("Item: ", item);
+  console.log('Item: ', item);
   return (
     <View style={tw`bg-white h-full dark:bg-primaryDark`}>
       <View style={tw`h-66`}>
@@ -118,7 +155,7 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
                   style={tw`h-6 w-6`}
                 />
                 <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
-                  {item?.coins || 'N/A'}coins
+                  {item?.coins || 'N/A'} coins
                 </Text>
               </View>
               <View style={tw`flex-row items-center gap-1 flex-shrink`}>
@@ -247,11 +284,34 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
 
       <View style={tw`flex-row items-center gap-4 pb-4 pt-2 px-[4%]`}>
         <TouchableOpacity
-          style={tw`border-violet100 border py-3 rounded-full flex-row items-center justify-center gap-3 flex-1`}
-          onPress={handleBucketList}>
-          <SvgXml xml={IconColoredHeart} />
-          <Text style={tw`text-sm font-WorkRegular text-violet100`}>
-            {isLoading ? "Adding..." : "Bucket List"}
+          style={tw`border-violet100 border py-3 rounded-full flex-row items-center justify-center gap-3 flex-1 ${
+            bucketListCheck?.data?.bucketlist_status === 'bucketlisted'
+              ? 'bg-violet100'
+              : ''
+          }`}
+          onPress={
+            bucketListCheck?.data?.bucketlist_status === 'bucketlisted'
+              ? handleRemoveBucketList
+              : handleBucketList
+          }>
+          <SvgXml
+            xml={
+              bucketListCheck?.data?.bucketlist_status === 'bucketlisted'
+                ? IconTik
+                : IconColoredHeart
+            }
+          />
+          <Text
+            style={tw`text-sm font-WorkRegular text-violet100 ${
+              bucketListCheck?.data?.bucketlist_status === 'bucketlisted'
+                ? 'text-white'
+                : ''
+            }`}>
+            {isLoading
+              ? 'Adding...'
+              : isLoadingRemove
+              ? 'Removing...'
+              : 'Bucket List'}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -305,7 +365,7 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
                 style={tw`h-6 w-6`}
               />
               <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
-                50 coins
+                {item?.coins} coins
               </Text>
             </View>
             <View style={tw`flex-row items-center gap-1`}>
@@ -314,13 +374,13 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
                 style={tw`h-6 w-6`}
               />
               <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
-                100 XP
+                {item?.xp} XP
               </Text>
             </View>
           </View>
           <Text
             style={tw`text-black text-base font-WorkRegular mt-3 text-center`}>
-            You’ve received 50 coins & {'\n'}100 XP{' '}
+            You’ve received {item?.coins} coins & {'\n'}{item?.xp} XP
           </Text>
           <TouchableOpacity
             onPress={() => setSaveBucketListModalVisible(false)}
