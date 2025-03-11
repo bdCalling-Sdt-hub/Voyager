@@ -33,6 +33,7 @@ const Home = ({navigation}: NavigProps<null>) => {
   const {data: topDestination} = useGetTopDestinationQuery({});
   const [locationVisit] = useLocationVisitMutation();
 
+   console.log("top destination: ", topDestination)
   // handlers
   const handleVisitLocation = async (item: any) => {
     const data = {type: item?.type, visited: '1'};
@@ -209,9 +210,10 @@ const Home = ({navigation}: NavigProps<null>) => {
               {topDestination?.data?.map((item, index) => (
                 <TouchableOpacity
                   style={tw`rounded-2xl overflow-hidden mt-6`}
-                  key={index}>
+                  key={item?.city_id}
+                  onPress={() => navigation?.navigate('DestinationDetails', {item: item?.data})}>
                   <ImageBackground
-                    source={require('../../assets/images/sky-tower.png')}
+                    source={item?.data?.images[0] ? {uri: baseUrl + item?.data?.images[0]} : require('../../assets/images/sky-tower.png')}
                     resizeMode="cover"
                     style={tw`h-[260px] w-82 justify-between items-center rounded-2xl p-4`}>
                     <View style={tw`gap-y-3 items-end w-full`}>
@@ -227,12 +229,12 @@ const Home = ({navigation}: NavigProps<null>) => {
                       <View style={tw`flex-row items-center`}>
                         <Text
                           style={tw`text-black dark:text-white text-sm font-WorkMedium`}>
-                          {item?.details?.city}
+                          {item?.data?.city}
                         </Text>
                       </View>
                       <Text
                         style={tw`text-gray100 font-WorkRegular text-[10px]`}>
-                        {item?.details?.description}
+                        {item?.data?.description}
                       </Text>
                     </View>
                   </ImageBackground>

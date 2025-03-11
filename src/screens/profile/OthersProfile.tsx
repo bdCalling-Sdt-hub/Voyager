@@ -66,6 +66,8 @@ const OthersProfile = ({navigation, route}: any) => {
     }
   };
 
+  console.log("checking the attraction data: ", userAttractions)
+
   return (
     <ScrollView style={tw`px-[4%] pt-2 bg-white h-full dark:bg-primaryDark`}>
       <View style={tw`mb-4`}>
