@@ -206,10 +206,10 @@ const Home = ({navigation}: NavigProps<null>) => {
               horizontal
               contentContainerStyle={tw`gap-4`}
               showsHorizontalScrollIndicator={false}>
-              {topDestination?.data?.map(item => (
+              {topDestination?.data?.map((item, index) => (
                 <TouchableOpacity
                   style={tw`rounded-2xl overflow-hidden mt-6`}
-                  key={item?.details?.id}>
+                  key={index}>
                   <ImageBackground
                     source={require('../../assets/images/sky-tower.png')}
                     resizeMode="cover"
