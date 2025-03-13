@@ -335,9 +335,9 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={handleVisited}
-          style={tw`border-violet100 bg-violet100 border py-3 rounded-full flex-row items-center justify-center gap-3 flex-1`}>
-          <SvgXml xml={IconTik} />
-          <Text style={tw`text-sm font-WorkRegular text-white`}>
+          style={tw`border-violet100 ${item?.mark_visited_status !== 'not_visited' ? 'bg-violet100' : ''} border py-3 rounded-full flex-row items-center justify-center gap-3 flex-1`}>
+         {item?.mark_visited_status !== 'not_visited' && <SvgXml xml={IconTik} />} 
+          <Text style={tw`text-sm font-WorkRegular ${item?.mark_visited_status !== 'not_visited' ? 'text-white' : 'text-violet100'}`}>
             {item?.mark_visited_status === 'not_visited'
               ? 'Mark As Visited'
               : 'Visited'}
