@@ -109,6 +109,7 @@ export const AuthSlice = api.injectEndpoints({
       query: () => ({
         url: `/profile`,
       }),
+      providesTags: ['visited'],
     }),
 
     // get personalized picks

@@ -26,6 +26,7 @@ import {Checkbox, RadioButton, RadioGroup} from 'react-native-ui-lib';
 import ActionModal from '../modals/ActionModal';
 import {useAppContext} from '../../utils/context/AppContext';
 import {useAppColorScheme} from 'twrnc';
+import { useGetProfileQuery } from '../../../android/app/src/redux/slice/ApiSlice';
 
 interface Props {
   title?: string;
@@ -97,6 +98,10 @@ const Header = ({
   const [selectedItems, setSelectedItems] = useState([]);
   const [visitedStatus, setVisitedStatus] = useState<string>('');
   const [colorScheme] = useAppColorScheme(tw);
+
+  // rtk query hooks
+  const {data} = useGetProfileQuery({});
+  const {coins, badges, level } = data?.data;
 
   const handleCheckboxChange = value => {
     if (selectedItems.includes(value)) {
@@ -172,8 +177,8 @@ const Header = ({
                           />
                           <View>
                             <Text
-                              style={tw`text-black dark:text-white dark:text-white text-base font-WorkBold font-700`}>
-                              5
+                              style={tw`text-black dark:text-white text-base font-WorkBold font-700`}>
+                              {level || '1'}
                             </Text>
                             <Text
                               style={tw`text-gray100 text-xs font-WorkMedium font-500`}>
@@ -188,7 +193,7 @@ const Header = ({
                           <View>
                             <Text
                               style={tw`text-black dark:text-white text-base font-WorkBold font-700`}>
-                              12
+                              {badges || '0'}
                             </Text>
                             <Text
                               style={tw`text-gray100 text-xs font-WorkMedium font-500`}>
@@ -299,7 +304,7 @@ const Header = ({
                 style={tw`h-7 w-7`}
               />
               <Text style={tw`text-gold text-lg font-WorkSemiBold font-600`}>
-                400
+                {coins.toString() || '0'}
               </Text>
             </TouchableOpacity>
           ) : (
