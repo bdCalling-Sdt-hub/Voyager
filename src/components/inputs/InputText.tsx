@@ -45,8 +45,9 @@ const InputText = ({
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
         containerStyle={[tw`flex-1`]}
+        style={tw` dark:text-white`}
         fieldStyle={[
-          tw`${inputProps?.floatingPlaceholder ? 'pb-4' : 'p-0'}`,
+          tw`${inputProps?.floatingPlaceholder ? 'pb-4' : 'pb-0'}`,
           fieldStyle,
         ]}
         {...inputProps}

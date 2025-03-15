@@ -1,4 +1,5 @@
 import {api} from './BaseApi';
+import { injectURLParams } from '../../../../../src/screens/utils/utils';
 
 export const AuthSlice = api.injectEndpoints({
   overrideExisting: true,
@@ -115,6 +116,7 @@ export const AuthSlice = api.injectEndpoints({
       query: () => ({
         url: `/personalized`,
       }),
+      providesTags: ['bucketlistRemoved', 'bucketlistAdded', 'visited'],
     }),
 
     // get top destination
@@ -260,10 +262,22 @@ export const AuthSlice = api.injectEndpoints({
       query: ({id}) => {
         return{
           url: `/remove-user-bucketlist?id=${id}`,
-          method: 'DELETE',
+          method: 'PATCH',
         }
       },
-      invalidatesTags: ['bucketlistAdded'],
+      invalidatesTags: ['bucketlistRemoved'],
+    }),
+
+    // mark as visited
+    markAsVisited: builder.mutation({
+      query: ({id, data}) => {
+        return{
+          url: `/mark-visited?id=${id}&_method=PUT`,
+          method: 'POST',
+          body: data
+        }
+      },
+      invalidatesTags: ['visited'],
     }),
 
   }),
@@ -306,5 +320,6 @@ export const {
   useAddToBucketListMutation,
   useLocationVisitMutation,
   useGetBucketListCheckQuery,
-  useRemoveFromBucketListMutation
+  useRemoveFromBucketListMutation,
+  useMarkAsVisitedMutation
 } = AuthSlice;

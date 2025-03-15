@@ -33,7 +33,6 @@ const Home = ({navigation}: NavigProps<null>) => {
   const {data: topDestination} = useGetTopDestinationQuery({});
   const [locationVisit] = useLocationVisitMutation();
 
-   console.log("top destination: ", topDestination)
   // handlers
   const handleVisitLocation = async (item: any) => {
     const data = {type: item?.type, visited: '1'};
@@ -55,6 +54,7 @@ const Home = ({navigation}: NavigProps<null>) => {
       );
     }
   };
+
 
   return (
     <View style={tw`h-full px-[4%] bg-white dark:bg-primaryDark`}>
@@ -152,7 +152,7 @@ const Home = ({navigation}: NavigProps<null>) => {
               horizontal
               contentContainerStyle={tw`gap-4`}
               showsHorizontalScrollIndicator={false}>
-              {personalizedPicks?.data?.map(
+              {personalizedPicks?.data?.data?.map(
                 (item: personalizedPicksTypes, index: number) => (
                   <TouchableOpacity
                     style={tw`rounded-2xl overflow-hidden mt-6`}

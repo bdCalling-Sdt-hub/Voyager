@@ -33,6 +33,7 @@ import {baseUrl} from '../../utils/exports';
 import {
   useAddToBucketListMutation,
   useGetBucketListCheckQuery,
+  useMarkAsVisitedMutation,
   useRemoveFromBucketListMutation,
 } from '../../../../android/app/src/redux/slice/ApiSlice';
 import SocialShareButton from '../../settings/SocialShareButton';
@@ -59,6 +60,8 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
     id: item?.id,
     type: item?.type,
   });
+  const [markAsVisited, {isLoading: isLoadingVisited}] =
+    useMarkAsVisitedMutation();
 
   const handleBucketList = async () => {
     const data = {type: item?.type, bucketlist_status: 'bucketlisted'};
@@ -71,7 +74,6 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
         );
         return;
       }
-      setSaveBucketListModalVisible(true);
     } catch (err: any) {
       Alert.alert(
         'Adding to bucket list Failed',
@@ -101,8 +103,29 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
     }
   };
 
+  const handleVisited = async () => {
+    const data = {type: item?.type, visit_status: 'visited'};
+    try {
+      const response = await markAsVisited({id: item?.id, data});
+      if (response?.error?.success === false) {
+        Alert.alert(
+          'Marking as visited failed',
+          response?.error?.message || 'An error occurred.',
+        );
+        return;
+      } else {
+        setSaveBucketListModalVisible(true);
+      }
+    } catch (err: any) {
+      Alert.alert(
+        'Marking as visited Failed',
+        err?.message || 'An error occurred.',
+      );
+    }
+  };
   // console.log('data: ', item?.id);
   console.log('Item: ', item);
+  console.log('remove id check: ', bucketListCheck?.data?.id);
   return (
     <View style={tw`bg-white h-full dark:bg-primaryDark`}>
       <View style={tw`h-66`}>
@@ -285,27 +308,23 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
       <View style={tw`flex-row items-center gap-4 pb-4 pt-2 px-[4%]`}>
         <TouchableOpacity
           style={tw`border-violet100 border py-3 rounded-full flex-row items-center justify-center gap-3 flex-1 ${
-            bucketListCheck?.data?.bucketlist_status === 'bucketlisted'
-              ? 'bg-violet100'
-              : ''
+            item?.bucketlist_status === 'bucketlisted' ? 'bg-violet100' : ''
           }`}
           onPress={
-            bucketListCheck?.data?.bucketlist_status === 'bucketlisted'
+            item?.bucketlist_status === 'bucketlisted'
               ? handleRemoveBucketList
               : handleBucketList
           }>
           <SvgXml
             xml={
-              bucketListCheck?.data?.bucketlist_status === 'bucketlisted'
+              item?.bucketlist_status === 'bucketlisted'
                 ? IconTik
                 : IconColoredHeart
             }
           />
           <Text
             style={tw`text-sm font-WorkRegular text-violet100 ${
-              bucketListCheck?.data?.bucketlist_status === 'bucketlisted'
-                ? 'text-white'
-                : ''
+              item?.bucketlist_status === 'bucketlisted' ? 'text-white' : ''
             }`}>
             {isLoading
               ? 'Adding...'
@@ -315,12 +334,14 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {
-            setSaveBucketListModalVisible(true);
-          }}
-          style={tw`border-violet100 bg-violet100 border py-3 rounded-full flex-row items-center justify-center gap-3 flex-1`}>
-          <SvgXml xml={IconTik} />
-          <Text style={tw`text-sm font-WorkRegular text-white`}>Visited</Text>
+          onPress={handleVisited}
+          style={tw`border-violet100 ${item?.mark_visited_status !== 'not_visited' ? 'bg-violet100' : ''} border py-3 rounded-full flex-row items-center justify-center gap-3 flex-1`}>
+         {item?.mark_visited_status !== 'not_visited' && <SvgXml xml={IconTik} />} 
+          <Text style={tw`text-sm font-WorkRegular ${item?.mark_visited_status !== 'not_visited' ? 'text-white' : 'text-violet100'}`}>
+            {item?.mark_visited_status === 'not_visited'
+              ? 'Mark As Visited'
+              : 'Visited'}
+          </Text>
         </TouchableOpacity>
       </View>
 
@@ -380,7 +401,8 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
           </View>
           <Text
             style={tw`text-black text-base font-WorkRegular mt-3 text-center`}>
-            You’ve received {item?.coins} coins & {'\n'}{item?.xp} XP
+            You’ve received {item?.coins} coins & {'\n'}
+            {item?.xp} XP
           </Text>
           <TouchableOpacity
             onPress={() => setSaveBucketListModalVisible(false)}
