@@ -101,7 +101,7 @@ const Header = ({
 
   // rtk query hooks
   const {data} = useGetProfileQuery({});
-  const {coins, badges, level } = data?.data;
+  const {coins, badges, level } = data?.data || {};
 
   const handleCheckboxChange = value => {
     if (selectedItems.includes(value)) {
@@ -304,7 +304,7 @@ const Header = ({
                 style={tw`h-7 w-7`}
               />
               <Text style={tw`text-gold text-lg font-WorkSemiBold font-600`}>
-                {coins.toString() || '0'}
+                {coins || '0'}
               </Text>
             </TouchableOpacity>
           ) : (

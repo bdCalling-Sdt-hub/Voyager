@@ -14,10 +14,26 @@ import {
 import {SvgXml} from 'react-native-svg';
 import NormalModal from '../../components/modals/NormalModal';
 import SocialShareButton from './SocialShareButton';
+import {LStorage} from '../utils/utils';
 
 const Settings = ({title = 'Settings', navigation}: any) => {
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
+  
+  const handleLogout = async () => {
+    try {
+      LStorage.removeItem('userToken');
+
+      if (!LStorage.getString('userToken')) {
+        setLogoutModalVisible(false);
+        navigation?.navigate('Login');
+      } else {
+        Alert.alert('Logout Failed', 'Failed to remove token.');
+      }
+    } catch (err: any) {
+      Alert.alert('Logout Error', err?.message || 'An error occurred.');
+    }
+  };
 
   return (
     <View style={tw`px-[4%] bg-white dark:bg-primaryDark h-full`}>
@@ -126,19 +142,14 @@ const Settings = ({title = 'Settings', navigation}: any) => {
           <View style={tw`flex-row gap-6 mt-5 justify-between`}>
             <TouchableOpacity
               style={tw`bg-white py-1 rounded-full justify-center items-center border-[2px] border-transparent px-4`}
-              onPress={() => {
-                navigation?.navigate('Login');
-                setLogoutModalVisible(false);
-              }}>
+              onPress={handleLogout}>
               <Text style={tw`text-violet100 font-WorkSemiBold text-sm`}>
                 Yes
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={tw`bg-violet100 py-1 rounded-full justify-center items-center border-[2px] border-violet100 px-4`}
-              onPress={() => {
-                setLogoutModalVisible(false);
-              }}>
+              onPress={() => setLogoutModalVisible(false)}>
               <Text style={tw`text-white font-WorkSemiBold text-sm`}>
                 Not Now
               </Text>
