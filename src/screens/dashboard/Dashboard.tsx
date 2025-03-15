@@ -27,10 +27,6 @@ const Dashboard = ({navigation}: any) => {
     weeklyQuest?.data?.total_quest ?? 0
 );
 
-
-
-  console.log('weekly quest: ', weeklyQuestProgress);
-
   return (
     <>
       <ScrollView

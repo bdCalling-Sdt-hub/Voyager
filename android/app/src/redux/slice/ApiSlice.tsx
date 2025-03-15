@@ -289,6 +289,13 @@ export const AuthSlice = api.injectEndpoints({
       providesTags: ['visited'],
     }),
 
+    // get notifications
+    getNotifications: builder.query({
+      query: () => ({
+        url: `/notifications`,
+      }),
+    }),
+
   }),
 });
 
@@ -332,4 +339,7 @@ export const {
   useRemoveFromBucketListMutation,
   useMarkAsVisitedMutation,
   useGetMarkAsVisitedQuery,
+
+  // notifications
+  useGetNotificationsQuery,
 } = AuthSlice;

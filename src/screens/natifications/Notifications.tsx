@@ -2,14 +2,18 @@ import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
-import {
-  IconFilledNotification,
-  IconNotification,
-} from '../../assets/icons/Icons';
-import notifications from '../../utils/json/notifications.json';
+import {IconFilledNotification} from '../../assets/icons/Icons';
+import notificationsData from '../../utils/json/notifications.json';
+import {useGetNotificationsQuery} from '../../../android/app/src/redux/slice/ApiSlice';
+import {baseUrl} from '../utils/exports';
 
 const Notifications = ({navigation}: any) => {
   const title = 'Notifications';
+
+  // rkt query hooks
+  const {data} = useGetNotificationsQuery({});
+  const notifications = data?.data;
+  console.log('notifications: ', notifications);
   return (
     <View style={tw`bg-white px-[4%] h-full dark:bg-primaryDark`}>
       <Header
@@ -21,7 +25,8 @@ const Notifications = ({navigation}: any) => {
       {/* body */}
       <ScrollView style={tw`mt-4`} showsVerticalScrollIndicator={false}>
         <View style={tw`flex-row items-center justify-between`}>
-          <Text style={tw`text-black dark:text-white text-sm font-WorkRegular font-400`}>
+          <Text
+            style={tw`text-black dark:text-white text-sm font-WorkRegular font-400`}>
             Today
           </Text>
           <TouchableOpacity>
@@ -34,14 +39,15 @@ const Notifications = ({navigation}: any) => {
         {/* notifications */}
         <View style={tw`mt-4 gap-y-2`}>
           {/*add request notification */}
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={tw`p-2 bg-gray80 dark:bg-darkBg rounded-3xl flex-row items-center gap-4`}>
             <Image
               source={require('../../assets/images/avatar1.png')}
               style={tw`w-16 h-16 rounded-full`}
             />
             <View style={tw`flex-shrink`}>
-              <Text style={tw`text-black dark:text-white text-base font-WorkRegular font-400`}>
+              <Text
+                style={tw`text-black dark:text-white text-base font-WorkRegular font-400`}>
                 <Text style={tw`font-600 font-WorkSemiBold`}>Anika Marley</Text>{' '}
                 sent you an add Request
               </Text>
@@ -61,30 +67,57 @@ const Notifications = ({navigation}: any) => {
                 </TouchableOpacity>
               </View>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           {/* Notification view */}
           {notifications?.map((item: any) => (
             <TouchableOpacity
-              style={tw`p-2 flex-row items-center gap-4`}
+              style={tw`p-2 flex-row items-center gap-4 ${
+                item?.data?.read_at ? '' : 'bg-darkBg'
+              } rounded-2xl`}
               key={item?.id}>
               <Image
-                source={require('../../assets/images/coin.png')}
-                style={tw`h-12 w-12 rounded-full`}
+                source={
+                  item?.data?.sender_image
+                    ? {uri: baseUrl + item?.data?.sender_image}
+                    : require('../../assets/images/avatar1.png')
+                }
+                style={tw`h-16 w-16 rounded-full`}
               />
               <View style={tw`flex-shrink`}>
-                <Text
-                  style={tw`text-black dark:text-white text-base font-WorkRegular font-400`}>
-                  <Text style={tw`font-600 font-WorkSemiBold`}>
-                    {item?.title}
-                  </Text>{' '}
-                  {item?.subtitle}
-                </Text>
-                <View style={tw`flex-row items-center gap-2 mt-1`}>
+                <View>
                   <Text
-                    style={tw`text-gray60 text-xs font-WorkRegular font-400`}>
-                    {item?.time}
+                    style={tw`text-black dark:text-white text-base font-WorkRegular font-400`}>
+                    <Text style={tw`font-600 font-WorkSemiBold`}>
+                      {item?.data?.sender_name || 'title'}
+                    </Text>{' '}
+                    {item?.data?.title || 'subtitle'}
                   </Text>
+                  <View style={tw`flex-row items-center gap-2 mt-1`}>
+                    <Text
+                      style={tw`text-gray60 text-xs font-WorkRegular font-400`}>
+                      {item?.time || 'time'}
+                    </Text>
+                  </View>
                 </View>
+
+                {item?.type ===
+                  'App\\Notifications\\FriendInterationNotification' && (
+                  <View style={tw`flex-row items-center gap-2 mt-2`}>
+                    <TouchableOpacity
+                      style={tw`bg-violet100 rounded-3xl px-5 pt-1 pb-1.5`}>
+                      <Text
+                        style={tw`text-white text-base font-600 font-WorkSemiBold`}>
+                        Accept
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={tw`rounded-3xl px-5 pt-1 pb-1.5`}>
+                      <Text
+                        style={tw`text-black dark:text-white text-base font-600 font-WorkSemiBold`}>
+                        Cancel
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
               </View>
             </TouchableOpacity>
           ))}
