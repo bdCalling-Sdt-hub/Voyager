@@ -33,6 +33,7 @@ import {baseUrl} from '../../utils/exports';
 import {
   useAddToBucketListMutation,
   useGetBucketListCheckQuery,
+  useGetMarkAsVisitedQuery,
   useMarkAsVisitedMutation,
   useRemoveFromBucketListMutation,
 } from '../../../../android/app/src/redux/slice/ApiSlice';
@@ -62,6 +63,12 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
   });
   const [markAsVisited, {isLoading: isLoadingVisited}] =
     useMarkAsVisitedMutation();
+  const {data: markAsVisitedCheck} = useGetMarkAsVisitedQuery({
+    id: item?.id,
+    type: item?.type,
+  });
+
+  const visitedStatus = markAsVisitedCheck?.data?.userEntity?.visit_status;
 
   const handleBucketList = async () => {
     const data = {type: item?.type, bucketlist_status: 'bucketlisted'};
@@ -107,6 +114,7 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
     const data = {type: item?.type, visit_status: 'visited'};
     try {
       const response = await markAsVisited({id: item?.id, data});
+      console.log("response of mark as visited: ", response);
       if (response?.error?.success === false) {
         Alert.alert(
           'Marking as visited failed',
@@ -123,9 +131,10 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
       );
     }
   };
-  console.log('main id from item: ', item?.id);
+  console.log('main id from item: ', item);
   // console.log('Item: ', item);
-  console.log('remove id check: ', bucketListCheck?.data);
+  // console.log('remove id check: ', bucketListCheck?.data);
+  // console.log("mark as visited check: ", visitedStatus);
   return (
     <View style={tw`bg-white h-full dark:bg-primaryDark`}>
       <View style={tw`h-66`}>
@@ -314,7 +323,7 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
             bucketListCheck?.data?.bucketlist_status === 'bucketlisted'
               ? handleRemoveBucketList
               : handleBucketList
-          }>
+          } disabled={isLoading || isLoadingRemove}>
           <SvgXml
             xml={
               bucketListCheck?.data?.bucketlist_status === 'bucketlisted'
@@ -335,10 +344,11 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={handleVisited}
-          style={tw`border-violet100 ${item?.mark_visited_status !== 'not_visited' ? 'bg-violet100' : ''} border py-3 rounded-full flex-row items-center justify-center gap-3 flex-1`}>
-         {item?.mark_visited_status !== 'not_visited' && <SvgXml xml={IconTik} />} 
-          <Text style={tw`text-sm font-WorkRegular ${item?.mark_visited_status !== 'not_visited' ? 'text-white' : 'text-violet100'}`}>
-            {item?.mark_visited_status === 'not_visited'
+          disabled={isLoadingVisited || visitedStatus === 'visited'}
+          style={tw`border-violet100 ${visitedStatus !== 'not_visited' ? 'bg-violet100' : ''} border py-3 rounded-full flex-row items-center justify-center gap-3 flex-1`}>
+         {visitedStatus !== 'not_visited' && <SvgXml xml={IconTik} />} 
+          <Text style={tw`text-sm font-WorkRegular ${visitedStatus !== 'not_visited' ? 'text-white' : 'text-violet100'}`}>
+            {visitedStatus === 'not_visited'
               ? 'Mark As Visited'
               : 'Visited'}
           </Text>

@@ -238,7 +238,6 @@ export const AuthSlice = api.injectEndpoints({
     // location visit
     locationVisit: builder.mutation({
       query: ({id, data}) => {
-        console.log("location visit id check from rtk: ", id);
         return{
           url: `visited?id=${id}&_method=PUT`,
           method: 'POST',
@@ -278,6 +277,16 @@ export const AuthSlice = api.injectEndpoints({
         }
       },
       invalidatesTags: ['visited'],
+    }),
+
+    // get mark as visited
+    getMarkAsVisited: builder.query({
+      query: ({id, type}) => {
+        return{
+          url: `/get-mark-visited?id=${id}&type=${type}`,
+        }
+      },
+      providesTags: ['visited'],
     }),
 
   }),
@@ -321,5 +330,6 @@ export const {
   useLocationVisitMutation,
   useGetBucketListCheckQuery,
   useRemoveFromBucketListMutation,
-  useMarkAsVisitedMutation
+  useMarkAsVisitedMutation,
+  useGetMarkAsVisitedQuery,
 } = AuthSlice;
