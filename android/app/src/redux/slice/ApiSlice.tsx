@@ -254,7 +254,7 @@ export const AuthSlice = api.injectEndpoints({
           url: `/get-bucket?id=${id}&type=${type}`,
         };
       },
-      providesTags: ['bucketlistAdded'],
+      providesTags: ['bucketlistAdded', 'bucketlistRemoved'],
     }),
 
     // remove from bucket list
