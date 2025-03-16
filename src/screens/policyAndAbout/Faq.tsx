@@ -5,8 +5,12 @@ import tw from '../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
 import Expend from './component/Expend';
 import {IconLeftArrow} from '../../assets/icons/Icons';
+import { useGetFaqQuery } from '../../../android/app/src/redux/slice/ApiSlice';
 
 const Faq = ({navigation}: any) => {
+
+  // rtk query hooks
+  const {data} = useGetFaqQuery({});
   return (
     <View style={tw`flex-1 bg-white px-[4%] pt-4 dark:bg-primaryDark`}>
       <View style={tw`flex-row`}>
@@ -26,12 +30,14 @@ const Faq = ({navigation}: any) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={tw`pb-6`}>
-        <Expend />
-        <Expend />
-        <Expend />
-        <Expend />
-        <Expend />
-        <Expend />
+        {
+          data?.data?.map((item: any, index: number) => (
+            <Expend
+              key={index}
+              content={item}
+            />
+          ))
+        }
       </ScrollView>
     </View>
   );

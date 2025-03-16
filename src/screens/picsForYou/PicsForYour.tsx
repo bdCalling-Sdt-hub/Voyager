@@ -42,7 +42,7 @@ const PicsForYour = ({navigation, route}: NavigProps<null>) => {
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={tw`gap-y-4 mt-4 pb-2`}>
-          {personalizedPicks?.data?.map(
+          {personalizedPicks?.data?.data?.map(
             (place: personalizedPicksTypes, index: number) => (
               <TouchableOpacity
                 style={tw`flex-row items-center gap-2 rounded-2xl mt-6 p-1 ${

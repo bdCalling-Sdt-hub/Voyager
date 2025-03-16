@@ -297,6 +297,13 @@ export const AuthSlice = api.injectEndpoints({
       }),
     }),
 
+    // get faq
+    getFaq: builder.query({
+      query: () => ({
+        url: `/get-faq`,
+      }),
+    }),
+
   }),
 });
 
@@ -343,4 +350,7 @@ export const {
 
   // notifications
   useGetNotificationsQuery,
+
+  // settings
+  useGetFaqQuery,
 } = AuthSlice;

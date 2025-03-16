@@ -114,7 +114,7 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
     const data = {type: item?.type, visit_status: 'visited'};
     try {
       const response = await markAsVisited({id: item?.id, data});
-      console.log("response of mark as visited: ", response);
+      console.log('response of mark as visited: ', response);
       if (response?.error?.success === false) {
         Alert.alert(
           'Marking as visited failed',
@@ -317,13 +317,16 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
       <View style={tw`flex-row items-center gap-4 pb-4 pt-2 px-[4%]`}>
         <TouchableOpacity
           style={tw`border-violet100 border py-3 rounded-full flex-row items-center justify-center gap-3 flex-1 ${
-            bucketListCheck?.data?.bucketlist_status === 'bucketlisted' ? 'bg-violet100' : ''
+            bucketListCheck?.data?.bucketlist_status === 'bucketlisted'
+              ? 'bg-violet100'
+              : ''
           }`}
           onPress={
             bucketListCheck?.data?.bucketlist_status === 'bucketlisted'
               ? handleRemoveBucketList
               : handleBucketList
-          } disabled={isLoading || isLoadingRemove}>
+          }
+          disabled={isLoading || isLoadingRemove}>
           <SvgXml
             xml={
               bucketListCheck?.data?.bucketlist_status === 'bucketlisted'
@@ -333,7 +336,9 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
           />
           <Text
             style={tw`text-sm font-WorkRegular text-violet100 ${
-              bucketListCheck?.data?.bucketlist_status  === 'bucketlisted' ? 'text-white' : ''
+              bucketListCheck?.data?.bucketlist_status === 'bucketlisted'
+                ? 'text-white'
+                : ''
             }`}>
             {isLoading
               ? 'Adding...'
@@ -345,12 +350,15 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
         <TouchableOpacity
           onPress={handleVisited}
           disabled={isLoadingVisited || visitedStatus === 'visited'}
-          style={tw`border-violet100 ${visitedStatus !== 'not_visited' ? 'bg-violet100' : ''} border py-3 rounded-full flex-row items-center justify-center gap-3 flex-1`}>
-         {visitedStatus !== 'not_visited' && <SvgXml xml={IconTik} />} 
-          <Text style={tw`text-sm font-WorkRegular ${visitedStatus !== 'not_visited' ? 'text-white' : 'text-violet100'}`}>
-            {visitedStatus === 'not_visited'
-              ? 'Mark As Visited'
-              : 'Visited'}
+          style={tw`border-violet100 ${
+            visitedStatus !== 'not_visited' ? 'bg-violet100' : ''
+          } border py-3 rounded-full flex-row items-center justify-center gap-3 flex-1`}>
+          {visitedStatus !== 'not_visited' && <SvgXml xml={IconTik} />}
+          <Text
+            style={tw`text-sm font-WorkRegular ${
+              visitedStatus !== 'not_visited' ? 'text-white' : 'text-violet100'
+            }`}>
+            {visitedStatus === 'not_visited' ? 'Mark As Visited' : 'Visited'}
           </Text>
         </TouchableOpacity>
       </View>
