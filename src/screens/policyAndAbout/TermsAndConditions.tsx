@@ -5,8 +5,12 @@ import React from 'react';
 import tw from '../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
 import {IconLeftArrow} from '../../assets/icons/Icons';
+import { useGetTermsAndConditionsQuery } from '../../../android/app/src/redux/slice/ApiSlice';
 
 const TermsAndConditions = ({navigation}: any) => {
+
+  // rkt query hooks
+  const {data} = useGetTermsAndConditionsQuery({});
   return (
     <View style={tw`flex-1 px-[4%] pb-[4%] bg-white dark:bg-primaryDark`}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -28,20 +32,15 @@ const TermsAndConditions = ({navigation}: any) => {
           </Text>
         </View>
 
-        {[...Array(8)].map((_, index) => (
-          <View style={tw` gap-2 mb-4`} key={index}>
+          <View style={tw` gap-2 mb-4`}>
             <Text style={tw`text-black dark:text-white font-WorkBold text-xl`}>
-              Clause {index + 1}
+              Clause 
             </Text>
             <Text
               style={tw`text-gray70 font-WorkRegular dark:text-white mt-1 leading-6`}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra
-              condimentum eget purus in. Consectetur eget id morbi amet amet,
-              in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse
-              aenean leo pharetra in sit semper et. Amet quam placerat sem.
+              {data?.data?.content}
             </Text>
           </View>
-        ))}
       </ScrollView>
 
       {/* <Button

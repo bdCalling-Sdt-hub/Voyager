@@ -304,6 +304,13 @@ export const AuthSlice = api.injectEndpoints({
       }),
     }),
 
+    // get terms and conditions
+    getTermsAndConditions: builder.query({
+      query: () => ({
+        url: `/get-term_condition`,
+      }),
+    }),
+
   }),
 });
 
@@ -353,4 +360,5 @@ export const {
 
   // settings
   useGetFaqQuery,
+  useGetTermsAndConditionsQuery,
 } = AuthSlice;
