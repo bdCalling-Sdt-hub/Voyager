@@ -19,7 +19,7 @@ import {LStorage} from '../utils/utils';
 const Settings = ({title = 'Settings', navigation}: any) => {
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
-  
+
   const handleLogout = async () => {
     try {
       LStorage.removeItem('userToken');
