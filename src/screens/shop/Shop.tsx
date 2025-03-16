@@ -6,6 +6,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Avatar from './Avatar';
 import shop from '../../utils/json/shop.json';
 import PowersUps from './PowersUps';
+import { useGetAvatarQuery } from '../../../android/app/src/redux/slice/ApiSlice';
 
 const Shop = () => {
   const [activePlace, setActivePlace] = useState('avatar');
