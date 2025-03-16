@@ -122,6 +122,13 @@ export const AuthSlice = api.injectEndpoints({
       invalidatesTags: ['profileUpdate'],
     }),
 
+    // get avatar
+    getAvatar: builder.query({
+      query: () => ({
+        url: `/get-shop-avatar`,
+      }),
+    }),
+
     // get personalized picks
     getPersonalized: builder.query({
       query: () => ({
@@ -350,6 +357,7 @@ export const {
   useGetOthersProfileQuery,
   useGetUserFriendAttractionsQuery,
   useUpdateProfileMutation,
+  useGetAvatarQuery,
 
   // goals queries
   useGetBucketListAttractionsQuery,

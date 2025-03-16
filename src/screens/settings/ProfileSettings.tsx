@@ -1,4 +1,11 @@
-import {Alert, Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import tw from '../../lib/tailwind';
 import Header from '../../components/header/Header';
@@ -8,11 +15,18 @@ import {
   IconFacebook,
   IconInstagram,
   IconLightCamera,
+  IconLock,
+  IconLock2,
 } from '../../assets/icons/Icons';
 import {RadioButton, RadioGroup} from 'react-native-ui-lib';
 import NormalModal from '../../components/modals/NormalModal';
 import {SvgXml} from 'react-native-svg';
-import { useUpdateProfileMutation } from '../../../android/app/src/redux/slice/ApiSlice';
+import {
+  useGetAvatarQuery,
+  useUpdateProfileMutation,
+} from '../../../android/app/src/redux/slice/ApiSlice';
+import {AvatarData} from '../utils/types';
+import {baseUrl} from '../utils/exports';
 
 const ProfileSettings = ({navigation}: any) => {
   const [bucketlistPrivacy, setBucketlistPrivacy] = useState('public');
@@ -22,7 +36,9 @@ const ProfileSettings = ({navigation}: any) => {
 
   // rtk query hooks
   const [updateProfile, {isLoading}] = useUpdateProfileMutation();
-  console.log("the name: ", name);
+  const {data} = useGetAvatarQuery({});
+  const avatars = data?.data?.avatars || [];
+  console.log('avatars checking: ', avatars);
 
   const handleUpdateProfile = async () => {
     try {
@@ -88,7 +104,7 @@ const ProfileSettings = ({navigation}: any) => {
                   placeholder="Your Name"
                   placeholderTextColor={'#9ba5b2'}
                   value={name}
-                  onChangeText={(text) => setName(text)}
+                  onChangeText={text => setName(text)}
                   style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}
                 />
               </View>
@@ -130,7 +146,8 @@ const ProfileSettings = ({navigation}: any) => {
             </Text>
             <View style={tw`gap-y-2`}>
               <View style={tw`mt-2`}>
-                <Text style={tw`text-lg text-black dark:text-white font-WorkMedium mb-2`}>
+                <Text
+                  style={tw`text-lg text-black dark:text-white font-WorkMedium mb-2`}>
                   Who can see your bucketlist?
                 </Text>
                 <RadioGroup
@@ -157,7 +174,8 @@ const ProfileSettings = ({navigation}: any) => {
                 </RadioGroup>
               </View>
               <View style={tw`mt-2`}>
-                <Text style={tw`text-lg text-black dark:text-white font-WorkMedium mb-2`}>
+                <Text
+                  style={tw`text-lg text-black dark:text-white font-WorkMedium mb-2`}>
                   Who can see your profile information?
                 </Text>
                 <RadioGroup
@@ -199,100 +217,52 @@ const ProfileSettings = ({navigation}: any) => {
         setVisible={setAvatarModalVisible}
         visible={avatarModalVisible}
         layerContainerStyle={tw`self-center items-center justify-center h-full w-[80%]`}
-        containerStyle={tw`bg-gray80 p-4 rounded-2xl`}>
-        <Text style={tw`text-black text-lg font-WorkSemiBold font-600`}>
+        containerStyle={tw`bg-gray80 p-4 rounded-2xl dark:bg-black`}>
+        <Text
+          style={tw`text-black dark:text-white text-lg font-WorkSemiBold font-600`}>
           Choose your avatar
         </Text>
 
         <View style={tw`flex-row flex-wrap mt-2 justify-between`}>
-          <View
-            style={tw`w-[48%] items-center bg-white p-4 rounded-2xl mb-2.5`}>
-            <Image
-              source={require('../../assets/images/avatar2.png')}
-              style={tw`w-14 h-14 rounded-full`}
-            />
-            <Text
-              style={tw`text-black text-base font-WorkMedium font-500 my-1`}>
-              Adventurer
-            </Text>
-
+          {avatars?.map((avatar: AvatarData, index: number) => (
             <TouchableOpacity
-              style={tw`flex-row items-center gap-2 border border-gold rounded-full py-0.5 px-2`}>
+            disabled={avatar?.status !== 'unlocked'}
+              key={index}
+              style={tw`w-[48%] items-center bg-white dark:bg-primaryDark p-4 rounded-2xl mb-2.5`}>
+              <View style={tw`w-full items-end justify-end h-4`}>
+                {avatar?.status === 'locked' && (
+                  <SvgXml xml={IconLock2} />
+                )}
+              </View>
               <Image
-                source={require('../../assets/images/coin.png')}
-                style={tw`h-7 w-7`}
+                source={
+                  avatar?.avatar
+                    ? {uri: baseUrl + avatar?.avatar}
+                    : require('../../assets/images/avatar2.png')
+                }
+                style={tw`w-14 h-14 rounded-full`}
               />
-              <Text style={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}>
-                300
+              <Text
+                style={tw`text-black dark:text-white text-base font-WorkMedium font-500 my-1`}>
+                {avatar?.name || 'No Name Available'}
               </Text>
-            </TouchableOpacity>
-          </View>
-          <View
-            style={tw`w-[48%] items-center bg-white p-4 rounded-2xl mb-2.5`}>
-            <Image
-              source={require('../../assets/images/avatar3.png')}
-              style={tw`w-14 h-14 rounded-full`}
-            />
-            <Text
-              style={tw`text-black text-base font-WorkMedium font-500 my-1`}>
-              Explorer
-            </Text>
 
-            <TouchableOpacity
-              style={tw`flex-row items-center gap-2 border border-gold rounded-full py-0.5 px-2`}>
-              <Image
-                source={require('../../assets/images/coin.png')}
-                style={tw`h-7 w-7`}
-              />
-              <Text style={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}>
-                200
-              </Text>
+              <TouchableOpacity
+              disabled={avatar?.status !== 'locked'}
+                style={tw`flex-row items-center gap-2 border border-gold rounded-full py-0.5 px-2`}>
+                {avatar?.status === 'locked' && (
+                  <Image
+                  source={require('../../assets/images/coin.png')}
+                  style={tw`h-7 w-7`}
+                />
+                )}
+                <Text
+                  style={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}>
+                  {avatar?.status === 'locked' ? (avatar?.cost || 0) : 'Unlocked'}
+                </Text>
+              </TouchableOpacity>
             </TouchableOpacity>
-          </View>
-          <View
-            style={tw`w-[48%] items-center bg-white p-4 rounded-2xl mb-2.5`}>
-            <Image
-              source={require('../../assets/images/avatar4.png')}
-              style={tw`w-14 h-14 rounded-full`}
-            />
-            <Text
-              style={tw`text-black text-base font-WorkMedium font-500 my-1`}>
-              Wanderer
-            </Text>
-
-            <TouchableOpacity
-              style={tw`flex-row items-center gap-2 border border-gold rounded-full py-0.5 px-2`}>
-              <Image
-                source={require('../../assets/images/coin.png')}
-                style={tw`h-7 w-7`}
-              />
-              <Text style={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}>
-                300
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View
-            style={tw`w-[48%] items-center bg-white p-4 rounded-2xl mb-2.5`}>
-            <Image
-              source={require('../../assets/images/avatar5.png')}
-              style={tw`w-14 h-14 rounded-full`}
-            />
-            <Text
-              style={tw`text-black text-base font-WorkMedium font-500 my-1`}>
-              Jetsetter
-            </Text>
-
-            <TouchableOpacity
-              style={tw`flex-row items-center gap-2 border border-gold rounded-full py-0.5 px-2`}>
-              <Image
-                source={require('../../assets/images/coin.png')}
-                style={tw`h-7 w-7`}
-              />
-              <Text style={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}>
-                400
-              </Text>
-            </TouchableOpacity>
-          </View>
+          ))}
         </View>
       </NormalModal>
     </View>

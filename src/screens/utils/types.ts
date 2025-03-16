@@ -74,3 +74,18 @@ export interface visitedTypes {
     created_at: string;
     updated_at: string;
 }
+
+// avatar types
+export type AvatarData = {
+  id: number;
+  name: string;
+  cost: number;
+  avatar_types: string;
+  level: number;
+  country: string | null;
+  subscription_plan: string;
+  avatar: string;
+  status: "unlocked" | "locked";
+  purchase_status: boolean;
+  equip_status: boolean;
+};
