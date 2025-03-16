@@ -27,6 +27,7 @@ import ActionModal from '../modals/ActionModal';
 import {useAppContext} from '../../utils/context/AppContext';
 import {useAppColorScheme} from 'twrnc';
 import { useGetProfileQuery } from '../../../android/app/src/redux/slice/ApiSlice';
+import { baseUrl } from '../../screens/utils/exports';
 
 interface Props {
   title?: string;
@@ -101,7 +102,7 @@ const Header = ({
 
   // rtk query hooks
   const {data} = useGetProfileQuery({});
-  const {coins, badges, level } = data?.data || {};
+  const {coins, badges, level, image } = data?.data || {};
 
   const handleCheckboxChange = value => {
     if (selectedItems.includes(value)) {
@@ -154,7 +155,7 @@ const Header = ({
             ) : (
               <View>
                 <Image
-                  source={require('../../assets/images/user.png')}
+                  source={ image ? {uri: baseUrl + image} : require('../../assets/images/user.png')}
                   style={tw`h-12 w-12 rounded-full`}
                 />
                 <View

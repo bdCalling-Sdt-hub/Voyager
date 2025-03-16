@@ -1,5 +1,5 @@
 import {api} from './BaseApi';
-import { injectURLParams } from '../../../../../src/screens/utils/utils';
+import {injectURLParams} from '../../../../../src/screens/utils/utils';
 
 export const AuthSlice = api.injectEndpoints({
   overrideExisting: true,
@@ -109,7 +109,17 @@ export const AuthSlice = api.injectEndpoints({
       query: () => ({
         url: `/profile`,
       }),
-      providesTags: ['visited'],
+      providesTags: ['visited', 'profileUpdate'],
+    }),
+
+    // update profile
+    updateProfile: builder.mutation({
+      query: data => ({
+        url: `/profile-update?_method=PUT`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['profileUpdate'],
     }),
 
     // get personalized picks
@@ -209,7 +219,7 @@ export const AuthSlice = api.injectEndpoints({
         url: `/city-bucklist`,
       }),
     }),
-    
+
     // bucketlist countries
     getBucketListCountries: builder.query({
       query: () => ({
@@ -227,11 +237,11 @@ export const AuthSlice = api.injectEndpoints({
     // add to bucket list
     addToBucketList: builder.mutation({
       query: ({id, data}) => {
-        return{
+        return {
           url: `/add-to-bucketlist?id=${id}`,
           method: 'POST',
           body: data,
-        }
+        };
       },
       invalidatesTags: ['bucketlistAdded'],
     }),
@@ -239,17 +249,17 @@ export const AuthSlice = api.injectEndpoints({
     // location visit
     locationVisit: builder.mutation({
       query: ({id, data}) => {
-        return{
+        return {
           url: `visited?id=${id}&_method=PUT`,
           method: 'POST',
           body: data,
-        }
+        };
       },
     }),
 
     // get bucket list check
     getBucketListCheck: builder.query({
-      query: ({ id, type }) => {
+      query: ({id, type}) => {
         return {
           url: `/get-bucket?id=${id}&type=${type}`,
         };
@@ -260,10 +270,10 @@ export const AuthSlice = api.injectEndpoints({
     // remove from bucket list
     removeFromBucketList: builder.mutation({
       query: ({id}) => {
-        return{
+        return {
           url: `/remove-user-bucketlist?id=${id}`,
           method: 'PATCH',
-        }
+        };
       },
       invalidatesTags: ['bucketlistRemoved'],
     }),
@@ -271,11 +281,11 @@ export const AuthSlice = api.injectEndpoints({
     // mark as visited
     markAsVisited: builder.mutation({
       query: ({id, data}) => {
-        return{
+        return {
           url: `/mark-visited?id=${id}&_method=PUT`,
           method: 'POST',
-          body: data
-        }
+          body: data,
+        };
       },
       invalidatesTags: ['visited'],
     }),
@@ -283,9 +293,9 @@ export const AuthSlice = api.injectEndpoints({
     // get mark as visited
     getMarkAsVisited: builder.query({
       query: ({id, type}) => {
-        return{
+        return {
           url: `/get-mark-visited?id=${id}&type=${type}`,
-        }
+        };
       },
       providesTags: ['visited'],
     }),
@@ -310,7 +320,6 @@ export const AuthSlice = api.injectEndpoints({
         url: `/get-term_condition`,
       }),
     }),
-
   }),
 });
 
@@ -340,6 +349,7 @@ export const {
   useGetFriendsQuery,
   useGetOthersProfileQuery,
   useGetUserFriendAttractionsQuery,
+  useUpdateProfileMutation,
 
   // goals queries
   useGetBucketListAttractionsQuery,

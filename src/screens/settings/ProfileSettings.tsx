@@ -1,4 +1,4 @@
-import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import tw from '../../lib/tailwind';
 import Header from '../../components/header/Header';
@@ -12,11 +12,40 @@ import {
 import {RadioButton, RadioGroup} from 'react-native-ui-lib';
 import NormalModal from '../../components/modals/NormalModal';
 import {SvgXml} from 'react-native-svg';
+import { useUpdateProfileMutation } from '../../../android/app/src/redux/slice/ApiSlice';
 
 const ProfileSettings = ({navigation}: any) => {
   const [bucketlistPrivacy, setBucketlistPrivacy] = useState('public');
   const [profilePrivacy, setProfilePrivacy] = useState('public');
   const [avatarModalVisible, setAvatarModalVisible] = useState(false);
+  const [name, setName] = useState('');
+
+  // rtk query hooks
+  const [updateProfile, {isLoading}] = useUpdateProfileMutation();
+  console.log("the name: ", name);
+
+  const handleUpdateProfile = async () => {
+    try {
+      const response = await updateProfile({
+        full_name: name,
+      });
+      console.log('response of update profile: ', response);
+      if (response?.error?.success === false) {
+        Alert.alert(
+          'Updating profile failed',
+          response?.error?.message || 'An error occurred.',
+        );
+        return;
+      } else {
+        navigation?.navigate('Settings');
+      }
+    } catch (err: any) {
+      Alert.alert(
+        'Updating profile Failed',
+        err?.message || 'An error occurred.',
+      );
+    }
+  };
   return (
     <View style={tw`h-full bg-white dark:bg-primaryDark px-[4%] pb-2`}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -56,9 +85,10 @@ const ProfileSettings = ({navigation}: any) => {
             <View style={tw`gap-y-2`}>
               <View style={tw`h-12`}>
                 <InputText
-                  placeholder="You Name"
-                  defaultValue="Henry William"
+                  placeholder="Your Name"
                   placeholderTextColor={'#9ba5b2'}
+                  value={name}
+                  onChangeText={(text) => setName(text)}
                   style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}
                 />
               </View>
@@ -159,12 +189,10 @@ const ProfileSettings = ({navigation}: any) => {
       </ScrollView>
       <TouchableOpacity
         style={tw`bg-violet100 rounded-full p-3 mt-2`}
-        onPress={() => {
-          navigation?.navigate('Settings');
-        }}>
+        onPress={handleUpdateProfile}>
         <Text
           style={tw`text-center text-white text-base font-WorkMedium font-500`}>
-          Update
+          {isLoading ? 'Updating...' : 'Update'}
         </Text>
       </TouchableOpacity>
       <NormalModal
