@@ -1,8 +1,14 @@
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import tw from '../../lib/tailwind';
-import users from '../../utils/json/users.json';
+// import users from '../../utils/json/users.json';
+import {useGetFriendRequestsQuery} from '../../../android/app/src/redux/slice/ApiSlice';
+import {baseUrl} from '../utils/exports';
 const Request = ({navigation}: any) => {
+  // rtk query hooks
+  const {data} = useGetFriendRequestsQuery({});
+  const users = data?.data?.friend_requests?.data || [];
+  console.log('request users checking: ', users);
   return (
     <View style={tw`gap-y-2`}>
       {users?.map((item: any) => (
@@ -11,20 +17,29 @@ const Request = ({navigation}: any) => {
           key={item?.id}>
           <Image
             source={{
-              uri: item?.avatar,
+              uri: item?.image
+                ? baseUrl + item?.image
+                : 'https://i.pravatar.cc/150?img=5',
             }}
             style={tw`w-16 h-16 rounded-full`}
           />
-          <View style={tw`flex-shrink gap-y-1.5`}>
-            <Text style={tw`text-black dark:text-white text-base font-600 font-WorkSemiBold`}>
-              {item?.name}
+          <View style={tw`flex-shrink`}>
+            <Text
+              style={tw`text-black dark:text-white text-base font-600 font-WorkSemiBold`}>
+              {item?.full_name || 'No Name Available'}
             </Text>
-            {item?.isAcceptedRequest ? (
+            <Text
+              style={tw`text-black dark:text-white text-base font-400 font-WorkRegular mb-2`}>
+              {item?.user_name || 'No username Available'}
+            </Text>
+            {item?.status === 'accepted' ? (
               <View style={tw`flex-row`}>
                 <TouchableOpacity
-                  style={tw`border-[2px] border-violet100 w-full pt-1 pb-2 justify-center rounded-full items-center`} onPress={() => {navigation?.navigate('OthersProfile')}}>
-                  <Text
-                    style={tw`text-violet100 text-base font-WorkSemiBold`}>
+                  style={tw`border-[2px] border-violet100 w-full pt-1 pb-2 justify-center rounded-full items-center`}
+                  onPress={() => {
+                    navigation?.navigate('OthersProfile');
+                  }}>
+                  <Text style={tw`text-violet100 text-base font-WorkSemiBold`}>
                     View
                   </Text>
                 </TouchableOpacity>
@@ -33,8 +48,7 @@ const Request = ({navigation}: any) => {
               <View style={tw`flex-row items-center gap-2`}>
                 <TouchableOpacity
                   style={tw`bg-violet100 border-[2px] border-violet100 w-20 pt-1 pb-2 justify-center rounded-full items-center`}>
-                  <Text
-                    style={tw`text-white text-base font-WorkSemiBold`}>
+                  <Text style={tw`text-white text-base font-WorkSemiBold`}>
                     Accept
                   </Text>
                 </TouchableOpacity>

@@ -136,6 +136,14 @@ export const AuthSlice = api.injectEndpoints({
       }),
     }),
 
+    // get friend requests
+    getFriendRequests: builder.query({
+      query: () => ({
+        url: `/user-friend-requests`,
+      }),
+      providesTags: ['addFriends'],
+    }),
+
     // get personalized picks
     getPersonalized: builder.query({
       query: () => ({
@@ -150,6 +158,7 @@ export const AuthSlice = api.injectEndpoints({
         url: `/friend-request?friend_id=${id}`,
         method: 'POST',
       }),
+      invalidatesTags: ['addFriends'],
     }),
 
     // get top destination
@@ -375,6 +384,7 @@ export const {
   useGetAvatarQuery,
   useGetFriendForAddQuery,
   useSendFriendRequestMutation,
+  useGetFriendRequestsQuery,
 
   // goals queries
   useGetBucketListAttractionsQuery,

@@ -42,7 +42,7 @@ const Login = ({navigation}: any) => {
       LStorage.setString('userToken', token);
 
       if (LStorage.getString('userToken') === token) {
-        navigation?.navigate('BottomRoutes');
+        navigation?.replace('BottomRoutes');
       } else {
         Alert.alert('Storage Error', 'Failed to store token.');
       }
