@@ -129,12 +129,27 @@ export const AuthSlice = api.injectEndpoints({
       }),
     }),
 
+    // get friend for add
+    getFriendForAdd: builder.query({
+      query: () => ({
+        url: `/add-friends?per_page=10&page=1`,
+      }),
+    }),
+
     // get personalized picks
     getPersonalized: builder.query({
       query: () => ({
         url: `/personalized`,
       }),
       providesTags: ['bucketlistRemoved', 'bucketlistAdded', 'visited'],
+    }),
+
+    // send friend request
+    sendFriendRequest: builder.mutation({
+      query: ({id}) => ({
+        url: `/friend-request?friend_id=${id}`,
+        method: 'POST',
+      }),
     }),
 
     // get top destination
@@ -358,6 +373,8 @@ export const {
   useGetUserFriendAttractionsQuery,
   useUpdateProfileMutation,
   useGetAvatarQuery,
+  useGetFriendForAddQuery,
+  useSendFriendRequestMutation,
 
   // goals queries
   useGetBucketListAttractionsQuery,
