@@ -26,7 +26,7 @@ const Settings = ({title = 'Settings', navigation}: any) => {
 
       if (!LStorage.getString('userToken')) {
         setLogoutModalVisible(false);
-        navigation?.navigate('Login');
+        navigation?.replace('Login');
       } else {
         Alert.alert('Logout Failed', 'Failed to remove token.');
       }

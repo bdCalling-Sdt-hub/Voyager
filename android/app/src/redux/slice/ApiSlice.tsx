@@ -144,6 +144,14 @@ export const AuthSlice = api.injectEndpoints({
       providesTags: ['addFriends'],
     }),
 
+    // accept friend request
+    acceptFriendRequest: builder.mutation({
+      query: ({id}) => ({
+        url: `/accept-request?friend_id=${id}`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['addFriends'],
+    }),
     // get personalized picks
     getPersonalized: builder.query({
       query: () => ({
@@ -385,6 +393,7 @@ export const {
   useGetFriendForAddQuery,
   useSendFriendRequestMutation,
   useGetFriendRequestsQuery,
+  useAcceptFriendRequestMutation,
 
   // goals queries
   useGetBucketListAttractionsQuery,
