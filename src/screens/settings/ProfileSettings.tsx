@@ -22,6 +22,7 @@ import {RadioButton, RadioGroup} from 'react-native-ui-lib';
 import NormalModal from '../../components/modals/NormalModal';
 import {SvgXml} from 'react-native-svg';
 import {
+  useEquipAvatarMutation,
   useGetAvatarQuery,
   useUpdateProfileMutation,
 } from '../../../android/app/src/redux/slice/ApiSlice';
@@ -37,6 +38,7 @@ const ProfileSettings = ({navigation}: any) => {
   // rtk query hooks
   const [updateProfile, {isLoading}] = useUpdateProfileMutation();
   const {data} = useGetAvatarQuery({});
+  const [equipAvatar, {isLoading: isLoadingEquip}] = useEquipAvatarMutation();
   const avatars = data?.data?.avatars || [];
   console.log('avatars checking: ', avatars);
 
@@ -62,6 +64,29 @@ const ProfileSettings = ({navigation}: any) => {
       );
     }
   };
+
+  const handleEquipAvatar = async (id: number) => {
+    try {
+      const response = await equipAvatar({id});
+      console.log('response of equip avatar: ', response);
+      if (response?.error?.success === false) {
+        Alert.alert(
+          'Equipping avatar failed',
+          response?.error?.message || 'An error occurred.',
+        );
+        return;
+      } else {
+        setAvatarModalVisible(false);
+      }
+    } catch (err: any) {
+      Alert.alert(
+        'Equipping avatar Failed',
+        err?.message || 'An error occurred.',
+      );
+    }
+  };
+
+  console.log("avatars: ", avatars);
   return (
     <View style={tw`h-full bg-white dark:bg-primaryDark px-[4%] pb-2`}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -226,13 +251,12 @@ const ProfileSettings = ({navigation}: any) => {
         <View style={tw`flex-row flex-wrap mt-2 justify-between`}>
           {avatars?.map((avatar: AvatarData, index: number) => (
             <TouchableOpacity
-            disabled={avatar?.status !== 'unlocked'}
+              onPress={() => handleEquipAvatar(avatar?.id)}
+              disabled={avatar?.status !== 'unlocked'}
               key={index}
               style={tw`w-[48%] items-center bg-white dark:bg-primaryDark p-4 rounded-2xl mb-2.5`}>
               <View style={tw`w-full items-end justify-end h-4`}>
-                {avatar?.status === 'locked' && (
-                  <SvgXml xml={IconLock2} />
-                )}
+                {avatar?.status === 'locked' && <SvgXml xml={IconLock2} />}
               </View>
               <Image
                 source={
@@ -248,17 +272,17 @@ const ProfileSettings = ({navigation}: any) => {
               </Text>
 
               <TouchableOpacity
-              disabled={avatar?.status !== 'locked'}
+                disabled={avatar?.status !== 'locked'}
                 style={tw`flex-row items-center gap-2 border border-gold rounded-full py-0.5 px-2`}>
                 {avatar?.status === 'locked' && (
                   <Image
-                  source={require('../../assets/images/coin.png')}
-                  style={tw`h-7 w-7`}
-                />
+                    source={require('../../assets/images/coin.png')}
+                    style={tw`h-7 w-7`}
+                  />
                 )}
                 <Text
                   style={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}>
-                  {avatar?.status === 'locked' ? (avatar?.cost || 0) : 'Unlocked'}
+                  {avatar?.status === 'locked' ? avatar?.cost || 0 : 'Unlocked'}
                 </Text>
               </TouchableOpacity>
             </TouchableOpacity>

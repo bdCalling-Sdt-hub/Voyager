@@ -6,12 +6,11 @@ import {
   Image,
   Alert,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import tw from '../../lib/tailwind';
 import Header from '../../components/header/Header';
-import {IconFilledHeart, IconSearch} from '../../assets/icons/Icons';
+import {IconFilledHeart, IconSearch, IconWhiteHeart} from '../../assets/icons/Icons';
 import {SvgXml} from 'react-native-svg';
-import desticaions from '../../utils/json/destinations.json';
 import {NavigProps} from '../../utils/interface/NaviProps';
 import {
   useGetAttractionsQuery,
@@ -144,7 +143,7 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
                 </View>
               </View>
             </View>
-            <SvgXml xml={IconFilledHeart} />
+            <SvgXml xml={item?.bucketlist_status === "bucketlisted" ? IconFilledHeart : IconWhiteHeart} />
           </TouchableOpacity>
         )}
       />

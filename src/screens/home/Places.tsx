@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
-import {IconFilledHeart, IconSearch} from '../../assets/icons/Icons';
+import {IconFilledHeart, IconSearch, IconWhiteHeart} from '../../assets/icons/Icons';
 import destinations from '../../utils/json/destinations.json';
 import {NavigProps} from '../../utils/interface/NaviProps';
 import {
@@ -238,7 +238,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
                   </View>
                 </View>
               </View>
-              <SvgXml xml={IconFilledHeart} />
+              <SvgXml xml={item?.bucketlist_status === "bucketlisted" ? IconFilledHeart : IconWhiteHeart} />
             </TouchableOpacity>
           ))}
         </View>

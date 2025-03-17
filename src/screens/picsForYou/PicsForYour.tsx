@@ -3,7 +3,7 @@ import React from 'react';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
-import {IconFilledHeart, IconSearch} from '../../assets/icons/Icons';
+import {IconFilledHeart, IconSearch, IconWhiteHeart} from '../../assets/icons/Icons';
 import {NavigProps} from '../../utils/interface/NaviProps';
 import places from '../../utils/json/places.json';
 import {useGetPersonalizedQuery} from '../../../android/app/src/redux/slice/ApiSlice';
@@ -80,7 +80,7 @@ const PicsForYour = ({navigation, route}: NavigProps<null>) => {
                     </View>
                   </View>
                 </View>
-                <SvgXml xml={IconFilledHeart} style={tw`mr-1.5`} />
+                <SvgXml xml={place?.bucketlist_status === "bucketlisted" ? IconFilledHeart : IconWhiteHeart} style={tw`mr-1.5`} />
               </TouchableOpacity>
             ),
           )}

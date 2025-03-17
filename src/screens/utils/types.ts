@@ -12,6 +12,7 @@ export interface personalizedPicksTypes {
     latitude: string;
     longitude: string;
     attraction_id: string;
+    bucketlist_status: string;
     activity_levels: string[];
     best_visit_times: string[];
     must_visit_spots: string[];

@@ -26,6 +26,7 @@ import {
 } from '../../../android/app/src/redux/slice/ApiSlice';
 import {personalizedPicksTypes} from '../utils/types';
 import {baseUrl} from '../utils/exports';
+import { Icon } from 'react-native-ui-lib';
 
 const Home = ({navigation}: NavigProps<null>) => {
   // rtk query hooks
@@ -55,7 +56,7 @@ const Home = ({navigation}: NavigProps<null>) => {
     }
   };
 
-
+console.log("personalizedPicks: ", topDestination?.data);
   return (
     <View style={tw`h-full px-[4%] bg-white dark:bg-primaryDark`}>
       <ScrollView
@@ -157,9 +158,6 @@ const Home = ({navigation}: NavigProps<null>) => {
                   <TouchableOpacity
                     style={tw`rounded-2xl overflow-hidden mt-6`}
                     key={index}
-                    // onPress={() => {
-                    //   navigation?.navigate('DestinationDetails', {item});
-                    // }}
                     onPress={() => handleVisitLocation(item)}>
                     <ImageBackground
                       source={{uri: baseUrl + item?.images[0]}}
@@ -167,7 +165,7 @@ const Home = ({navigation}: NavigProps<null>) => {
                       style={tw`h-[260px] w-82 justify-between items-center rounded-2xl p-4`}>
                       <View style={tw`gap-y-3 items-end w-full`}>
                         <SvgXml
-                          xml={item?.name ? IconFilledHeart : IconWhiteHeart}
+                          xml={item?.bucketlist_status === "bucketlisted" ? IconFilledHeart : IconWhiteHeart}
                         />
                       </View>
                       <View
@@ -217,7 +215,7 @@ const Home = ({navigation}: NavigProps<null>) => {
                     resizeMode="cover"
                     style={tw`h-[260px] w-82 justify-between items-center rounded-2xl p-4`}>
                     <View style={tw`gap-y-3 items-end w-full`}>
-                      <SvgXml xml={IconFilledHeart} />
+                      <SvgXml xml={item?.data?.bucketlist_status === "bucketlisted" ? IconFilledHeart : IconWhiteHeart} />
                       {/* <SvgXml
                       xml={
                         item?.isVerified ? IconVerifiedTik : IconTikWithCircle

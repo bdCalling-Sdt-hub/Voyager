@@ -81,6 +81,7 @@ export const AuthSlice = api.injectEndpoints({
       query: () => ({
         url: `/get-attraction`,
       }),
+      providesTags: ['bucketlistRemoved', 'bucketlistAdded'],
     }),
 
     // token validation check
@@ -95,6 +96,7 @@ export const AuthSlice = api.injectEndpoints({
       query: () => ({
         url: `/get-city`,
       }),
+      providesTags: ['bucketlistRemoved', 'bucketlistAdded'],
     }),
 
     // get country
@@ -102,6 +104,7 @@ export const AuthSlice = api.injectEndpoints({
       query: () => ({
         url: `/get-country`,
       }),
+      providesTags: ['bucketlistRemoved', 'bucketlistAdded'],
     }),
 
     // get profile
@@ -152,6 +155,18 @@ export const AuthSlice = api.injectEndpoints({
       }),
       invalidatesTags: ['addFriends'],
     }),
+
+    // equip avatar
+    equipAvatar: builder.mutation({
+      query: ({id, data}) => {
+        return {
+          url: `/equip_avatar?id=${id}&_method=PUT`,
+          method: 'POST',
+          body: data,
+        };
+      },
+      invalidatesTags: ['updateProfile'],
+    }),
     // get personalized picks
     getPersonalized: builder.query({
       query: () => ({
@@ -174,6 +189,7 @@ export const AuthSlice = api.injectEndpoints({
       query: () => ({
         url: `/destination`,
       }),
+      providesTags: ['bucketlistAdded'],
     }),
 
     // app dashboard
@@ -220,6 +236,7 @@ export const AuthSlice = api.injectEndpoints({
       query: () => ({
         url: `/get-visited`,
       }),
+      providesTags: ['bucketlistRemoved', 'bucketlistAdded'],
     }),
 
     // get friends
@@ -250,6 +267,7 @@ export const AuthSlice = api.injectEndpoints({
       query: () => ({
         url: `/attraction-bucklist`,
       }),
+      providesTags: ['bucketlistRemoved', 'bucketlistAdded'],
     }),
 
     // bucketlist cities
@@ -257,6 +275,7 @@ export const AuthSlice = api.injectEndpoints({
       query: () => ({
         url: `/city-bucklist`,
       }),
+      providesTags: ['bucketlistRemoved', 'bucketlistAdded'],
     }),
 
     // bucketlist countries
@@ -264,6 +283,7 @@ export const AuthSlice = api.injectEndpoints({
       query: () => ({
         url: `/country-bucklist`,
       }),
+      providesTags: ['bucketlistRemoved', 'bucketlistAdded'],
     }),
 
     // bucketlist banner
@@ -394,6 +414,7 @@ export const {
   useSendFriendRequestMutation,
   useGetFriendRequestsQuery,
   useAcceptFriendRequestMutation,
+  useEquipAvatarMutation,
 
   // goals queries
   useGetBucketListAttractionsQuery,

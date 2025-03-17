@@ -63,5 +63,5 @@ export const api = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithRath,
   endpoints: () => ({}),
-  tagTypes: ['bucketlistAdded', 'bucketlistRemoved', 'visited', 'profileUpdate', 'addFriends'],
+  tagTypes: ['bucketlistAdded', 'bucketlistRemoved', 'visited', 'profileUpdate', 'addFriends', 'updateProfile'],
 });
