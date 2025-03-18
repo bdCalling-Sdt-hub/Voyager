@@ -7,25 +7,20 @@ import FriendsList from '../profile/components/FriendsList';
 import Request from './Request';
 import AddFriends from './AddFriends';
 import {
-  useGetFriendForAddQuery,
   useGetFriendRequestsQuery,
   useGetFriendsQuery,
 } from '../../../android/app/src/redux/slice/ApiSlice';
 
 const Friends = ({title = 'Friends', navigation}: any) => {
+  // states
+  const [friendsOption, setFriendsOption] = useState('add_friends');
+
   // rkt query hooks
   const {data} = useGetFriendRequestsQuery({});
   const users = data?.data?.friend_requests?.data || [];
   const {data: friendsData} = useGetFriendsQuery({});
   const friends = friendsData?.data?.friends?.data || [];
 
-  // states
-  const [totalAddFriends, setTotalAddFriends] = useState(0);
-  const [totalRequests, setTotalRequests] = useState(0);
-  const [totalFriends, setTotalFriends] = useState(0);
-  const [friendsOption, setFriendsOption] = useState('add_friends');
-
-  console.log('data checking... ', totalRequests);
   return (
     <View style={tw`bg-white dark:bg-primaryDark px-[4%] h-full`}>
       <Header
@@ -102,7 +97,7 @@ const Friends = ({title = 'Friends', navigation}: any) => {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always">
         {friendsOption === 'add_friends' && (
-          <AddFriends navigation={navigation} totalData={setTotalAddFriends} />
+          <AddFriends navigation={navigation} />
         )}
         {friendsOption === 'requests' && (
           <Request navigation={navigation} users={users} />

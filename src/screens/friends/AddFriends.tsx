@@ -10,7 +10,7 @@ import {
 } from '../../../android/app/src/redux/slice/ApiSlice';
 import {baseUrl} from '../utils/exports';
 
-const AddFriends = ({navigation, totaldata}: any) => {
+const AddFriends = ({navigation}: any) => {
   // rtk query hooks
   const {data} = useGetFriendForAddQuery({});
   const [sendFriendRequest, {isLoading}] = useSendFriendRequestMutation();
