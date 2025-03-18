@@ -16,12 +16,8 @@ const AddFriends = ({navigation, totaldata}: any) => {
   const [sendFriendRequest, {isLoading}] = useSendFriendRequestMutation();
   const addFriends = data?.data?.data || [];
 
-  useEffect(() => {
-    if (totaldata) {
-      totaldata(addFriends?.length);
-    }
-  }, [data]);
 
+  console.log("add friends: ", addFriends?.length)
   // handlers
   const handleSendFriendRequest = async (id: number) => {
     try {

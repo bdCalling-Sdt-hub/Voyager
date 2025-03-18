@@ -7,15 +7,8 @@ import {
   useSendFriendRequestMutation,
 } from '../../../../android/app/src/redux/slice/ApiSlice';
 import {baseUrl} from '../../utils/exports';
-const FriendsList = ({navigation, totaldata}: any) => {
-  const {data} = useGetFriendsQuery({});
-  const friends = data?.data?.friends?.data || [];
-
-  useEffect(() => {
-    if (totaldata) {
-      totaldata(friends?.length);
-    }
-  }, [data]);
+const FriendsList = ({navigation, friends}: any) => {
+  
   return (
     <View style={tw`gap-y-2`}>
       {friends?.map((item: any) => (

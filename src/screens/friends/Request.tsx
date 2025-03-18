@@ -7,13 +7,12 @@ import {
   useGetFriendRequestsQuery,
 } from '../../../android/app/src/redux/slice/ApiSlice';
 import {baseUrl} from '../utils/exports';
-const Request = ({navigation, totaldata}: any) => {
+const Request = ({navigation, users}: any) => {
   // rtk query hooks
-  const {data} = useGetFriendRequestsQuery({});
   const [acceptFriendRequest, {isLoading: isAccepting}] =
     useAcceptFriendRequestMutation();
 
-  const users = data?.data?.friend_requests?.data || [];
+
 
   const handleAcceptRequest = async (id: number) => {
     try {
@@ -36,13 +35,7 @@ const Request = ({navigation, totaldata}: any) => {
     }
   };
 
-  useEffect(() => {
-    if (totaldata) {
-      totaldata(users?.length);
-    }
-  }, [data]);
 
-  console.log('users data check: ', users);
   return (
     <View style={tw`gap-y-2`}>
       {users?.map((item: any) => (
