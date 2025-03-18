@@ -1,13 +1,21 @@
 import {View, Text, TouchableOpacity, Image, Alert} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import tw from '../../../lib/tailwind';
 import users from '../../../utils/json/users.json';
-import { useGetFriendsQuery, useSendFriendRequestMutation } from '../../../../android/app/src/redux/slice/ApiSlice';
-import { baseUrl } from '../../utils/exports';
-const FriendsList = ({navigation}: any) => {
+import {
+  useGetFriendsQuery,
+  useSendFriendRequestMutation,
+} from '../../../../android/app/src/redux/slice/ApiSlice';
+import {baseUrl} from '../../utils/exports';
+const FriendsList = ({navigation, totaldata}: any) => {
   const {data} = useGetFriendsQuery({});
   const friends = data?.data?.friends?.data || [];
-  
+
+  useEffect(() => {
+    if (totaldata) {
+      totaldata(friends?.length);
+    }
+  }, [data]);
   return (
     <View style={tw`gap-y-2`}>
       {friends?.map((item: any) => (

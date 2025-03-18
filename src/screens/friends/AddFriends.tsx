@@ -1,5 +1,5 @@
 import {View, Text, Image, TouchableOpacity, Alert} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import tw from '../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
 import {IconAdd, IconClose} from '../../assets/icons/Icons';
@@ -10,11 +10,17 @@ import {
 } from '../../../android/app/src/redux/slice/ApiSlice';
 import {baseUrl} from '../utils/exports';
 
-const AddFriends = ({navigation}: any) => {
+const AddFriends = ({navigation, totaldata}: any) => {
   // rtk query hooks
   const {data} = useGetFriendForAddQuery({});
   const [sendFriendRequest, {isLoading}] = useSendFriendRequestMutation();
   const addFriends = data?.data?.data || [];
+
+  useEffect(() => {
+    if (totaldata) {
+      totaldata(addFriends?.length);
+    }
+  }, [data]);
 
   // handlers
   const handleSendFriendRequest = async (id: number) => {
@@ -67,9 +73,14 @@ const AddFriends = ({navigation}: any) => {
           <TouchableOpacity
             onPress={() => handleSendFriendRequest(item?.id)}
             disabled={isLoading || item?.status === 'pending'}
-            style={tw`flex-row w-full justify-center items-center gap-2 border border-violet100 rounded-full py-1 px-2 ${item?.status === 'not_friend' ? '' : 'bg-violet100'}`}>
+            style={tw`flex-row w-full justify-center items-center gap-2 border border-violet100 rounded-full py-1 px-2 ${
+              item?.status === 'not_friend' ? '' : 'bg-violet100'
+            }`}>
             {item?.status === 'not_friend' && <SvgXml xml={IconAdd} />}
-            <Text style={tw`text-base font-WorkMedium font-500 ${item?.status === 'not_friend' ? 'text-violet100' : 'text-white'}`}>
+            <Text
+              style={tw`text-base font-WorkMedium font-500 ${
+                item?.status === 'not_friend' ? 'text-violet100' : 'text-white'
+              }`}>
               {isLoading
                 ? 'Sending...'
                 : item?.status === 'not_friend'

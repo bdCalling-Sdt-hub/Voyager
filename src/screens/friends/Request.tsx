@@ -1,5 +1,5 @@
 import {View, Text, TouchableOpacity, Image, Alert} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import tw from '../../lib/tailwind';
 // import users from '../../utils/json/users.json';
 import {
@@ -7,7 +7,7 @@ import {
   useGetFriendRequestsQuery,
 } from '../../../android/app/src/redux/slice/ApiSlice';
 import {baseUrl} from '../utils/exports';
-const Request = ({navigation}: any) => {
+const Request = ({navigation, totaldata}: any) => {
   // rtk query hooks
   const {data} = useGetFriendRequestsQuery({});
   const [acceptFriendRequest, {isLoading: isAccepting}] =
@@ -35,6 +35,12 @@ const Request = ({navigation}: any) => {
       );
     }
   };
+
+  useEffect(() => {
+    if (totaldata) {
+      totaldata(users?.length);
+    }
+  }, [data]);
 
   console.log('users data check: ', users);
   return (
