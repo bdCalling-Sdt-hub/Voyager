@@ -1,10 +1,10 @@
-import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
 import {IconFilledNotification} from '../../assets/icons/Icons';
 import notificationsData from '../../utils/json/notifications.json';
-import {useGetNotificationsQuery} from '../../../android/app/src/redux/slice/ApiSlice';
+import {useAcceptFriendRequestMutation, useGetNotificationsQuery} from '../../../android/app/src/redux/slice/ApiSlice';
 import {baseUrl} from '../utils/exports';
 
 const Notifications = ({navigation}: any) => {
@@ -12,8 +12,31 @@ const Notifications = ({navigation}: any) => {
 
   // rkt query hooks
   const {data} = useGetNotificationsQuery({});
+  const [acceptFriendRequest, {isLoading: isAccepting}] = useAcceptFriendRequestMutation();
   const notifications = data?.data;
-  console.log('notifications: ', notifications);
+  console.log("notification data: ", notifications);
+
+  // handlers 
+  const handleAcceptRequest = async (id: number) => {
+    try {
+      const response = await acceptFriendRequest({id});
+      console.log('response of accept friend request: ', response);
+      if (response?.error?.success === false) {
+        Alert.alert(
+          'Accepting friend request failed',
+          response?.error?.message || 'An error occurred.',
+        );
+        return;
+      } else {
+        // navigation?.navigate('OthersProfile');
+      }
+    } catch (err: any) {
+      Alert.alert(
+        'Accepting friend request Failed',
+        err?.message || 'An error occurred.',
+      );
+    }
+  }; 
   return (
     <View style={tw`bg-white px-[4%] h-full dark:bg-primaryDark`}>
       <Header
@@ -104,10 +127,11 @@ const Notifications = ({navigation}: any) => {
                   'App\\Notifications\\FriendInterationNotification' && (
                   <View style={tw`flex-row items-center gap-2 mt-2`}>
                     <TouchableOpacity
+                      onPress={() => handleAcceptRequest(item?.data?.sender_id)}
                       style={tw`bg-violet100 rounded-3xl px-5 pt-1 pb-1.5`}>
                       <Text
                         style={tw`text-white text-base font-600 font-WorkSemiBold`}>
-                        Accept
+                        {isAccepting ? 'Accepting...' : 'Accept'}
                       </Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={tw`rounded-3xl px-5 pt-1 pb-1.5`}>

@@ -137,6 +137,7 @@ export const AuthSlice = api.injectEndpoints({
       query: () => ({
         url: `/add-friends?per_page=10&page=1`,
       }),
+      providesTags: ['addFriends'],
     }),
 
     // get friend requests
@@ -149,10 +150,13 @@ export const AuthSlice = api.injectEndpoints({
 
     // accept friend request
     acceptFriendRequest: builder.mutation({
-      query: ({id}) => ({
-        url: `/accept-request?friend_id=${id}`,
-        method: 'POST',
-      }),
+      query: ({id}) => {
+        console.log(`/accept-request?friend_id=${id}`)
+        return {
+          url: `/accept-request?friend_id=${id}`,
+          method: 'PATCH',
+        }
+      },
       invalidatesTags: ['addFriends'],
     }),
 

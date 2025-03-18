@@ -2,15 +2,19 @@ import {View, Text, TouchableOpacity, Image, Alert} from 'react-native';
 import React from 'react';
 import tw from '../../lib/tailwind';
 // import users from '../../utils/json/users.json';
-import {useAcceptFriendRequestMutation, useGetFriendRequestsQuery} from '../../../android/app/src/redux/slice/ApiSlice';
+import {
+  useAcceptFriendRequestMutation,
+  useGetFriendRequestsQuery,
+} from '../../../android/app/src/redux/slice/ApiSlice';
 import {baseUrl} from '../utils/exports';
 const Request = ({navigation}: any) => {
   // rtk query hooks
   const {data} = useGetFriendRequestsQuery({});
-  const [acceptFriendRequest, {isLoading: isAccepting}] = useAcceptFriendRequestMutation();
+  const [acceptFriendRequest, {isLoading: isAccepting}] =
+    useAcceptFriendRequestMutation();
 
   const users = data?.data?.friend_requests?.data || [];
-  
+
   const handleAcceptRequest = async (id: number) => {
     try {
       const response = await acceptFriendRequest({id});
@@ -31,6 +35,8 @@ const Request = ({navigation}: any) => {
       );
     }
   };
+
+  console.log('users data check: ', users);
   return (
     <View style={tw`gap-y-2`}>
       {users?.map((item: any) => (
@@ -69,7 +75,7 @@ const Request = ({navigation}: any) => {
             ) : (
               <View style={tw`flex-row items-center gap-2`}>
                 <TouchableOpacity
-                  onPress={() => handleAcceptRequest(item?.id)}
+                  onPress={() => handleAcceptRequest(item?.user_id)}
                   style={tw`bg-violet100 border-[2px] border-violet100 w-20 pt-1 pb-2 justify-center rounded-full items-center`}>
                   <Text style={tw`text-white text-base font-WorkSemiBold`}>
                     {isAccepting ? 'Accepting...' : 'Accept'}
