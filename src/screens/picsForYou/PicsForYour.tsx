@@ -27,8 +27,6 @@ const PicsForYour = ({navigation, route}: NavigProps<null>) => {
     }
   };
 
-  console.log('Picks for you: ', personalizedPicks);
-
   return (
     <View style={tw`px-[4%] bg-white dark:bg-primaryDark h-full`}>
       <Header

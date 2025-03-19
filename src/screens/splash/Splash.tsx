@@ -10,7 +10,6 @@ const Splash = ({navigation}: any) => {
   };
 
   const {data} = useValidateTokenQuery({});
-  console.log("validate data: ", data);
 
   return (
     <Video

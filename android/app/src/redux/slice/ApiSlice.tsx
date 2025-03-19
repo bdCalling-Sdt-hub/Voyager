@@ -138,7 +138,7 @@ export const AuthSlice = api.injectEndpoints({
       query: () => ({
         url: `/add-friends?per_page=10&page=1`,
       }),
-      providesTags: ['addFriends'],
+      providesTags: ['addFriends', 'cancelFriendRequest'],
     }),
 
     // get friend requests
@@ -146,7 +146,7 @@ export const AuthSlice = api.injectEndpoints({
       query: () => ({
         url: `/user-friend-requests`,
       }),
-      providesTags: ['addFriends'],
+      providesTags: ['addFriends', 'cancelFriendRequest'],
     }),
 
     // accept friend request
@@ -193,11 +193,23 @@ export const AuthSlice = api.injectEndpoints({
 
     // send friend request
     sendFriendRequest: builder.mutation({
+      query: ({id}) => {
+        // console.log("id checking from backend: ", id);
+        return {
+          url: `/friend-request?friend_id=${id}`,
+          method: 'POST',
+        }
+      },
+      invalidatesTags: ['addFriends'],
+    }),
+
+    // cancel friend request
+    cancelFriendRequest: builder.mutation({
       query: ({id}) => ({
-        url: `/friend-request?friend_id=${id}`,
+        url: `/cancel-request?friend_id=${id}&_method=PUT`,
         method: 'POST',
       }),
-      invalidatesTags: ['addFriends'],
+      invalidatesTags: ['cancelFriendRequest'],
     }),
 
     // get top destination
@@ -267,6 +279,7 @@ export const AuthSlice = api.injectEndpoints({
       query: ({id}) => ({
         url: `/user-friend-profile?friend_id=${id}`,
       }),
+      providesTags: ['cancelFriendRequest', 'addFriends', 'cancelFriendRequest'],
     }),
 
     // get user friend attractions
@@ -455,6 +468,7 @@ export const {
   useAcceptFriendRequestMutation,
   useEquipAvatarMutation,
   useBuyAvatarMutation,
+  useCancelFriendRequestMutation,
 
   // goals queries
   useGetBucketListAttractionsQuery,
