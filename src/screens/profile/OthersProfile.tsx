@@ -21,6 +21,7 @@ import {
   useGetOthersProfileQuery,
   useGetUserFriendAttractionsQuery,
   useSendFriendRequestMutation,
+  useUnfriendUserMutation,
 } from '../../../android/app/src/redux/slice/ApiSlice';
 
 const OthersProfile = ({navigation, route}: any) => {
@@ -36,6 +37,7 @@ const OthersProfile = ({navigation, route}: any) => {
   const [cancelFriendRequest, {isLoading: isLoadingCancel}] =
     useCancelFriendRequestMutation();
   const {data: userAttractions} = useGetUserFriendAttractionsQuery({id});
+  const [unfriendUser] = useUnfriendUserMutation();
   const {
     attractions,
     badges,
@@ -106,6 +108,22 @@ const OthersProfile = ({navigation, route}: any) => {
     }
   };
 
+  const handleUnfriendUser = async () => {
+    console.log('Unfriend User Handler Called');
+    try {
+      const response = await unfriendUser({id});
+      console.log('response of unfriend user: ', response);
+      if (response?.error?.success === false || response?.error?.message) {
+        Alert.alert(
+          'Unfriend user failed',
+          response?.error?.message || 'An error occurred.',
+        );
+      }
+    } catch (err: any) {
+      Alert.alert('Unfriend user Failed', err?.message || 'An error occurred.');
+    }
+  };
+
   return (
     <ScrollView style={tw`px-[4%] pt-2 bg-white h-full dark:bg-primaryDark`}>
       <View style={tw`mb-4`}>
@@ -173,9 +191,15 @@ const OthersProfile = ({navigation, route}: any) => {
         <View style={tw`items-center mt-6 gap-y-4`}>
           {item?.status !== 'accepted' && (
             <TouchableOpacity
-              onPress={
-                isReqSend ? handleCancelFriendRequest : handleSendFriendRequest
-              }
+              onPress={() => {
+                if (item?.status === 'unfriend') {
+                  handleUnfriendUser();
+                } else if (isReqSend) {
+                  handleCancelFriendRequest();
+                } else {
+                  handleSendFriendRequest();
+                }
+              }}
               disabled={isLoading}
               style={tw`flex-row w-full justify-center items-center gap-2 border border-violet100 rounded-full py-2 ${
                 isReqSend ? '' : 'bg-violet100'
@@ -189,6 +213,8 @@ const OthersProfile = ({navigation, route}: any) => {
                   ? 'Sending...'
                   : item?.status === 'not_friend'
                   ? 'Add Friend'
+                  : item?.status === 'unfriend'
+                  ? 'Unfriend'
                   : isReqSend
                   ? 'Cancel Request'
                   : 'Add Friend'}

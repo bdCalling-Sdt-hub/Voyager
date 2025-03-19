@@ -92,7 +92,6 @@ const AddFriends = ({navigation}: any) => {
       Alert.alert('Unfriend user Failed', err?.message || 'An error occurred.');
     }
   };
-  console.log('add friends: ', addFriends[0]);
 
   return (
     <View style={tw`flex-row flex-wrap mt-2 justify-between`}>
