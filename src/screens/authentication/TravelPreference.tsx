@@ -25,7 +25,8 @@ const activityType = [
 ];
 
 const TravelPreferences = ({navigation}: any) => {
-  const [selectedItems, setSelectedItems] = useState<number[]>([]); // Store IDs of selected items
+  const [selectedItems, setSelectedItems] = useState<number[]>([]); 
+
 
   const toggleSelection = (id: number) => {
     if (selectedItems.includes(id)) {

@@ -55,8 +55,6 @@ const Home = ({navigation}: NavigProps<null>) => {
       );
     }
   };
-
-console.log("personalizedPicks: ", topDestination?.data);
   return (
     <View style={tw`h-full px-[4%] bg-white dark:bg-primaryDark`}>
       <ScrollView

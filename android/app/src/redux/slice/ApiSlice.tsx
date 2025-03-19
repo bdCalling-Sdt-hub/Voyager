@@ -395,6 +395,29 @@ export const AuthSlice = api.injectEndpoints({
         url: `/get-term_condition`,
       }),
     }),
+
+    // --------- travel preferences ---------
+
+    // get travel preferences
+    getTravelPreferences: builder.query({
+      query: () => ({
+        url: `/get-preference`,
+      }),
+      providesTags: ['travelInterest'],
+    }),
+
+    //  add travel interest
+    addTravelInterest: builder.mutation({
+      query: (data) => {
+        return {
+          url: `/travel-interest`,
+          method: 'POST',
+          body: data,
+        };
+      },
+      invalidatesTags: ['travelInterest'],
+    }),
+    
   }),
 });
 
@@ -453,4 +476,8 @@ export const {
   // settings
   useGetFaqQuery,
   useGetTermsAndConditionsQuery,
+
+  // travel preferences
+  useGetTravelPreferencesQuery,
+  useAddTravelInterestMutation,
 } = AuthSlice;
