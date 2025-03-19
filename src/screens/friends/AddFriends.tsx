@@ -90,6 +90,8 @@ const AddFriends = ({navigation}: any) => {
       }
     } catch (err: any) {
       Alert.alert('Unfriend user Failed', err?.message || 'An error occurred.');
+    } finally {
+      setLoadingStates(prev => ({...prev, [id]: null}));
     }
   };
 
@@ -131,7 +133,7 @@ const AddFriends = ({navigation}: any) => {
                   ? handleUnfriendUser(item?.id)
                   : handleSendFriendRequest(item?.id)
               }
-              disabled={isLoading || isLoadingCancel}
+              disabled={isLoading || isLoadingCancel || isLoadingUnfriend}
               style={tw`flex-row w-full justify-center items-center gap-2 border border-violet100 rounded-full py-1 px-2 ${
                 item?.status === 'not_friend' || item?.status === 'canceled'
                   ? 'bg-violet100'
