@@ -212,6 +212,15 @@ export const AuthSlice = api.injectEndpoints({
       invalidatesTags: ['cancelFriendRequest'],
     }),
 
+    // unfriend user
+    unfriendUser: builder.mutation({
+      query: ({id}) => ({
+        url: `/unfriend?friend_id=${id}`,
+        method: 'PUT',
+      }),
+      invalidatesTags: ['addFriends'],
+    }),
+
     // get top destination
     getTopDestination: builder.query({
       query: () => ({
@@ -469,6 +478,7 @@ export const {
   useEquipAvatarMutation,
   useBuyAvatarMutation,
   useCancelFriendRequestMutation,
+  useUnfriendUserMutation,
 
   // goals queries
   useGetBucketListAttractionsQuery,

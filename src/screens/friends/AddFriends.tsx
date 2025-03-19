@@ -8,6 +8,7 @@ import {
   useCancelFriendRequestMutation,
   useGetFriendForAddQuery,
   useSendFriendRequestMutation,
+  useUnfriendUserMutation,
 } from '../../../android/app/src/redux/slice/ApiSlice';
 import {baseUrl} from '../utils/exports';
 
@@ -16,18 +17,19 @@ const AddFriends = ({navigation}: any) => {
   const {data} = useGetFriendForAddQuery({});
   const [sendFriendRequest] = useSendFriendRequestMutation();
   const [cancelFriendRequest] = useCancelFriendRequestMutation();
+  const [unfriendUser] = useUnfriendUserMutation();
   const addFriends = data?.data?.data || [];
 
   // State to track loading states for each button
   const [loadingStates, setLoadingStates] = useState<{
-    [key: number]: 'sending' | 'canceling' | null;
+    [key: number]: 'sending' | 'canceling' | 'unfriending' | null;
   }>({});
 
   // handlers
 
   // send friend request
   const handleSendFriendRequest = async (id: number) => {
-    console.log('sending id: ', id);
+    console.log('Send Request Handler Called');
     setLoadingStates(prev => ({...prev, [id]: 'sending'}));
     try {
       const response = await sendFriendRequest({id});
@@ -52,6 +54,7 @@ const AddFriends = ({navigation}: any) => {
 
   // cancel friend request
   const handleCancelFriendRequest = async (id: number) => {
+    console.log('Cancel Request Handler Called');
     setLoadingStates(prev => ({...prev, [id]: 'canceling'}));
     try {
       const response = await cancelFriendRequest({id});
@@ -72,13 +75,31 @@ const AddFriends = ({navigation}: any) => {
     }
   };
 
-  // console.log('add friends: ', addFriends);
+  // unfriend user
+  const handleUnfriendUser = async (id: number) => {
+    console.log('Unfriend User Handler Called');
+    setLoadingStates(prev => ({...prev, [id]: 'unfriending'}));
+    try {
+      const response = await unfriendUser({id});
+      console.log('response of unfriend user: ', response);
+      if (response?.error?.success === false || response?.error?.message) {
+        Alert.alert(
+          'Unfriend user failed',
+          response?.error?.message || 'An error occurred.',
+        );
+      }
+    } catch (err: any) {
+      Alert.alert('Unfriend user Failed', err?.message || 'An error occurred.');
+    }
+  };
+  console.log('add friends: ', addFriends[0]);
 
   return (
     <View style={tw`flex-row flex-wrap mt-2 justify-between`}>
       {addFriends?.map((item: any) => {
         const isLoading = loadingStates[item.id] === 'sending';
         const isLoadingCancel = loadingStates[item.id] === 'canceling';
+        const isLoadingUnfriend = loadingStates[item.id] === 'unfriending';
 
         return (
           <TouchableOpacity
@@ -105,9 +126,11 @@ const AddFriends = ({navigation}: any) => {
 
             <TouchableOpacity
               onPress={() =>
-                item?.status === 'canceled'
-                  ? handleSendFriendRequest(item?.id)
-                  : handleCancelFriendRequest(item?.id)
+                item?.status === 'pending'
+                  ? handleCancelFriendRequest(item?.id)
+                  : item?.status === 'unfriend'
+                  ? handleUnfriendUser(item?.id)
+                  : handleSendFriendRequest(item?.id)
               }
               disabled={isLoading || isLoadingCancel}
               style={tw`flex-row w-full justify-center items-center gap-2 border border-violet100 rounded-full py-1 px-2 ${
@@ -126,12 +149,16 @@ const AddFriends = ({navigation}: any) => {
                   ? 'Sending...'
                   : isLoadingCancel
                   ? 'Canceling...'
+                  : isLoadingUnfriend
+                  ? 'Unfriending...'
                   : item?.status === 'not_friend'
                   ? 'Add'
                   : item?.status === 'canceled'
                   ? 'Add'
                   : item?.status === 'pending'
                   ? 'Cancel'
+                  : item?.status === 'unfriend'
+                  ? 'Unfriend'
                   : 'View Profile'}
               </Text>
             </TouchableOpacity>

@@ -64,9 +64,6 @@ const OthersProfile = ({navigation, route}: any) => {
     }
   };
 
-  console.log('add friend info: ', item);
-  console.log('status check: ', isReqSend);
-
   const handleSendFriendRequest = async () => {
     try {
       const response = await sendFriendRequest({id});
