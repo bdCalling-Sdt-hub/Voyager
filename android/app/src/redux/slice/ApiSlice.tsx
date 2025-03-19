@@ -112,7 +112,7 @@ export const AuthSlice = api.injectEndpoints({
       query: () => ({
         url: `/profile`,
       }),
-      providesTags: ['visited', 'profileUpdate'],
+      providesTags: ['visited', 'profileUpdate', 'updateAvatar'],
     }),
 
     // update profile
@@ -130,6 +130,7 @@ export const AuthSlice = api.injectEndpoints({
       query: () => ({
         url: `/get-shop-avatar`,
       }),
+      providesTags: ['updateAvatar'],
     }),
 
     // get friend for add
@@ -151,11 +152,11 @@ export const AuthSlice = api.injectEndpoints({
     // accept friend request
     acceptFriendRequest: builder.mutation({
       query: ({id}) => {
-        console.log(`/accept-request?friend_id=${id}`)
+        console.log(`/accept-request?friend_id=${id}`);
         return {
           url: `/accept-request?friend_id=${id}`,
           method: 'PATCH',
-        }
+        };
       },
       invalidatesTags: ['addFriends'],
     }),
@@ -169,7 +170,18 @@ export const AuthSlice = api.injectEndpoints({
           body: data,
         };
       },
-      invalidatesTags: ['updateProfile'],
+      invalidatesTags: ['updateProfile', 'updateAvatar'],
+    }),
+
+    // buy avatar
+    buyAvatar: builder.mutation({
+      query: ({id}) => {
+        return {
+          url: `/buy-shop-avatar?id=${id}&_method=PUT`,
+          method: 'POST',
+        };
+      },
+      invalidatesTags: ['updateAvatar'],
     }),
     // get personalized picks
     getPersonalized: builder.query({
@@ -419,6 +431,7 @@ export const {
   useGetFriendRequestsQuery,
   useAcceptFriendRequestMutation,
   useEquipAvatarMutation,
+  useBuyAvatarMutation,
 
   // goals queries
   useGetBucketListAttractionsQuery,

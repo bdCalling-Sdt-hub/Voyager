@@ -22,8 +22,10 @@ import {RadioButton, RadioGroup} from 'react-native-ui-lib';
 import NormalModal from '../../components/modals/NormalModal';
 import {SvgXml} from 'react-native-svg';
 import {
+  useBuyAvatarMutation,
   useEquipAvatarMutation,
   useGetAvatarQuery,
+  useGetProfileQuery,
   useUpdateProfileMutation,
 } from '../../../android/app/src/redux/slice/ApiSlice';
 import {AvatarData} from '../utils/types';
@@ -39,6 +41,9 @@ const ProfileSettings = ({navigation}: any) => {
   const [updateProfile, {isLoading}] = useUpdateProfileMutation();
   const {data} = useGetAvatarQuery({});
   const [equipAvatar, {isLoading: isLoadingEquip}] = useEquipAvatarMutation();
+  const [buyAvatar, {isLoading: isLoadingBuy}] = useBuyAvatarMutation();
+  const {data: profileData, error} = useGetProfileQuery({});
+  const {full_name, email, image, user_name, signup_date} = profileData?.data || {};
   const avatars = data?.data?.avatars || [];
   console.log('avatars checking: ', avatars);
 
@@ -77,6 +82,10 @@ const ProfileSettings = ({navigation}: any) => {
         return;
       } else {
         setAvatarModalVisible(false);
+        Alert.alert(
+          'Equipping avatar Success',
+          'Your avatar has been successfully equipped.',
+        )
       }
     } catch (err: any) {
       Alert.alert(
@@ -86,7 +95,29 @@ const ProfileSettings = ({navigation}: any) => {
     }
   };
 
-  console.log("avatars: ", avatars);
+  // handle buy avatar
+  const handleBuyAvatar = async (id: number) => {
+    try {
+      const response = await buyAvatar({id});
+      if (response?.error) {
+        Alert.alert(
+          'Buying avatar Failed',
+          response?.error?.message || 'An error occurred.',
+        );
+        return;
+      } else {
+        Alert.alert(
+          'Buying avatar Success',
+          'Your avatar has been successfully bought.',
+        );
+      }
+      console.log('buy avatar data: ', response);
+    } catch (err: any) {
+      Alert.alert('Buying avatar Failed', err?.message || 'An error occurred.');
+    }
+  };
+
+  console.log('avatars: ', avatars);
   return (
     <View style={tw`h-full bg-white dark:bg-primaryDark px-[4%] pb-2`}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -102,7 +133,7 @@ const ProfileSettings = ({navigation}: any) => {
           <View style={tw`items-center`}>
             <TouchableOpacity>
               <Image
-                source={require('../../assets/images/avatar1.png')}
+                source={image ? {uri: baseUrl + image} : require('../../assets/images/avatar1.png')}
                 style={tw`h-18 w-18 rounded-full`}
               />
               <TouchableOpacity
@@ -272,9 +303,10 @@ const ProfileSettings = ({navigation}: any) => {
               </Text>
 
               <TouchableOpacity
-                disabled={avatar?.status !== 'locked'}
+                disabled={avatar?.status === 'locked' || avatar?.purchase_status}
+                onPress={() => handleBuyAvatar(avatar?.id)}
                 style={tw`flex-row items-center gap-2 border border-gold rounded-full py-0.5 px-2`}>
-                {avatar?.status === 'locked' && (
+                {avatar?.purchase_status === false && (
                   <Image
                     source={require('../../assets/images/coin.png')}
                     style={tw`h-7 w-7`}
@@ -282,7 +314,9 @@ const ProfileSettings = ({navigation}: any) => {
                 )}
                 <Text
                   style={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}>
-                  {avatar?.status === 'locked' ? avatar?.cost || 0 : 'Unlocked'}
+                  {avatar?.purchase_status === false
+                    ? avatar?.cost || 0
+                    : 'Get Avatar'}
                 </Text>
               </TouchableOpacity>
             </TouchableOpacity>
