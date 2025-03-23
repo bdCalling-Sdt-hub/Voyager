@@ -94,7 +94,6 @@ const AddFriends = ({navigation}: any) => {
       setLoadingStates(prev => ({...prev, [id]: null}));
     }
   };
-
   return (
     <View style={tw`flex-row flex-wrap mt-2 justify-between`}>
       {addFriends?.map((item: any) => {
@@ -129,7 +128,7 @@ const AddFriends = ({navigation}: any) => {
               onPress={() =>
                 item?.status === 'pending'
                   ? handleCancelFriendRequest(item?.id)
-                  : item?.status === 'unfriend'
+                  : item?.status === 'accepted'
                   ? handleUnfriendUser(item?.id)
                   : handleSendFriendRequest(item?.id)
               }
@@ -158,9 +157,9 @@ const AddFriends = ({navigation}: any) => {
                   ? 'Add'
                   : item?.status === 'pending'
                   ? 'Cancel'
-                  : item?.status === 'unfriend'
+                  : item?.status === 'accepted'
                   ? 'Unfriend'
-                  : 'View Profile'}
+                  : 'Add'}
               </Text>
             </TouchableOpacity>
           </TouchableOpacity>
