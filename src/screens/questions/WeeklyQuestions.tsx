@@ -25,7 +25,8 @@ import BottomSheet, {BottomSheetBackdrop} from '@gorhom/bottom-sheet';
 import NormalModal from '../../components/modals/NormalModal';
 import {BottomSheetProvider} from '@gorhom/bottom-sheet/lib/typescript/contexts';
 import {NavigProps} from '../../utils/interface/NaviProps';
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
+import {useGetWeeklyQuestsQuery} from '../../../android/app/src/redux/slice/ApiSlice';
 
 interface SheetData {
   title?: string;
@@ -38,20 +39,20 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
   const [achievementsPopupVisible, setAchievementsPopupVisible] =
     useState<boolean>(false);
 
-    useFocusEffect(
-      React.useCallback(() => {
-        if (screen) {
-          setActiveQuest(screen);
-          console.log("Screen focused, state updated with screen:", screen);
-        } else {
-          console.log("Screen focused, but no screen value found.");
-        }
-  
-        return () => {
-          setActiveQuest(activeQuest);
-        };
-      }, [screen])
-    ); 
+  useFocusEffect(
+    React.useCallback(() => {
+      if (screen) {
+        setActiveQuest(screen);
+        console.log('Screen focused, state updated with screen:', screen);
+      } else {
+        console.log('Screen focused, but no screen value found.');
+      }
+
+      return () => {
+        setActiveQuest(activeQuest);
+      };
+    }, [screen]),
+  );
 
   const bottomSheetRef = useRef(null);
 
@@ -86,9 +87,23 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
     );
   };
 
+  // rtk query hooks
+  const {data} = useGetWeeklyQuestsQuery({});
+  const weeklyQuests = data?.data?.weekly_quests || [];
+
+  const incompleteQuests = weeklyQuests.filter(
+    quest => quest.complete_status === 'incomplete',
+  );
+  const completeQuests = weeklyQuests.filter(
+    quest => quest.complete_status === 'complete',
+  );
+  console.log('weekly quests data: ', completeQuests);
+
   return (
     <>
-      <ScrollView style={tw`px-[4%] bg-white dark:bg-primaryDark`} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={tw`px-[4%] bg-white dark:bg-primaryDark`}
+        showsVerticalScrollIndicator={false}>
         <Header
           title="Quests"
           containerStyle={tw`mt-2`}
@@ -141,7 +156,10 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                 style={tw`text-black dark:text-white text-base font-WorkMedium mb-2`}>
                 Weekly Quests Progress
               </Text>
-              <Text style={tw`text-xs font-WorkMedium`}>Completed 1/3</Text>
+              <Text style={tw`text-xs font-WorkMedium`}>
+                Completed {data?.data?.completedCount || 0}/
+                {data?.data?.total_quest || 0}
+              </Text>
               <View pointerEvents="none">
                 <RangeSlider
                   color="#ff5c8d"
@@ -161,7 +179,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                 </View>
 
                 <View style={tw`gap-y-4 mt-6`}>
-                  {quests?.quests?.map((item: any) => (
+                  {incompleteQuests?.map((item: any) => (
                     <View
                       style={tw`flex-row items-center gap-3 border border-gray90 dark:bg-darkBg dark:border-darkBg rounded-2xl p-4`}
                       key={item?.id}>
@@ -173,7 +191,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                       <View style={tw`flex-shrink gap-y-3`}>
                         <Text
                           style={tw`text-black dark:text-white font-WorkRegular text-base `}>
-                          {item?.question}
+                          {item?.name}
                         </Text>
 
                         <View style={tw`gap-4 flex-row items-center`}>
@@ -183,7 +201,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                             />
                             <Text
                               style={tw`text-gray100 text-[10px] font-WorkRegular`}>
-                              {item?.coins} Coins
+                              {item?.bonus_coins} Coins
                             </Text>
                           </View>
                           <View style={tw`flex-row items-center gap-2`}>
@@ -192,7 +210,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                             />
                             <Text
                               style={tw`text-gray100 text-[10px] font-WorkRegular`}>
-                              {item?.trophy}
+                              {item?.bonus_xp} XP
                             </Text>
                           </View>
                         </View>
@@ -211,7 +229,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                 </View>
 
                 <View style={tw`gap-y-4 mt-6 pb-2`}>
-                  {quests?.quests?.map((item: any) => (
+                  {completeQuests?.map((item: any) => (
                     <View
                       style={tw`flex-row items-center justify-between gap-3 border dark:bg-darkBg border-gray90 dark:border-darkBg rounded-2xl p-4`}
                       key={item?.id}>

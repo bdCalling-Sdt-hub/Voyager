@@ -439,6 +439,15 @@ export const AuthSlice = api.injectEndpoints({
       },
       invalidatesTags: ['travelInterest'],
     }),
+
+    // quests queries
+
+    // get weekly quests
+    getWeeklyQuests: builder.query({
+      query: () => ({
+        url: `/weekly-quests`,
+      }),
+    }),
     
   }),
 });
@@ -504,4 +513,7 @@ export const {
   // travel preferences
   useGetTravelPreferencesQuery,
   useAddTravelInterestMutation,
+
+  // weekly quests
+  useGetWeeklyQuestsQuery,
 } = AuthSlice;
