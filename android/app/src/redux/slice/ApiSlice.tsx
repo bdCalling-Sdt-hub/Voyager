@@ -448,6 +448,13 @@ export const AuthSlice = api.injectEndpoints({
         url: `/weekly-quests`,
       }),
     }),
+
+    // get quest achievements
+    getQuestAchievements: builder.query({
+      query: () => ({
+        url: `/quest-achievement`,
+      }),
+    }),
     
   }),
 });
@@ -516,4 +523,5 @@ export const {
 
   // weekly quests
   useGetWeeklyQuestsQuery,
+  useGetQuestAchievementsQuery,
 } = AuthSlice;

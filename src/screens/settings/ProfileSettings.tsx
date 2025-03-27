@@ -169,7 +169,7 @@ const ProfileSettings = ({navigation}: any) => {
           </View>
 
           {/* Social Links */}
-          <View style={tw`bg-gray80 dark:bg-darkBg rounded-2xl p-4 mt-6`}>
+          {/* <View style={tw`bg-gray80 dark:bg-darkBg rounded-2xl p-4 mt-6`}>
             <Text
               style={tw`text-gray100 text-sm font-WorkMedium font-500 mb-3`}>
               Social Links
@@ -192,7 +192,7 @@ const ProfileSettings = ({navigation}: any) => {
                 />
               </View>
             </View>
-          </View>
+          </View> */}
 
           {/* privacy */}
           <View style={tw`bg-gray80 dark:bg-darkBg rounded-2xl p-4 mt-6`}>
