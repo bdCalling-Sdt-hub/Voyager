@@ -1,14 +1,15 @@
-import {ScrollView, Text, TouchableOpacity, useColorScheme, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import tw from '../../lib/tailwind';
-import Header from '../../components/header/Header';
-import CountryDropdown from './CountryDropdown';
+import React, {useState} from 'react';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {RadioButton, RadioGroup, Switch} from 'react-native-ui-lib';
-import { useAppColorScheme } from 'twrnc';
+
+import Header from '../../components/header/Header';
+import tw from '../../lib/tailwind';
+import {useAppContext} from '../../utils/context/AppContext';
+import {LStorage} from '../utils/utils';
+import CountryDropdown from './CountryDropdown';
 
 const AccountSettings = ({navigation}: any) => {
-  const colorMode = useColorScheme();
-  const [themeMode, setThemeMode] = useState(colorMode);
+  const {toggleColorScheme, colorScheme} = useAppContext();
   const [isPushNotificationEnabled, setIsPushNotificationEnabled] =
     useState(false);
   const [isEmailNotificationEnabled, setIsEmailNotificationEnabled] =
@@ -24,14 +25,6 @@ const AccountSettings = ({navigation}: any) => {
 
   const handleInAppNotification = () =>
     setIsInAppNotificationEnabled(previousState => !previousState);
-
-  const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
-
-  useEffect(() => {
-    setColorScheme(themeMode);
-  }, [themeMode]);
-
-
 
   return (
     <View style={tw`h-full bg-white dark:bg-primaryDark px-[4%] pb-2`}>
@@ -66,8 +59,11 @@ const AccountSettings = ({navigation}: any) => {
                   Theme
                 </Text>
                 <RadioGroup
-                  initialValue={themeMode}
-                  onValueChange={(value: any) => setThemeMode(value)}
+                  initialValue={colorScheme}
+                  onValueChange={(value: any) => {
+                    LStorage.setString('mode', value);
+                    toggleColorScheme();
+                  }}
                   style={tw`gap-y-3 mt-1`}>
                   <RadioButton
                     label="Light Mode"
@@ -135,7 +131,6 @@ const AccountSettings = ({navigation}: any) => {
               </View>
             </View>
           </View>
-
         </View>
       </ScrollView>
       <TouchableOpacity

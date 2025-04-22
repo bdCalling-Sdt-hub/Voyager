@@ -1,7 +1,5 @@
-import {View, Text, TouchableOpacity, ScrollView, Alert} from 'react-native';
 import React, {useState} from 'react';
-import tw from '../../lib/tailwind';
-import InputText from '../../components/inputs/InputText';
+import {Alert, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {
   IconCloseEye,
   IconEnvelop,
@@ -10,8 +8,11 @@ import {
   IconGoogle,
   IconKey,
 } from '../../assets/icons/Icons';
+
 import {SvgXml} from 'react-native-svg';
 import {useLoginMutation} from '../../../android/app/src/redux/slice/ApiSlice';
+import InputText from '../../components/inputs/InputText';
+import tw from '../../lib/tailwind';
 import {LStorage} from '../utils/utils';
 
 const Login = ({navigation}: any) => {
@@ -20,31 +21,42 @@ const Login = ({navigation}: any) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-
   // RTK Query Hooks
   const [login, {isLoading}] = useLoginMutation();
 
   // handlers
   const handleLogin = async () => {
     try {
-      const response = await login({email, password});
-      const token = response?.data?.data?.token;
-
-      if (!token) {
+      if (!email || !password) {
+        return Alert.alert('Warning', 'Email and password are required.');
+      }
+      if (!email.includes('@')) {
+        return Alert.alert('Warning', 'Please enter a valid email.');
+      }
+      if (password.length < 6) {
         return Alert.alert(
-          'Login Failed',
-          // 'No token returned from the server.'
-          'Username or Password is incorrect.'
-          ,
+          'Warning',
+          'Password must be at least 6 characters long.',
         );
       }
 
-      LStorage.setString('userToken', token);
+      const response = await login({email, password});
+      const token = response?.data?.data?.token;
 
-      if (LStorage.getString('userToken') === token) {
+      console.log(response?.error);
+
+      if (response?.error) {
+        return Alert.alert(
+          'Login Failed',
+          response?.error?.data?.message ||
+            response?.error?.data?.error ||
+            'An error occurred while logging in.',
+        );
+      }
+
+      if (response?.data?.success) {
+        LStorage.setString('userToken', token);
         navigation?.replace('BottomRoutes');
-      } else {
-        Alert.alert('Storage Error', 'Failed to store token.');
       }
     } catch (err: any) {
       Alert.alert('Login Failed', err?.message || 'An error occurred.');

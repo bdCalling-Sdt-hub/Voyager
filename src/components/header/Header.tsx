@@ -1,33 +1,32 @@
+import React, {useState} from 'react';
 import {
-  View,
-  Text,
   Image,
-  TouchableOpacity,
-  TextInput,
-  TouchableWithoutFeedback,
   Pressable,
   ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
 } from 'react-native';
-import React, {useState} from 'react';
-import tw from '../../lib/tailwind';
-import {SvgXml} from 'react-native-svg';
+import {Checkbox, RadioButton, RadioGroup} from 'react-native-ui-lib';
 import {
-  experiType1,
-  experiType2,
   IconClose,
   IconFilter,
   IconLeftArrow,
   IconSearch,
+  experiType1,
+  experiType2,
 } from '../../assets/icons/Icons';
+
 import {useNavigation} from '@react-navigation/native';
-import {NavigProps} from '../../utils/interface/NaviProps';
-import NormalModal from '../modals/NormalModal';
-import {Checkbox, RadioButton, RadioGroup} from 'react-native-ui-lib';
-import ActionModal from '../modals/ActionModal';
-import {useAppContext} from '../../utils/context/AppContext';
+import {SvgXml} from 'react-native-svg';
 import {useAppColorScheme} from 'twrnc';
-import { useGetProfileQuery } from '../../../android/app/src/redux/slice/ApiSlice';
-import { baseUrl } from '../../screens/utils/exports';
+import {useGetProfileQuery} from '../../../android/app/src/redux/slice/ApiSlice';
+import tw from '../../lib/tailwind';
+import {baseUrl} from '../../screens/utils/exports';
+import {useAppContext} from '../../utils/context/AppContext';
+import NormalModal from '../modals/NormalModal';
 
 interface Props {
   title?: string;
@@ -102,7 +101,7 @@ const Header = ({
 
   // rtk query hooks
   const {data} = useGetProfileQuery({});
-  const {coins, badges, level, image } = data?.data || {};
+  const {coins, badges, level, image} = data?.data || {};
 
   const handleCheckboxChange = value => {
     if (selectedItems.includes(value)) {
@@ -128,10 +127,10 @@ const Header = ({
     <>
       <View
         style={[
-          tw`flex-row items-center justify-between py-2 z-10`,
+          tw`flex-row  w-full items-center justify-between py-2 z-10`,
           containerStyle,
         ]}>
-        <View style={tw`w-1/6`}>
+        <View style={tw`flex-1`}>
           <TouchableWithoutFeedback
             style={[tw``, imageContainer]}
             onPress={() => {
@@ -155,11 +154,15 @@ const Header = ({
             ) : (
               <View>
                 <Image
-                  source={ image ? {uri: baseUrl + image} : require('../../assets/images/user.png')}
+                  source={
+                    image
+                      ? {uri: baseUrl + image}
+                      : require('../../assets/images/user.png')
+                  }
                   style={tw`h-12 w-12 rounded-full`}
                 />
                 <View
-                  style={tw`h-2 w-2 bg-red rounded-full absolute bottom-0 right-[30%]`}
+                  style={tw`h-2 w-2 bg-red rounded-full absolute bottom-0 left-9`}
                 />
 
                 {showActionModal && (
@@ -281,18 +284,18 @@ const Header = ({
             )}
           </TouchableWithoutFeedback>
         </View>
-        <View style={[tw`w-4/6 items-center`, titleContainer]}>
+        <View style={[tw`flex-1 items-center`, titleContainer]}>
           {middleComponent || (
             <Text
               style={[
-                tw`text-black dark:text-white dark:text-white text-[22px] font-WorkMedium capitalize`,
+                tw`text-black dark:text-white text-[22px] font-WorkMedium capitalize`,
                 titleStyle,
               ]}>
               {title}
             </Text>
           )}
         </View>
-        <View style={tw`w-1/6 items-end`}>
+        <View style={tw`flex-1 items-end`}>
           {rightComponent || !hideRightIcon ? (
             <TouchableOpacity
               style={[
