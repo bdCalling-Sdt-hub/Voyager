@@ -1,15 +1,15 @@
-import {View, Text, Image, TouchableOpacity, Alert} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import tw from '../../lib/tailwind';
-import {SvgXml} from 'react-native-svg';
+import React, {useState} from 'react';
+import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
 import {IconAdd, IconClose} from '../../assets/icons/Icons';
-import users from '../../utils/json/users.json';
 import {
   useCancelFriendRequestMutation,
   useGetFriendForAddQuery,
   useSendFriendRequestMutation,
   useUnfriendUserMutation,
-} from '../../../android/app/src/redux/slice/ApiSlice';
+} from '../../redux/slice/ApiSlice';
+
+import {SvgXml} from 'react-native-svg';
+import tw from '../../lib/tailwind';
 import {baseUrl} from '../utils/exports';
 
 const AddFriends = ({navigation}: any) => {

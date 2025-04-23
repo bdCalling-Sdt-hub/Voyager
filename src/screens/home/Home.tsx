@@ -8,16 +8,16 @@ import {
   View,
 } from 'react-native';
 import {
-  useGetPersonalizedQuery,
-  useGetTopDestinationQuery,
-  useLocationVisitMutation,
-} from '../../../android/app/src/redux/slice/ApiSlice';
-import {
   IconColoredRightArrow,
   IconFilledHeart,
   IconSearch,
   IconWhiteHeart,
 } from '../../assets/icons/Icons';
+import {
+  useGetPersonalizedQuery,
+  useGetTopDestinationQuery,
+  useLocationVisitMutation,
+} from '../../redux/slice/ApiSlice';
 
 import React from 'react';
 import {SvgXml} from 'react-native-svg';

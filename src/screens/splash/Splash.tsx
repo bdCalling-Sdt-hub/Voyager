@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 
 import Video from 'react-native-video';
-import {useValidateTokenQuery} from '../../../android/app/src/redux/slice/ApiSlice';
 import tw from '../../lib/tailwind';
+import {useValidateTokenQuery} from '../../redux/slice/ApiSlice';
 
 const Splash = ({navigation}: any) => {
   const [isVideoPaused, setIsVideoPaused] = useState(false);

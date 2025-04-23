@@ -1,7 +1,5 @@
-import {View, Text, TouchableOpacity, ScrollView, Alert} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import tw from '../../lib/tailwind';
-import InputText from '../../components/inputs/InputText';
+import {Alert, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {
   IconCloseEye,
   IconDarkUser,
@@ -11,13 +9,15 @@ import {
   IconGoogle,
   IconKey,
 } from '../../assets/icons/Icons';
-import {Checkbox} from 'react-native-ui-lib';
-import {SvgXml} from 'react-native-svg';
 import {
   useGetUserNameQuery,
   useSignUpMutation,
-} from '../../../android/app/src/redux/slice/ApiSlice';
-import {LStorage} from '../utils/utils';
+} from '../../redux/slice/ApiSlice';
+
+import {SvgXml} from 'react-native-svg';
+import {Checkbox} from 'react-native-ui-lib';
+import InputText from '../../components/inputs/InputText';
+import tw from '../../lib/tailwind';
 
 const Registration = ({navigation}: any) => {
   // state

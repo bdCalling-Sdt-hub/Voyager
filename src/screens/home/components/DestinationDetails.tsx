@@ -1,15 +1,14 @@
 import React, {useState} from 'react';
 import {
-  View,
-  Text,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  Linking,
   Alert,
+  Image,
+  Linking,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import tw from '../../../lib/tailwind';
-import {SvgXml} from 'react-native-svg';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {
   IconBottomArrow,
   IconBrowse,
@@ -23,21 +22,22 @@ import {
   IconTik,
   IconTopArrow,
 } from '../../../assets/icons/Icons';
-import {NavigProps} from '../../../utils/interface/NaviProps';
-import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import {Fader} from 'react-native-ui-lib';
-import Swiper from 'react-native-swiper';
-import NormalModal from '../../../components/modals/NormalModal';
-import {useAppColorScheme} from 'twrnc';
-import {baseUrl} from '../../utils/exports';
 import {
   useAddToBucketListMutation,
   useGetBucketListCheckQuery,
   useGetMarkAsVisitedQuery,
   useMarkAsVisitedMutation,
   useRemoveFromBucketListMutation,
-} from '../../../../android/app/src/redux/slice/ApiSlice';
-import SocialShareButton from '../../settings/SocialShareButton';
+} from '../../../redux/slice/ApiSlice';
+
+import {SvgXml} from 'react-native-svg';
+import Swiper from 'react-native-swiper';
+import {Fader} from 'react-native-ui-lib';
+import {useAppColorScheme} from 'twrnc';
+import NormalModal from '../../../components/modals/NormalModal';
+import tw from '../../../lib/tailwind';
+import {NavigProps} from '../../../utils/interface/NaviProps';
+import {baseUrl} from '../../utils/exports';
 
 const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
   const {item} = route?.params || {};
@@ -131,7 +131,7 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
       );
     }
   };
-  console.log('main id from item: ', item);
+  // console.log('main id from item: ', item);
   // console.log('Item: ', item);
   // console.log('remove id check: ', bucketListCheck?.data);
   // console.log("mark as visited check: ", visitedStatus);

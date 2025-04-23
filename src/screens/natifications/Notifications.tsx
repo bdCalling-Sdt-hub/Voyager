@@ -1,10 +1,20 @@
-import {Alert, Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {
+  useAcceptFriendRequestMutation,
+  useGetNotificationsQuery,
+} from '../../redux/slice/ApiSlice';
+
 import React from 'react';
+import {IconFilledNotification} from '../../assets/icons/Icons';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
-import {IconFilledNotification} from '../../assets/icons/Icons';
-import notificationsData from '../../utils/json/notifications.json';
-import {useAcceptFriendRequestMutation, useGetNotificationsQuery} from '../../../android/app/src/redux/slice/ApiSlice';
 import {baseUrl} from '../utils/exports';
 
 const Notifications = ({navigation}: any) => {
@@ -12,11 +22,12 @@ const Notifications = ({navigation}: any) => {
 
   // rkt query hooks
   const {data} = useGetNotificationsQuery({});
-  const [acceptFriendRequest, {isLoading: isAccepting}] = useAcceptFriendRequestMutation();
+  const [acceptFriendRequest, {isLoading: isAccepting}] =
+    useAcceptFriendRequestMutation();
   const notifications = data?.data;
-  console.log("notification data: ", notifications);
+  console.log('notification data: ', notifications);
 
-  // handlers 
+  // handlers
   const handleAcceptRequest = async (id: number) => {
     try {
       const response = await acceptFriendRequest({id});
@@ -36,7 +47,7 @@ const Notifications = ({navigation}: any) => {
         err?.message || 'An error occurred.',
       );
     }
-  }; 
+  };
   return (
     <View style={tw`bg-white px-[4%] h-full dark:bg-primaryDark`}>
       <Header

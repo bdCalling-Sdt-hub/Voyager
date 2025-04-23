@@ -1,14 +1,13 @@
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 
 import React from 'react';
-import tw from '../../lib/tailwind';
 import {SvgXml} from 'react-native-svg';
-import Expend from './component/Expend';
 import {IconLeftArrow} from '../../assets/icons/Icons';
-import { useGetFaqQuery } from '../../../android/app/src/redux/slice/ApiSlice';
+import tw from '../../lib/tailwind';
+import {useGetFaqQuery} from '../../redux/slice/ApiSlice';
+import Expend from './component/Expend';
 
 const Faq = ({navigation}: any) => {
-
   // rtk query hooks
   const {data} = useGetFaqQuery({});
   return (
@@ -30,14 +29,9 @@ const Faq = ({navigation}: any) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={tw`pb-6`}>
-        {
-          data?.data?.map((item: any, index: number) => (
-            <Expend
-              key={index}
-              content={item}
-            />
-          ))
-        }
+        {data?.data?.map((item: any, index: number) => (
+          <Expend key={index} content={item} />
+        ))}
       </ScrollView>
     </View>
   );

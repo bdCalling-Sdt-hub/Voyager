@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import {
   Alert,
   Image,
@@ -6,30 +7,24 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
-import tw from '../../lib/tailwind';
-import Header from '../../components/header/Header';
-import InputText from '../../components/inputs/InputText';
-import CountryDropdown from './CountryDropdown';
-import {
-  IconFacebook,
-  IconInstagram,
-  IconLightCamera,
-  IconLock,
-  IconLock2,
-} from '../../assets/icons/Icons';
 import {RadioButton, RadioGroup} from 'react-native-ui-lib';
-import NormalModal from '../../components/modals/NormalModal';
-import {SvgXml} from 'react-native-svg';
+import {IconLightCamera, IconLock2} from '../../assets/icons/Icons';
 import {
   useBuyAvatarMutation,
   useEquipAvatarMutation,
   useGetAvatarQuery,
   useGetProfileQuery,
   useUpdateProfileMutation,
-} from '../../../android/app/src/redux/slice/ApiSlice';
-import {AvatarData} from '../utils/types';
+} from '../../redux/slice/ApiSlice';
+
+import {SvgXml} from 'react-native-svg';
+import Header from '../../components/header/Header';
+import InputText from '../../components/inputs/InputText';
+import NormalModal from '../../components/modals/NormalModal';
+import tw from '../../lib/tailwind';
 import {baseUrl} from '../utils/exports';
+import {AvatarData} from '../utils/types';
+import CountryDropdown from './CountryDropdown';
 
 const ProfileSettings = ({navigation}: any) => {
   const [bucketlistPrivacy, setBucketlistPrivacy] = useState('public');
@@ -43,7 +38,8 @@ const ProfileSettings = ({navigation}: any) => {
   const [equipAvatar, {isLoading: isLoadingEquip}] = useEquipAvatarMutation();
   const [buyAvatar, {isLoading: isLoadingBuy}] = useBuyAvatarMutation();
   const {data: profileData, error} = useGetProfileQuery({});
-  const {full_name, email, image, user_name, signup_date} = profileData?.data || {};
+  const {full_name, email, image, user_name, signup_date} =
+    profileData?.data || {};
   const avatars = data?.data?.avatars || [];
   console.log('avatars checking: ', avatars);
 
@@ -85,7 +81,7 @@ const ProfileSettings = ({navigation}: any) => {
         Alert.alert(
           'Equipping avatar Success',
           'Your avatar has been successfully equipped.',
-        )
+        );
       }
     } catch (err: any) {
       Alert.alert(
@@ -133,7 +129,11 @@ const ProfileSettings = ({navigation}: any) => {
           <View style={tw`items-center`}>
             <TouchableOpacity>
               <Image
-                source={image ? {uri: baseUrl + image} : require('../../assets/images/avatar1.png')}
+                source={
+                  image
+                    ? {uri: baseUrl + image}
+                    : require('../../assets/images/avatar1.png')
+                }
                 style={tw`h-18 w-18 rounded-full`}
               />
               <TouchableOpacity
@@ -303,7 +303,9 @@ const ProfileSettings = ({navigation}: any) => {
               </Text>
 
               <TouchableOpacity
-                disabled={avatar?.status === 'locked' || avatar?.purchase_status}
+                disabled={
+                  avatar?.status === 'locked' || avatar?.purchase_status
+                }
                 onPress={() => handleBuyAvatar(avatar?.id)}
                 style={tw`flex-row items-center gap-2 border border-gold rounded-full py-0.5 px-2`}>
                 {avatar?.purchase_status === false && (

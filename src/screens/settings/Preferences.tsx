@@ -1,11 +1,12 @@
-import {ScrollView, Text, TouchableOpacity, View, Alert} from 'react-native';
 import React, {useState} from 'react';
-import tw from '../../lib/tailwind';
-import Header from '../../components/header/Header';
+import {Alert, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {
   useAddTravelInterestMutation,
   useGetTravelPreferencesQuery,
-} from '../../../android/app/src/redux/slice/ApiSlice';
+} from '../../redux/slice/ApiSlice';
+
+import Header from '../../components/header/Header';
+import tw from '../../lib/tailwind';
 
 const Preferences = ({navigation}: any) => {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);

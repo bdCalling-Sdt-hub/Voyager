@@ -1,18 +1,29 @@
-import {View, Text, TouchableOpacity, ScrollView, Image, Alert} from 'react-native';
 import React, {useState} from 'react';
-import Header from '../../components/header/Header';
-import tw from '../../lib/tailwind';
-import {SvgXml} from 'react-native-svg';
-import {IconFilledHeart, IconSearch, IconWhiteHeart} from '../../assets/icons/Icons';
-import destinations from '../../utils/json/destinations.json';
-import {NavigProps} from '../../utils/interface/NaviProps';
+import {
+  Alert,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {
+  IconFilledHeart,
+  IconSearch,
+  IconWhiteHeart,
+} from '../../assets/icons/Icons';
 import {
   useGetBucketListAttractionsQuery,
   useGetBucketListBannerQuery,
   useGetBucketListCitiesQuery,
   useGetBucketListCountriesQuery,
   useLocationVisitMutation,
-} from '../../../android/app/src/redux/slice/ApiSlice';
+} from '../../redux/slice/ApiSlice';
+
+import {SvgXml} from 'react-native-svg';
+import Header from '../../components/header/Header';
+import tw from '../../lib/tailwind';
+import {NavigProps} from '../../utils/interface/NaviProps';
 import {baseUrl} from '../utils/exports';
 
 const Places = ({navigation, route}: NavigProps<null>) => {
@@ -27,18 +38,24 @@ const Places = ({navigation, route}: NavigProps<null>) => {
 
   // handlers
   const handleVisitLocation = async (item: any) => {
-    const data = {type: item?.type, visited: '1'}
+    const data = {type: item?.type, visited: '1'};
     try {
       const response = await locationVisit({id: item?.id, data});
       console.log('reponse check of visit location: ', response);
-      if(response?.error?.success === false){
-        Alert.alert('Adding to bucket list failed', response?.error?.message || 'An error occurred.');
+      if (response?.error?.success === false) {
+        Alert.alert(
+          'Adding to bucket list failed',
+          response?.error?.message || 'An error occurred.',
+        );
         return;
-      }else{
-        navigation?.navigate('DestinationDetails', {item})
+      } else {
+        navigation?.navigate('DestinationDetails', {item});
       }
     } catch (err: any) {
-      Alert.alert('Visit Location Failed', err?.message || 'An error occurred.');
+      Alert.alert(
+        'Visit Location Failed',
+        err?.message || 'An error occurred.',
+      );
     }
   };
 
@@ -57,7 +74,6 @@ const Places = ({navigation, route}: NavigProps<null>) => {
         return null;
     }
   })();
-
 
   const activeColor = () => {
     switch (activePlace) {
@@ -195,8 +211,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
             <TouchableOpacity
               style={tw`flex-row items-center p-1 gap-4 rounded-2xl border-r border-b border-b-[${activeColor()}] border-r-[${activeColor()}]`}
               key={index}
-              onPress={() => handleVisitLocation(item?.data)}
-              >
+              onPress={() => handleVisitLocation(item?.data)}>
               <Image
                 source={require('../../assets/images/explore-card-2.png')}
                 style={tw`rounded-2xl w-4/12 h-24`}
@@ -238,7 +253,13 @@ const Places = ({navigation, route}: NavigProps<null>) => {
                   </View>
                 </View>
               </View>
-              <SvgXml xml={item?.bucketlist_status === "bucketlisted" ? IconFilledHeart : IconWhiteHeart} />
+              <SvgXml
+                xml={
+                  item?.bucketlist_status === 'bucketlisted'
+                    ? IconFilledHeart
+                    : IconWhiteHeart
+                }
+              />
             </TouchableOpacity>
           ))}
         </View>

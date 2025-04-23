@@ -99,10 +99,7 @@ const AppRoutes = () => {
               name="Splash"
               component={Splash}
               options={{
-                statusBarColor:
-                  colorScheme === 'light'
-                    ? tw.color('bg-violet100')
-                    : tw.color('bg-primaryDark'),
+                statusBarColor: tw.color('bg-violet100'),
                 statusBarStyle: 'light',
                 statusBarAnimation: 'fade',
               }}

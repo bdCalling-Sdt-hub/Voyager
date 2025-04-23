@@ -1,5 +1,4 @@
 import {api} from './BaseApi';
-import {injectURLParams} from '../../../../../src/screens/utils/utils';
 
 export const AuthSlice = api.injectEndpoints({
   overrideExisting: true,
@@ -198,7 +197,7 @@ export const AuthSlice = api.injectEndpoints({
         return {
           url: `/friend-request?friend_id=${id}`,
           method: 'POST',
-        }
+        };
       },
       invalidatesTags: ['addFriends'],
     }),
@@ -288,7 +287,11 @@ export const AuthSlice = api.injectEndpoints({
       query: ({id}) => ({
         url: `/user-friend-profile?friend_id=${id}`,
       }),
-      providesTags: ['cancelFriendRequest', 'addFriends', 'cancelFriendRequest'],
+      providesTags: [
+        'cancelFriendRequest',
+        'addFriends',
+        'cancelFriendRequest',
+      ],
     }),
 
     // get user friend attractions
@@ -430,7 +433,7 @@ export const AuthSlice = api.injectEndpoints({
 
     //  add travel interest
     addTravelInterest: builder.mutation({
-      query: (data) => {
+      query: data => {
         return {
           url: `/travel-interest`,
           method: 'POST',
@@ -455,7 +458,6 @@ export const AuthSlice = api.injectEndpoints({
         url: `/quest-achievement`,
       }),
     }),
-    
   }),
 });
 

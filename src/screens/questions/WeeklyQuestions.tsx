@@ -1,35 +1,32 @@
+import React, {useMemo, useRef, useState} from 'react';
 import {
-  View,
+  Image,
+  ScrollView,
   Text,
   TouchableOpacity,
-  ScrollView,
-  Image,
   TouchableWithoutFeedback,
-  Pressable,
+  View,
 } from 'react-native';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import Header from '../../components/header/Header';
-import tw from '../../lib/tailwind';
-import RangeSlider from '../../components/slider/RangeSlider';
-import quests from '../../utils/json/quests.json';
-import {SvgXml} from 'react-native-svg';
 import {
   IconClose,
   IconColoredRightArrow,
   IconSearch,
   IconShare,
   IconSuccessTik,
-  IconVerifiedTik,
 } from '../../assets/icons/Icons';
-import BottomSheet, {BottomSheetBackdrop} from '@gorhom/bottom-sheet';
-import NormalModal from '../../components/modals/NormalModal';
-import {BottomSheetProvider} from '@gorhom/bottom-sheet/lib/typescript/contexts';
-import {NavigProps} from '../../utils/interface/NaviProps';
-import {useFocusEffect} from '@react-navigation/native';
 import {
   useGetQuestAchievementsQuery,
   useGetWeeklyQuestsQuery,
-} from '../../../android/app/src/redux/slice/ApiSlice';
+} from '../../redux/slice/ApiSlice';
+
+import BottomSheet from '@gorhom/bottom-sheet';
+import {useFocusEffect} from '@react-navigation/native';
+import {SvgXml} from 'react-native-svg';
+import Header from '../../components/header/Header';
+import NormalModal from '../../components/modals/NormalModal';
+import RangeSlider from '../../components/slider/RangeSlider';
+import tw from '../../lib/tailwind';
+import {NavigProps} from '../../utils/interface/NaviProps';
 import {baseUrl} from '../utils/exports';
 
 interface SheetData {
@@ -418,7 +415,9 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                       style={tw`flex-row items-center justify-between mt-3`}>
                       <View style={tw`bg-violet90 h-3.5 rounded-full w-10/12`}>
                         <View
-                          style={tw`bg-violet100 w-[${item?.progress || '8'}%] h-full rounded-full items-end justify-center`}>
+                          style={tw`bg-violet100 w-[${
+                            item?.progress || '8'
+                          }%] h-full rounded-full items-end justify-center`}>
                           <Image
                             source={require('../../assets/images/tressure.png')}
                             style={tw`h-8 w-8 absolute right-[-1]`}
@@ -447,10 +446,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                         key={item?.id}>
                         <View style={tw`flex-row items-center gap-3`}>
                           <Image
-                            source={
-                               
-                                require('../../assets/images/city-hopper.png')
-                            }
+                            source={require('../../assets/images/city-hopper.png')}
                           />
                           <View style={tw`flex-shrink`}>
                             <Text
@@ -489,7 +485,9 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                           <View
                             style={tw`bg-violet90 h-3.5 rounded-full w-10/12`}>
                             <View
-                              style={tw`bg-violet100 w-[${item?.progress || '8'}%] h-full rounded-full items-end justify-center`}>
+                              style={tw`bg-violet100 w-[${
+                                item?.progress || '8'
+                              }%] h-full rounded-full items-end justify-center`}>
                               <Image
                                 source={require('../../assets/images/tressure.png')}
                                 style={tw`h-8 w-8 absolute right-[-1]`}
@@ -498,7 +496,9 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                           </View>
                           <View style={tw`w-2/12`}>
                             <Text
-                              style={tw`ml-3 text-violet100 text-base font-WorkMedium`}>{`${item?.progress || '0'}%`}</Text>
+                              style={tw`ml-3 text-violet100 text-base font-WorkMedium`}>{`${
+                              item?.progress || '0'
+                            }%`}</Text>
                           </View>
                         </View>
                       </View>

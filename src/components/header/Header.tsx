@@ -22,8 +22,8 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {SvgXml} from 'react-native-svg';
 import {useAppColorScheme} from 'twrnc';
-import {useGetProfileQuery} from '../../../android/app/src/redux/slice/ApiSlice';
 import tw from '../../lib/tailwind';
+import {useGetProfileQuery} from '../../redux/slice/ApiSlice';
 import {baseUrl} from '../../screens/utils/exports';
 import {useAppContext} from '../../utils/context/AppContext';
 import NormalModal from '../modals/NormalModal';

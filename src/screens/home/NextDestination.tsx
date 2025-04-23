@@ -1,23 +1,28 @@
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  Image,
-  Alert,
-} from 'react-native';
 import React, {useState} from 'react';
-import tw from '../../lib/tailwind';
-import Header from '../../components/header/Header';
-import {IconFilledHeart, IconSearch, IconWhiteHeart} from '../../assets/icons/Icons';
-import {SvgXml} from 'react-native-svg';
-import {NavigProps} from '../../utils/interface/NaviProps';
+import {
+  Alert,
+  FlatList,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {
+  IconFilledHeart,
+  IconSearch,
+  IconWhiteHeart,
+} from '../../assets/icons/Icons';
 import {
   useGetAttractionsQuery,
   useGetCityQuery,
   useGetCountryQuery,
   useLocationVisitMutation,
-} from '../../../android/app/src/redux/slice/ApiSlice';
+} from '../../redux/slice/ApiSlice';
+
+import {SvgXml} from 'react-native-svg';
+import Header from '../../components/header/Header';
+import tw from '../../lib/tailwind';
+import {NavigProps} from '../../utils/interface/NaviProps';
 
 const NextDestination = ({navigation, route}: NavigProps<null>) => {
   const {title} = route?.params || {};
@@ -79,7 +84,10 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
         navigation?.navigate('DestinationDetails', {item});
       }
     } catch (err: any) {
-      Alert.alert('Visit Location Failed', err?.message || 'An error occurred.');
+      Alert.alert(
+        'Visit Location Failed',
+        err?.message || 'An error occurred.',
+      );
     }
   };
 
@@ -143,7 +151,13 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
                 </View>
               </View>
             </View>
-            <SvgXml xml={item?.bucketlist_status === "bucketlisted" ? IconFilledHeart : IconWhiteHeart} />
+            <SvgXml
+              xml={
+                item?.bucketlist_status === 'bucketlisted'
+                  ? IconFilledHeart
+                  : IconWhiteHeart
+              }
+            />
           </TouchableOpacity>
         )}
       />

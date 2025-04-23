@@ -1,12 +1,12 @@
-import {View, Text, ScrollView, TouchableOpacity, Image} from 'react-native';
-import React from 'react';
-import destinationData from '../../../utils/json/destinations.json';
-import tw from '../../../lib/tailwind';
-import {SvgXml} from 'react-native-svg';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {IconFilledHeart, IconWhiteHeart} from '../../../assets/icons/Icons';
-import {useGetVisitedQuery} from '../../../../android/app/src/redux/slice/ApiSlice';
-import {visitedTypes} from '../../utils/types';
+
+import React from 'react';
+import {SvgXml} from 'react-native-svg';
+import tw from '../../../lib/tailwind';
+import {useGetVisitedQuery} from '../../../redux/slice/ApiSlice';
 import {getColorByTitle} from '../../../utils/functions/functions';
+import {visitedTypes} from '../../utils/types';
 
 const Visited = ({navigation}: any) => {
   const {data} = useGetVisitedQuery({});
@@ -65,7 +65,14 @@ const Visited = ({navigation}: any) => {
               </View>
             </View>
           </View>
-          <SvgXml xml={item?.bucketlist_status === "bucketlisted" ? IconFilledHeart : IconWhiteHeart} style={tw`mr-1.5`} />
+          <SvgXml
+            xml={
+              item?.bucketlist_status === 'bucketlisted'
+                ? IconFilledHeart
+                : IconWhiteHeart
+            }
+            style={tw`mr-1.5`}
+          />
         </TouchableOpacity>
       ))}
     </ScrollView>

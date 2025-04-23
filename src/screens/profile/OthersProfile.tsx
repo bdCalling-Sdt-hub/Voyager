@@ -1,20 +1,17 @@
+import React, {useState} from 'react';
 import {
-  View,
-  Text,
-  TouchableOpacity,
+  Alert,
   Image,
   ScrollView,
-  Alert,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import React, {useState} from 'react';
-import tw from '../../lib/tailwind';
-import {SvgXml} from 'react-native-svg';
 import {
   IconAdd,
   IconFilledHeart,
   IconLeftArrow,
   IconNotification,
-  IconWhiteAdd,
 } from '../../assets/icons/Icons';
 import {
   useCancelFriendRequestMutation,
@@ -22,7 +19,10 @@ import {
   useGetUserFriendAttractionsQuery,
   useSendFriendRequestMutation,
   useUnfriendUserMutation,
-} from '../../../android/app/src/redux/slice/ApiSlice';
+} from '../../redux/slice/ApiSlice';
+
+import {SvgXml} from 'react-native-svg';
+import tw from '../../lib/tailwind';
 
 const OthersProfile = ({navigation, route}: any) => {
   const {id, item} = route?.params || {};

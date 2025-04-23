@@ -1,19 +1,23 @@
-import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
 import React, {useState} from 'react';
-import Header from '../../components/header/Header';
-import tw from '../../lib/tailwind';
-import CircularProgress from '../../components/progressBar/CircularProgress';
-import RangeSlider from '../../components/slider/RangeSlider';
-import {SvgXml} from 'react-native-svg';
-import places from '../../utils/json/places.json';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {
   IconColoredRightArrow,
   IconFilledHeart,
   IconSearch,
   IconVerifiedLocation,
 } from '../../assets/icons/Icons';
-import {useAppDashboardQuery, useGetWeeklyQuestProgressQuery} from '../../../android/app/src/redux/slice/ApiSlice';
-import { getCompletionPercentage } from '../../utils/functions/functions';
+import {
+  useAppDashboardQuery,
+  useGetWeeklyQuestProgressQuery,
+} from '../../redux/slice/ApiSlice';
+
+import {SvgXml} from 'react-native-svg';
+import Header from '../../components/header/Header';
+import CircularProgress from '../../components/progressBar/CircularProgress';
+import RangeSlider from '../../components/slider/RangeSlider';
+import tw from '../../lib/tailwind';
+import {getCompletionPercentage} from '../../utils/functions/functions';
+import places from '../../utils/json/places.json';
 
 const Dashboard = ({navigation}: any) => {
   const [activePlace, setActivePlace] = useState('attractions');
@@ -24,8 +28,8 @@ const Dashboard = ({navigation}: any) => {
 
   const weeklyQuestProgress = getCompletionPercentage(
     weeklyQuest?.data?.completedCount ?? 0,
-    weeklyQuest?.data?.total_quest ?? 0
-);
+    weeklyQuest?.data?.total_quest ?? 0,
+  );
 
   return (
     <>
@@ -44,7 +48,7 @@ const Dashboard = ({navigation}: any) => {
         />
         {/* visited location card */}
         <View
-          style={tw`border border-gray90 dark:border-black p-4 rounded-2xl my-4`}>
+          style={tw`border border-gray90 dark:border-gray-700 p-4 rounded-2xl my-4`}>
           <View style={tw`flex-row bg-gray80 dark:bg-darkBg p-1 rounded-full`}>
             <TouchableOpacity
               style={tw`${
@@ -171,7 +175,9 @@ const Dashboard = ({navigation}: any) => {
             style={tw`text-black dark:text-white text-base font-WorkMedium mb-2`}>
             Weekly Quests Progress
           </Text>
-          <Text style={tw`text-xs font-WorkMedium`}>Completed 1/3</Text>
+          <Text style={tw`text-xs text-black dark:text-white font-WorkMedium`}>
+            Completed 1/3
+          </Text>
           <View style={tw`mt-4`} pointerEvents="none">
             <RangeSlider color="#ff5c8d" value={weeklyQuestProgress} />
           </View>
@@ -185,7 +191,9 @@ const Dashboard = ({navigation}: any) => {
             style={tw`text-black dark:text-white text-base font-WorkMedium mb-2`}>
             Bucket List Progress
           </Text>
-          <Text style={tw`text-xs font-WorkMedium`}>Visited 14/40</Text>
+          <Text style={tw`text-xs font-WorkMedium text-black dark:text-white`}>
+            Visited 14/40
+          </Text>
           <View pointerEvents="none">
             <RangeSlider color="#32B1B4" containerStyle={tw`mt-4`} value={35} />
           </View>

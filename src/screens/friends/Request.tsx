@@ -1,18 +1,15 @@
-import {View, Text, TouchableOpacity, Image, Alert} from 'react-native';
-import React, {useEffect} from 'react';
+import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
+
+import React from 'react';
 import tw from '../../lib/tailwind';
-// import users from '../../utils/json/users.json';
-import {
-  useAcceptFriendRequestMutation,
-  useGetFriendRequestsQuery,
-} from '../../../android/app/src/redux/slice/ApiSlice';
+import {useAcceptFriendRequestMutation} from '../../redux/slice/ApiSlice';
 import {baseUrl} from '../utils/exports';
+// import users from '../../utils/json/users.json';
+
 const Request = ({navigation, users}: any) => {
   // rtk query hooks
   const [acceptFriendRequest, {isLoading: isAccepting}] =
     useAcceptFriendRequestMutation();
-
-
 
   const handleAcceptRequest = async (id: number) => {
     try {
@@ -34,7 +31,6 @@ const Request = ({navigation, users}: any) => {
       );
     }
   };
-
 
   return (
     <View style={tw`gap-y-2`}>

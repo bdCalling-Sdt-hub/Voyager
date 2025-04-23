@@ -1,15 +1,16 @@
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import React, {useState} from 'react';
-import tw from '../../lib/tailwind';
-import Header from '../../components/header/Header';
-import {IconFilledNotification} from '../../assets/icons/Icons';
-import FriendsList from '../profile/components/FriendsList';
-import Request from './Request';
-import AddFriends from './AddFriends';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {
   useGetFriendRequestsQuery,
   useGetFriendsQuery,
-} from '../../../android/app/src/redux/slice/ApiSlice';
+} from '../../redux/slice/ApiSlice';
+
+import {IconFilledNotification} from '../../assets/icons/Icons';
+import Header from '../../components/header/Header';
+import tw from '../../lib/tailwind';
+import FriendsList from '../profile/components/FriendsList';
+import AddFriends from './AddFriends';
+import Request from './Request';
 
 const Friends = ({title = 'Friends', navigation}: any) => {
   // states

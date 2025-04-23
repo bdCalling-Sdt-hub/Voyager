@@ -1,17 +1,24 @@
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {
+  useGetAchievementsQuery,
+  useGetShopBannerQuery,
+} from '../../../redux/slice/ApiSlice';
+
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import tw from '../../../lib/tailwind';
-import { useGetAchievementsQuery, useGetShopBannerQuery } from '../../../../android/app/src/redux/slice/ApiSlice';
 
 const Achievements = ({navigation}: any) => {
-
   // rtk query hooks
   const {data, isLoading} = useGetAchievementsQuery({});
   const {data: shopBannerData} = useGetShopBannerQuery({});
 
   const {level, level_icon, badges, xp, coins} = data?.data || {};
-  const {name: shopName, photos, short_description: description} = shopBannerData?.data || {};
+  const {
+    name: shopName,
+    photos,
+    short_description: description,
+  } = shopBannerData?.data || {};
   return (
     <>
       <View style={tw`gap-y-4`}>
@@ -61,7 +68,8 @@ const Achievements = ({navigation}: any) => {
             style={tw`border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl flex-row items-center gap-4 p-4 flex-1`}>
             <Image source={require('../../../assets/images/trophy.png')} />
             <View>
-              <Text style={tw`text-black dark:text-white text-[20px] font-WorkBold font-700`}>
+              <Text
+                style={tw`text-black dark:text-white text-[20px] font-WorkBold font-700`}>
                 {xp}
               </Text>
               <Text style={tw`text-gray100 text-sm font-WorkMedium font-500`}>
@@ -93,7 +101,7 @@ const Achievements = ({navigation}: any) => {
             </Text>
             <Text
               style={tw`text-black text-xs font-WorkRegular leading-[18px] mt-1`}>
-             {description}
+              {description}
             </Text>
           </View>
         </LinearGradient>
