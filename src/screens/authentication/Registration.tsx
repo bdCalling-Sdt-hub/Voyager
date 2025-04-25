@@ -91,7 +91,7 @@ const Registration = ({navigation}: any) => {
               placeholder="Username"
               placeholderTextColor={'#9A9C9D'}
               onChangeText={text => setUserName(text)}
-              style={tw`lowercase`}
+              style={tw`lowercase `}
             />
           </View>
           {data?.data[0]?.user_name !== undefined && (

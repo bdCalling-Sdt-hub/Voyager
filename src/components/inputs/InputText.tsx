@@ -1,4 +1,4 @@
-import {Text, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {TextField, TextFieldProps} from 'react-native-ui-lib';
 
 import React from 'react';
@@ -34,7 +34,9 @@ const InputText = ({
   return (
     <View
       style={[
-        tw`flex-1 rounded-2xl px-4 bg-white ${fromUP ? 'dark:bg-darkBg' : 'dark:bg-primaryDark'} flex-row items-center gap-3 border border-gray90 dark:border-primaryDark h-14`,
+        tw`flex-1 rounded-2xl px-4 bg-white ${
+          fromUP ? 'dark:bg-darkBg' : 'dark:bg-primaryDark'
+        } flex-row items-center gap-3 border border-gray90 dark:border-primaryDark h-14`,
         containerStyle,
         focus && focusStyle,
       ]}>
@@ -45,7 +47,7 @@ const InputText = ({
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
         containerStyle={[tw`flex-1`]}
-        style={tw` dark:text-white`}
+        style={tw` text-black dark:text-white`}
         fieldStyle={[
           tw`${inputProps?.floatingPlaceholder ? 'pb-4' : 'pb-0'}`,
           fieldStyle,
