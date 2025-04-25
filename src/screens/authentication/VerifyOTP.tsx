@@ -1,20 +1,21 @@
+import React, {useEffect, useRef, useState} from 'react';
 import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  TextInput,
-  NativeSyntheticEvent,
-  TextInputKeyPressEventData,
   Alert,
+  NativeSyntheticEvent,
+  ScrollView,
+  Text,
+  TextInput,
+  TextInputKeyPressEventData,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import React, {useEffect, useState, useRef} from 'react';
-import tw from '../../lib/tailwind';
-import Header from '../../components/header/Header';
 import {
   useResendOTPMutation,
   useVerifyOTPMutation,
-} from '../../../android/app/src/redux/slice/ApiSlice';
+} from '../../redux/slice/ApiSlice';
+
+import Header from '../../components/header/Header';
+import tw from '../../lib/tailwind';
 import {LStorage} from '../utils/utils';
 
 const VerifyOTP = ({navigation, route}: any) => {
@@ -24,7 +25,7 @@ const VerifyOTP = ({navigation, route}: any) => {
   const inputRefs = useRef<(TextInput | null)[]>([]);
   const {email, from} = route.params;
 
-  console.log("email from verify otp: ", email);
+  console.log('email from verify otp: ', email);
 
   // Masking the email address
   const maskInput = (input: string): string => {
@@ -104,9 +105,9 @@ const VerifyOTP = ({navigation, route}: any) => {
       LStorage.setString('userToken', token);
 
       if (LStorage.getString('userToken') === token) {
-        if(from === 'forgot'){
+        if (from === 'forgot') {
           navigation?.navigate('SetNewPassword', {email: email});
-        }else{
+        } else {
           navigation?.navigate('BottomRoutes');
         }
         setIsActive(false);

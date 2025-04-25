@@ -1,14 +1,18 @@
-import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  IconFilledHeart,
+  IconSearch,
+  IconWhiteHeart,
+} from '../../assets/icons/Icons';
+
 import React from 'react';
+import {SvgXml} from 'react-native-svg';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
-import {SvgXml} from 'react-native-svg';
-import {IconFilledHeart, IconSearch} from '../../assets/icons/Icons';
+import {useGetPersonalizedQuery} from '../../redux/slice/ApiSlice';
 import {NavigProps} from '../../utils/interface/NaviProps';
-import places from '../../utils/json/places.json';
-import {useGetPersonalizedQuery} from '../../../android/app/src/redux/slice/ApiSlice';
-import {personalizedPicksTypes} from '../utils/types';
 import {baseUrl} from '../utils/exports';
+import {personalizedPicksTypes} from '../utils/types';
 
 const PicsForYour = ({navigation, route}: NavigProps<null>) => {
   // rtk query hooks
@@ -27,8 +31,6 @@ const PicsForYour = ({navigation, route}: NavigProps<null>) => {
     }
   };
 
-  console.log('Picks for you: ', personalizedPicks);
-
   return (
     <View style={tw`px-[4%] bg-white dark:bg-primaryDark h-full`}>
       <Header
@@ -42,7 +44,7 @@ const PicsForYour = ({navigation, route}: NavigProps<null>) => {
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={tw`gap-y-4 mt-4 pb-2`}>
-          {personalizedPicks?.data?.map(
+          {personalizedPicks?.data?.data?.map(
             (place: personalizedPicksTypes, index: number) => (
               <TouchableOpacity
                 style={tw`flex-row items-center gap-2 rounded-2xl mt-6 p-1 ${
@@ -54,7 +56,7 @@ const PicsForYour = ({navigation, route}: NavigProps<null>) => {
                 }`}
                 key={index}
                 onPress={() => {
-                  navigation?.navigate('DestinationDetails',  {item: place});
+                  navigation?.navigate('DestinationDetails', {item: place});
                 }}>
                 <Image
                   source={{
@@ -80,7 +82,14 @@ const PicsForYour = ({navigation, route}: NavigProps<null>) => {
                     </View>
                   </View>
                 </View>
-                <SvgXml xml={IconFilledHeart} style={tw`mr-1.5`} />
+                <SvgXml
+                  xml={
+                    place?.bucketlist_status === 'bucketlisted'
+                      ? IconFilledHeart
+                      : IconWhiteHeart
+                  }
+                  style={tw`mr-1.5`}
+                />
               </TouchableOpacity>
             ),
           )}

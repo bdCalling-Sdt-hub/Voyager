@@ -12,6 +12,7 @@ export interface personalizedPicksTypes {
     latitude: string;
     longitude: string;
     attraction_id: string;
+    bucketlist_status: string;
     activity_levels: string[];
     best_visit_times: string[];
     must_visit_spots: string[];
@@ -74,3 +75,18 @@ export interface visitedTypes {
     created_at: string;
     updated_at: string;
 }
+
+// avatar types
+export type AvatarData = {
+  id: number;
+  name: string;
+  cost: number;
+  avatar_types: string;
+  level: number;
+  country: string | null;
+  subscription_plan: string;
+  avatar: string;
+  status: "unlocked" | "locked";
+  purchase_status: boolean;
+  equip_status: boolean;
+};

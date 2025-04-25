@@ -163,6 +163,15 @@ export const IconLock = `<svg width="24" height="24" viewBox="0 0 24 24" fill="n
 </svg>
 `;
 
+export const IconLock2 = `
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.5 8.5C3.5 7.67114 4.17114 7 5 7H11C11.8289 7 12.5 7.67114 12.5 8.5V12.5C12.5 13.3289 11.8289 14 11 14H5C4.17114 14 3.5 13.3289 3.5 12.5V8.5Z" stroke="#6C6E71"/>
+<path d="M8 11V12" stroke="#6C6E71" stroke-linecap="round"/>
+<path d="M5 7V5V5C5 5 5 2 8 2C11 2 11 5 11 5V5C11 5 11 5.97 11 6.75" stroke="#6C6E71" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="8" cy="10" r="1" stroke="#6C6E71"/>
+</svg>
+`;
+
 export const IconCart = `<svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path fill-rule="evenodd" clip-rule="evenodd" d="M1.45405 5.82432C1.23152 5.17526 1.71384 4.5 2.4 4.5L11.6126 4.5" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round"/>
 <path d="M12.5 5L13.4 3.8C13.7777 3.29639 14.3705 3 15 3V3" stroke="#6C6E71" stroke-width="1.5" stroke-linecap="round"/>

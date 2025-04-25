@@ -1,10 +1,11 @@
-import {View, Text, ScrollView, TouchableOpacity, Alert} from 'react-native';
 import React, {useState} from 'react';
-import tw from '../../lib/tailwind';
+import {Alert, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+
+import {IconEnvelop} from '../../assets/icons/Icons';
 import Header from '../../components/header/Header';
 import InputText from '../../components/inputs/InputText';
-import {IconEnvelop} from '../../assets/icons/Icons';
-import {useForgetPasswordMutation} from '../../../android/app/src/redux/slice/ApiSlice';
+import tw from '../../lib/tailwind';
+import {useForgetPasswordMutation} from '../../redux/slice/ApiSlice';
 
 const ForgotPassword = ({navigation}: any) => {
   const [email, setEmail] = useState('');

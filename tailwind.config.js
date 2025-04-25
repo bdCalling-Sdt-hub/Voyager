@@ -1,6 +1,4 @@
-const {blue} = require('react-native-reanimated/lib/typescript/Colors');
-const plugin = require('tailwindcss/plugin');
-
+// @ts-check
 module.exports = {
   theme: {
     screens: {
@@ -58,19 +56,4 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    plugin(({addUtilities}) => {
-      addUtilities({
-        '.btn': {
-          padding: 3,
-          borderRadius: 10,
-          textTransform: `uppercase`,
-          backgroundColor: `#333`,
-        },
-        '.resize-repeat': {
-          resizeMode: `repeat`,
-        },
-      });
-    }),
-  ],
 };

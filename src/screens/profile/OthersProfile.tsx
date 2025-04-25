@@ -1,29 +1,43 @@
-import {View, Text, TouchableOpacity, Image, ScrollView} from 'react-native';
 import React, {useState} from 'react';
-import tw from '../../lib/tailwind';
-import {SvgXml} from 'react-native-svg';
+import {
+  Alert,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {
   IconAdd,
   IconFilledHeart,
   IconLeftArrow,
   IconNotification,
-  IconSettings,
-  IconWhiteAdd,
 } from '../../assets/icons/Icons';
-import destinations from '../../utils/json/destinations.json';
 import {
+  useCancelFriendRequestMutation,
   useGetOthersProfileQuery,
   useGetUserFriendAttractionsQuery,
-} from '../../../android/app/src/redux/slice/ApiSlice';
+  useSendFriendRequestMutation,
+  useUnfriendUserMutation,
+} from '../../redux/slice/ApiSlice';
+
+import {SvgXml} from 'react-native-svg';
+import tw from '../../lib/tailwind';
 
 const OthersProfile = ({navigation, route}: any) => {
-  const {id} = route?.params || {};
+  const {id, item} = route?.params || {};
   const [activePlace, setActivePlace] = useState('attractions');
-  const [isReqSend, setIsReqSend] = useState(false);
+  const [isReqSend, setIsReqSend] = useState(
+    item?.status === 'pending' || item?.status === 'not_friend',
+  );
 
   // rtk query hooks
   const {data} = useGetOthersProfileQuery({id});
+  const [sendFriendRequest, {isLoading}] = useSendFriendRequestMutation();
+  const [cancelFriendRequest, {isLoading: isLoadingCancel}] =
+    useCancelFriendRequestMutation();
   const {data: userAttractions} = useGetUserFriendAttractionsQuery({id});
+  const [unfriendUser] = useUnfriendUserMutation();
   const {
     attractions,
     badges,
@@ -38,20 +52,6 @@ const OthersProfile = ({navigation, route}: any) => {
   } = data?.data || {};
 
   const attractionsData = userAttractions?.data?.attractions;
-  console.log('other profile attractions check: ', attractionsData);
-
-  const destinationData = (() => {
-    switch (activePlace) {
-      case 'cities':
-        return destinations?.data?.cities || null;
-      case 'countries':
-        return destinations?.data?.countries || null;
-      case 'attractions':
-        return destinations?.data?.attractions || null;
-      default:
-        return null;
-    }
-  })();
 
   const activeColor = () => {
     switch (activePlace) {
@@ -66,7 +66,63 @@ const OthersProfile = ({navigation, route}: any) => {
     }
   };
 
-  console.log("checking the attraction data: ", userAttractions)
+  const handleSendFriendRequest = async () => {
+    try {
+      const response = await sendFriendRequest({id});
+      console.log('response of send friend request: ', response);
+      if (response?.error?.success === false || response?.error?.message) {
+        Alert.alert(
+          'Sending friend request failed',
+          response?.error?.message || 'An error occurred.',
+        );
+        return;
+      } else {
+        setIsReqSend(true);
+      }
+    } catch (err: any) {
+      Alert.alert(
+        'Sending friend request Failed',
+        err?.message || 'An error occurred.',
+      );
+    }
+  };
+
+  const handleCancelFriendRequest = async () => {
+    try {
+      const response = await cancelFriendRequest({id});
+      console.log('response of cancel friend request: ', response);
+      if (response?.error?.success === false || response?.error?.message) {
+        Alert.alert(
+          'Canceling friend request failed',
+          response?.error?.message || 'An error occurred.',
+        );
+        return;
+      } else {
+        setIsReqSend(false);
+      }
+    } catch (err: any) {
+      Alert.alert(
+        'Canceling friend request Failed',
+        err?.message || 'An error occurred.',
+      );
+    }
+  };
+
+  const handleUnfriendUser = async () => {
+    console.log('Unfriend User Handler Called');
+    try {
+      const response = await unfriendUser({id});
+      console.log('response of unfriend user: ', response);
+      if (response?.error?.success === false || response?.error?.message) {
+        Alert.alert(
+          'Unfriend user failed',
+          response?.error?.message || 'An error occurred.',
+        );
+      }
+    } catch (err: any) {
+      Alert.alert('Unfriend user Failed', err?.message || 'An error occurred.');
+    }
+  };
 
   return (
     <ScrollView style={tw`px-[4%] pt-2 bg-white h-full dark:bg-primaryDark`}>
@@ -133,29 +189,38 @@ const OthersProfile = ({navigation, route}: any) => {
           </View>
         </View>
         <View style={tw`items-center mt-6 gap-y-4`}>
-          <TouchableOpacity
-            style={tw`${
-              isReqSend
-                ? 'border-placeholderColor bg-placeholderColor '
-                : 'border-violet100 bg-violet100 '
-            } border py-3 rounded-full flex-row items-center justify-center gap-3 w-full`}
-            onPress={() => {
-              setIsReqSend(!isReqSend);
-            }}>
-            {isReqSend ? (
-              <Text style={tw`text-sm font-WorkMedium text-white font-500`}>
-                Cancel Request
+          {item?.status !== 'accepted' && (
+            <TouchableOpacity
+              onPress={() => {
+                if (item?.status === 'unfriend') {
+                  handleUnfriendUser();
+                } else if (isReqSend) {
+                  handleCancelFriendRequest();
+                } else {
+                  handleSendFriendRequest();
+                }
+              }}
+              disabled={isLoading}
+              style={tw`flex-row w-full justify-center items-center gap-2 border border-violet100 rounded-full py-2 ${
+                isReqSend ? '' : 'bg-violet100'
+              }`}>
+              {isReqSend && <SvgXml xml={IconAdd} />}
+              <Text
+                style={tw`text-base font-WorkMedium font-500 ${
+                  isReqSend ? 'text-violet100' : 'text-white'
+                }`}>
+                {isLoading
+                  ? 'Sending...'
+                  : item?.status === 'not_friend'
+                  ? 'Add Friend'
+                  : item?.status === 'unfriend'
+                  ? 'Unfriend'
+                  : isReqSend
+                  ? 'Cancel Request'
+                  : 'Add Friend'}
               </Text>
-            ) : (
-              <>
-                <SvgXml xml={IconWhiteAdd} />
-
-                <Text style={tw`text-sm font-WorkMedium text-white font-500`}>
-                  Add Friends
-                </Text>
-              </>
-            )}
-          </TouchableOpacity>
+            </TouchableOpacity>
+          )}
         </View>
 
         <View style={tw`gap-y-4 mt-6`}>

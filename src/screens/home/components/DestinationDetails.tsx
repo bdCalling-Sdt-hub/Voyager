@@ -1,15 +1,14 @@
 import React, {useState} from 'react';
 import {
-  View,
-  Text,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  Linking,
   Alert,
+  Image,
+  Linking,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import tw from '../../../lib/tailwind';
-import {SvgXml} from 'react-native-svg';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {
   IconBottomArrow,
   IconBrowse,
@@ -23,20 +22,22 @@ import {
   IconTik,
   IconTopArrow,
 } from '../../../assets/icons/Icons';
-import {NavigProps} from '../../../utils/interface/NaviProps';
-import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import {Fader} from 'react-native-ui-lib';
-import Swiper from 'react-native-swiper';
-import NormalModal from '../../../components/modals/NormalModal';
-import {useAppColorScheme} from 'twrnc';
-import {baseUrl} from '../../utils/exports';
 import {
   useAddToBucketListMutation,
   useGetBucketListCheckQuery,
+  useGetMarkAsVisitedQuery,
   useMarkAsVisitedMutation,
   useRemoveFromBucketListMutation,
-} from '../../../../android/app/src/redux/slice/ApiSlice';
-import SocialShareButton from '../../settings/SocialShareButton';
+} from '../../../redux/slice/ApiSlice';
+
+import {SvgXml} from 'react-native-svg';
+import Swiper from 'react-native-swiper';
+import {Fader} from 'react-native-ui-lib';
+import {useAppColorScheme} from 'twrnc';
+import NormalModal from '../../../components/modals/NormalModal';
+import tw from '../../../lib/tailwind';
+import {NavigProps} from '../../../utils/interface/NaviProps';
+import {baseUrl} from '../../utils/exports';
 
 const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
   const {item} = route?.params || {};
@@ -62,6 +63,12 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
   });
   const [markAsVisited, {isLoading: isLoadingVisited}] =
     useMarkAsVisitedMutation();
+  const {data: markAsVisitedCheck} = useGetMarkAsVisitedQuery({
+    id: item?.id,
+    type: item?.type,
+  });
+
+  const visitedStatus = markAsVisitedCheck?.data?.userEntity?.visit_status;
 
   const handleBucketList = async () => {
     const data = {type: item?.type, bucketlist_status: 'bucketlisted'};
@@ -107,6 +114,7 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
     const data = {type: item?.type, visit_status: 'visited'};
     try {
       const response = await markAsVisited({id: item?.id, data});
+      console.log('response of mark as visited: ', response);
       if (response?.error?.success === false) {
         Alert.alert(
           'Marking as visited failed',
@@ -123,9 +131,10 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
       );
     }
   };
-  // console.log('data: ', item?.id);
-  console.log('Item: ', item);
-  console.log('remove id check: ', bucketListCheck?.data?.id);
+  // console.log('main id from item: ', item);
+  // console.log('Item: ', item);
+  // console.log('remove id check: ', bucketListCheck?.data);
+  // console.log("mark as visited check: ", visitedStatus);
   return (
     <View style={tw`bg-white h-full dark:bg-primaryDark`}>
       <View style={tw`h-66`}>
@@ -308,23 +317,28 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
       <View style={tw`flex-row items-center gap-4 pb-4 pt-2 px-[4%]`}>
         <TouchableOpacity
           style={tw`border-violet100 border py-3 rounded-full flex-row items-center justify-center gap-3 flex-1 ${
-            item?.bucketlist_status === 'bucketlisted' ? 'bg-violet100' : ''
+            bucketListCheck?.data?.bucketlist_status === 'bucketlisted'
+              ? 'bg-violet100'
+              : ''
           }`}
           onPress={
-            item?.bucketlist_status === 'bucketlisted'
+            bucketListCheck?.data?.bucketlist_status === 'bucketlisted'
               ? handleRemoveBucketList
               : handleBucketList
-          }>
+          }
+          disabled={isLoading || isLoadingRemove}>
           <SvgXml
             xml={
-              item?.bucketlist_status === 'bucketlisted'
+              bucketListCheck?.data?.bucketlist_status === 'bucketlisted'
                 ? IconTik
                 : IconColoredHeart
             }
           />
           <Text
             style={tw`text-sm font-WorkRegular text-violet100 ${
-              item?.bucketlist_status === 'bucketlisted' ? 'text-white' : ''
+              bucketListCheck?.data?.bucketlist_status === 'bucketlisted'
+                ? 'text-white'
+                : ''
             }`}>
             {isLoading
               ? 'Adding...'
@@ -335,12 +349,16 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={handleVisited}
-          style={tw`border-violet100 ${item?.mark_visited_status !== 'not_visited' ? 'bg-violet100' : ''} border py-3 rounded-full flex-row items-center justify-center gap-3 flex-1`}>
-         {item?.mark_visited_status !== 'not_visited' && <SvgXml xml={IconTik} />} 
-          <Text style={tw`text-sm font-WorkRegular ${item?.mark_visited_status !== 'not_visited' ? 'text-white' : 'text-violet100'}`}>
-            {item?.mark_visited_status === 'not_visited'
-              ? 'Mark As Visited'
-              : 'Visited'}
+          disabled={isLoadingVisited || visitedStatus === 'visited'}
+          style={tw`border-violet100 ${
+            visitedStatus !== 'not_visited' ? 'bg-violet100' : ''
+          } border py-3 rounded-full flex-row items-center justify-center gap-3 flex-1`}>
+          {visitedStatus !== 'not_visited' && <SvgXml xml={IconTik} />}
+          <Text
+            style={tw`text-sm font-WorkRegular ${
+              visitedStatus !== 'not_visited' ? 'text-white' : 'text-violet100'
+            }`}>
+            {visitedStatus === 'not_visited' ? 'Mark As Visited' : 'Visited'}
           </Text>
         </TouchableOpacity>
       </View>

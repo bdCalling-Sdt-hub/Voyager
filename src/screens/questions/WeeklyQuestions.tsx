@@ -1,31 +1,33 @@
+import React, {useMemo, useRef, useState} from 'react';
 import {
-  View,
+  Image,
+  ScrollView,
   Text,
   TouchableOpacity,
-  ScrollView,
-  Image,
   TouchableWithoutFeedback,
-  Pressable,
+  View,
 } from 'react-native';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import Header from '../../components/header/Header';
-import tw from '../../lib/tailwind';
-import RangeSlider from '../../components/slider/RangeSlider';
-import quests from '../../utils/json/quests.json';
-import {SvgXml} from 'react-native-svg';
 import {
   IconClose,
   IconColoredRightArrow,
   IconSearch,
   IconShare,
   IconSuccessTik,
-  IconVerifiedTik,
 } from '../../assets/icons/Icons';
-import BottomSheet, {BottomSheetBackdrop} from '@gorhom/bottom-sheet';
+import {
+  useGetQuestAchievementsQuery,
+  useGetWeeklyQuestsQuery,
+} from '../../redux/slice/ApiSlice';
+
+import BottomSheet from '@gorhom/bottom-sheet';
+import {useFocusEffect} from '@react-navigation/native';
+import {SvgXml} from 'react-native-svg';
+import Header from '../../components/header/Header';
 import NormalModal from '../../components/modals/NormalModal';
-import {BottomSheetProvider} from '@gorhom/bottom-sheet/lib/typescript/contexts';
+import RangeSlider from '../../components/slider/RangeSlider';
+import tw from '../../lib/tailwind';
 import {NavigProps} from '../../utils/interface/NaviProps';
-import { useFocusEffect } from '@react-navigation/native';
+import {baseUrl} from '../utils/exports';
 
 interface SheetData {
   title?: string;
@@ -38,20 +40,20 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
   const [achievementsPopupVisible, setAchievementsPopupVisible] =
     useState<boolean>(false);
 
-    useFocusEffect(
-      React.useCallback(() => {
-        if (screen) {
-          setActiveQuest(screen);
-          console.log("Screen focused, state updated with screen:", screen);
-        } else {
-          console.log("Screen focused, but no screen value found.");
-        }
-  
-        return () => {
-          setActiveQuest(activeQuest);
-        };
-      }, [screen])
-    ); 
+  useFocusEffect(
+    React.useCallback(() => {
+      if (screen) {
+        setActiveQuest(screen);
+        console.log('Screen focused, state updated with screen:', screen);
+      } else {
+        console.log('Screen focused, but no screen value found.');
+      }
+
+      return () => {
+        setActiveQuest(activeQuest);
+      };
+    }, [screen]),
+  );
 
   const bottomSheetRef = useRef(null);
 
@@ -86,9 +88,35 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
     );
   };
 
+  // rtk query hooks
+  const {data} = useGetWeeklyQuestsQuery({});
+  const {data: questAchievements} = useGetQuestAchievementsQuery({});
+  const weeklyQuests = data?.data?.weekly_quests || [];
+
+  const incompleteQuests = weeklyQuests.filter(
+    quest => quest.complete_status === 'incomplete',
+  );
+  const completeQuests = weeklyQuests.filter(
+    quest => quest.complete_status === 'complete',
+  );
+  const formattedNumber = data?.data?.progressPercentage
+    ? parseFloat(data?.data?.progressPercentage)?.toString()
+    : 0;
+
+  const lockedQuestAchievements = questAchievements?.data.filter(
+    quest => quest?.status === 'locked',
+  );
+  const unlockedQuestAchievements = questAchievements?.data.filter(
+    quest => quest?.status === 'unlocked',
+  );
+
+  console.log('quest achievements: ', unlockedQuestAchievements);
+
   return (
     <>
-      <ScrollView style={tw`px-[4%] bg-white dark:bg-primaryDark`} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={tw`px-[4%] bg-white dark:bg-primaryDark`}
+        showsVerticalScrollIndicator={false}>
         <Header
           title="Quests"
           containerStyle={tw`mt-2`}
@@ -132,7 +160,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
               style={tw`bg-brown70 dark:bg-darkBg flex-row rounded-2xl items-center mt-4 py-3 pl-6 gap-4`}>
               <Image source={require('../../assets/images/time-stamp.png')} />
               <Text style={tw`text-brown100 text-base font-WorkMedium`}>
-                4 days left
+                {data?.data?.daysLeftForWeek} days left
               </Text>
             </View>
             <View
@@ -141,12 +169,15 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                 style={tw`text-black dark:text-white text-base font-WorkMedium mb-2`}>
                 Weekly Quests Progress
               </Text>
-              <Text style={tw`text-xs font-WorkMedium`}>Completed 1/3</Text>
+              <Text style={tw`text-xs font-WorkMedium`}>
+                Completed {data?.data?.completedCount || 0}/
+                {data?.data?.total_quest || 0}
+              </Text>
               <View pointerEvents="none">
                 <RangeSlider
                   color="#ff5c8d"
                   containerStyle={tw`mt-4`}
-                  value={33}
+                  value={Number(formattedNumber)}
                 />
               </View>
             </View>
@@ -161,7 +192,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                 </View>
 
                 <View style={tw`gap-y-4 mt-6`}>
-                  {quests?.quests?.map((item: any) => (
+                  {incompleteQuests?.map((item: any) => (
                     <View
                       style={tw`flex-row items-center gap-3 border border-gray90 dark:bg-darkBg dark:border-darkBg rounded-2xl p-4`}
                       key={item?.id}>
@@ -173,7 +204,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                       <View style={tw`flex-shrink gap-y-3`}>
                         <Text
                           style={tw`text-black dark:text-white font-WorkRegular text-base `}>
-                          {item?.question}
+                          {item?.name}
                         </Text>
 
                         <View style={tw`gap-4 flex-row items-center`}>
@@ -183,7 +214,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                             />
                             <Text
                               style={tw`text-gray100 text-[10px] font-WorkRegular`}>
-                              {item?.coins} Coins
+                              {item?.bonus_coins} Coins
                             </Text>
                           </View>
                           <View style={tw`flex-row items-center gap-2`}>
@@ -192,7 +223,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                             />
                             <Text
                               style={tw`text-gray100 text-[10px] font-WorkRegular`}>
-                              {item?.trophy}
+                              {item?.bonus_xp} XP
                             </Text>
                           </View>
                         </View>
@@ -211,7 +242,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                 </View>
 
                 <View style={tw`gap-y-4 mt-6 pb-2`}>
-                  {quests?.quests?.map((item: any) => (
+                  {completeQuests?.map((item: any) => (
                     <View
                       style={tw`flex-row items-center justify-between gap-3 border dark:bg-darkBg border-gray90 dark:border-darkBg rounded-2xl p-4`}
                       key={item?.id}>
@@ -336,114 +367,70 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                 </Text>
               </View>
               <View style={tw`gap-y-4`}>
-                <View
-                  style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-white dark:bg-darkBg`}>
-                  <View style={tw`flex-row items-center gap-3`}>
-                    <Image
-                      source={require('../../assets/images/city-hopper.png')}
-                    />
-                    <View>
-                      <Text
-                        style={tw`text-black dark:text-white text-base font-WorkRegular mb-1`}>
-                        City Hopper
-                      </Text>
-                      <Text
-                        style={tw`text-[10px] font-WorkMedium text-gray100`}>
-                        Visit 15 different cities
-                      </Text>
-                      <View style={tw`gap-4 flex-row items-center mt-3`}>
-                        <View style={tw`flex-row items-center gap-2`}>
-                          <Image
-                            source={require('../../assets/images/coin.png')}
-                          />
-                          <Text
-                            style={tw`text-gray100 text-[10px] font-WorkRegular`}>
-                            250 Coins
-                          </Text>
-                        </View>
-                        <View style={tw`flex-row items-center gap-2`}>
-                          <Image
-                            source={require('../../assets/images/trophy.png')}
-                          />
-                          <Text
-                            style={tw`text-gray100 text-[10px] font-WorkRegular`}>
-                            350 XP
-                          </Text>
-                        </View>
-                      </View>
-                    </View>
-                  </View>
-                  {/* tresure progressbar */}
-                  <View style={tw`flex-row items-center justify-between mt-3`}>
-                    <View style={tw`bg-violet90 h-3.5 rounded-full w-10/12`}>
-                      <View
-                        style={tw`bg-violet100 w-[35%] h-full rounded-full items-end justify-center`}>
-                        <Image
-                          source={require('../../assets/images/tressure.png')}
-                          style={tw`h-8 w-8 absolute right-[-1]`}
-                        />
-                      </View>
-                    </View>
-                    <View style={tw`w-2/12`}>
-                      <Text
-                        style={tw`ml-3 text-violet100 text-base font-WorkMedium text-base`}>{`35%`}</Text>
-                    </View>
-                  </View>
-                </View>
-                <View
-                  style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-white dark:bg-darkBg`}>
-                  <View style={tw`flex-row items-center gap-3`}>
-                    <Image
-                      source={require('../../assets/images/beach-explorer.png')}
-                    />
-                    <View>
-                      <Text
-                        style={tw`text-black text-base font-WorkRegular mb-1`}>
-                        Beach Explorer
-                      </Text>
-                      <Text
-                        style={tw`text-[10px] font-WorkMedium text-gray100`}>
-                        Visit 10 different beaches
-                      </Text>
-                      <View style={tw`gap-4 flex-row items-center mt-3`}>
-                        <View style={tw`flex-row items-center gap-2`}>
-                          <Image
-                            source={require('../../assets/images/coin.png')}
-                          />
-                          <Text
-                            style={tw`text-gray100 text-[10px] font-WorkRegular`}>
-                            200 Coins
-                          </Text>
-                        </View>
-                        <View style={tw`flex-row items-center gap-2`}>
-                          <Image
-                            source={require('../../assets/images/trophy.png')}
-                          />
-                          <Text
-                            style={tw`text-gray100 text-[10px] font-WorkRegular`}>
-                            400 XP
-                          </Text>
+                {unlockedQuestAchievements?.map((item: any) => (
+                  <View
+                    style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-white dark:bg-darkBg`}
+                    key={item?.id}>
+                    <View style={tw`flex-row items-center gap-3`}>
+                      <Image
+                        source={
+                          item?.photos[0]
+                            ? {uri: baseUrl + item?.photos[0]}
+                            : require('../../assets/images/city-hopper.png')
+                        }
+                      />
+                      <View style={tw`flex-shrink`}>
+                        <Text
+                          style={tw`text-black dark:text-white text-base font-WorkRegular mb-1`}>
+                          {item?.name}
+                        </Text>
+                        <Text
+                          style={tw`text-[10px] font-WorkMedium text-gray100`}>
+                          {item?.choose_option}
+                        </Text>
+                        <View style={tw`gap-4 flex-row items-center mt-3`}>
+                          <View style={tw`flex-row items-center gap-2`}>
+                            <Image
+                              source={require('../../assets/images/coin.png')}
+                            />
+                            <Text
+                              style={tw`text-gray100 text-[10px] font-WorkRegular`}>
+                              {item?.coins} Coins
+                            </Text>
+                          </View>
+                          <View style={tw`flex-row items-center gap-2`}>
+                            <Image
+                              source={require('../../assets/images/trophy.png')}
+                            />
+                            <Text
+                              style={tw`text-gray100 text-[10px] font-WorkRegular`}>
+                              {item?.xp} XP
+                            </Text>
+                          </View>
                         </View>
                       </View>
                     </View>
-                  </View>
-                  {/* tresure progressbar */}
-                  <View style={tw`flex-row items-center justify-between mt-3`}>
-                    <View style={tw`bg-violet90 h-3.5 rounded-full w-10/12`}>
-                      <View
-                        style={tw`bg-violet100 w-[75%] h-full rounded-full items-end justify-center`}>
-                        <Image
-                          source={require('../../assets/images/tressure.png')}
-                          style={tw`h-8 w-8 absolute right-[-1]`}
-                        />
+                    {/* tresure progressbar */}
+                    <View
+                      style={tw`flex-row items-center justify-between mt-3`}>
+                      <View style={tw`bg-violet90 h-3.5 rounded-full w-10/12`}>
+                        <View
+                          style={tw`bg-violet100 w-[${
+                            item?.progress || '8'
+                          }%] h-full rounded-full items-end justify-center`}>
+                          <Image
+                            source={require('../../assets/images/tressure.png')}
+                            style={tw`h-8 w-8 absolute right-[-1]`}
+                          />
+                        </View>
+                      </View>
+                      <View style={tw`w-2/12`}>
+                        <Text
+                          style={tw`ml-3 text-violet100 text-base font-WorkMedium`}>{`${item?.progress}%`}</Text>
                       </View>
                     </View>
-                    <View style={tw`w-2/12`}>
-                      <Text
-                        style={tw`ml-3 text-violet100 text-base font-WorkMedium text-base`}>{`75%`}</Text>
-                    </View>
                   </View>
-                </View>
+                ))}
 
                 <View style={tw`pb-2`}>
                   <View style={tw`flex-row items-center my-4`}>
@@ -453,40 +440,65 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                     </Text>
                   </View>
                   <View style={tw`gap-y-4`}>
-                    {quests?.quests?.map((item: any) => (
+                    {lockedQuestAchievements?.map((item: any) => (
                       <View
-                        style={tw`flex-row items-center gap-3 border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl p-4`}
+                        style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-white dark:bg-darkBg opacity-50`}
                         key={item?.id}>
-                        <View style={tw``}>
+                        <View style={tw`flex-row items-center gap-3`}>
                           <Image
-                            source={require('../../assets/images/locked.png')}
+                            source={require('../../assets/images/city-hopper.png')}
                           />
+                          <View style={tw`flex-shrink`}>
+                            <Text
+                              style={tw`text-black dark:text-white text-base font-WorkRegular mb-1`}>
+                              {item?.name}
+                            </Text>
+                            <Text
+                              style={tw`text-[10px] font-WorkMedium text-gray100`}>
+                              {item?.choose_option}
+                            </Text>
+                            <View style={tw`gap-4 flex-row items-center mt-3`}>
+                              <View style={tw`flex-row items-center gap-2`}>
+                                <Image
+                                  source={require('../../assets/images/coin.png')}
+                                />
+                                <Text
+                                  style={tw`text-gray100 text-[10px] font-WorkRegular`}>
+                                  {item?.coins} Coins
+                                </Text>
+                              </View>
+                              <View style={tw`flex-row items-center gap-2`}>
+                                <Image
+                                  source={require('../../assets/images/trophy.png')}
+                                />
+                                <Text
+                                  style={tw`text-gray100 text-[10px] font-WorkRegular`}>
+                                  {item?.xp} XP
+                                </Text>
+                              </View>
+                            </View>
+                          </View>
                         </View>
-                        <View style={tw`flex-shrink gap-y-3`}>
-                          <Text
-                            style={tw`text-black dark:text-white font-WorkRegular text-base `}>
-                            {item?.question}
-                          </Text>
-
-                          <View style={tw`gap-4 flex-row items-center`}>
-                            <View style={tw`flex-row items-center gap-2`}>
+                        {/* tresure progressbar */}
+                        <View
+                          style={tw`flex-row items-center justify-between mt-3`}>
+                          <View
+                            style={tw`bg-violet90 h-3.5 rounded-full w-10/12`}>
+                            <View
+                              style={tw`bg-violet100 w-[${
+                                item?.progress || '8'
+                              }%] h-full rounded-full items-end justify-center`}>
                               <Image
-                                source={require('../../assets/images/coin.png')}
+                                source={require('../../assets/images/tressure.png')}
+                                style={tw`h-8 w-8 absolute right-[-1]`}
                               />
-                              <Text
-                                style={tw`text-gray100 text-[10px] font-WorkRegular`}>
-                                {item?.coins} Coins
-                              </Text>
                             </View>
-                            <View style={tw`flex-row items-center gap-2`}>
-                              <Image
-                                source={require('../../assets/images/trophy.png')}
-                              />
-                              <Text
-                                style={tw`text-gray100 text-[10px] font-WorkRegular`}>
-                                {item?.trophy}
-                              </Text>
-                            </View>
+                          </View>
+                          <View style={tw`w-2/12`}>
+                            <Text
+                              style={tw`ml-3 text-violet100 text-base font-WorkMedium`}>{`${
+                              item?.progress || '0'
+                            }%`}</Text>
                           </View>
                         </View>
                       </View>

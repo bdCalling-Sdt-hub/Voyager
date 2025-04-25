@@ -1,55 +1,66 @@
-import {ScrollView, Text, TouchableOpacity, View, Alert} from 'react-native';
 import React, {useState} from 'react';
-import tw from '../../lib/tailwind';
-import Header from '../../components/header/Header';
+import {Alert, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  useAddTravelInterestMutation,
+  useGetTravelPreferencesQuery,
+} from '../../redux/slice/ApiSlice';
 
-const activityType = [
-  {id: 1, label: 'Mountains'},
-  {id: 2, label: 'Beaches'},
-  {id: 3, label: 'Forests'},
-  {id: 4, label: 'Deserts'},
-  {id: 5, label: 'Lakes'},
-  {id: 6, label: 'Rivers'},
-  {id: 7, label: 'Waterfalls'},
-  {id: 8, label: 'National Parks'},
-  {id: 9, label: 'Wildlife'},
-  {id: 10, label: 'Caves'},
-  {id: 11, label: 'Hiking'},
-  {id: 12, label: 'Camping'},
-  {id: 13, label: 'Skiing'},
-  {id: 14, label: 'Surfing'},
-  {id: 15, label: 'Scuba Diving'},
-  {id: 16, label: 'Rock Climbing'},
-  {id: 17, label: 'Road Trips'},
-  {id: 18, label: 'History'},
-];
+import Header from '../../components/header/Header';
+import tw from '../../lib/tailwind';
 
 const Preferences = ({navigation}: any) => {
-  const [selectedItems, setSelectedItems] = useState<number[]>([]); // Store IDs of selected items
+  const [selectedItems, setSelectedItems] = useState<number[]>([]);
+  const [selectedName, setSelectedName] = useState<[]>([]);
 
-  const toggleSelection = (id: number) => {
+  // rtk query hooks
+  const {data} = useGetTravelPreferencesQuery({});
+  const [addTravelInterest, {isLoading}] = useAddTravelInterestMutation();
+  const activityType = data?.data || [];
+
+  const toggleSelection = (id: number, name: string) => {
     if (selectedItems.includes(id)) {
-      // Remove the item if it's already selected
+      // নির্বাচিত আইটেম থাকলে তা সরিয়ে ফেলবো
       setSelectedItems(selectedItems.filter(item => item !== id));
+      setSelectedName(selectedName.filter(item => item !== name));
     } else if (selectedItems.length < 5) {
-      // Add the item if less than 5 are selected
+      // সর্বোচ্চ ৫টা আইটেম নির্বাচন করা যাবে
       setSelectedItems([...selectedItems, id]);
+      setSelectedName([...selectedName, name]);
     } else {
-      // Alert the user if they try to select more than 5 items
-      Alert.alert(
-        'Limit Reached',
-        'You can only select up to 5 preferences.',
-        [{text: 'OK'}],
-      );
+      Alert.alert('Limit Reached', 'You can only select up to 5 preferences.', [
+        {text: 'OK'},
+      ]);
     }
   };
 
   const handleClearAll = () => {
-    setSelectedItems([]); // Clear all selections
+    setSelectedItems([]);
+    setSelectedName([]);
   };
 
-  const handleContinue = () => {
-    navigation?.navigate('Settings', {selectedItems});
+  // const handleContinue = () => {
+  //   navigation?.navigate('Settings', {selectedItems});
+  // };
+
+  const handleContinue = async () => {
+    try {
+      const response = await addTravelInterest({name: selectedName});
+      console.log('response of add travel interest: ', response);
+      if (response?.error?.success === false) {
+        Alert.alert(
+          'Adding to bucket list failed',
+          response?.error?.message || 'An error occurred.',
+        );
+        return;
+      } else {
+        navigation?.navigate('Settings');
+      }
+    } catch (err: any) {
+      Alert.alert(
+        'Adding to bucket list Failed',
+        err?.message || 'An error occurred.',
+      );
+    }
   };
 
   return (
@@ -65,10 +76,12 @@ const Preferences = ({navigation}: any) => {
         <View>
           {/* header */}
           <View style={tw``}>
-            <Text style={tw`text-black dark:text-white text-3xl font-WorkSemiBold`}>
+            <Text
+              style={tw`text-black dark:text-white text-3xl font-WorkSemiBold`}>
               Travel Interests
             </Text>
-            <Text style={tw`text-gray70 dark:text-white text-sm font-WorkRegular`}>
+            <Text
+              style={tw`text-gray70 dark:text-white text-sm font-WorkRegular`}>
               Pick up to 5 attractions, cities, or countries you're excited
               about visiting.
             </Text>
@@ -81,16 +94,18 @@ const Preferences = ({navigation}: any) => {
                 <TouchableOpacity
                   key={type.id}
                   style={tw`${
-                    selectedItems.includes(type.id) ? 'bg-violet100' : 'bg-white dark:bg-primaryDark'
+                    selectedItems.includes(type.id)
+                      ? 'bg-violet100'
+                      : 'bg-white dark:bg-primaryDark'
                   } py-2 rounded-full justify-center items-center border-[2px] border-violet100 px-4`}
-                  onPress={() => toggleSelection(type.id)}>
+                  onPress={() => toggleSelection(type.id, type.name)}>
                   <Text
                     style={tw`${
                       selectedItems.includes(type.id)
                         ? 'text-white'
                         : 'text-violet100'
                     } font-WorkMedium text-sm`}>
-                    {type.label}
+                    {type?.name}
                   </Text>
                 </TouchableOpacity>
               ))}

@@ -1,27 +1,31 @@
-import {View, Text, TouchableOpacity, Image, ScrollView} from 'react-native';
 import React, {useState} from 'react';
-import tw from '../../lib/tailwind';
-import {SvgXml} from 'react-native-svg';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {
   IconAdd,
   IconNotification,
   IconSettings,
 } from '../../assets/icons/Icons';
+
+import {SvgXml} from 'react-native-svg';
+import tw from '../../lib/tailwind';
+import {useGetProfileQuery} from '../../redux/slice/ApiSlice';
+import {baseUrl} from '../utils/exports';
 import Achievements from './components/Achievements';
-import Visited from './components/Visited';
 import FriendsList from './components/FriendsList';
-import {useGetProfileQuery} from '../../../android/app/src/redux/slice/ApiSlice';
-import { baseUrl } from '../utils/exports';
+import Visited from './components/Visited';
 
 const Profile = ({navigation}: any) => {
   const [activeTab, setActiveTab] = useState(0);
 
   // rtk query hooks
   const {data: profileData, isLoading, error} = useGetProfileQuery({});
-  const {full_name, email, image, user_name, signup_date} = profileData?.data || {};
+  const {full_name, email, image, user_name, signup_date} =
+    profileData?.data || {};
 
   return (
-    <ScrollView style={tw`px-[4%] pt-2 bg-white dark:bg-primaryDark h-full`} showsVerticalScrollIndicator={false}>
+    <ScrollView
+      style={tw`px-[4%] pt-2 bg-white dark:bg-primaryDark h-full`}
+      showsVerticalScrollIndicator={false}>
       <View style={tw`mb-4`}>
         <View style={tw`flex-row items-start justify-between py-2`}>
           <TouchableOpacity
@@ -51,9 +55,9 @@ const Profile = ({navigation}: any) => {
         </View>
         <Text
           style={tw`text-black dark:text-white text-2xl font-WorkMedium text-center`}>
-          {full_name || "N/A"}
+          {full_name || 'N/A'}
         </Text>
-        <Text style={tw`text-center text-gray70`}>{user_name || "N/A"}</Text>
+        <Text style={tw`text-center text-gray70`}>{user_name || 'N/A'}</Text>
         <View style={tw`flex-row items-center mt-6`}>
           <View style={tw`items-center flex-1`}>
             <Text
@@ -62,7 +66,7 @@ const Profile = ({navigation}: any) => {
             </Text>
             <Text
               style={tw`text-black dark:text-white text-lg font-WorkSemiBold`}>
-            {signup_date?.slice(0, 4) || "N/A"}
+              {signup_date?.slice(0, 4) || 'N/A'}
             </Text>
           </View>
           <View style={tw`items-center flex-1`}>
@@ -113,7 +117,9 @@ const Profile = ({navigation}: any) => {
             onPress={() => setActiveTab(0)}>
             <Text
               style={tw` ${
-                activeTab === 0 ? 'text-violet100' : 'text-gray100 dark:text-white'
+                activeTab === 0
+                  ? 'text-violet100'
+                  : 'text-gray100 dark:text-white'
               } text-sm font-WorkBold font-700`}>
               Achievements
             </Text>
@@ -125,13 +131,17 @@ const Profile = ({navigation}: any) => {
             onPress={() => setActiveTab(1)}>
             <Text
               style={tw` ${
-                activeTab === 1 ? 'text-violet100' : 'text-gray100 dark:text-white'
+                activeTab === 1
+                  ? 'text-violet100'
+                  : 'text-gray100 dark:text-white'
               } text-sm font-WorkBold font-700`}>
               Visited {''}
             </Text>
             <View
               style={tw`${
-                activeTab === 1 ? 'bg-violet100' : 'bg-gray100 dark:bg-secDarkBg'
+                activeTab === 1
+                  ? 'bg-violet100'
+                  : 'bg-gray100 dark:bg-secDarkBg'
               } px-1 py-0.5 rounded`}>
               <Text style={tw`text-white text-[10px]`}>03</Text>
             </View>
@@ -143,13 +153,17 @@ const Profile = ({navigation}: any) => {
             onPress={() => setActiveTab(2)}>
             <Text
               style={tw` ${
-                activeTab === 2 ? 'text-violet100' : 'text-gray100 dark:text-white'
+                activeTab === 2
+                  ? 'text-violet100'
+                  : 'text-gray100 dark:text-white'
               } text-sm font-WorkBold font-700`}>
               Friends{' '}
             </Text>
             <View
               style={tw`${
-                activeTab === 2 ? 'bg-violet100' : 'bg-gray100 dark:bg-secDarkBg'
+                activeTab === 2
+                  ? 'bg-violet100'
+                  : 'bg-gray100 dark:bg-secDarkBg'
               } px-1 py-0.5 rounded`}>
               <Text style={tw`text-white text-[10px]`}>09</Text>
             </View>

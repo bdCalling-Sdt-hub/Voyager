@@ -1,6 +1,7 @@
 import {BaseQueryFn, createApi} from '@reduxjs/toolkit/query/react';
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
-import {LStorage} from '../../../../../src/screens/utils/utils';
+
+import {LStorage} from '../../screens/utils/utils';
 
 interface BaseQueryArgs extends AxiosRequestConfig {
   url: string;
@@ -63,5 +64,15 @@ export const api = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithRath,
   endpoints: () => ({}),
-  tagTypes: ['bucketlistAdded', 'bucketlistRemoved', 'visited'],
+  tagTypes: [
+    'bucketlistAdded',
+    'bucketlistRemoved',
+    'visited',
+    'profileUpdate',
+    'addFriends',
+    'updateProfile',
+    'updateAvatar',
+    'cancelFriendRequest',
+    'travelInterest',
+  ],
 });

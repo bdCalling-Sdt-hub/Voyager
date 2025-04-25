@@ -1,10 +1,11 @@
-import {View, Text, ScrollView, TouchableOpacity, Image} from 'react-native';
 import React, {useState} from 'react';
-import tw from '../../lib/tailwind';
-import Header from '../../components/header/Header';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+
 import LinearGradient from 'react-native-linear-gradient';
-import Avatar from './Avatar';
+import Header from '../../components/header/Header';
+import tw from '../../lib/tailwind';
 import shop from '../../utils/json/shop.json';
+import Avatar from './Avatar';
 import PowersUps from './PowersUps';
 
 const Shop = () => {

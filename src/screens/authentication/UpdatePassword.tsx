@@ -1,18 +1,18 @@
-import {View, Text, ScrollView, TouchableOpacity, Alert} from 'react-native';
 import React, {useState} from 'react';
-import tw from '../../lib/tailwind';
-import Header from '../../components/header/Header';
+import {Alert, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {
-  IconClose,
   IconCloseEye,
   IconDot,
   IconEye,
   IconSuccesTik,
 } from '../../assets/icons/Icons';
+
 import {SvgXml} from 'react-native-svg';
+import Header from '../../components/header/Header';
 import InputText from '../../components/inputs/InputText';
 import NormalModal from '../../components/modals/NormalModal';
-import {useUpdatePasswordMutation} from '../../../android/app/src/redux/slice/ApiSlice';
+import tw from '../../lib/tailwind';
+import {useUpdatePasswordMutation} from '../../redux/slice/ApiSlice';
 
 const UpdatePassword = ({navigation}: any) => {
   const [isSecureNewPass, setIsSecureNewPass] = useState(true);

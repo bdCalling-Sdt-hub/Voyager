@@ -1,13 +1,9 @@
-import {View, Text, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
+
 import tw from '../../../lib/tailwind';
-import users from '../../../utils/json/users.json';
-import { useGetFriendsQuery } from '../../../../android/app/src/redux/slice/ApiSlice';
-import { baseUrl } from '../../utils/exports';
-const FriendsList = ({navigation}: any) => {
-  const {data} = useGetFriendsQuery({});
-  const friends = data?.data?.friends?.data || [];
-  console.log(friends);
+import {baseUrl} from '../../utils/exports';
+const FriendsList = ({navigation, friends}: any) => {
   return (
     <View style={tw`gap-y-2`}>
       {friends?.map((item: any) => (
@@ -16,7 +12,6 @@ const FriendsList = ({navigation}: any) => {
           key={item?.user_id}
           onPress={() => {
             navigation?.navigate('OthersProfile', {id: item?.user_id});
-            console.log('object');
           }}>
           <Image
             source={{
