@@ -15,10 +15,25 @@ import {SvgXml} from 'react-native-svg';
 import NormalModal from '../../components/modals/NormalModal';
 import SocialShareButton from './SocialShareButton';
 import {LStorage} from '../utils/utils';
+import { useGetProfileQuery } from '../../redux/slice/ApiSlice';
+import { useGetMysubscriptionQuery } from '../../redux/slice/SubsCription';
 
 const Settings = ({title = 'Settings', navigation}: any) => {
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
+
+    // Fetch user data
+    const {data: profileData, isLoading: isProfileLoading, error: profileError} = useGetProfileQuery({});
+    const userId = profileData?.data?.id;
+      
+        // Fetch subscription data
+        const {
+          data: subscriptionData, 
+          isLoading: isSubscriptionLoading, 
+          error: subscriptionError
+        } = useGetMysubscriptionQuery(userId ? {id: userId} : null, {
+          skip: !userId
+        });
 
   const handleLogout = async () => {
     try {
@@ -87,7 +102,14 @@ const Settings = ({title = 'Settings', navigation}: any) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={tw`flex-row items-center gap-4 p-4 border border-gray90 dark:border-darkBg dark:bg-darkBg rounded-2xl`}
-          onPress={() => navigation.navigate('Subscription')}>
+          onPress={() =>{
+            if(subscriptionData?.data?.length === 0){
+              navigation.navigate('Subscription');
+            }else{
+              navigation.navigate('SubscriptionPlan');
+            }
+        
+            }}>
           <SvgXml xml={IconCart} />
           <Text
             style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}>

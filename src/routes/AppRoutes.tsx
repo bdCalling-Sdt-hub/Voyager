@@ -35,6 +35,9 @@ import SinglePlace from '../screens/singlePlace/SinglePlace';
 import Splash from '../screens/splash/Splash';
 import {useAppContext} from '../utils/context/AppContext';
 import BottomRoutes from './bottomRoutes';
+import { LogBox } from 'react-native';
+
+LogBox.ignoreAllLogs();
 
 const AppRoutes = () => {
   const Stack = createNativeStackNavigator();

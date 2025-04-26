@@ -13,6 +13,7 @@ import {baseUrl} from '../utils/exports';
 import Achievements from './components/Achievements';
 import FriendsList from './components/FriendsList';
 import Visited from './components/Visited';
+import { useGetMysubscriptionQuery } from '../../redux/slice/SubsCription';
 
 const Profile = ({navigation}: any) => {
   const [activeTab, setActiveTab] = useState(0);
@@ -21,6 +22,19 @@ const Profile = ({navigation}: any) => {
   const {data: profileData, isLoading, error} = useGetProfileQuery({});
   const {full_name, email, image, user_name, signup_date} =
     profileData?.data || {};
+
+      // Fetch user data
+     
+      const userId = profileData?.data?.id;
+    
+      // Fetch subscription data
+      const {
+        data: subscriptionData, 
+        isLoading: isSubscriptionLoading, 
+        error: subscriptionError
+      } = useGetMysubscriptionQuery(userId ? {id: userId} : null, {
+        skip: !userId
+      });
 
   return (
     <ScrollView
@@ -99,13 +113,16 @@ const Profile = ({navigation}: any) => {
               Add Friends
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
+          {
+            !isSubscriptionLoading  && !subscriptionData?.data?.length &&  <TouchableOpacity
             style={tw`border-pink100 bg-pink100 border py-3 rounded-full flex-row items-center justify-center gap-3 w-full`}
             onPress={() => navigation?.navigate('Subscription')}>
             <Text style={tw`text-sm font-WorkSemiBold text-white font-600`}>
               Upgrade to Premium
             </Text>
           </TouchableOpacity>
+          }
+          
         </View>
 
         {/* tabs */}
