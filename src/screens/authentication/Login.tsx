@@ -47,8 +47,8 @@ const Login = ({navigation}: any) => {
 
       if (response?.error) {
         return Alert.alert(
-          'Login Failed',
-          response?.error?.data?.message ||
+          'Login Warning',
+          response?.error?.message ||
             response?.error?.data?.error ||
             'An error occurred while logging in.',
         );
