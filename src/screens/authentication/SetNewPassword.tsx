@@ -13,7 +13,7 @@ import Header from '../../components/header/Header';
 import InputText from '../../components/inputs/InputText';
 import NormalModal from '../../components/modals/NormalModal';
 import tw from '../../lib/tailwind';
-import {useChangePasswordMutation} from '../../redux/slice/ApiSlice';
+import {useChangePasswordMutation} from '../../redux/apiSlices/authApiSlice';
 
 const SetNewPassword = ({navigation, route}: any) => {
   const {email} = route.params || {};

@@ -1,21 +1,20 @@
-import {View, Text, TouchableOpacity, Image, ScrollView} from 'react-native';
 import React, {useState} from 'react';
-import tw from '../../../lib/tailwind';
-import {SvgXml} from 'react-native-svg';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {
   IconClose,
   IconFooterDot,
   IconVerifiedTik,
 } from '../../../assets/icons/Icons';
-import {useGetSubscriptionQuery} from '../../../redux/slice/SubsCription';
+
+import {SvgXml} from 'react-native-svg';
+import tw from '../../../lib/tailwind';
+import {useGetSubscriptionQuery} from '../../../redux/apiSlices/subsCription';
 
 const Subscription = ({navigation}: any) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const {data, isLoading} = useGetSubscriptionQuery({});
   const subscriptionData = data?.data?.data || [];
 
-
-  
   const handleSelect = (index: number) => {
     setSelectedIndex(index);
   };
@@ -126,7 +125,9 @@ const Subscription = ({navigation}: any) => {
       {/* Continue Button */}
       <TouchableOpacity
         style={tw`bg-violet100 rounded-full p-3 mt-2`}
-        onPress={() => navigation?.navigate('PaymentMethod', {plan: selectedPlan})}>
+        onPress={() =>
+          navigation?.navigate('PaymentMethod', {plan: selectedPlan})
+        }>
         <Text
           style={tw`text-center text-white text-base font-WorkMedium font-500`}>
           Continue - ${selectedPlan?.price} Total
@@ -151,6 +152,3 @@ const Subscription = ({navigation}: any) => {
 };
 
 export default Subscription;
-
-
-

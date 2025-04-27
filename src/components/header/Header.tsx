@@ -23,11 +23,10 @@ import {useNavigation} from '@react-navigation/native';
 import {SvgXml} from 'react-native-svg';
 import {useAppColorScheme} from 'twrnc';
 import tw from '../../lib/tailwind';
-
+import {useGetProfileQuery} from '../../redux/apiSlices/authApiSlice';
 import {baseUrl} from '../../screens/utils/exports';
 import {useAppContext} from '../../utils/context/AppContext';
 import NormalModal from '../modals/NormalModal';
-import { useGetProfileQuery } from '../../redux/slice/AuthApis';
 
 interface Props {
   title?: string;

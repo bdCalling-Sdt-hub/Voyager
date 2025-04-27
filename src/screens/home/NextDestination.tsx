@@ -13,14 +13,16 @@ import {
   IconWhiteHeart,
 } from '../../assets/icons/Icons';
 import {
- 
-} from '../../redux/slice/ApiSlice';
+  useGetAttractionsQuery,
+  useGetCityQuery,
+  useGetCountryQuery,
+  useLocationVisitMutation,
+} from '../../redux/apiSlices/attractionApiSlice';
 
 import {SvgXml} from 'react-native-svg';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
 import {NavigProps} from '../../utils/interface/NaviProps';
-import { useGetAttractionsQuery, useGetCityQuery, useGetCountryQuery, useLocationVisitMutation } from '../../redux/slice/Attraction';
 
 const NextDestination = ({navigation, route}: NavigProps<null>) => {
   const {title} = route?.params || {};

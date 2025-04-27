@@ -4,7 +4,7 @@ import {IconFilledHeart, IconWhiteHeart} from '../../../assets/icons/Icons';
 import React from 'react';
 import {SvgXml} from 'react-native-svg';
 import tw from '../../../lib/tailwind';
-import {useGetVisitedQuery} from '../../../redux/slice/ApiSlice';
+import {useGetVisitedQuery} from '../../../redux/apiSlices/attractionApiSlice';
 import {getColorByTitle} from '../../../utils/functions/functions';
 import {visitedTypes} from '../../utils/types';
 

@@ -23,11 +23,14 @@ import {
   IconTopArrow,
 } from '../../../assets/icons/Icons';
 import {
-
   useGetMarkAsVisitedQuery,
   useMarkAsVisitedMutation,
-
-} from '../../../redux/slice/ApiSlice';
+} from '../../../redux/apiSlices/attractionApiSlice';
+import {
+  useAddToBucketListMutation,
+  useGetBucketListCheckQuery,
+  useRemoveFromBucketListMutation,
+} from '../../../redux/apiSlices/bucketApiSlice';
 
 import {SvgXml} from 'react-native-svg';
 import Swiper from 'react-native-swiper';
@@ -37,7 +40,6 @@ import NormalModal from '../../../components/modals/NormalModal';
 import tw from '../../../lib/tailwind';
 import {NavigProps} from '../../../utils/interface/NaviProps';
 import {baseUrl} from '../../utils/exports';
-import { useAddToBucketListMutation, useGetBucketListCheckQuery, useRemoveFromBucketListMutation } from '../../../redux/slice/Attraction';
 
 const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
   const {item} = route?.params || {};

@@ -9,7 +9,7 @@ import React from 'react';
 import {SvgXml} from 'react-native-svg';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
-import {useGetPersonalizedQuery} from '../../redux/slice/ApiSlice';
+import {useGetPersonalizedQuery} from '../../redux/apiSlices/attractionApiSlice';
 import {NavigProps} from '../../utils/interface/NaviProps';
 import {baseUrl} from '../utils/exports';
 import {personalizedPicksTypes} from '../utils/types';

@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {
-
-} from '../../redux/slice/ApiSlice';
+  useGetFriendRequestsQuery,
+  useGetFriendsQuery,
+} from '../../redux/apiSlices/friendSlice';
 
 import {IconFilledNotification} from '../../assets/icons/Icons';
 import Header from '../../components/header/Header';
@@ -10,7 +11,6 @@ import tw from '../../lib/tailwind';
 import FriendsList from '../profile/components/FriendsList';
 import AddFriends from './AddFriends';
 import Request from './Request';
-import { useGetFriendRequestsQuery, useGetFriendsQuery } from '../../redux/slice/AuthApis';
 
 const Friends = ({title = 'Friends', navigation}: any) => {
   // states
