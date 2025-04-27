@@ -15,8 +15,9 @@ import {SvgXml} from 'react-native-svg';
 import NormalModal from '../../components/modals/NormalModal';
 import SocialShareButton from './SocialShareButton';
 import {LStorage} from '../utils/utils';
-import { useGetProfileQuery } from '../../redux/slice/ApiSlice';
+
 import { useGetMysubscriptionQuery } from '../../redux/slice/SubsCription';
+import { useGetProfileQuery } from '../../redux/slice/AuthApis';
 
 const Settings = ({title = 'Settings', navigation}: any) => {
   const [isSearchVisible, setSearchVisible] = useState(false);

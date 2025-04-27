@@ -8,12 +8,13 @@ import {
 
 import {SvgXml} from 'react-native-svg';
 import tw from '../../lib/tailwind';
-import {useGetProfileQuery} from '../../redux/slice/ApiSlice';
+
 import {baseUrl} from '../utils/exports';
 import Achievements from './components/Achievements';
 import FriendsList from './components/FriendsList';
 import Visited from './components/Visited';
 import { useGetMysubscriptionQuery } from '../../redux/slice/SubsCription';
+import { useGetProfileQuery } from '../../redux/slice/AuthApis';
 
 const Profile = ({navigation}: any) => {
   const [activeTab, setActiveTab] = useState(0);

@@ -14,9 +14,7 @@ import {
   IconWhiteHeart,
 } from '../../assets/icons/Icons';
 import {
-  useGetPersonalizedQuery,
-  useGetTopDestinationQuery,
-  useLocationVisitMutation,
+
 } from '../../redux/slice/ApiSlice';
 
 import React from 'react';
@@ -26,6 +24,9 @@ import tw from '../../lib/tailwind';
 import {NavigProps} from '../../utils/interface/NaviProps';
 import {baseUrl} from '../utils/exports';
 import {personalizedPicksTypes} from '../utils/types';
+import { useGetPersonalizedQuery, useGetTopDestinationQuery } from '../../redux/slice/AuthApis';
+import { useLocationVisitMutation } from '../../redux/slice/Attraction';
+
 
 const Home = ({navigation}: NavigProps<null>) => {
   // rtk query hooks

@@ -2,15 +2,13 @@ import React, {useState} from 'react';
 import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
 import {IconAdd, IconClose} from '../../assets/icons/Icons';
 import {
-  useCancelFriendRequestMutation,
-  useGetFriendForAddQuery,
-  useSendFriendRequestMutation,
-  useUnfriendUserMutation,
+
 } from '../../redux/slice/ApiSlice';
 
 import {SvgXml} from 'react-native-svg';
 import tw from '../../lib/tailwind';
 import {baseUrl} from '../utils/exports';
+import { useCancelFriendRequestMutation, useGetFriendForAddQuery, useSendFriendRequestMutation, useUnfriendUserMutation } from '../../redux/slice/AuthApis';
 
 const AddFriends = ({navigation}: any) => {
   // rtk query hooks
