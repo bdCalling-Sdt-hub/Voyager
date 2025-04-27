@@ -14,15 +14,13 @@ import {
   IconNotification,
 } from '../../assets/icons/Icons';
 import {
-  useCancelFriendRequestMutation,
-  useGetOthersProfileQuery,
-  useGetUserFriendAttractionsQuery,
-  useSendFriendRequestMutation,
-  useUnfriendUserMutation,
+ 
 } from '../../redux/slice/ApiSlice';
 
 import {SvgXml} from 'react-native-svg';
 import tw from '../../lib/tailwind';
+import { useCancelFriendRequestMutation, useGetOthersProfileQuery, useSendFriendRequestMutation, useUnfriendUserMutation } from '../../redux/slice/AuthApis';
+import { useGetUserFriendAttractionsQuery } from '../../redux/slice/Attraction';
 
 const OthersProfile = ({navigation, route}: any) => {
   const {id, item} = route?.params || {};

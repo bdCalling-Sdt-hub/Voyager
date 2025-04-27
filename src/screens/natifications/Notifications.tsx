@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import {
-  useAcceptFriendRequestMutation,
+
   useGetNotificationsQuery,
 } from '../../redux/slice/ApiSlice';
 
@@ -16,6 +16,7 @@ import {IconFilledNotification} from '../../assets/icons/Icons';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
 import {baseUrl} from '../utils/exports';
+import { useAcceptFriendRequestMutation } from '../../redux/slice/AuthApis';
 
 const Notifications = ({navigation}: any) => {
   const title = 'Notifications';

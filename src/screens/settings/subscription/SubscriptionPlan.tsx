@@ -2,10 +2,11 @@ import {View, Text, ScrollView, TouchableOpacity, ActivityIndicator, FlatList, I
 import React, {useState, useRef} from 'react';
 import tw from '../../../lib/tailwind';
 import Header from '../../../components/header/Header';
-import { useGetProfileQuery } from '../../../redux/slice/ApiSlice';
+
 import { useGetMysubscriptionQuery, useInvoichistoryQuery } from '../../../redux/slice/SubsCription';
 import { SvgXml } from 'react-native-svg';
 import {IconVerifiedTik} from '../../../assets/icons/Icons';
+import { useGetProfileQuery } from '../../../redux/slice/AuthApis';
 
 const { width: screenWidth } = Dimensions.get('screen');
 

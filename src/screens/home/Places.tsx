@@ -13,11 +13,7 @@ import {
   IconWhiteHeart,
 } from '../../assets/icons/Icons';
 import {
-  useGetBucketListAttractionsQuery,
-  useGetBucketListBannerQuery,
-  useGetBucketListCitiesQuery,
-  useGetBucketListCountriesQuery,
-  useLocationVisitMutation,
+
 } from '../../redux/slice/ApiSlice';
 
 import {SvgXml} from 'react-native-svg';
@@ -25,6 +21,7 @@ import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
 import {NavigProps} from '../../utils/interface/NaviProps';
 import {baseUrl} from '../utils/exports';
+import { useGetBucketListAttractionsQuery, useGetBucketListBannerQuery, useGetBucketListCitiesQuery, useGetBucketListCountriesQuery, useLocationVisitMutation } from '../../redux/slice/Attraction';
 
 const Places = ({navigation, route}: NavigProps<null>) => {
   const [activePlace, setActivePlace] = useState('attractions');

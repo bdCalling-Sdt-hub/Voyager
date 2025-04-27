@@ -10,11 +10,7 @@ import {
 import {RadioButton, RadioGroup} from 'react-native-ui-lib';
 import {IconLightCamera, IconLock2} from '../../assets/icons/Icons';
 import {
-  useBuyAvatarMutation,
-  useEquipAvatarMutation,
-  useGetAvatarQuery,
-  useGetProfileQuery,
-  useUpdateProfileMutation,
+
 } from '../../redux/slice/ApiSlice';
 
 import {SvgXml} from 'react-native-svg';
@@ -25,6 +21,7 @@ import tw from '../../lib/tailwind';
 import {baseUrl} from '../utils/exports';
 import {AvatarData} from '../utils/types';
 import CountryDropdown from './CountryDropdown';
+import { useBuyAvatarMutation, useEquipAvatarMutation, useGetAvatarQuery, useGetProfileQuery, useUpdateProfileMutation } from '../../redux/slice/AuthApis';
 
 const ProfileSettings = ({navigation}: any) => {
   const [bucketlistPrivacy, setBucketlistPrivacy] = useState('public');
