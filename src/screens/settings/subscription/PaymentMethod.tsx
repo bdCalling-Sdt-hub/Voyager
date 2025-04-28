@@ -22,7 +22,11 @@ import tw from '../../../lib/tailwind';
 
 const PaymentMethod = ({navigation, route}: any) => {
   const {plan} = route.params;
-  const {id, price: cost, duration} = plan;
+
+
+  const id = plan?.id;
+  const cost = plan?.price || 0;
+  const duration = plan?.duration || '';
 
   const stripe = useStripe();
   const {confirmPayment, loading} = useConfirmPayment();
