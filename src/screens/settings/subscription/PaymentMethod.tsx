@@ -1,37 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import tw from '../../../lib/tailwind';
-import { SvgXml } from 'react-native-svg';
+import {
+  CardField,
+  useConfirmPayment,
+  useStripe,
+} from '@stripe/stripe-react-native';
+import React, {useEffect, useState} from 'react';
+import {Alert, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {
   IconAcceptedCards,
   IconClose,
   IconWarn,
 } from '../../../assets/icons/Icons';
+import {
+  useCreatePaymentIntentMutation,
+  usePaymentSuccessMutation,
+} from '../../../redux/apiSlices/subsCription';
+
+import {SvgXml} from 'react-native-svg';
 import Header from '../../../components/header/Header';
 import InputText from '../../../components/inputs/InputText';
-import { CardField, useConfirmPayment, useStripe } from '@stripe/stripe-react-native';
-import { 
-  useCreatePaymentIntentMutation, 
-  usePaymentSuccessMutation 
-} from '../../../redux/slice/SubsCription';
+import tw from '../../../lib/tailwind';
 
-const PaymentMethod = ({ navigation, route }: any) => {
-  const { plan } = route.params;
-  const { id, price: cost, duration } = plan;
+const PaymentMethod = ({navigation, route}: any) => {
+  const {plan} = route.params;
+  const {id, price: cost, duration} = plan;
 
   const stripe = useStripe();
-  const {confirmPayment,loading} = useConfirmPayment();
+  const {confirmPayment, loading} = useConfirmPayment();
   const [cardDetails, setCardDetails] = useState<any>(null);
 
   const [createPaymentIntent] = useCreatePaymentIntentMutation();
   const [paymentSuccess] = usePaymentSuccessMutation();
 
-
   const [clientSecret, setClientSecret] = useState('');
   const [transactionId, setTransactionId] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
 
-  
   const [formData, setFormData] = useState({
     nameOnCard: '',
     streetAddress: '',
@@ -46,16 +49,16 @@ const PaymentMethod = ({ navigation, route }: any) => {
   // Create or refresh payment intent
   const createNewPaymentIntent = async () => {
     try {
-      const response = await createPaymentIntent({ 
+      const response = await createPaymentIntent({
         amount: cost * 100,
-        payment_method:'pm_card_visa'
+        payment_method: 'pm_card_visa',
       });
 
       console.log('payment intent response: ', response?.data?.client_secret);
-      
+
       if (response?.data?.data?.client_secret) {
         setClientSecret(response?.data?.data?.client_secret);
-       setTransactionId(response?.data?.data?.id);
+        setTransactionId(response?.data?.data?.id);
         return response?.data?.data?.client_secret;
       }
       throw new Error('No client secret received');
@@ -74,7 +77,7 @@ const PaymentMethod = ({ navigation, route }: any) => {
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -83,9 +86,18 @@ const PaymentMethod = ({ navigation, route }: any) => {
     setIsProcessing(true);
 
     // Validate form fields
-    const requiredFields = ['nameOnCard', 'streetAddress', 'city', 'region', 'postalCode', 'country'];
-    const missingFields = requiredFields.filter(field => !formData[field as keyof typeof formData]);
-    
+    const requiredFields = [
+      'nameOnCard',
+      'streetAddress',
+      'city',
+      'region',
+      'postalCode',
+      'country',
+    ];
+    const missingFields = requiredFields.filter(
+      field => !formData[field as keyof typeof formData],
+    );
+
     if (missingFields.length > 0) {
       Alert.alert('Error', 'Please fill all required fields');
       setIsProcessing(false);
@@ -111,38 +123,38 @@ const PaymentMethod = ({ navigation, route }: any) => {
 
     try {
       // Confirm payment with Stripe
-      const { error, paymentIntent } = await confirmPayment(currentClientSecret,{
-        paymentMethodType : "Card",
-      
+      const {error, paymentIntent} = await confirmPayment(currentClientSecret, {
+        paymentMethodType: 'Card',
+
         paymentMethodData: {
-          billingDetails:{
-             name : formData.nameOnCard,
-            address : {
-              city : formData.city,
-              country : formData.country,
-              line1 : formData.streetAddress,
-              postalCode : formData.postalCode,
-              state : formData.region,
-              line2 : ''
+          billingDetails: {
+            name: formData.nameOnCard,
+            address: {
+              city: formData.city,
+              country: formData.country,
+              line1: formData.streetAddress,
+              postalCode: formData.postalCode,
+              state: formData.region,
+              line2: '',
             },
-          
-           } 
-         }
+          },
+        },
       });
 
-      console.log('payment intent SUCCESS: ',paymentIntent);
+      console.log('payment intent SUCCESS: ', paymentIntent);
 
       if (error) {
         console.log('payment intent error: ', error);
-        if (error.code === 'Failed' && error.message.includes('No such payment_intent')) {
+        if (
+          error.code === 'Failed' &&
+          error.message.includes('No such payment_intent')
+        ) {
           // Handle expired payment intent
           const newSecret = await createNewPaymentIntent();
           if (newSecret) {
-            Alert.alert(
-              'Session Expired', 
-              'Please try your payment again',
-              [{ text: 'OK' }]
-            );
+            Alert.alert('Session Expired', 'Please try your payment again', [
+              {text: 'OK'},
+            ]);
           }
         } else {
           Alert.alert('Payment Error', error.message || 'Payment failed');
@@ -152,7 +164,7 @@ const PaymentMethod = ({ navigation, route }: any) => {
 
       console.log('payment intent: ', paymentIntent);
 
-      if (paymentIntent?.status === "Succeeded") {
+      if (paymentIntent?.status === 'Succeeded') {
         const paymentData = {
           subscription_id: id,
           transaction_id: paymentIntent.id,
@@ -162,7 +174,7 @@ const PaymentMethod = ({ navigation, route }: any) => {
           region: formData.region,
           postal_code: formData.postalCode,
           country: formData.country,
-          status: 'paid'
+          status: 'paid',
         };
 
         try {
@@ -170,20 +182,28 @@ const PaymentMethod = ({ navigation, route }: any) => {
           Alert.alert(
             'Payment Successful',
             `Transaction ID: ${paymentIntent.id}\nAmount: $${cost.toFixed(2)}`,
-            [{
-              text: 'OK',
-              onPress: () => navigation.navigate('SubscriptionPlan', { 
-                paymentSuccess: true,
-                transactionId: paymentIntent.id
-              })
-            }]
+            [
+              {
+                text: 'OK',
+                onPress: () =>
+                  navigation.navigate('SubscriptionPlan', {
+                    paymentSuccess: true,
+                    transactionId: paymentIntent.id,
+                  }),
+              },
+            ],
           );
         } catch (apiError) {
           console.error('API Error:', apiError);
           Alert.alert(
             'Payment Recorded',
             'Payment succeeded but we had trouble saving your details. Please contact support.',
-            [{ text: 'OK', onPress: () => navigation.navigate('SubscriptionPlan') }]
+            [
+              {
+                text: 'OK',
+                onPress: () => navigation.navigate('SubscriptionPlan'),
+              },
+            ],
           );
         }
       }
@@ -208,20 +228,24 @@ const PaymentMethod = ({ navigation, route }: any) => {
         />
 
         <View>
-          <View style={tw`h-12 bg-gray90 dark:bg-darkBg rounded-2xl items-center flex-row gap-2 justify-center`}>
+          <View
+            style={tw`h-12 bg-gray90 dark:bg-darkBg rounded-2xl items-center flex-row gap-2 justify-center`}>
             <SvgXml xml={IconWarn} />
-            <Text style={tw`text-black dark:text-white text-sm font-WorkMedium font-500 py-1`}>
+            <Text
+              style={tw`text-black dark:text-white text-sm font-WorkMedium font-500 py-1`}>
               You won't be charged until you pay.
             </Text>
           </View>
 
           <View style={tw`mt-4`}>
-            <Text style={tw`text-black dark:text-white text-[20px] font-WorkSemiBold font-600 mb-4`}>
+            <Text
+              style={tw`text-black dark:text-white text-[20px] font-WorkSemiBold font-600 mb-4`}>
               Card Information
             </Text>
             <View style={tw`gap-y-4`}>
               <View>
-                <Text style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
+                <Text
+                  style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
                   Name on card
                 </Text>
                 <View style={tw`h-12`}>
@@ -231,13 +255,14 @@ const PaymentMethod = ({ navigation, route }: any) => {
                     placeholderTextColor={'#BBBCBD'}
                     style={tw`text-black text-base font-WorkMedium font-500`}
                     value={formData.nameOnCard}
-                    onChangeText={(text) => handleInputChange('nameOnCard', text)}
+                    onChangeText={text => handleInputChange('nameOnCard', text)}
                   />
                 </View>
               </View>
-              
+
               <View>
-                <Text style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
+                <Text
+                  style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
                   Card details
                 </Text>
                 <View style={tw`h-16 mb-2`}>
@@ -246,7 +271,7 @@ const PaymentMethod = ({ navigation, route }: any) => {
                     placeholder={{
                       number: '4242 4242 4242 4242',
                       expiration: 'MM/YY',
-                      cvc: 'CVC'
+                      cvc: 'CVC',
                     }}
                     cardStyle={{
                       backgroundColor: '#FFFFFF',
@@ -266,19 +291,23 @@ const PaymentMethod = ({ navigation, route }: any) => {
                 </View>
                 <View style={tw`flex-row items-center gap-1`}>
                   <SvgXml xml={IconAcceptedCards} />
-                  <Text style={tw`text-gray-500 text-xs`}>Secure payment powered by Stripe</Text>
+                  <Text style={tw`text-gray-500 text-xs`}>
+                    Secure payment powered by Stripe
+                  </Text>
                 </View>
               </View>
             </View>
           </View>
 
           <View style={tw`mt-4`}>
-            <Text style={tw`text-black dark:text-white text-[20px] font-WorkSemiBold font-600 mb-4`}>
+            <Text
+              style={tw`text-black dark:text-white text-[20px] font-WorkSemiBold font-600 mb-4`}>
               Billing Information
             </Text>
             <View style={tw`gap-y-4`}>
               <View>
-                <Text style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
+                <Text
+                  style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
                   Street Address
                 </Text>
                 <View style={tw`h-12`}>
@@ -288,14 +317,17 @@ const PaymentMethod = ({ navigation, route }: any) => {
                     placeholderTextColor={'#BBBCBD'}
                     style={tw`text-black text-base font-WorkMedium font-500`}
                     value={formData.streetAddress}
-                    onChangeText={(text) => handleInputChange('streetAddress', text)}
+                    onChangeText={text =>
+                      handleInputChange('streetAddress', text)
+                    }
                   />
                 </View>
               </View>
 
               <View style={tw`flex-row items-center gap-4`}>
                 <View style={tw`flex-1`}>
-                  <Text style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
+                  <Text
+                    style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
                     City
                   </Text>
                   <View style={tw`h-12`}>
@@ -305,12 +337,13 @@ const PaymentMethod = ({ navigation, route }: any) => {
                       placeholderTextColor={'#BBBCBD'}
                       style={tw`text-black text-base font-WorkMedium font-500`}
                       value={formData.city}
-                      onChangeText={(text) => handleInputChange('city', text)}
+                      onChangeText={text => handleInputChange('city', text)}
                     />
                   </View>
                 </View>
                 <View style={tw`flex-1`}>
-                  <Text style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
+                  <Text
+                    style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
                     Region
                   </Text>
                   <View style={tw`h-12`}>
@@ -320,14 +353,15 @@ const PaymentMethod = ({ navigation, route }: any) => {
                       placeholderTextColor={'#BBBCBD'}
                       style={tw`text-black text-base font-WorkMedium font-500`}
                       value={formData.region}
-                      onChangeText={(text) => handleInputChange('region', text)}
+                      onChangeText={text => handleInputChange('region', text)}
                     />
                   </View>
                 </View>
               </View>
               <View style={tw`flex-row items-center gap-4`}>
                 <View style={tw`flex-1`}>
-                  <Text style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
+                  <Text
+                    style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
                     Postal Code
                   </Text>
                   <View style={tw`h-12`}>
@@ -337,13 +371,16 @@ const PaymentMethod = ({ navigation, route }: any) => {
                       placeholderTextColor={'#BBBCBD'}
                       style={tw`text-black text-base font-WorkMedium font-500`}
                       value={formData.postalCode}
-                      onChangeText={(text) => handleInputChange('postalCode', text)}
+                      onChangeText={text =>
+                        handleInputChange('postalCode', text)
+                      }
                       keyboardType="numeric"
                     />
                   </View>
                 </View>
                 <View style={tw`flex-1`}>
-                  <Text style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
+                  <Text
+                    style={tw`mb-1 text-black dark:text-white text-sm font-WorkMedium font-500`}>
                     Country
                   </Text>
                   <View style={tw`h-12`}>
@@ -353,7 +390,7 @@ const PaymentMethod = ({ navigation, route }: any) => {
                       placeholderTextColor={'#BBBCBD'}
                       style={tw`text-black text-base font-WorkMedium font-500`}
                       value={formData.country}
-                      onChangeText={(text) => handleInputChange('country', text)}
+                      onChangeText={text => handleInputChange('country', text)}
                     />
                   </View>
                 </View>
@@ -362,7 +399,8 @@ const PaymentMethod = ({ navigation, route }: any) => {
           </View>
 
           <View style={tw`mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg`}>
-            <Text style={tw`text-lg font-WorkSemiBold text-black dark:text-white mb-2`}>
+            <Text
+              style={tw`text-lg font-WorkSemiBold text-black dark:text-white mb-2`}>
               Plan Summary
             </Text>
             <View style={tw`flex-row justify-between mb-1`}>
@@ -371,17 +409,22 @@ const PaymentMethod = ({ navigation, route }: any) => {
             </View>
             <View style={tw`flex-row justify-between`}>
               <Text style={tw`text-gray-600 dark:text-gray-300`}>Price:</Text>
-              <Text style={tw`text-black dark:text-white`}>${cost.toFixed(2)}</Text>
+              <Text style={tw`text-black dark:text-white`}>
+                ${cost.toFixed(2)}
+              </Text>
             </View>
           </View>
         </View>
       </ScrollView>
 
       <TouchableOpacity
-        style={tw`bg-violet100 rounded-full p-3 mt-2 ${isProcessing ? 'opacity-70' : ''}`}
+        style={tw`bg-violet100 rounded-full p-3 mt-2 ${
+          isProcessing ? 'opacity-70' : ''
+        }`}
         onPress={handlePayPress}
         disabled={isProcessing}>
-        <Text style={tw`text-center text-white text-base font-WorkMedium font-500`}>
+        <Text
+          style={tw`text-center text-white text-base font-WorkMedium font-500`}>
           {isProcessing ? 'Processing...' : `Pay $${cost.toFixed(2)}`}
         </Text>
       </TouchableOpacity>

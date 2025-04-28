@@ -6,17 +6,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {
-
-  useGetNotificationsQuery,
-} from '../../redux/slice/ApiSlice';
 
 import React from 'react';
 import {IconFilledNotification} from '../../assets/icons/Icons';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
+import {useAcceptFriendRequestMutation} from '../../redux/apiSlices/friendSlice';
+import {useGetNotificationsQuery} from '../../redux/apiSlices/settingSlice';
 import {baseUrl} from '../utils/exports';
-import { useAcceptFriendRequestMutation } from '../../redux/slice/AuthApis';
 
 const Notifications = ({navigation}: any) => {
   const title = 'Notifications';

@@ -17,7 +17,7 @@ import {
 import {
   useGetQuestAchievementsQuery,
   useGetWeeklyQuestsQuery,
-} from '../../redux/slice/ApiSlice';
+} from '../../redux/apiSlices/questSlice';
 
 import BottomSheet from '@gorhom/bottom-sheet';
 import {useFocusEffect} from '@react-navigation/native';

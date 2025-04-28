@@ -4,10 +4,9 @@ import React from 'react';
 import {SvgXml} from 'react-native-svg';
 import {IconLock2} from '../../assets/icons/Icons';
 import tw from '../../lib/tailwind';
-
+import {useGetAvatarQuery} from '../../redux/apiSlices/qauipmentSlice';
 import {baseUrl} from '../utils/exports';
 import {AvatarData} from '../utils/types';
-import { useGetAvatarQuery } from '../../redux/slice/AuthApis';
 
 const Avatar = ({data}: any) => {
   // rtk query hooks

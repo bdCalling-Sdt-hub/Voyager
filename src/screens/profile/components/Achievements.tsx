@@ -2,7 +2,7 @@ import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {
   useGetAchievementsQuery,
   useGetShopBannerQuery,
-} from '../../../redux/slice/ApiSlice';
+} from '../../../redux/apiSlices/settingSlice';
 
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';

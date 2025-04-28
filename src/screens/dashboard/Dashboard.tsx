@@ -9,7 +9,7 @@ import {
 import {
   useAppDashboardQuery,
   useGetWeeklyQuestProgressQuery,
-} from '../../redux/slice/ApiSlice';
+} from '../../redux/apiSlices/dashboardApiSlice';
 
 import {SvgXml} from 'react-native-svg';
 import Header from '../../components/header/Header';

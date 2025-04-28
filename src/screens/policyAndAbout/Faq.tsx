@@ -4,7 +4,7 @@ import React from 'react';
 import {SvgXml} from 'react-native-svg';
 import {IconLeftArrow} from '../../assets/icons/Icons';
 import tw from '../../lib/tailwind';
-import {useGetFaqQuery} from '../../redux/slice/ApiSlice';
+import {useGetFaqQuery} from '../../redux/apiSlices/settingSlice';
 import Expend from './component/Expend';
 
 const Faq = ({navigation}: any) => {

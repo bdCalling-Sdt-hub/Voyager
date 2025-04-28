@@ -5,7 +5,7 @@ import {IconEnvelop} from '../../assets/icons/Icons';
 import Header from '../../components/header/Header';
 import InputText from '../../components/inputs/InputText';
 import tw from '../../lib/tailwind';
-import {useForgetPasswordMutation} from '../../redux/slice/ApiSlice';
+import {useForgetPasswordMutation} from '../../redux/apiSlices/authApiSlice';
 
 const ForgotPassword = ({navigation}: any) => {
   const [email, setEmail] = useState('');

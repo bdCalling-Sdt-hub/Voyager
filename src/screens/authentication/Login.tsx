@@ -13,7 +13,7 @@ import {HIGHT, LStorage} from '../utils/utils';
 import {SvgXml} from 'react-native-svg';
 import InputText from '../../components/inputs/InputText';
 import tw from '../../lib/tailwind';
-import {useLoginMutation} from '../../redux/slice/ApiSlice';
+import {useLoginMutation} from '../../redux/apiSlices/authApiSlice';
 
 const Login = ({navigation}: any) => {
   // state

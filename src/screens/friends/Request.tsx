@@ -2,8 +2,9 @@ import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
 
 import React from 'react';
 import tw from '../../lib/tailwind';
-import {useAcceptFriendRequestMutation} from '../../redux/slice/ApiSlice';
+import {useAcceptFriendRequestMutation} from '../../redux/apiSlices/friendSlice';
 import {baseUrl} from '../utils/exports';
+
 // import users from '../../utils/json/users.json';
 
 const Request = ({navigation, users}: any) => {

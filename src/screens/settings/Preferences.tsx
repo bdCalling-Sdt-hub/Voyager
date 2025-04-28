@@ -3,7 +3,7 @@ import {Alert, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {
   useAddTravelInterestMutation,
   useGetTravelPreferencesQuery,
-} from '../../redux/slice/ApiSlice';
+} from '../../redux/apiSlices/settingSlice';
 
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';

@@ -12,7 +12,7 @@ import Header from '../../components/header/Header';
 import InputText from '../../components/inputs/InputText';
 import NormalModal from '../../components/modals/NormalModal';
 import tw from '../../lib/tailwind';
-import {useUpdatePasswordMutation} from '../../redux/slice/ApiSlice';
+import {useUpdatePasswordMutation} from '../../redux/apiSlices/authApiSlice';
 
 const UpdatePassword = ({navigation}: any) => {
   const [isSecureNewPass, setIsSecureNewPass] = useState(true);
