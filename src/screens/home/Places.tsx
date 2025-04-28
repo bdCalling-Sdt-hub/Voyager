@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   Image,
@@ -19,33 +19,34 @@ import {
   useGetBucketListCountriesQuery,
 } from '../../redux/apiSlices/bucketApiSlice';
 
-import {SvgXml} from 'react-native-svg';
+import { SvgXml } from 'react-native-svg';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
-import {useLocationVisitMutation} from '../../redux/apiSlices/attractionApiSlice';
-import {NavigProps} from '../../utils/interface/NaviProps';
-import {baseUrl} from '../utils/exports';
+import { useLocationVisitMutation } from '../../redux/apiSlices/attractionApiSlice';
+import { NavigProps } from '../../utils/interface/NaviProps';
+import { baseUrl } from '../utils/exports';
+import { ImageUrl } from '../../redux/api/baseApi';
 
-const Places = ({navigation, route}: NavigProps<null>) => {
+const Places = ({ navigation, route }: NavigProps<null>) => {
   const [activePlace, setActivePlace] = useState('attractions');
 
   // rtk query hooks
-  const {data: bucketListCountries} = useGetBucketListCountriesQuery({});
-  const {data: bucketListCities} = useGetBucketListCitiesQuery({});
-  const {data: bucketListAttractions} = useGetBucketListAttractionsQuery({});
-  const {data: bucketListBanner} = useGetBucketListBannerQuery({});
-  const [locationVisit, {isLoading}] = useLocationVisitMutation();
+  const { data: bucketListCountries } = useGetBucketListCountriesQuery({});
+  const { data: bucketListCities } = useGetBucketListCitiesQuery({});
+  const { data: bucketListAttractions } = useGetBucketListAttractionsQuery({});
+  const { data: bucketListBanner } = useGetBucketListBannerQuery({});
+  const [locationVisit, { isLoading }] = useLocationVisitMutation();
 
 
   console.log('bucketListBanner: ', bucketListBanner);
   console.log('bucketlistattractions', bucketListAttractions?.data?.attractions?.data);
-  console.log('bucketListCities: ', bucketListCities);
+  console.log('Url+++++++++++++++++: ', ImageUrl + bucketListCities?.data?.cities.data[0]?.data?.images[0]);
   console.log('bucketListCountries', bucketListCountries);
   // handlers
   const handleVisitLocation = async (item: any) => {
-    const data = {type: item?.type, visited: '1'};
+    const data = { type: item?.type, visited: '1' };
     try {
-      const response = await locationVisit({id: item?.id, data});
+      const response = await locationVisit({ id: item?.id, data });
       console.log('reponse check of visit location: ', response);
       if (response?.error?.success === false) {
         Alert.alert(
@@ -54,7 +55,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
         );
         return;
       } else {
-        navigation?.navigate('DestinationDetails', {item});
+        navigation?.navigate('DestinationDetails', { item });
       }
     } catch (err: any) {
       Alert.alert(
@@ -79,6 +80,9 @@ const Places = ({navigation, route}: NavigProps<null>) => {
         return null;
     }
   })();
+
+
+
 
   const activeColor = () => {
     switch (activePlace) {
@@ -116,10 +120,10 @@ const Places = ({navigation, route}: NavigProps<null>) => {
               source={
                 bucketListBanner?.data?.freeBucketList?.photos[0]
                   ? {
-                      uri:
-                        baseUrl +
-                        bucketListBanner?.data?.freeBucketList?.photos[0],
-                    }
+                    uri:
+                      baseUrl +
+                      bucketListBanner?.data?.freeBucketList?.photos[0],
+                  }
                   : require('../../assets/images/speedmeter.png')
               }
               style={tw`w-full h-14`}
@@ -141,71 +145,59 @@ const Places = ({navigation, route}: NavigProps<null>) => {
 
       <View style={tw`flex-row bg-gray80 dark:bg-darkBg p-1 rounded-full mt-4`}>
         <TouchableOpacity
-          style={tw`${
-            activePlace === 'attractions' ? 'bg-violet100' : ''
-          } py-2 rounded-full flex-1 justify-center items-center flex-row gap-1`}
+          style={tw`${activePlace === 'attractions' ? 'bg-violet100' : ''
+            } py-2 rounded-full flex-1 justify-center items-center flex-row gap-1`}
           onPress={() => setActivePlace('attractions')}>
           <Text
-            style={tw`${
-              activePlace === 'attractions' ? 'text-white' : 'text-gray100'
-            } text-xs font-WorkMedium`}>
+            style={tw`${activePlace === 'attractions' ? 'text-white' : 'text-gray100'
+              } text-xs font-WorkMedium`}>
             Attractions
           </Text>
           <View
-            style={tw`h-5 w-5 ${
-              activePlace === 'attractions' ? 'bg-white' : 'bg-gray100'
-            } rounded-full text-center items-center justify-center`}>
+            style={tw`h-5 w-5 ${activePlace === 'attractions' ? 'bg-white' : 'bg-gray100'
+              } rounded-full text-center items-center justify-center`}>
             <Text
-              style={tw`text-xs ${
-                activePlace === 'attractions' ? 'text-violet100' : 'text-white'
-              }`}>
-              07
+              style={tw`text-xs ${activePlace === 'attractions' ? 'text-violet100' : 'text-white'
+                }`}>
+              {bucketListAttractions?.data?.attractions?.data?.length}
             </Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          style={tw`${
-            activePlace === 'cities' ? 'bg-violet100' : ''
-          } py-2 rounded-full flex-1 justify-center items-center flex-row gap-1`}
+          style={tw`${activePlace === 'cities' ? 'bg-violet100' : ''
+            } py-2 rounded-full flex-1 justify-center items-center flex-row gap-1`}
           onPress={() => setActivePlace('cities')}>
           <Text
-            style={tw`${
-              activePlace === 'cities' ? 'text-white' : 'text-gray100'
-            } text-xs font-WorkMedium`}>
+            style={tw`${activePlace === 'cities' ? 'text-white' : 'text-gray100'
+              } text-xs font-WorkMedium`}>
             Cities
           </Text>
           <View
-            style={tw`h-5 w-5 ${
-              activePlace === 'cities' ? 'bg-white' : 'bg-gray100'
-            } rounded-full text-center items-center justify-center`}>
+            style={tw`h-5 w-5 ${activePlace === 'cities' ? 'bg-white' : 'bg-gray100'
+              } rounded-full text-center items-center justify-center`}>
             <Text
-              style={tw`text-xs ${
-                activePlace === 'cities' ? 'text-violet100' : 'text-white'
-              }`}>
-              24
+              style={tw`text-xs ${activePlace === 'cities' ? 'text-violet100' : 'text-white'
+                }`}>
+              {bucketListCities?.data?.cities?.data?.length}
             </Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          style={tw`${
-            activePlace === 'countries' ? 'bg-violet100' : ''
-          } py-2 rounded-full flex-1 justify-center items-center flex-row gap-1`}
+          style={tw`${activePlace === 'countries' ? 'bg-violet100' : ''
+            } py-2 rounded-full flex-1 justify-center items-center flex-row gap-1`}
           onPress={() => setActivePlace('countries')}>
           <Text
-            style={tw`${
-              activePlace === 'countries' ? 'text-white' : 'text-gray100'
-            }  text-xs font-WorkMedium`}>
+            style={tw`${activePlace === 'countries' ? 'text-white' : 'text-gray100'
+              }  text-xs font-WorkMedium`}>
             Countries
           </Text>
           <View
-            style={tw`h-5 w-5 ${
-              activePlace === 'countries' ? 'bg-white' : 'bg-gray100'
-            } rounded-full text-center items-center justify-center`}>
+            style={tw`h-5 w-5 ${activePlace === 'countries' ? 'bg-white' : 'bg-gray100'
+              } rounded-full text-center items-center justify-center`}>
             <Text
-              style={tw`text-xs ${
-                activePlace === 'countries' ? 'text-violet100' : 'text-white'
-              }`}>
-              07
+              style={tw`text-xs ${activePlace === 'countries' ? 'text-violet100' : 'text-white'
+                }`}>
+              {bucketListCountries?.data?.countries?.data?.length}
             </Text>
           </View>
         </TouchableOpacity>
@@ -218,9 +210,12 @@ const Places = ({navigation, route}: NavigProps<null>) => {
               key={index}
               onPress={() => handleVisitLocation(item?.data)}>
               <Image
-                source={require('../../assets/images/explore-card-2.png')}
+                source={{ uri: `${ImageUrl}${item?.data?.images?.[0]}` }}
                 style={tw`rounded-2xl w-4/12 h-24`}
               />
+
+
+
               <View
                 style={tw`flex-1 justify-between flex-row items-center gap-2`}>
                 <View style={tw`gap-y-1`}>
@@ -233,6 +228,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
                     </View>
                     <Text style={tw`text-gray100 font-WorkRegular text-sm`}>
                       {item?.data?.location || 'Location'}
+                      {/* {ImageUrl + item?.data?.images[0]} */}
                     </Text>
                   </View>
                   <View style={tw`flex-row gap-4`}>
@@ -242,7 +238,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
                         style={tw`h-6 w-6`}
                       />
                       <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
-                        50 coins
+                        {item?.data?.coins}
                       </Text>
                     </View>
 
@@ -252,7 +248,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
                         style={tw`h-6 w-6`}
                       />
                       <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
-                        100 XP
+                        {item?.data?.xp}
                       </Text>
                     </View>
                   </View>
