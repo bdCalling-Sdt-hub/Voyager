@@ -8,7 +8,7 @@ export const FriendSlice = api.injectEndpoints({
       query: () => ({
         url: `/add-friends?per_page=10&page=1`,
       }),
-      providesTags: ['addFriends', 'cancelFriendRequest'],
+      providesTags: ['friend'],
     }),
     // send friend request
     sendFriendRequest: builder.mutation({
@@ -19,7 +19,7 @@ export const FriendSlice = api.injectEndpoints({
           method: 'POST',
         };
       },
-      invalidatesTags: ['addFriends'],
+      invalidatesTags: ['friend'],
     }),
 
     // cancel friend request
@@ -28,7 +28,7 @@ export const FriendSlice = api.injectEndpoints({
         url: `/cancel-request?friend_id=${id}&_method=PUT`,
         method: 'POST',
       }),
-      invalidatesTags: ['cancelFriendRequest'],
+      invalidatesTags: ['friend'],
     }),
 
     // unfriend user
@@ -37,14 +37,14 @@ export const FriendSlice = api.injectEndpoints({
         url: `/unfriend?friend_id=${id}`,
         method: 'PUT',
       }),
-      invalidatesTags: ['addFriends'],
+      invalidatesTags: ['friend'],
     }),
     // get friend requests
     getFriendRequests: builder.query({
       query: () => ({
         url: `/user-friend-requests`,
       }),
-      providesTags: ['addFriends', 'cancelFriendRequest'],
+      providesTags: ['friend'],
     }),
     // get friends
     getFriends: builder.query({
@@ -61,7 +61,7 @@ export const FriendSlice = api.injectEndpoints({
           method: 'PATCH',
         };
       },
-      invalidatesTags: ['addFriends'],
+      invalidatesTags: ['friend'],
     }),
   }),
 });

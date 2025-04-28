@@ -7,6 +7,7 @@ export const AuthSlice = api.injectEndpoints({
       query: () => ({
         url: `/get-subscription`,
       }),
+      providesTags: ['subscription'],
     }),
 
     createPaymentIntent: builder.mutation({
@@ -15,6 +16,7 @@ export const AuthSlice = api.injectEndpoints({
         method: 'POST',
         body: data,
       }),
+      invalidatesTags: ['subscription'],
     }),
 
     paymentSuccess: builder.mutation({
@@ -23,17 +25,20 @@ export const AuthSlice = api.injectEndpoints({
         method: 'POST',
         body: data,
       }),
+      invalidatesTags: ['subscription'],
     }),
 
     getMysubscription: builder.query({
       query: ({id}) => ({
         url: `/my-subscription?user_id=${id}`,
       }),
+      providesTags: ['subscription'],
     }),
     invoichistory: builder.query({
       query: () => ({
         url: `/invoice-history`,
       }),
+      providesTags: ['subscription'],
     }),
   }),
 });

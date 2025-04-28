@@ -11,6 +11,7 @@ export const AuthApiSlice = api.injectEndpoints({
           body: data,
         };
       },
+      invalidatesTags: ['auth'],
     }),
 
     // signUp
@@ -20,6 +21,7 @@ export const AuthApiSlice = api.injectEndpoints({
         method: 'POST',
         body: data,
       }),
+      invalidatesTags: ['auth'],
     }),
 
     // get username
@@ -80,6 +82,7 @@ export const AuthApiSlice = api.injectEndpoints({
         method: 'POST',
         body: data,
       }),
+      invalidatesTags: ['auth'],
     }),
 
     // get profile
@@ -87,7 +90,7 @@ export const AuthApiSlice = api.injectEndpoints({
       query: () => ({
         url: `/profile`,
       }),
-      providesTags: ['visited', 'profileUpdate', 'updateAvatar'],
+      providesTags: ['auth'],
     }),
 
     // update profile
@@ -97,7 +100,7 @@ export const AuthApiSlice = api.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ['profileUpdate'],
+      invalidatesTags: ['auth'],
     }),
 
     // token validation check
@@ -112,11 +115,7 @@ export const AuthApiSlice = api.injectEndpoints({
       query: ({id}) => ({
         url: `/user-friend-profile?friend_id=${id}`,
       }),
-      providesTags: [
-        'cancelFriendRequest',
-        'addFriends',
-        'cancelFriendRequest',
-      ],
+      providesTags: ['auth'],
     }),
   }),
 });

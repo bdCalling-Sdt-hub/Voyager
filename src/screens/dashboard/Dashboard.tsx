@@ -1,41 +1,90 @@
-import React, {useState} from 'react';
-import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  FlatList,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {
   IconColoredRightArrow,
-  IconFilledHeart,
   IconSearch,
   IconVerifiedLocation,
 } from '../../assets/icons/Icons';
+import React, {useState} from 'react';
 import {
   useAppDashboardQuery,
+  useGetBucketListDataQuery,
   useGetWeeklyQuestProgressQuery,
 } from '../../redux/apiSlices/dashboardApiSlice';
 
-import {SvgXml} from 'react-native-svg';
-import Header from '../../components/header/Header';
+import AttractionCard from '../../components/cards/AttractionCard';
 import CircularProgress from '../../components/progressBar/CircularProgress';
+import Header from '../../components/header/Header';
+import {PrimaryColor} from '../utils/utils';
 import RangeSlider from '../../components/slider/RangeSlider';
+import {RefreshControl} from 'react-native-gesture-handler';
+import {SvgXml} from 'react-native-svg';
+import {makeImage} from '../../redux/api/baseApi';
 import tw from '../../lib/tailwind';
-import {getCompletionPercentage} from '../../utils/functions/functions';
-import places from '../../utils/json/places.json';
+import {useGetBucketListProgressQuery} from '../../redux/apiSlices/bucketApiSlice';
 
 const Dashboard = ({navigation}: any) => {
   const [activePlace, setActivePlace] = useState('attractions');
 
   // rtk query hooks
-  const {data: appDashboard} = useAppDashboardQuery({});
-  const {data: weeklyQuest} = useGetWeeklyQuestProgressQuery({});
+  const {
+    data: appDashboard,
+    isFetching: appDashboardFetching,
+    isLoading: appDashboardLoading,
+    refetch: appDashboardRefetch,
+  } = useAppDashboardQuery({});
+  const {
+    data: weeklyQuest,
+    isFetching: weeklyQuestFetching,
+    isLoading: weeklyQuestLoading,
+    refetch: weeklyQuestRefetch,
+  } = useGetWeeklyQuestProgressQuery({});
+  const {
+    data: bucketListProgress,
+    isFetching: bucketListProgressFetching,
+    isLoading: bucketListProgressLoading,
+    refetch: bucketListProgressRefetch,
+  } = useGetBucketListProgressQuery({});
+  const {
+    data: bucketListData,
+    isFetching: bucketListDataFetching,
+    isLoading: bucketListDataLoading,
+    refetch: bucketListDataRefetch,
+  } = useGetBucketListDataQuery({});
 
-  const weeklyQuestProgress = getCompletionPercentage(
-    weeklyQuest?.data?.completedCount ?? 0,
-    weeklyQuest?.data?.total_quest ?? 0,
-  );
+  const handleVisitLocation = async (item: any) => {
+    navigation?.navigate('DestinationDetails', {item});
+  };
 
   return (
     <>
       <ScrollView
+        refreshControl={
+          <RefreshControl
+            colors={[PrimaryColor]}
+            refreshing={
+              appDashboardFetching ||
+              weeklyQuestFetching ||
+              bucketListProgressFetching ||
+              bucketListDataFetching
+            }
+            onRefresh={() => {
+              appDashboardRefetch();
+              weeklyQuestRefetch();
+              bucketListDataRefetch();
+              bucketListProgressRefetch();
+            }}
+          />
+        }
         showsVerticalScrollIndicator={false}
         style={tw`px-[4%] bg-white dark:bg-primaryDark`}
+        contentContainerStyle={tw`pb-10`}
         keyboardShouldPersistTaps="always">
         <Header
           title="Dashboard"
@@ -51,7 +100,7 @@ const Dashboard = ({navigation}: any) => {
           style={tw`border border-gray90 dark:border-gray-700 p-4 rounded-2xl my-4`}>
           <View style={tw`flex-row bg-gray80 dark:bg-darkBg p-1 rounded-full`}>
             <TouchableOpacity
-              style={tw`${
+              style={tw`flex-row gap-1 ${
                 activePlace === 'attractions' ? 'bg-violet100' : ''
               } py-3 rounded-full flex-1 justify-center items-center`}
               onPress={() => setActivePlace('attractions')}>
@@ -61,9 +110,22 @@ const Dashboard = ({navigation}: any) => {
                 } text-xs font-WorkMedium`}>
                 Attractions
               </Text>
+              <View
+                style={tw`h-5 w-5 ${
+                  activePlace === 'attractions' ? 'bg-white' : 'bg-gray100'
+                } rounded-full text-center items-center justify-center`}>
+                <Text
+                  style={tw`text-xs ${
+                    activePlace === 'attractions'
+                      ? 'text-violet100'
+                      : 'text-white'
+                  }`}>
+                  {appDashboard?.data?.totalAttraction}
+                </Text>
+              </View>
             </TouchableOpacity>
             <TouchableOpacity
-              style={tw`${
+              style={tw`flex-row gap-1  ${
                 activePlace === 'cities' ? 'bg-violet100' : ''
               } py-3 rounded-full flex-1 justify-center items-center`}
               onPress={() => setActivePlace('cities')}>
@@ -73,9 +135,20 @@ const Dashboard = ({navigation}: any) => {
                 } text-xs font-WorkMedium`}>
                 Cities
               </Text>
+              <View
+                style={tw`h-5 w-5 ${
+                  activePlace === 'cities' ? 'bg-white' : 'bg-gray100'
+                } rounded-full text-center items-center justify-center`}>
+                <Text
+                  style={tw`text-xs ${
+                    activePlace === 'cities' ? 'text-violet100' : 'text-white'
+                  }`}>
+                  {appDashboard?.data?.totalCity}
+                </Text>
+              </View>
             </TouchableOpacity>
             <TouchableOpacity
-              style={tw`${
+              style={tw`flex-row gap-1 ${
                 activePlace === 'countries' ? 'bg-violet100' : ''
               } py-3 rounded-full flex-1 justify-center items-center`}
               onPress={() => setActivePlace('countries')}>
@@ -85,6 +158,19 @@ const Dashboard = ({navigation}: any) => {
                 }  text-xs font-WorkMedium`}>
                 Countries
               </Text>
+              <View
+                style={tw`h-5 w-5 ${
+                  activePlace === 'countries' ? 'bg-white' : 'bg-gray100'
+                } rounded-full text-center items-center justify-center`}>
+                <Text
+                  style={tw`text-xs ${
+                    activePlace === 'countries'
+                      ? 'text-violet100'
+                      : 'text-white'
+                  }`}>
+                  {appDashboard?.data?.totalCountry}
+                </Text>
+              </View>
             </TouchableOpacity>
           </View>
           <TouchableOpacity
@@ -94,7 +180,15 @@ const Dashboard = ({navigation}: any) => {
             style={tw`bg-violet80 dark:bg-darkBg 
             flex-row rounded-2xl items-center mt-4`}>
             <View style={tw`w-4/12`}>
-              <CircularProgress percentage={70} />
+              <CircularProgress
+                percentage={
+                  activePlace === 'attractions'
+                    ? appDashboard?.data?.attractionProgress
+                    : activePlace === 'cities'
+                    ? appDashboard?.data?.cityProgress
+                    : appDashboard?.data?.countyProgress
+                }
+              />
             </View>
             <View style={tw`gap-y-2`}>
               <Text
@@ -114,56 +208,42 @@ const Dashboard = ({navigation}: any) => {
             <Text style={tw`text-gray100 text-xs font-WorkRegular mt-4 mb-2`}>
               Places you visited
             </Text>
-            <ScrollView
-              horizontal
-              contentContainerStyle={tw`flex-row items-center gap-2`}
-              showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation?.navigate('DestinationDetails');
-                }}>
-                <Image source={require('../../assets/images/city-1.png')} />
-                <SvgXml
-                  xml={IconVerifiedLocation}
-                  style={tw`absolute bottom-2 right-2`}
-                />
-              </TouchableOpacity>
-              <View>
-                <Image source={require('../../assets/images/city-2.png')} />
-                <SvgXml
-                  xml={IconVerifiedLocation}
-                  style={tw`absolute bottom-2 right-2`}
-                />
-              </View>
-              <View>
-                <Image source={require('../../assets/images/city-3.png')} />
-                <SvgXml
-                  xml={IconVerifiedLocation}
-                  style={tw`absolute bottom-2 right-2`}
-                />
-              </View>
-              <View>
-                <Image source={require('../../assets/images/city-1.png')} />
-                <SvgXml
-                  xml={IconVerifiedLocation}
-                  style={tw`absolute bottom-2 right-2`}
-                />
-              </View>
-              <View>
-                <Image source={require('../../assets/images/city-2.png')} />
-                <SvgXml
-                  xml={IconVerifiedLocation}
-                  style={tw`absolute bottom-2 right-2`}
-                />
-              </View>
-              <View>
-                <Image source={require('../../assets/images/city-3.png')} />
-                <SvgXml
-                  xml={IconVerifiedLocation}
-                  style={tw`absolute bottom-2 right-2`}
-                />
-              </View>
-            </ScrollView>
+
+            <>
+              <FlatList
+                data={
+                  activePlace === 'attractions'
+                    ? appDashboard?.data?.visitedCity
+                    : activePlace === 'cities'
+                    ? appDashboard?.data?.visitedCity
+                    : appDashboard?.data?.visitedCountry || []
+                }
+                horizontal
+                contentContainerStyle={tw`flex-row items-center gap-2`}
+                showsHorizontalScrollIndicator={false}
+                renderItem={({index, item}) => {
+                  // console.log(makeImage(item?.images[0]));
+                  return (
+                    <TouchableOpacity
+                      onPress={() => {
+                        handleVisitLocation(item);
+                      }}>
+                      <Image
+                        style={tw`w-24 h-22 rounded-lg`}
+                        key={index}
+                        source={{
+                          uri: makeImage(item?.images![0]),
+                        }}
+                      />
+                      <SvgXml
+                        xml={IconVerifiedLocation}
+                        style={tw`absolute bottom-2 right-2`}
+                      />
+                    </TouchableOpacity>
+                  );
+                }}
+              />
+            </>
           </View>
         </View>
 
@@ -176,28 +256,40 @@ const Dashboard = ({navigation}: any) => {
             Weekly Quests Progress
           </Text>
           <Text style={tw`text-xs text-black dark:text-white font-WorkMedium`}>
-            Completed 1/3
+            Completed {weeklyQuest?.data?.completedCount}/
+            {weeklyQuest?.data?.total_quest} quests
           </Text>
           <View style={tw`mt-4`} pointerEvents="none">
-            <RangeSlider color="#ff5c8d" value={weeklyQuestProgress} />
+            <RangeSlider
+              color="#ff5c8d"
+              value={weeklyQuest?.data?.questProgress}
+            />
           </View>
         </TouchableOpacity>
 
         {/* bucket list progress */}
-        <TouchableOpacity
-          style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-blue80 dark:bg-darkBg mt-4`}
-          onPress={() => navigation.navigate('Places')}>
-          <Text
-            style={tw`text-black dark:text-white text-base font-WorkMedium mb-2`}>
-            Bucket List Progress
-          </Text>
-          <Text style={tw`text-xs font-WorkMedium text-black dark:text-white`}>
-            Visited 14/40
-          </Text>
-          <View pointerEvents="none">
-            <RangeSlider color="#32B1B4" containerStyle={tw`mt-4`} value={35} />
-          </View>
-        </TouchableOpacity>
+        {bucketListProgress?.data?.coin || (
+          <TouchableOpacity
+            style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-blue80 dark:bg-darkBg mt-4`}
+            onPress={() => navigation.navigate('Places')}>
+            <Text
+              style={tw`text-black dark:text-white text-base font-WorkMedium mb-2`}>
+              Bucket List Progress
+            </Text>
+            <Text
+              style={tw`text-xs font-WorkMedium text-black dark:text-white`}>
+              Visited {bucketListProgress?.data?.usedBuckets}/
+              {bucketListProgress?.data?.totalBucketSpace}
+            </Text>
+            <View pointerEvents="none">
+              <RangeSlider
+                color="#32B1B4"
+                containerStyle={tw`mt-4`}
+                value={bucketListProgress?.data?.progress}
+              />
+            </View>
+          </TouchableOpacity>
+        )}
 
         <View style={tw`mt-8 pb-2`}>
           <TouchableOpacity
@@ -215,40 +307,17 @@ const Dashboard = ({navigation}: any) => {
             <SvgXml xml={IconColoredRightArrow} />
           </TouchableOpacity>
 
-          {places.map(place => (
-            <TouchableOpacity
-              style={tw`flex-row items-center gap-2 rounded-2xl mt-6 p-1 ${
-                place?.color
-                  ? `border-r border-b border-b-[${place?.color}] border-r-[${place?.color}]`
-                  : ''
-              }`}
-              key={place.id}
-              onPress={() => {
-                navigation?.navigate('DestinationDetails');
-              }}>
-              <Image
-                source={{uri: place?.image_url}}
-                style={tw`rounded-2xl w-4/12 h-24`}
-              />
-              <View
-                style={tw`flex-1 justify-between flex-row items-center gap-2`}>
-                <View style={tw`gap-y-1`}>
-                  <View style={tw``}>
-                    <View style={tw`flex-row items-center`}>
-                      <Text
-                        style={tw`text-black dark:text-white font-WorkSemiBold text-[20px]`}>
-                        {place?.title}
-                      </Text>
-                    </View>
-                    <Text style={tw`text-gray100 font-WorkRegular text-sm`}>
-                      {place?.subtitle || 'Location'}
-                    </Text>
-                  </View>
-                </View>
-              </View>
-              <SvgXml xml={IconFilledHeart} style={tw`mr-1.5`} />
-            </TouchableOpacity>
-          ))}
+          <View style={tw`gap-2 mt-4`}>
+            {bucketListData?.data?.data?.map(item => {
+              // console.log(makeImage(item?.images![0]));
+              return (
+                <AttractionCard
+                  item={item}
+                  handleVisitLocation={handleVisitLocation}
+                />
+              );
+            })}
+          </View>
         </View>
       </ScrollView>
     </>

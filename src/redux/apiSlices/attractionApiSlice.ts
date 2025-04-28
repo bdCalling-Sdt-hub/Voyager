@@ -8,28 +8,28 @@ export const AttractionSlice = api.injectEndpoints({
       query: () => ({
         url: `/get-attraction`,
       }),
-      providesTags: ['bucketlistRemoved', 'bucketlistAdded'],
+      providesTags: ['attractions'],
     }),
     // get top destination
     getTopDestination: builder.query({
       query: () => ({
         url: `/destination`,
       }),
-      providesTags: ['bucketlistAdded'],
+      providesTags: ['attractions'],
     }),
     // get personalized picks
     getPersonalized: builder.query({
       query: () => ({
         url: `/personalized`,
       }),
-      providesTags: ['bucketlistRemoved', 'bucketlistAdded', 'visited'],
+      providesTags: ['attractions'],
     }),
     // get city
     getCity: builder.query({
       query: () => ({
         url: `/get-city`,
       }),
-      providesTags: ['bucketlistRemoved', 'bucketlistAdded'],
+      providesTags: ['attractions'],
     }),
 
     // get country
@@ -37,7 +37,7 @@ export const AttractionSlice = api.injectEndpoints({
       query: () => ({
         url: `/get-country`,
       }),
-      providesTags: ['bucketlistRemoved', 'bucketlistAdded'],
+      providesTags: ['attractions'],
     }),
 
     // get user friend attractions
@@ -45,13 +45,14 @@ export const AttractionSlice = api.injectEndpoints({
       query: ({id}) => ({
         url: `/user-friend-attraction?friend_id=${id}&per_page=10`,
       }),
+      providesTags: ['attractions'],
     }),
     // get visited
     getVisited: builder.query({
       query: () => ({
         url: `/get-visited`,
       }),
-      providesTags: ['bucketlistRemoved', 'bucketlistAdded'],
+      providesTags: ['attractions'],
     }),
     //     // get mark as visited
     getMarkAsVisited: builder.query({
@@ -60,7 +61,7 @@ export const AttractionSlice = api.injectEndpoints({
           url: `/get-mark-visited?id=${id}&type=${type}`,
         };
       },
-      providesTags: ['visited'],
+      providesTags: ['attractions'],
     }),
     // mark as visited
     markAsVisited: builder.mutation({
@@ -71,7 +72,7 @@ export const AttractionSlice = api.injectEndpoints({
           body: data,
         };
       },
-      invalidatesTags: ['visited'],
+      invalidatesTags: ['attractions', 'bucket', 'dashboard'],
     }),
     // location visit
     locationVisit: builder.mutation({
@@ -82,6 +83,7 @@ export const AttractionSlice = api.injectEndpoints({
           body: data,
         };
       },
+      invalidatesTags: ['attractions'],
     }),
   }),
 });

@@ -8,6 +8,13 @@ export const DashboardSlice = api.injectEndpoints({
       query: () => ({
         url: `/app-dashboard`,
       }),
+      providesTags: ['dashboard'],
+    }),
+    getBucketListData: builder.query({
+      query: () => ({
+        url: `/dashboard-bucklist-data`,
+      }),
+      providesTags: ['dashboard'],
     }),
 
     // get weekly quest progress
@@ -15,9 +22,13 @@ export const DashboardSlice = api.injectEndpoints({
       query: () => ({
         url: `/dashboard-weekly-quest-progress`,
       }),
+      providesTags: ['dashboard'],
     }),
   }),
 });
 
-export const {useAppDashboardQuery, useGetWeeklyQuestProgressQuery} =
-  DashboardSlice;
+export const {
+  useAppDashboardQuery,
+  useGetWeeklyQuestProgressQuery,
+  useGetBucketListDataQuery,
+} = DashboardSlice;

@@ -8,6 +8,7 @@ export const SettingSlice = api.injectEndpoints({
       query: () => ({
         url: `/get-achivevement`,
       }),
+      providesTags: ['setting'],
     }),
 
     // shop banner
@@ -15,6 +16,7 @@ export const SettingSlice = api.injectEndpoints({
       query: () => ({
         url: `/get-shopbanner`,
       }),
+      providesTags: ['setting'],
     }),
 
     // get notifications
@@ -22,6 +24,7 @@ export const SettingSlice = api.injectEndpoints({
       query: () => ({
         url: `/notifications`,
       }),
+      providesTags: ['setting'],
     }),
 
     // get faq
@@ -29,6 +32,7 @@ export const SettingSlice = api.injectEndpoints({
       query: () => ({
         url: `/get-faq`,
       }),
+      providesTags: ['setting'],
     }),
 
     // get terms and conditions
@@ -36,6 +40,7 @@ export const SettingSlice = api.injectEndpoints({
       query: () => ({
         url: `/get-term_condition`,
       }),
+      providesTags: ['setting'],
     }),
 
     // --------- travel preferences ---------
@@ -45,7 +50,7 @@ export const SettingSlice = api.injectEndpoints({
       query: () => ({
         url: `/get-preference`,
       }),
-      providesTags: ['travelInterest'],
+      providesTags: ['setting'],
     }),
 
     //  add travel interest
@@ -57,7 +62,7 @@ export const SettingSlice = api.injectEndpoints({
           body: data,
         };
       },
-      invalidatesTags: ['travelInterest'],
+      invalidatesTags: ['setting'],
     }),
   }),
 });

@@ -1,4 +1,3 @@
-import React, {useState} from 'react';
 import {
   Alert,
   Image,
@@ -7,26 +6,27 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {RadioButton, RadioGroup} from 'react-native-ui-lib';
 import {IconLightCamera, IconLock2} from '../../assets/icons/Icons';
-import {
-  useGetProfileQuery,
-  useUpdateProfileMutation,
-} from '../../redux/apiSlices/authApiSlice';
+import {RadioButton, RadioGroup} from 'react-native-ui-lib';
+import React, {useState} from 'react';
 import {
   useBuyAvatarMutation,
   useEquipAvatarMutation,
   useGetAvatarQuery,
-} from '../../redux/apiSlices/qauipmentSlice';
+} from '../../redux/apiSlices/equipmentSlice';
+import {
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+} from '../../redux/apiSlices/authApiSlice';
 
-import {SvgXml} from 'react-native-svg';
+import {AvatarData} from '../utils/types';
+import CountryDropdown from './CountryDropdown';
 import Header from '../../components/header/Header';
 import InputText from '../../components/inputs/InputText';
 import NormalModal from '../../components/modals/NormalModal';
-import tw from '../../lib/tailwind';
+import {SvgXml} from 'react-native-svg';
 import {baseUrl} from '../utils/exports';
-import {AvatarData} from '../utils/types';
-import CountryDropdown from './CountryDropdown';
+import tw from '../../lib/tailwind';
 
 const ProfileSettings = ({navigation}: any) => {
   const [bucketlistPrivacy, setBucketlistPrivacy] = useState('public');
