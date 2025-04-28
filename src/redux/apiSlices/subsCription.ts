@@ -1,4 +1,4 @@
-import { api } from "./BaseApi";
+import {api} from '../api/baseApi';
 
 export const AuthSlice = api.injectEndpoints({
   overrideExisting: true,
@@ -35,16 +35,13 @@ export const AuthSlice = api.injectEndpoints({
         url: `/invoice-history`,
       }),
     }),
-
-
-
   }),
 });
 
-export const { 
+export const {
   useGetSubscriptionQuery,
   useCreatePaymentIntentMutation,
   usePaymentSuccessMutation,
   useGetMysubscriptionQuery,
-  useInvoichistoryQuery
+  useInvoichistoryQuery,
 } = AuthSlice;

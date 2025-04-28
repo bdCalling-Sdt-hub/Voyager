@@ -4,7 +4,7 @@ import React from 'react';
 import {SvgXml} from 'react-native-svg';
 import {IconLeftArrow} from '../../assets/icons/Icons';
 import tw from '../../lib/tailwind';
-import {useGetTermsAndConditionsQuery} from '../../redux/slice/ApiSlice';
+import {useGetTermsAndConditionsQuery} from '../../redux/apiSlices/settingSlice';
 
 const TermsAndConditions = ({navigation}: any) => {
   // rkt query hooks

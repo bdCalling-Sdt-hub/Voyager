@@ -12,7 +12,7 @@ import {
 import {
   useGetUserNameQuery,
   useSignUpMutation,
-} from '../../redux/slice/ApiSlice';
+} from '../../redux/apiSlices/authApiSlice';
 
 import {SvgXml} from 'react-native-svg';
 import {Checkbox} from 'react-native-ui-lib';

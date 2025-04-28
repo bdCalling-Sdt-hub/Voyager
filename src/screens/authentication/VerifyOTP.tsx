@@ -12,7 +12,7 @@ import {
 import {
   useResendOTPMutation,
   useVerifyOTPMutation,
-} from '../../redux/slice/ApiSlice';
+} from '../../redux/apiSlices/authApiSlice';
 
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
