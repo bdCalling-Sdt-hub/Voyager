@@ -33,6 +33,11 @@ const Places = ({navigation, route}: NavigProps<null>) => {
   const {data: bucketListBanner} = useGetBucketListBannerQuery({});
   const [locationVisit, {isLoading}] = useLocationVisitMutation();
 
+
+  console.log('bucketListBanner: ', bucketListBanner);
+  console.log('bucketlistattractions', bucketListAttractions?.data?.attractions?.data);
+  console.log('bucketListCities: ', bucketListCities);
+  console.log('bucketListCountries', bucketListCountries);
   // handlers
   const handleVisitLocation = async (item: any) => {
     const data = {type: item?.type, visited: '1'};
