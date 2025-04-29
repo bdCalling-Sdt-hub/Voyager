@@ -1,5 +1,6 @@
 import {ActivityIndicator, StyleSheet, TouchableOpacity} from 'react-native';
 
+import {PrimaryColor} from '../../screens/utils/utils';
 import React from 'react';
 import {SvgXml} from 'react-native-svg';
 import tw from '../../lib/tailwind';
@@ -27,17 +28,14 @@ const IButton = ({
     <TouchableOpacity
       onPress={onPress}
       disabled={isLoading || disabled}
-      activeOpacity={0.5}
       style={[
-        tw`bg-primary  items-center  px-3 flex-row justify-center gap-3 rounded-2xl   ${
+        tw`bg-transparent  items-center  px-3 flex-row justify-center gap-3 rounded-2xl   ${
           disabled ? 'opacity-60' : 'opacity-100'
         }`,
         containerStyle,
       ]}>
       {isLoading ? (
-        <ActivityIndicator
-          color={loadingColor ? loadingColor : tw.color('bg-primary')}
-        />
+        <ActivityIndicator color={loadingColor ? loadingColor : PrimaryColor} />
       ) : (
         <>
           {icon ? (
