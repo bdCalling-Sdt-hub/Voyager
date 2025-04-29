@@ -1,12 +1,12 @@
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 
+import {AvatarData} from '../utils/types';
+import {IconLock2} from '../../assets/icons/Icons';
 import React from 'react';
 import {SvgXml} from 'react-native-svg';
-import {IconLock2} from '../../assets/icons/Icons';
-import tw from '../../lib/tailwind';
-import {useGetAvatarQuery} from '../../redux/apiSlices/qauipmentSlice';
 import {baseUrl} from '../utils/exports';
-import {AvatarData} from '../utils/types';
+import tw from '../../lib/tailwind';
+import {useGetAvatarQuery} from '../../redux/apiSlices/equipmentSlice';
 
 const Avatar = ({data}: any) => {
   // rtk query hooks

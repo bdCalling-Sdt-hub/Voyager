@@ -9,7 +9,7 @@ export const EquipmentSlice = api.injectEndpoints({
       query: () => ({
         url: `/get-shop-avatar`,
       }),
-      providesTags: ['updateAvatar'],
+      providesTags: ['equipment'],
     }),
 
     // equip avatar
@@ -21,7 +21,7 @@ export const EquipmentSlice = api.injectEndpoints({
           body: data,
         };
       },
-      invalidatesTags: ['updateProfile', 'updateAvatar'],
+      invalidatesTags: ['equipment'],
     }),
 
     // buy avatar
@@ -32,7 +32,7 @@ export const EquipmentSlice = api.injectEndpoints({
           method: 'POST',
         };
       },
-      invalidatesTags: ['updateAvatar'],
+      invalidatesTags: ['equipment'],
     }),
   }),
 });

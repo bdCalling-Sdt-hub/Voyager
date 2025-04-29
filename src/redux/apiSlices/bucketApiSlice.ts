@@ -8,7 +8,7 @@ export const BucketSlice = api.injectEndpoints({
       query: () => ({
         url: `/attraction-bucklist`,
       }),
-      providesTags: ['bucketlistRemoved', 'bucketlistAdded'],
+      providesTags: ['bucket'],
     }),
 
     // bucketlist cities
@@ -16,7 +16,14 @@ export const BucketSlice = api.injectEndpoints({
       query: () => ({
         url: `/city-bucklist`,
       }),
-      providesTags: ['bucketlistRemoved', 'bucketlistAdded'],
+      providesTags: ['bucket'],
+    }),
+    // bucketlist cities
+    getBucketListProgress: builder.query({
+      query: () => ({
+        url: `/dashboard-bucklist-progress`,
+      }),
+      providesTags: ['bucket'],
     }),
 
     // bucketlist countries
@@ -24,7 +31,7 @@ export const BucketSlice = api.injectEndpoints({
       query: () => ({
         url: `/country-bucklist`,
       }),
-      providesTags: ['bucketlistRemoved', 'bucketlistAdded'],
+      providesTags: ['bucket'],
     }),
 
     // bucketlist banner
@@ -43,7 +50,7 @@ export const BucketSlice = api.injectEndpoints({
           body: data,
         };
       },
-      invalidatesTags: ['bucketlistAdded'],
+      invalidatesTags: ['bucket', 'attractions', 'dashboard'],
     }),
 
     // get bucket list check
@@ -53,7 +60,7 @@ export const BucketSlice = api.injectEndpoints({
           url: `/get-bucket?id=${id}&type=${type}`,
         };
       },
-      providesTags: ['bucketlistAdded', 'bucketlistRemoved'],
+      providesTags: ['bucket'],
     }),
 
     // remove from bucket list
@@ -64,7 +71,7 @@ export const BucketSlice = api.injectEndpoints({
           method: 'PATCH',
         };
       },
-      invalidatesTags: ['bucketlistRemoved'],
+      invalidatesTags: ['bucket', 'attractions', 'dashboard'],
     }),
   }),
 });
@@ -74,7 +81,7 @@ export const {
   useGetBucketListCitiesQuery,
   useGetBucketListCountriesQuery,
   useGetBucketListBannerQuery,
-
+  useGetBucketListProgressQuery,
   useGetBucketListCheckQuery,
   useAddToBucketListMutation,
   useRemoveFromBucketListMutation,

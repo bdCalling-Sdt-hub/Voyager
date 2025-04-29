@@ -10,6 +10,7 @@ export const questSlice = api.injectEndpoints({
       query: () => ({
         url: `/weekly-quests`,
       }),
+      providesTags: ['quests'],
     }),
 
     // get quest achievements
@@ -17,6 +18,7 @@ export const questSlice = api.injectEndpoints({
       query: () => ({
         url: `/quest-achievement`,
       }),
+      providesTags: ['quests'],
     }),
   }),
 });

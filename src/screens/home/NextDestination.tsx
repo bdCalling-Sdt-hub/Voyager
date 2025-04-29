@@ -1,17 +1,5 @@
+import {Alert, FlatList, View} from 'react-native';
 import React, {useState} from 'react';
-import {
-  Alert,
-  FlatList,
-  Image,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import {
-  IconFilledHeart,
-  IconSearch,
-  IconWhiteHeart,
-} from '../../assets/icons/Icons';
 import {
   useGetAttractionsQuery,
   useGetCityQuery,
@@ -19,10 +7,11 @@ import {
   useLocationVisitMutation,
 } from '../../redux/apiSlices/attractionApiSlice';
 
-import {SvgXml} from 'react-native-svg';
+import AttractionCard from '../../components/cards/AttractionCard';
 import Header from '../../components/header/Header';
-import tw from '../../lib/tailwind';
+import {IconSearch} from '../../assets/icons/Icons';
 import {NavigProps} from '../../utils/interface/NaviProps';
+import tw from '../../lib/tailwind';
 
 const NextDestination = ({navigation, route}: NavigProps<null>) => {
   const {title} = route?.params || {};
@@ -109,56 +98,12 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
         showsVerticalScrollIndicator={false}
         onEndReached={fetchMoreData}
         onEndReachedThreshold={0.5}
+        contentContainerStyle={tw`pb-10 pt-2 gap-2`}
         renderItem={({item}) => (
-          <TouchableOpacity
-            style={tw`flex-row items-center p-1 gap-4 rounded-2xl border-r border-b border-b-[${activeColor()}] border-r-[${activeColor()}]`}
-            onPress={() => handleVisitLocation(item)}>
-            <Image
-              source={require('../../assets/images/explore-card-2.png')}
-              style={tw`rounded-2xl w-4/12 h-24`}
-            />
-            <View
-              style={tw`flex-1 justify-between flex-row items-center gap-2`}>
-              <View style={tw`gap-y-1`}>
-                <View>
-                  <Text
-                    style={tw`text-black dark:text-white font-WorkSemiBold text-[20px]`}>
-                    {item?.name}
-                  </Text>
-                  <Text style={tw`text-gray100 font-WorkRegular text-sm`}>
-                    {item?.location || 'Location'}
-                  </Text>
-                </View>
-                <View style={tw`flex-row gap-4`}>
-                  <View style={tw`flex-row items-center gap-1 flex-shrink`}>
-                    <Image
-                      source={require('../../assets/images/coin.png')}
-                      style={tw`h-6 w-6`}
-                    />
-                    <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
-                      {item?.coins} coins
-                    </Text>
-                  </View>
-                  <View style={tw`flex-row items-center gap-1 flex-shrink`}>
-                    <Image
-                      source={require('../../assets/images/trophy.png')}
-                      style={tw`h-6 w-6`}
-                    />
-                    <Text style={tw`text-gray100 text-xs font-WorkRegular`}>
-                      {item?.xp} XP
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-            <SvgXml
-              xml={
-                item?.bucketlist_status === 'bucketlisted'
-                  ? IconFilledHeart
-                  : IconWhiteHeart
-              }
-            />
-          </TouchableOpacity>
+          <AttractionCard
+            item={item}
+            handleVisitLocation={handleVisitLocation}
+          />
         )}
       />
     </View>

@@ -65,23 +65,23 @@ export const api = createApi({
   baseQuery: baseQueryWithRath,
   endpoints: () => ({}),
   tagTypes: [
-    'bucketlistAdded',
-    'bucketlistRemoved',
-    'visited',
-    'profileUpdate',
-    'addFriends',
-    'updateProfile',
-    'updateAvatar',
-    'cancelFriendRequest',
-    'travelInterest',
+    'auth',
+    'attractions',
+    'bucket',
+    'friend',
+    'dashboard',
+    'equipment',
+    'quests',
+    'setting',
+    'subscription',
   ],
 });
 
 export const ImageUrl = 'http://137.59.180.219:8002/';
 
-export const MakeImage = (url: string) => {
+export const makeImage = (url: string) => {
   if (url) {
-    return `${ImageUrl}${url}`;
+    return ImageUrl + url;
   }
-  return null;
+  return '';
 };
