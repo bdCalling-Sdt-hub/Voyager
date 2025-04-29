@@ -39,6 +39,7 @@ export const BucketSlice = api.injectEndpoints({
       query: () => ({
         url: `/user-bucket`,
       }),
+      providesTags: ['bucket'],
     }),
 
     // add to bucket list

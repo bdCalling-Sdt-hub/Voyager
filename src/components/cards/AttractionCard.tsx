@@ -51,6 +51,7 @@ export default function AttractionCard({
     const data = {type: item?.type};
     try {
       const response = await addToBucketList({id: item?.id, data}).unwrap();
+      console.log(response);
       if (response?.error?.success === false) {
         Alert.alert(
           'Warning',

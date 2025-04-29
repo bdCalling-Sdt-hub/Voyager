@@ -240,7 +240,8 @@ const Dashboard = ({navigation}: any) => {
                     <TouchableOpacity
                       onPress={() => {
                         handleVisitLocation(item);
-                      }}>
+                      }}
+                      disabled>
                       <Image
                         style={tw`w-24 h-22 rounded-lg`}
                         key={index}
@@ -301,6 +302,13 @@ const Dashboard = ({navigation}: any) => {
                 value={bucketListProgress?.data?.progress}
               />
             </View>
+            {bucketListProgress?.data?.message && (
+              <View style={tw`mt-2`}>
+                <Text style={tw`text-sm font-serif text-[#32B1B4] `}>
+                  {bucketListProgress?.data?.message}
+                </Text>
+              </View>
+            )}
           </TouchableOpacity>
         )}
 
@@ -324,16 +332,19 @@ const Dashboard = ({navigation}: any) => {
           </TouchableOpacity>
 
           <View style={tw`gap-2 mt-4`}>
-            {bucketListData?.data?.data?.map((item: any, index: number) => {
-              // console.log(makeImage(item?.images![0]));
-              return (
-                <AttractionCard
-                  key={index + item?.id + item?.type + Math.random() * 6000}
-                  item={item}
-                  handleVisitLocation={handleVisitLocation}
-                />
-              );
-            })}
+            <FlatList
+              scrollEnabled={false}
+              data={bucketListData?.data?.data || []}
+              renderItem={({item, index}) => {
+                return (
+                  <AttractionCard
+                    key={index + item?.id + item?.type + Math.random() * 6000}
+                    item={item}
+                    handleVisitLocation={handleVisitLocation}
+                  />
+                );
+              }}
+            />
           </View>
         </View>
       </ScrollView>

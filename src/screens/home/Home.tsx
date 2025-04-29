@@ -122,6 +122,7 @@ const Home = ({navigation}: NavigProps<null>) => {
             IconRouteName="Dashboard"
             isSearchVisible={true}
             searchBarShow={true}
+            // hideFilterIcon={true}
           />
           <View>
             <View style={tw`mt-4`}>

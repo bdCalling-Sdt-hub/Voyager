@@ -24,6 +24,7 @@ import ProfileSettings from '../screens/settings/ProfileSettings';
 import ProgressBucketlist from '../screens/progressBucketlist/ProgressBucketlist';
 import {Provider} from 'react-redux';
 import Registration from '../screens/authentication/Registration';
+import SearchScreen from '../screens/search/SearchScreen';
 import SetNewPassword from '../screens/authentication/SetNewPassword';
 import Settings from '../screens/settings/Settings';
 import Shop from '../screens/shop/Shop';
@@ -121,6 +122,7 @@ const AppRoutes = () => {
               name="TravelPreferences"
               component={TravelPreferences}
             />
+            <Stack.Screen name="Search" component={SearchScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </GestureHandlerRootView>
