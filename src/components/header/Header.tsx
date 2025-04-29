@@ -1,4 +1,12 @@
-import React, {useState} from 'react';
+import {Checkbox, RadioButton, RadioGroup} from 'react-native-ui-lib';
+import {
+  IconClose,
+  IconFilter,
+  IconLeftArrow,
+  IconSearch,
+  experiType1,
+  experiType2,
+} from '../../assets/icons/Icons';
 import {
   Image,
   Pressable,
@@ -9,24 +17,16 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {Checkbox, RadioButton, RadioGroup} from 'react-native-ui-lib';
-import {
-  IconClose,
-  IconFilter,
-  IconLeftArrow,
-  IconSearch,
-  experiType1,
-  experiType2,
-} from '../../assets/icons/Icons';
+import React, {useState} from 'react';
 
-import {useNavigation} from '@react-navigation/native';
-import {SvgXml} from 'react-native-svg';
-import {useAppColorScheme} from 'twrnc';
-import tw from '../../lib/tailwind';
-import {useGetProfileQuery} from '../../redux/apiSlices/authApiSlice';
-import {baseUrl} from '../../screens/utils/exports';
-import {useAppContext} from '../../utils/context/AppContext';
 import NormalModal from '../modals/NormalModal';
+import {SvgXml} from 'react-native-svg';
+import {baseUrl} from '../../screens/utils/exports';
+import tw from '../../lib/tailwind';
+import {useAppColorScheme} from 'twrnc';
+import {useAppContext} from '../../utils/context/AppContext';
+import {useGetProfileQuery} from '../../redux/apiSlices/authApiSlice';
+import {useNavigation} from '@react-navigation/native';
 
 interface Props {
   title?: string;
@@ -130,7 +130,7 @@ const Header = ({
           tw`flex-row  w-full items-center justify-between py-2 z-10`,
           containerStyle,
         ]}>
-        <View style={tw`flex-1`}>
+        <View style={tw`flex-row items-center`}>
           <TouchableWithoutFeedback
             style={[tw``, imageContainer]}
             onPress={() => {
@@ -287,15 +287,16 @@ const Header = ({
         <View style={[tw`flex-1 items-center`, titleContainer]}>
           {middleComponent || (
             <Text
+              // numberOfLines={1}
               style={[
-                tw`text-black dark:text-white text-[22px] font-WorkMedium capitalize`,
+                tw`text-black  dark:text-white text-xl font-WorkMedium capitalize`,
                 titleStyle,
               ]}>
               {title}
             </Text>
           )}
         </View>
-        <View style={tw`flex-1 items-end`}>
+        <View style={tw`items-end`}>
           {rightComponent || !hideRightIcon ? (
             <TouchableOpacity
               style={[
@@ -328,6 +329,9 @@ const Header = ({
             <TextInput
               placeholder="Search"
               style={tw`w-[85%]`}
+              onEndEditing={e => {
+                navigation?.navigate('Search', {search: e.nativeEvent.text});
+              }}
               placeholderTextColor={`${
                 colorScheme === 'dark' ? '#9A9C9D' : '#000000'
               }`}

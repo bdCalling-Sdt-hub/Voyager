@@ -1,6 +1,6 @@
 import {Alert, FlatList, View} from 'react-native';
 import {
-  useGetPersonalizedQuery,
+  useGetCityQuery,
   useLocationVisitMutation,
 } from '../../redux/apiSlices/attractionApiSlice';
 
@@ -9,11 +9,21 @@ import Header from '../../components/header/Header';
 import {IconSearch} from '../../assets/icons/Icons';
 import {NavigProps} from '../../utils/interface/NaviProps';
 import React from 'react';
+import Spinner from 'react-native-loading-spinner-overlay';
+import {Wander} from 'react-native-animated-spinkit';
 import tw from '../../lib/tailwind';
 
-const PicsForYour = ({navigation, route}: NavigProps<null>) => {
-  // rtk query hooks
-  const {data: personalizedPicks} = useGetPersonalizedQuery({});
+const CitiesScreen = ({navigation, route}: NavigProps<null>) => {
+  const {title} = route?.params || {};
+
+  // rkt query hooks
+
+  const {
+    data: cities,
+    isLoading: citiesLoading,
+    isFetching: citiesLoadingFetching,
+    refetch: citiesRefetch,
+  } = useGetCityQuery({});
 
   // rtk query hooks
   const [locationVisit] = useLocationVisitMutation();
@@ -41,9 +51,19 @@ const PicsForYour = ({navigation, route}: NavigProps<null>) => {
   };
 
   return (
-    <View style={tw`px-[4%] bg-white dark:bg-primaryDark h-full`}>
+    <View style={tw`px-[4%] bg-white h-full dark:bg-primaryDark`}>
+      <Spinner
+        animation="fade"
+        spinnerKey="AttractionGroup"
+        // textStyle={tw`text-white text-base`}
+        // textContent="Loading"
+        size={40}
+        customIndicator={<Wander size={30} color={'white'} />}
+        overlayColor={'rgba(123, 99, 235,0.2)'}
+        visible={citiesLoadingFetching}
+      />
       <Header
-        title={'Picks For You'}
+        title={title || 'Next Destination'}
         containerStyle={tw`mt-2`}
         icon={IconSearch}
         isSearchVisible={true}
@@ -51,20 +71,22 @@ const PicsForYour = ({navigation, route}: NavigProps<null>) => {
         hideDestination={true}
         isIcon={true}
       />
+
       <FlatList
-        contentContainerStyle={tw`gap-2 mt-4 pb-8`}
-        data={personalizedPicks?.data?.data}
-        renderItem={({index, item}) => {
-          return (
-            <AttractionCard
-              item={item}
-              handleVisitLocation={handleVisitLocation}
-            />
-          );
-        }}
+        data={cities?.data?.data}
+        keyExtractor={(item, index) => index.toString()}
+        showsVerticalScrollIndicator={false}
+        onEndReachedThreshold={0.5}
+        contentContainerStyle={tw`pb-10 pt-2 gap-2`}
+        renderItem={({item}) => (
+          <AttractionCard
+            item={item}
+            handleVisitLocation={handleVisitLocation}
+          />
+        )}
       />
     </View>
   );
 };
 
-export default PicsForYour;
+export default CitiesScreen;

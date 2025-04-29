@@ -39,6 +39,7 @@ export const BucketSlice = api.injectEndpoints({
       query: () => ({
         url: `/user-bucket`,
       }),
+      providesTags: ['bucket'],
     }),
 
     // add to bucket list
@@ -65,10 +66,11 @@ export const BucketSlice = api.injectEndpoints({
 
     // remove from bucket list
     removeFromBucketList: builder.mutation({
-      query: ({id}) => {
+      query: ({id, type}) => {
         return {
           url: `/remove-user-bucketlist?id=${id}`,
           method: 'PATCH',
+          body: {type},
         };
       },
       invalidatesTags: ['bucket', 'attractions', 'dashboard'],

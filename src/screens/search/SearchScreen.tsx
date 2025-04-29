@@ -11,7 +11,7 @@ import {NavigProps} from '../../utils/interface/NaviProps';
 import React from 'react';
 import tw from '../../lib/tailwind';
 
-const PicsForYour = ({navigation, route}: NavigProps<null>) => {
+const SearchScreen = ({navigation, route}: NavigProps<null>) => {
   // rtk query hooks
   const {data: personalizedPicks} = useGetPersonalizedQuery({});
 
@@ -43,14 +43,15 @@ const PicsForYour = ({navigation, route}: NavigProps<null>) => {
   return (
     <View style={tw`px-[4%] bg-white dark:bg-primaryDark h-full`}>
       <Header
-        title={'Picks For You'}
+        title="Search"
         containerStyle={tw`mt-2`}
         icon={IconSearch}
+        IconRouteName="Dashboard"
         isSearchVisible={true}
         searchBarShow={true}
-        hideDestination={true}
-        isIcon={true}
+        // hideFilterIcon={true}
       />
+
       <FlatList
         contentContainerStyle={tw`gap-2 mt-4 pb-8`}
         data={personalizedPicks?.data?.data}
@@ -67,4 +68,4 @@ const PicsForYour = ({navigation, route}: NavigProps<null>) => {
   );
 };
 
-export default PicsForYour;
+export default SearchScreen;

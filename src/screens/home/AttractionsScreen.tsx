@@ -1,9 +1,6 @@
 import {Alert, FlatList, View} from 'react-native';
-import React, {useState} from 'react';
 import {
   useGetAttractionsQuery,
-  useGetCityQuery,
-  useGetCountryQuery,
   useLocationVisitMutation,
 } from '../../redux/apiSlices/attractionApiSlice';
 
@@ -11,49 +8,21 @@ import AttractionCard from '../../components/cards/AttractionCard';
 import Header from '../../components/header/Header';
 import {IconSearch} from '../../assets/icons/Icons';
 import {NavigProps} from '../../utils/interface/NaviProps';
+import React from 'react';
+import Spinner from 'react-native-loading-spinner-overlay';
+import {Wander} from 'react-native-animated-spinkit';
 import tw from '../../lib/tailwind';
 
-const NextDestination = ({navigation, route}: NavigProps<null>) => {
+const AttractionsScreen = ({navigation, route}: NavigProps<null>) => {
   const {title} = route?.params || {};
-  const [destinationData, setDestinationData] = useState([]);
-
-  const fetchMoreData = () => {
-    console.log('Fetching more data...');
-    setTimeout(() => {
-      setDestinationData(prevData => [...prevData, ...prevData]);
-    }, 1500);
-  };
-
-  const activeColor = () => {
-    switch (title) {
-      case 'attractions':
-        return '#FC5D88BF';
-      case 'cities':
-        return '#FFA94DBF';
-      case 'countries':
-        return '#8C78EABF';
-      default:
-        return '#FC5D88BF';
-    }
-  };
 
   // rkt query hooks
-  const {data: attractions} = useGetAttractionsQuery({});
-  const {data: cities} = useGetCityQuery({});
-  const {data: countries} = useGetCountryQuery({});
-
-  const data = (() => {
-    switch (title) {
-      case 'attractions':
-        return attractions?.data?.data;
-      case 'cities':
-        return cities?.data?.data;
-      case 'countries':
-        return countries?.data?.data;
-      default:
-        return attractions?.data?.data;
-    }
-  })();
+  const {
+    data: attractions,
+    isLoading: attractionsLoading,
+    isFetching: attractionsFetching,
+    refetch: attractionsRefetch,
+  } = useGetAttractionsQuery({});
 
   // rtk query hooks
   const [locationVisit] = useLocationVisitMutation();
@@ -82,6 +51,16 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
 
   return (
     <View style={tw`px-[4%] bg-white h-full dark:bg-primaryDark`}>
+      <Spinner
+        animation="fade"
+        spinnerKey="AttractionGroup"
+        // textStyle={tw`text-white text-base`}
+        // textContent="Loading"
+        size={40}
+        customIndicator={<Wander size={30} color={'white'} />}
+        overlayColor={'rgba(123, 99, 235,0.2)'}
+        visible={attractionsFetching}
+      />
       <Header
         title={title || 'Next Destination'}
         containerStyle={tw`mt-2`}
@@ -93,10 +72,9 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
       />
 
       <FlatList
-        data={data}
+        data={attractions?.data?.data}
         keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}
-        onEndReached={fetchMoreData}
         onEndReachedThreshold={0.5}
         contentContainerStyle={tw`pb-10 pt-2 gap-2`}
         renderItem={({item}) => (
@@ -110,4 +88,4 @@ const NextDestination = ({navigation, route}: NavigProps<null>) => {
   );
 };
 
-export default NextDestination;
+export default AttractionsScreen;

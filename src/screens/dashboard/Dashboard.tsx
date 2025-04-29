@@ -24,7 +24,9 @@ import Header from '../../components/header/Header';
 import {PrimaryColor} from '../utils/utils';
 import RangeSlider from '../../components/slider/RangeSlider';
 import {RefreshControl} from 'react-native-gesture-handler';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {SvgXml} from 'react-native-svg';
+import {Wander} from 'react-native-animated-spinkit';
 import {makeImage} from '../../redux/api/baseApi';
 import tw from '../../lib/tailwind';
 import {useGetBucketListProgressQuery} from '../../redux/apiSlices/bucketApiSlice';
@@ -64,16 +66,26 @@ const Dashboard = ({navigation}: any) => {
 
   return (
     <>
+      <Spinner
+        animation="fade"
+        spinnerKey="dashboard"
+        // textStyle={tw`text-white text-base`}
+        // textContent="Loading"
+        size={40}
+        customIndicator={<Wander size={30} color={'white'} />}
+        overlayColor={'rgba(123, 99, 235,0.2)'}
+        visible={
+          appDashboardFetching ||
+          weeklyQuestFetching ||
+          bucketListProgressFetching ||
+          bucketListDataFetching
+        }
+      />
       <ScrollView
         refreshControl={
           <RefreshControl
             colors={[PrimaryColor]}
-            refreshing={
-              appDashboardFetching ||
-              weeklyQuestFetching ||
-              bucketListProgressFetching ||
-              bucketListDataFetching
-            }
+            refreshing={false}
             onRefresh={() => {
               appDashboardRefetch();
               weeklyQuestRefetch();
@@ -221,13 +233,15 @@ const Dashboard = ({navigation}: any) => {
                 horizontal
                 contentContainerStyle={tw`flex-row items-center gap-2`}
                 showsHorizontalScrollIndicator={false}
+                keyExtractor={(item, index) => index.toString() + item?.id}
                 renderItem={({index, item}) => {
                   // console.log(makeImage(item?.images[0]));
                   return (
                     <TouchableOpacity
                       onPress={() => {
                         handleVisitLocation(item);
-                      }}>
+                      }}
+                      disabled>
                       <Image
                         style={tw`w-24 h-22 rounded-lg`}
                         key={index}
@@ -288,13 +302,23 @@ const Dashboard = ({navigation}: any) => {
                 value={bucketListProgress?.data?.progress}
               />
             </View>
+            {bucketListProgress?.data?.message && (
+              <View style={tw`mt-2`}>
+                <Text style={tw`text-sm font-serif text-[#32B1B4] `}>
+                  {bucketListProgress?.data?.message}
+                </Text>
+              </View>
+            )}
           </TouchableOpacity>
         )}
 
         <View style={tw`mt-8 pb-2`}>
           <TouchableOpacity
             style={tw`flex-row items-center justify-between`}
-            onPress={() => navigation.navigate('ProgressBucketlist')}>
+            onPress={() => {
+              // navigation.navigate('ProgressBucketlist');
+              navigation.navigate('Places');
+            }}>
             <View style={tw`w-11/12`}>
               <Text
                 style={tw`text-black dark:text-white text-base font-WorkMedium`}>
@@ -308,15 +332,19 @@ const Dashboard = ({navigation}: any) => {
           </TouchableOpacity>
 
           <View style={tw`gap-2 mt-4`}>
-            {bucketListData?.data?.data?.map(item => {
-              // console.log(makeImage(item?.images![0]));
-              return (
-                <AttractionCard
-                  item={item}
-                  handleVisitLocation={handleVisitLocation}
-                />
-              );
-            })}
+            <FlatList
+              scrollEnabled={false}
+              data={bucketListData?.data?.data || []}
+              renderItem={({item, index}) => {
+                return (
+                  <AttractionCard
+                    key={index + item?.id + item?.type + Math.random() * 6000}
+                    item={item}
+                    handleVisitLocation={handleVisitLocation}
+                  />
+                );
+              }}
+            />
           </View>
         </View>
       </ScrollView>

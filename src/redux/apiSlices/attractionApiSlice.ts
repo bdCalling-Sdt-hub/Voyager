@@ -10,6 +10,20 @@ export const AttractionSlice = api.injectEndpoints({
       }),
       providesTags: ['attractions'],
     }),
+    getSinglePlaceAndImages: builder.query({
+      query: ({place_image, place_id, place_type}) => {
+        if (place_image) {
+          return {
+            url: `/place-details?place_id=${place_id}&place_type=${place_type}&place_image=${place_image}`,
+          };
+        } else {
+          return {
+            url: `/place-details?place_id=${place_id}&place_type=${place_type}`,
+          };
+        }
+      },
+      providesTags: ['attractions'],
+    }),
     // get top destination
     getTopDestination: builder.query({
       query: () => ({
@@ -83,7 +97,7 @@ export const AttractionSlice = api.injectEndpoints({
           body: data,
         };
       },
-      invalidatesTags: ['attractions'],
+      // invalidatesTags: ['attractions'],
     }),
   }),
 });
@@ -99,4 +113,5 @@ export const {
   useGetVisitedQuery,
   useMarkAsVisitedMutation,
   useGetTopDestinationQuery,
+  useGetSinglePlaceAndImagesQuery,
 } = AttractionSlice;
