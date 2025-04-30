@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import {
   FlatList,
   Image,
@@ -11,25 +12,24 @@ import {
   IconSearch,
   IconVerifiedLocation,
 } from '../../assets/icons/Icons';
-import React, {useState} from 'react';
 import {
   useAppDashboardQuery,
   useGetBucketListDataQuery,
   useGetWeeklyQuestProgressQuery,
 } from '../../redux/apiSlices/dashboardApiSlice';
 
-import AttractionCard from '../../components/cards/AttractionCard';
-import CircularProgress from '../../components/progressBar/CircularProgress';
-import Header from '../../components/header/Header';
-import {PrimaryColor} from '../utils/utils';
-import RangeSlider from '../../components/slider/RangeSlider';
+import {Wander} from 'react-native-animated-spinkit';
 import {RefreshControl} from 'react-native-gesture-handler';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {SvgXml} from 'react-native-svg';
-import {Wander} from 'react-native-animated-spinkit';
-import {makeImage} from '../../redux/api/baseApi';
+import AttractionCard from '../../components/cards/AttractionCard';
+import Header from '../../components/header/Header';
+import CircularProgress from '../../components/progressBar/CircularProgress';
+import RangeSlider from '../../components/slider/RangeSlider';
 import tw from '../../lib/tailwind';
+import {makeImage} from '../../redux/api/baseApi';
 import {useGetBucketListProgressQuery} from '../../redux/apiSlices/bucketApiSlice';
+import {PrimaryColor} from '../utils/utils';
 
 const Dashboard = ({navigation}: any) => {
   const [activePlace, setActivePlace] = useState('attractions');
@@ -282,7 +282,7 @@ const Dashboard = ({navigation}: any) => {
         </TouchableOpacity>
 
         {/* bucket list progress */}
-        {bucketListProgress?.data?.coin || (
+        {!bucketListProgress?.data?.coin || (
           <TouchableOpacity
             style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-blue80 dark:bg-darkBg mt-4`}
             onPress={() => navigation.navigate('Places')}>
