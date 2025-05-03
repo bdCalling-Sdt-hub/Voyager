@@ -3,16 +3,17 @@ import {
   useGetCityQuery,
   useLocationVisitMutation,
 } from '../../redux/apiSlices/attractionApiSlice';
+import {HIGHT, PrimaryColor} from '../utils/utils';
 
 import React from 'react';
 import {Wander} from 'react-native-animated-spinkit';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {IconSearch} from '../../assets/icons/Icons';
 import AttractionCard from '../../components/cards/AttractionCard';
+import EmptyCard from '../../components/Empty/EmptyCard';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
 import {NavigProps} from '../../utils/interface/NaviProps';
-import {PrimaryColor} from '../utils/utils';
 
 const CitiesScreen = ({navigation, route}: NavigProps<null>) => {
   const {title} = route?.params || {};
@@ -80,6 +81,9 @@ const CitiesScreen = ({navigation, route}: NavigProps<null>) => {
             onRefresh={citiesRefetch}
             colors={[PrimaryColor]}
           />
+        }
+        ListEmptyComponent={
+          <EmptyCard title="No have any place's" hight={HIGHT * 0.7} />
         }
         data={cities?.data?.data}
         keyExtractor={(item, index) => index.toString()}

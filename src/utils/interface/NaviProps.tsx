@@ -6,5 +6,5 @@ import {
 
 export interface NavigProps<RouteParamsDataType> {
   navigation?: NavigationProp<ParamListBase>;
-  route?: RouteProp<{params: RouteParamsDataType | any}, 'params'>;
+  route?: RouteProp<{params: RouteParamsDataType}, 'params'>;
 }

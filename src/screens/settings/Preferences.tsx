@@ -63,6 +63,11 @@ const Preferences = ({navigation}: any) => {
     }
   };
 
+  React.useEffect(() => {
+    setSelectedItems(data?.data?.map((item: any) => item.id) || []);
+    setSelectedName(data?.data?.map((item: any) => item.name) || []);
+  }, []);
+
   return (
     <View style={tw`h-full bg-white px-[4%] pb-2 dark:bg-primaryDark`}>
       <ScrollView showsVerticalScrollIndicator={false}>

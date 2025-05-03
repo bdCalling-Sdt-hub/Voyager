@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import {
   Alert,
   Image,
@@ -6,7 +7,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
 import {
   useGetBucketListAttractionsQuery,
   useGetBucketListBannerQuery,
@@ -14,17 +14,17 @@ import {
   useGetBucketListCountriesQuery,
 } from '../../redux/apiSlices/bucketApiSlice';
 
-import AttractionCard from '../../components/cards/AttractionCard';
-import Header from '../../components/header/Header';
-import {IconSearch} from '../../assets/icons/Icons';
-import {NavigProps} from '../../utils/interface/NaviProps';
-import {PrimaryColor} from '../utils/utils';
+import {Wander} from 'react-native-animated-spinkit';
 import {RefreshControl} from 'react-native-gesture-handler';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {Wander} from 'react-native-animated-spinkit';
-import {makeImage} from '../../redux/api/baseApi';
+import {IconSearch} from '../../assets/icons/Icons';
+import AttractionCard from '../../components/cards/AttractionCard';
+import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
+import {makeImage} from '../../redux/api/baseApi';
 import {useLocationVisitMutation} from '../../redux/apiSlices/attractionApiSlice';
+import {NavigProps} from '../../utils/interface/NaviProps';
+import {PrimaryColor} from '../utils/utils';
 
 const Places = ({navigation, route}: NavigProps<null>) => {
   const [activePlace, setActivePlace] = useState('attractions');
@@ -121,6 +121,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
             isSearchVisible={true}
             searchBarShow={true}
             hideDestination={true}
+            hideFilterIcon={true}
           />
 
           {bucketListBanner?.data?.freeBucketList?.user_types === 'Free' && (

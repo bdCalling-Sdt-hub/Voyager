@@ -4,7 +4,6 @@ import {
   IconCloseEye,
   IconEnvelop,
   IconEye,
-  IconFacebook,
   IconGoogle,
   IconKey,
 } from '../../assets/icons/Icons';
@@ -134,7 +133,7 @@ const Login = ({navigation}: any) => {
             <View style={tw`bg-gray90 flex-1 h-[1px]`} />
           </View>
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={tw`bg-transparent rounded-full p-3 mt-2 border border-gray90 dark:border-darkBg flex-row items-center gap-3 justify-center`}
             onPress={() => {
               //   navigation?.navigate('PaymentMethod');
@@ -144,7 +143,7 @@ const Login = ({navigation}: any) => {
               style={tw`text-center text-black dark:text-white text-base font-WorkSemiBold font-600`}>
               Continue with Facebook
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity
             style={tw`bg-transparent rounded-full p-3 mt-2 border border-gray90 dark:border-darkBg flex-row items-center gap-3 justify-center`}

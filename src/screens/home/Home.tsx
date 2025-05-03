@@ -21,18 +21,18 @@ import {
   useLocationVisitMutation,
 } from '../../redux/apiSlices/attractionApiSlice';
 
-import Header from '../../components/header/Header';
-import {NavigProps} from '../../utils/interface/NaviProps';
-import {PrimaryColor} from '../utils/utils';
 import React from 'react';
+import {Wander} from 'react-native-animated-spinkit';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {SvgXml} from 'react-native-svg';
 import TopAttractionCard from '../../components/cards/TopAttractionCard';
-import {Wander} from 'react-native-animated-spinkit';
-import {baseUrl} from '../utils/exports';
-import {makeImage} from '../../redux/api/baseApi';
-import {personalizedPicksTypes} from '../utils/types';
+import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
+import {makeImage} from '../../redux/api/baseApi';
+import {NavigProps} from '../../utils/interface/NaviProps';
+import {baseUrl} from '../utils/exports';
+import {personalizedPicksTypes} from '../utils/types';
+import {PrimaryColor} from '../utils/utils';
 
 const Home = ({navigation}: NavigProps<null>) => {
   // rtk query hooks
@@ -122,7 +122,7 @@ const Home = ({navigation}: NavigProps<null>) => {
             IconRouteName="Dashboard"
             isSearchVisible={true}
             searchBarShow={true}
-            // hideFilterIcon={true}
+            hideFilterIcon={true}
           />
           <View>
             <View style={tw`mt-4`}>

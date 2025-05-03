@@ -4,12 +4,14 @@ import {
   useLocationVisitMutation,
 } from '../../redux/apiSlices/attractionApiSlice';
 
-import AttractionCard from '../../components/cards/AttractionCard';
-import Header from '../../components/header/Header';
-import {IconSearch} from '../../assets/icons/Icons';
-import {NavigProps} from '../../utils/interface/NaviProps';
 import React from 'react';
+import {IconSearch} from '../../assets/icons/Icons';
+import AttractionCard from '../../components/cards/AttractionCard';
+import EmptyCard from '../../components/Empty/EmptyCard';
+import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
+import {NavigProps} from '../../utils/interface/NaviProps';
+import {HIGHT} from '../utils/utils';
 
 const PicsForYour = ({navigation, route}: NavigProps<null>) => {
   // rtk query hooks
@@ -52,6 +54,9 @@ const PicsForYour = ({navigation, route}: NavigProps<null>) => {
         isIcon={true}
       />
       <FlatList
+        ListEmptyComponent={
+          <EmptyCard title="No have any place's" hight={HIGHT * 0.7} />
+        }
         contentContainerStyle={tw`gap-2 mt-4 pb-8`}
         data={personalizedPicks?.data?.data}
         renderItem={({index, item}) => {

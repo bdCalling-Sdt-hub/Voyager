@@ -1,32 +1,22 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {
-  Alert,
-  NativeSyntheticEvent,
-  ScrollView,
-  Text,
-  TextInput,
-  TextInputKeyPressEventData,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Alert, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {
   useResendOTPMutation,
   useVerifyOTPMutation,
 } from '../../redux/apiSlices/authApiSlice';
+import {LStorage, PrimaryColor} from '../utils/utils';
 
+import {OtpInput} from 'react-native-otp-entry';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
-import {LStorage} from '../utils/utils';
 
 const VerifyOTP = ({navigation, route}: any) => {
-  const [otp, setOtp] = useState<string[]>(['', '', '', '', '', '']);
+  const [otp, setOtp] = useState<string>('');
   const [seconds, setSeconds] = useState(119);
   const [isActive, setIsActive] = useState(true);
-  const inputRefs = useRef<(TextInput | null)[]>([]);
   const {email, from} = route.params;
 
-  console.log('email from verify otp: ', email);
-
+  // Masking the email address
   // Masking the email address
   const maskInput = (input: string): string => {
     try {
@@ -40,34 +30,9 @@ const VerifyOTP = ({navigation, route}: any) => {
   };
 
   const maskedEmail = maskInput(email);
-
   // rtk query hooks
   const [verifyOTP, {isLoading}] = useVerifyOTPMutation();
   const [resendOTP] = useResendOTPMutation();
-
-  const handleChange = (value: string, index: number) => {
-    const updatedOtp = [...otp];
-    updatedOtp[index] = value;
-    setOtp(updatedOtp);
-
-    // Move to the next input if value is entered
-    if (value && index < otp.length - 1) {
-      inputRefs.current[index + 1]?.focus();
-    }
-  };
-
-  const handleKeyPress = (
-    event: NativeSyntheticEvent<TextInputKeyPressEventData>,
-    index: number,
-  ) => {
-    if (
-      event.nativeEvent.key === 'Backspace' &&
-      otp[index] === '' &&
-      index > 0
-    ) {
-      inputRefs.current[index - 1]?.focus();
-    }
-  };
 
   // Resend OTP timer
   useEffect(() => {
@@ -88,10 +53,10 @@ const VerifyOTP = ({navigation, route}: any) => {
   };
 
   // handlers
-  const handleVerifyOtp = async () => {
+  const handleVerifyOtp = async (textOtp: string) => {
     try {
-      const response = await verifyOTP({otp: otp.join('')});
-      const token = response?.data?.message;
+      const response = await verifyOTP({otp: textOtp});
+      const token = response?.data?.data;
       console.log('Response: ', response);
       console.log('Token: ', token);
 
@@ -108,7 +73,7 @@ const VerifyOTP = ({navigation, route}: any) => {
         if (from === 'forgot') {
           navigation?.navigate('SetNewPassword', {email: email});
         } else {
-          navigation?.navigate('BottomRoutes');
+          navigation?.navigate('TravelPreferences');
         }
         setIsActive(false);
         setSeconds(0);
@@ -158,33 +123,44 @@ const VerifyOTP = ({navigation, route}: any) => {
 
         {/* OTP Input Fields */}
         <View style={tw`flex-row gap-3 my-2`}>
-          {otp.map((digit, index) => (
-            <View
-              key={index}
-              style={tw`flex-1 h-12 rounded-lg border bg-white dark:bg-darkBg border-[#D1D1D1] dark:border-darkBg justify-center items-center`}>
-              <TextInput
-                ref={el => (inputRefs.current[index] = el)}
-                value={digit}
-                onChangeText={value => handleChange(value, index)}
-                onKeyPress={e => handleKeyPress(e, index)}
-                keyboardType="number-pad"
-                textAlign="center"
-                placeholder="0"
-                placeholderTextColor={'#E7E7E9'}
-                maxLength={1}
-                style={tw`text-center font-WorkBold font-700 text-[34px] p-0`}
-              />
-            </View>
-          ))}
+          <OtpInput
+            numberOfDigits={6}
+            focusColor={PrimaryColor}
+            autoFocus={false}
+            hideStick={true}
+            placeholder="0"
+            blurOnFilled={true}
+            disabled={false}
+            type="numeric"
+            secureTextEntry={false}
+            focusStickBlinkingDuration={500}
+            // onFocus={() => console.log("Focused")}
+            // onBlur={() => console.log("Blurred")}
+            // onTextChange={(text) => console.log(text)}
+            onFilled={async text => {
+              console.log(`OTP is ${text}`);
+              setOtp(text);
+              handleVerifyOtp(text);
+            }}
+            textInputProps={{
+              accessibilityLabel: 'One-Time Password',
+            }}
+            theme={{
+              containerStyle: tw`my-4`,
+              pinCodeContainerStyle: tw`h-14 w-14 justify-center items-center  `,
+              pinCodeTextStyle: tw`text-deepBlue300 text-4xl font-NunitoSansBold  `,
+              placeholderTextStyle: tw`text-[#D5D7DA] text-4xl font-NunitoSansBold`,
+            }}
+          />
         </View>
 
         {/* Submit OTP Button */}
         <TouchableOpacity
-          disabled={otp.join('')?.length !== 6}
+          disabled={otp?.length !== 6}
           style={tw`bg-violet100 rounded-full p-3 mt-4 ${
-            otp.join('')?.length === 6 ? '' : 'opacity-80'
+            otp?.length === 6 ? '' : 'opacity-80'
           }`}
-          onPress={handleVerifyOtp}>
+          onPress={() => handleVerifyOtp(otp)}>
           <Text style={tw`text-center text-white text-base font-WorkMedium`}>
             Verify OTP
           </Text>

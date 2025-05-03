@@ -122,19 +122,6 @@ const Dashboard = ({navigation}: any) => {
                 } text-xs font-WorkMedium`}>
                 Attractions
               </Text>
-              <View
-                style={tw`h-5 w-5 ${
-                  activePlace === 'attractions' ? 'bg-white' : 'bg-gray100'
-                } rounded-full text-center items-center justify-center`}>
-                <Text
-                  style={tw`text-xs ${
-                    activePlace === 'attractions'
-                      ? 'text-violet100'
-                      : 'text-white'
-                  }`}>
-                  {appDashboard?.data?.totalAttraction}
-                </Text>
-              </View>
             </TouchableOpacity>
             <TouchableOpacity
               style={tw`flex-row gap-1  ${
@@ -147,17 +134,6 @@ const Dashboard = ({navigation}: any) => {
                 } text-xs font-WorkMedium`}>
                 Cities
               </Text>
-              <View
-                style={tw`h-5 w-5 ${
-                  activePlace === 'cities' ? 'bg-white' : 'bg-gray100'
-                } rounded-full text-center items-center justify-center`}>
-                <Text
-                  style={tw`text-xs ${
-                    activePlace === 'cities' ? 'text-violet100' : 'text-white'
-                  }`}>
-                  {appDashboard?.data?.totalCity}
-                </Text>
-              </View>
             </TouchableOpacity>
             <TouchableOpacity
               style={tw`flex-row gap-1 ${
@@ -170,24 +146,28 @@ const Dashboard = ({navigation}: any) => {
                 }  text-xs font-WorkMedium`}>
                 Countries
               </Text>
-              <View
-                style={tw`h-5 w-5 ${
-                  activePlace === 'countries' ? 'bg-white' : 'bg-gray100'
-                } rounded-full text-center items-center justify-center`}>
-                <Text
-                  style={tw`text-xs ${
-                    activePlace === 'countries'
-                      ? 'text-violet100'
-                      : 'text-white'
-                  }`}>
-                  {appDashboard?.data?.totalCountry}
-                </Text>
-              </View>
             </TouchableOpacity>
           </View>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('SinglePlace', {title: activePlace});
+              if (activePlace === 'attractions') {
+                navigation.navigate('SinglePlace', {
+                  title: activePlace,
+                  data: appDashboard?.data?.visitedAttraction,
+                });
+              }
+              if (activePlace === 'cities') {
+                navigation.navigate('SinglePlace', {
+                  title: activePlace,
+                  data: appDashboard?.data?.visitedCity,
+                });
+              }
+              if (activePlace === 'countries') {
+                navigation.navigate('SinglePlace', {
+                  title: activePlace,
+                  data: appDashboard?.data?.visitedCountry,
+                });
+              }
             }}
             style={tw`bg-violet80 dark:bg-darkBg 
             flex-row rounded-2xl items-center mt-4`}>
@@ -282,7 +262,7 @@ const Dashboard = ({navigation}: any) => {
         </TouchableOpacity>
 
         {/* bucket list progress */}
-        {!bucketListProgress?.data?.coin || (
+        {bucketListProgress?.data?.coin && (
           <TouchableOpacity
             style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-blue80 dark:bg-darkBg mt-4`}
             onPress={() => navigation.navigate('Places')}>
