@@ -1,21 +1,20 @@
-import { Image, TouchableOpacity, View, Text } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { SvgXml } from 'react-native-svg';
-import tw from '../lib/tailwind';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {
   IconDashboard,
   IconExplore,
   IconHeart,
-  IconLocation,
   IconTrophy,
   IconUser,
 } from '../assets/icons/Icons';
+
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {SvgXml} from 'react-native-svg';
+import tw from '../lib/tailwind';
 import Dashboard from '../screens/dashboard/Dashboard';
+import BucketList from '../screens/home/BucketList';
 import Home from '../screens/home/Home';
-import NextDestination from '../screens/home/NextDestination';
-import WeeklyQuestions from '../screens/questions/WeeklyQuestions';
 import Profile from '../screens/profile/Profile';
-import Places from '../screens/home/Places';
+import WeeklyQuestions from '../screens/questions/WeeklyQuestions';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,7 +22,7 @@ function BottomRoutes() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      screenOptions={({ route }) => ({
+      screenOptions={({route}) => ({
         headerShown: false,
         tabBarStyle: tw`h-20 bg-white dark:bg-primaryDark shadow-none border-t border-t-white dark:border-t-darkBg`,
         tabBarItemStyle: {
@@ -33,8 +32,8 @@ function BottomRoutes() {
           fontFamily: 'NunitoSansBold',
           textTransform: 'capitalize',
         },
-        tabBarButton: (props) => <TouchableOpacity {...props} />,
-        tabBarIcon: ({ focused }) => {
+        tabBarButton: props => <TouchableOpacity {...props} />,
+        tabBarIcon: ({focused}) => {
           let icon;
 
           switch (route.name) {
@@ -64,19 +63,25 @@ function BottomRoutes() {
                 focused
                   ? 'bg-black h-12 w-12 rounded-full flex-row items-center justify-center'
                   : ''
-              }`}
-            >
+              }`}>
               <SvgXml xml={icon} />
             </View>
           );
         },
-        tabBarLabel: ({ focused }) =>
-          focused ? null : <Text style={tw`text-black dark:text-white text-xs`}>{route.name === 'Home' ? 'Explore' : route.name === 'Places' ? 'Goals' : route.name}</Text>,
-      })}
-    >
+        tabBarLabel: ({focused}) =>
+          focused ? null : (
+            <Text style={tw`text-black dark:text-white text-xs`}>
+              {route.name === 'Home'
+                ? 'Explore'
+                : route.name === 'BucketList'
+                ? 'Goals'
+                : route.name}
+            </Text>
+          ),
+      })}>
       <Tab.Screen name="Dashboard" component={Dashboard} />
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Places" component={Places} />
+      <Tab.Screen name="BucketList" component={BucketList} />
       <Tab.Screen name="Quests" component={WeeklyQuestions} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>

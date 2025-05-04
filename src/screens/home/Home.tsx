@@ -1,36 +1,26 @@
 import {
-  Alert,
   Image,
-  ImageBackground,
   RefreshControl,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import {
-  IconColoredRightArrow,
-  IconFilledHeart,
-  IconSearch,
-  IconWhiteHeart,
-} from '../../assets/icons/Icons';
+import {IconColoredRightArrow, IconSearch} from '../../assets/icons/Icons';
 import {
   useGetPersonalizedQuery,
   useGetSinglePlaceAndImagesQuery,
   useGetTopDestinationQuery,
-  useLocationVisitMutation,
 } from '../../redux/apiSlices/attractionApiSlice';
 
 import React from 'react';
-import {Wander} from 'react-native-animated-spinkit';
-import Spinner from 'react-native-loading-spinner-overlay';
 import {SvgXml} from 'react-native-svg';
 import TopAttractionCard from '../../components/cards/TopAttractionCard';
 import Header from '../../components/header/Header';
+import LoadingModal from '../../components/modals/LoadingModal';
 import tw from '../../lib/tailwind';
 import {makeImage} from '../../redux/api/baseApi';
 import {NavigProps} from '../../utils/interface/NaviProps';
-import {baseUrl} from '../utils/exports';
 import {personalizedPicksTypes} from '../utils/types';
 import {PrimaryColor} from '../utils/utils';
 
@@ -58,44 +48,12 @@ const Home = ({navigation}: NavigProps<null>) => {
     place_image: true,
   });
 
-  const [locationVisit] = useLocationVisitMutation();
-
-  // console.log(singlePlaceAndImages, 'singlePlaceAndImages');
-
-  // handlers
-  const handleVisitLocation = async (item: any) => {
-    const data = {type: item?.type, visited: '1'};
-    try {
-      const response = await locationVisit({id: item?.id, data});
-      if (response?.error?.success === false) {
-        Alert.alert(
-          'Adding to bucket list failed',
-          response?.error?.message || 'An error occurred.',
-        );
-        return;
-      } else {
-        navigation?.navigate('DestinationDetails', {item});
-      }
-    } catch (err: any) {
-      Alert.alert(
-        'Visit Location Failed',
-        err?.message || 'An error occurred.',
-      );
-    }
-  };
   return (
-    <>
-      <Spinner
-        animation="fade"
-        spinnerKey="home"
-        // textStyle={tw`text-white text-base`}
-        // textContent="Loading"
-        size={40}
-        customIndicator={<Wander size={30} color={'white'} />}
-        overlayColor={'rgba(123, 99, 235,0.2)'}
+    <View style={tw`flex-1`}>
+      <LoadingModal
         visible={
           personalizedPicksFetching ||
-          topDestinationFetching ||
+          topDestinationLoading ||
           singlePlaceAndImageFetching
         }
       />
@@ -244,38 +202,7 @@ const Home = ({navigation}: NavigProps<null>) => {
               showsHorizontalScrollIndicator={false}>
               {personalizedPicks?.data?.data?.map(
                 (item: personalizedPicksTypes, index: number) => (
-                  <TouchableOpacity
-                    key={item?.id + index}
-                    style={tw`rounded-2xl overflow-hidden mt-6`}
-                    onPress={() => handleVisitLocation(item)}>
-                    <ImageBackground
-                      source={{uri: baseUrl + item?.images[0]}}
-                      resizeMode="cover"
-                      style={tw`h-[260px] w-82 justify-between items-center rounded-2xl p-4`}>
-                      <View style={tw`gap-y-3 items-end w-full`}>
-                        <SvgXml
-                          xml={
-                            item?.bucketlist_status === 'bucketlisted'
-                              ? IconFilledHeart
-                              : IconWhiteHeart
-                          }
-                        />
-                      </View>
-                      <View
-                        style={tw`bg-white dark:bg-darkBg p-3 w-full rounded-2xl`}>
-                        <View style={tw`flex-row items-center`}>
-                          <Text
-                            style={tw`text-black dark:text-white text-sm font-WorkMedium`}>
-                            {item?.name}
-                          </Text>
-                        </View>
-                        <Text
-                          style={tw`text-gray100 font-WorkRegular text-[10px]`}>
-                          {item?.description}
-                        </Text>
-                      </View>
-                    </ImageBackground>
-                  </TouchableOpacity>
+                  <TopAttractionCard key={index} item={item} />
                 ),
               )}
             </ScrollView>
@@ -305,7 +232,7 @@ const Home = ({navigation}: NavigProps<null>) => {
           </View>
         </View>
       </ScrollView>
-    </>
+    </View>
   );
 };
 

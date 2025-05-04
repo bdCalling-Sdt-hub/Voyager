@@ -1,12 +1,4 @@
-import {Checkbox, RadioButton, RadioGroup} from 'react-native-ui-lib';
-import {
-  IconClose,
-  IconFilter,
-  IconLeftArrow,
-  IconSearch,
-  experiType1,
-  experiType2,
-} from '../../assets/icons/Icons';
+import React, {useState} from 'react';
 import {
   Image,
   Pressable,
@@ -17,16 +9,25 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import {
+  IconClose,
+  IconFilter,
+  IconLeftArrow,
+  IconSearch,
+} from '../../assets/icons/Icons';
+import {
+  useGetBestTravelTimesQuery,
+  useGetCategoriesQuery,
+} from '../../redux/apiSlices/filterPropertySlice';
 
-import NormalModal from '../modals/NormalModal';
-import {SvgXml} from 'react-native-svg';
-import {baseUrl} from '../../screens/utils/exports';
-import tw from '../../lib/tailwind';
-import {useAppColorScheme} from 'twrnc';
-import {useAppContext} from '../../utils/context/AppContext';
-import {useGetProfileQuery} from '../../redux/apiSlices/authApiSlice';
 import {useNavigation} from '@react-navigation/native';
+import {SvgXml} from 'react-native-svg';
+import {useAppColorScheme} from 'twrnc';
+import tw from '../../lib/tailwind';
+import {makeImage} from '../../redux/api/baseApi';
+import {useGetProfileQuery} from '../../redux/apiSlices/authApiSlice';
+import {useAppContext} from '../../utils/context/AppContext';
+import NormalModal from '../modals/NormalModal';
 
 interface Props {
   title?: string;
@@ -48,29 +49,6 @@ interface Props {
   hideDestination?: boolean;
   rightComponent?: any;
 }
-
-const activityType = [
-  {id: 1, label: 'Relax'},
-  {id: 2, label: 'Moderate'},
-  {id: 3, label: 'Active'},
-];
-
-const experienceType = [
-  {label: 'Adventure', icon: experiType1},
-  {label: 'Cultural', icon: experiType1},
-  {label: 'Relation', icon: experiType2},
-  {label: 'food', icon: experiType2},
-  {label: 'Nature', icon: experiType1},
-];
-
-const bestTravelTime = [
-  {label: 'Summer', icon: experiType2},
-  {label: 'Rainy', icon: experiType2},
-  {label: 'Winter', icon: experiType1},
-  {label: 'Autumn', icon: experiType1},
-  {label: 'Late-Autumn', icon: experiType2},
-  {label: 'Spring', icon: experiType2},
-];
 
 const Header = ({
   title,
@@ -96,12 +74,15 @@ const Header = ({
   const [filterModal, setFilterModal] = useState(false);
   const [locationType, setLocationType] = useState('');
   const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState<any | null>(null);
+  const [selectedTime, setSelectedTime] = useState<any | null>(null);
   const [visitedStatus, setVisitedStatus] = useState<string>('');
   const [colorScheme] = useAppColorScheme(tw);
 
   // rtk query hooks
-  const {data} = useGetProfileQuery({});
-  const {coins, badges, level, image} = data?.data || {};
+  const {data: profileData} = useGetProfileQuery({});
+  const {data: categories} = useGetCategoriesQuery({});
+  const {data: bestTimes} = useGetBestTravelTimesQuery({});
 
   const handleCheckboxChange = value => {
     if (selectedItems.includes(value)) {
@@ -122,6 +103,8 @@ const Header = ({
   };
 
   const {showActionModal, setShowActionModal} = useAppContext();
+
+  // console.log(selectedCategory, 'selectedCategory');
 
   return (
     <>
@@ -154,11 +137,7 @@ const Header = ({
             ) : (
               <View>
                 <Image
-                  source={
-                    image
-                      ? {uri: baseUrl + image}
-                      : require('../../assets/images/user.png')
-                  }
+                  source={{uri: makeImage(profileData?.data?.image)}}
                   style={tw`h-12 w-12 rounded-full`}
                 />
                 <View
@@ -182,7 +161,7 @@ const Header = ({
                           <View>
                             <Text
                               style={tw`text-black dark:text-white text-base font-WorkBold font-700`}>
-                              {level || '1'}
+                              {profileData?.data?.level || '1'}
                             </Text>
                             <Text
                               style={tw`text-gray100 text-xs font-WorkMedium font-500`}>
@@ -197,7 +176,7 @@ const Header = ({
                           <View>
                             <Text
                               style={tw`text-black dark:text-white text-base font-WorkBold font-700`}>
-                              {badges || '0'}
+                              {profileData?.data?.badges || '0'}
                             </Text>
                             <Text
                               style={tw`text-gray100 text-xs font-WorkMedium font-500`}>
@@ -309,7 +288,7 @@ const Header = ({
                 style={tw`h-7 w-7`}
               />
               <Text style={tw`text-gold text-lg font-WorkSemiBold font-600`}>
-                {coins || '0'}
+                {profileData?.data?.coins || '0'}
               </Text>
             </TouchableOpacity>
           ) : (
@@ -370,41 +349,68 @@ const Header = ({
             keyboardShouldPersistTaps="always"
             showsVerticalScrollIndicator={false}>
             {/* location type */}
-            {!hideDestination && (
-              <View style={tw`mt-2`}>
-                <Text
-                  style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
-                  Destination
-                </Text>
-                <RadioGroup
-                  onValueChange={(value: any) => setLocationType(value)}
-                  style={tw`gap-y-3 mt-1`}>
-                  <RadioButton
-                    label="Cities"
-                    value="cities"
-                    labelStyle={tw`text-black dark:text-white`}
-                    color="#8C78EA"
-                  />
 
-                  <RadioButton
-                    label="Attractions"
-                    value="attractions"
-                    labelStyle={tw`text-black dark:text-white`}
-                    color="#8C78EA"
-                  />
+            <View style={tw`mt-2`}>
+              <Text
+                style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
+                Categories
+              </Text>
 
-                  <RadioButton
-                    label="Countries"
-                    value="countries"
-                    labelStyle={tw`text-black dark:text-white`}
-                    color="#8C78EA"
-                  />
-                </RadioGroup>
+              <View style={tw`flex-row flex-wrap gap-3 mt-1 `}>
+                {categories?.data?.data?.map((category: any, index: number) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={tw`${
+                      selectedCategory?.name === category?.name
+                        ? 'bg-violet100'
+                        : 'bg-white dark:bg-darkBg'
+                    } py-2 flex-row gap-1 rounded-full justify-center items-center border-[2px] border-violet100 px-2`}
+                    onPress={() => setSelectedCategory(category)}>
+                    <Text
+                      style={tw`${
+                        selectedCategory?.name === category?.name
+                          ? 'text-white'
+                          : 'text-violet100'
+                      } font-WorkMedium text-sm capitalize`}>
+                      {category?.name?.replace('_', '-')}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
               </View>
-            )}
+            </View>
+            <View style={tw`mt-2`}>
+              <Text
+                style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
+                Sub - Categories
+              </Text>
+
+              <View style={tw`flex-row flex-wrap gap-3 mt-1 `}>
+                {(selectedCategory as any)?.sub_categories?.map(
+                  (category: any, index: number) => (
+                    <TouchableOpacity
+                      key={index}
+                      style={tw`${
+                        selectedCategory?.name === category?.name
+                          ? 'bg-violet100'
+                          : 'bg-white dark:bg-darkBg'
+                      } py-2 flex-row gap-1 rounded-full justify-center items-center border-[2px] border-violet100 px-2`}
+                      onPress={() => setSelectedCategory(category)}>
+                      <Text
+                        style={tw`${
+                          selectedCategory?.name === category?.name
+                            ? 'text-white'
+                            : 'text-violet100'
+                        } font-WorkMedium text-sm capitalize`}>
+                        {category?.name?.replace('_', '-')}
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                )}
+              </View>
+            </View>
 
             {/* Experience type */}
-            <View style={tw`mt-5`}>
+            {/* <View style={tw`mt-5`}>
               <Text
                 style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
                 Experience type
@@ -431,7 +437,7 @@ const Header = ({
                   </TouchableOpacity>
                 ))}
               </View>
-            </View>
+            </View> */}
 
             {/* Best travel time */}
             <View style={tw`mt-5`}>
@@ -440,23 +446,23 @@ const Header = ({
                 Best travel time
               </Text>
               <View style={tw`flex-row flex-wrap gap-3 mt-1`}>
-                {bestTravelTime.map((type, index) => (
+                {bestTimes?.data?.map((type: any, index: number) => (
                   <TouchableOpacity
                     key={index}
                     style={tw`${
-                      visitedStatus.includes(type?.label)
+                      visitedStatus.includes(type?.name)
                         ? 'bg-violet100'
                         : 'bg-white dark:bg-darkBg'
                     } py-2 flex-row gap-1 rounded-full justify-center items-center border-[2px] border-violet100 px-2`}
-                    onPress={() => toggleVisitedStatus(type?.label)}>
+                    onPress={() => toggleVisitedStatus(type?.name)}>
                     <SvgXml xml={type?.icon} />
                     <Text
                       style={tw`${
-                        visitedStatus.includes(type?.label)
+                        visitedStatus.includes(type?.name)
                           ? 'text-white'
                           : 'text-violet100'
                       } font-WorkMedium text-sm capitalize`}>
-                      {type?.label.replace('_', '-')}
+                      {type?.name.replace('_', '-')}
                     </Text>
                   </TouchableOpacity>
                 ))}
@@ -464,7 +470,7 @@ const Header = ({
             </View>
 
             {/* activity type */}
-            <View style={tw`gap-y-3 mt-5`}>
+            {/* <View style={tw`gap-y-3 mt-5`}>
               <Text
                 style={tw`text-black dark:text-white text-base font-WorkSemiBold`}>
                 Activity level
@@ -480,7 +486,7 @@ const Header = ({
                   onValueChange={() => handleCheckboxChange(item.label)}
                 />
               ))}
-            </View>
+            </View> */}
 
             <View style={tw`flex-row gap-6 mt-5`}>
               <TouchableOpacity

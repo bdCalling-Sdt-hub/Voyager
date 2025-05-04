@@ -15,19 +15,26 @@ import {
   IconSuccessTik,
 } from '../../assets/icons/Icons';
 import {
+  useCompletedAchievementMutation,
+  useCompletedQuestMutation,
   useGetQuestAchievementsQuery,
   useGetWeeklyQuestsQuery,
 } from '../../redux/apiSlices/questSlice';
 
 import BottomSheet from '@gorhom/bottom-sheet';
 import {useFocusEffect} from '@react-navigation/native';
+import {RefreshControl} from 'react-native-gesture-handler';
 import {SvgXml} from 'react-native-svg';
+import TButton from '../../components/buttons/TButton';
 import Header from '../../components/header/Header';
+import LoadingModal from '../../components/modals/LoadingModal';
 import NormalModal from '../../components/modals/NormalModal';
 import RangeSlider from '../../components/slider/RangeSlider';
 import tw from '../../lib/tailwind';
+import {makeImage} from '../../redux/api/baseApi';
 import {NavigProps} from '../../utils/interface/NaviProps';
 import {baseUrl} from '../utils/exports';
+import {PrimaryColor} from '../utils/utils';
 
 interface SheetData {
   title?: string;
@@ -89,32 +96,46 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
   };
 
   // rtk query hooks
-  const {data} = useGetWeeklyQuestsQuery({});
-  const {data: questAchievements} = useGetQuestAchievementsQuery({});
-  const weeklyQuests = data?.data?.weekly_quests || [];
+  const {
+    data: weeklyQuests,
+    isLoading: weeklyQuestsLoading,
+    isFetching: weeklyQuestsFetching,
+    refetch: weeklyQuestsRefetch,
+  } = useGetWeeklyQuestsQuery({});
+  const {
+    data: questAchievements,
+    isLoading: questAchievementsLoading,
+    isFetching: questAchievementsFetching,
+    refetch: questAchievementsRefetch,
+  } = useGetQuestAchievementsQuery({});
 
-  const incompleteQuests = weeklyQuests.filter(
-    quest => quest.complete_status === 'incomplete',
-  );
-  const completeQuests = weeklyQuests.filter(
-    quest => quest.complete_status === 'complete',
-  );
-  const formattedNumber = data?.data?.progressPercentage
-    ? parseFloat(data?.data?.progressPercentage)?.toString()
-    : 0;
+  const [completedQuest] = useCompletedQuestMutation();
+  const [completedAchievement] = useCompletedAchievementMutation();
 
-  const lockedQuestAchievements = questAchievements?.data.filter(
-    quest => quest?.status === 'locked',
-  );
-  const unlockedQuestAchievements = questAchievements?.data.filter(
-    quest => quest?.status === 'unlocked',
-  );
+  const handleCompleteQuest = async (id: number) => {
+    try {
+      await completedQuest(id).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  console.log('quest achievements: ', unlockedQuestAchievements);
+  const lockedQuestAchievements = [];
 
   return (
     <>
+      <LoadingModal visible={weeklyQuestsLoading || questAchievementsLoading} />
       <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={false}
+            colors={[PrimaryColor]}
+            onRefresh={() => {
+              weeklyQuestsRefetch();
+              questAchievementsRefetch();
+            }}
+          />
+        }
         style={tw`px-[4%] bg-white dark:bg-primaryDark`}
         showsVerticalScrollIndicator={false}>
         <Header
@@ -160,7 +181,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
               style={tw`bg-brown70 dark:bg-darkBg flex-row rounded-2xl items-center mt-4 py-3 pl-6 gap-4`}>
               <Image source={require('../../assets/images/time-stamp.png')} />
               <Text style={tw`text-brown100 text-base font-WorkMedium`}>
-                {data?.data?.daysLeftForWeek} days left
+                {weeklyQuests?.data?.daysLeftForWeek} days left
               </Text>
             </View>
             <View
@@ -170,14 +191,14 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                 Weekly Quests Progress
               </Text>
               <Text style={tw`text-xs font-WorkMedium`}>
-                Completed {data?.data?.completedCount || 0}/
-                {data?.data?.total_quest || 0}
+                Completed {weeklyQuests?.data?.completedCount || 0}/
+                {weeklyQuests?.data?.total_quest || 0}
               </Text>
               <View pointerEvents="none">
                 <RangeSlider
                   color="#ff5c8d"
                   containerStyle={tw`mt-4`}
-                  value={Number(formattedNumber)}
+                  value={Number(weeklyQuests?.data?.progressPercentage) || 0}
                 />
               </View>
             </View>
@@ -192,16 +213,25 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                 </View>
 
                 <View style={tw`gap-y-4 mt-6`}>
-                  {incompleteQuests?.map((item: any) => (
+                  {weeklyQuests?.data?.incomplete?.map((item: any) => (
                     <View
-                      style={tw`flex-row items-center gap-3 border border-gray90 dark:bg-darkBg dark:border-darkBg rounded-2xl p-4`}
+                      style={[
+                        tw`flex-row items-center gap-3 border border-gray90 dark:bg-darkBg dark:border-darkBg rounded-2xl p-4`,
+                        {
+                          opacity: item?.status == 'locked' ? 0.5 : 1,
+                        },
+                      ]}
                       key={item?.id}>
                       <View style={tw``}>
                         <Image
-                          source={require('../../assets/images/quest-1.png')}
+                          key={item?.id + 'quest-images'}
+                          source={{
+                            uri: makeImage(item?.icons),
+                          }}
+                          style={tw`w-16 h-16`}
                         />
                       </View>
-                      <View style={tw`flex-shrink gap-y-3`}>
+                      <View style={tw`flex-1 gap-y-3`}>
                         <Text
                           style={tw`text-black dark:text-white font-WorkRegular text-base `}>
                           {item?.name}
@@ -211,6 +241,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                           <View style={tw`flex-row items-center gap-2`}>
                             <Image
                               source={require('../../assets/images/coin.png')}
+                              style={tw`w-6 h-6`}
                             />
                             <Text
                               style={tw`text-gray100 text-[10px] font-WorkRegular`}>
@@ -220,6 +251,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                           <View style={tw`flex-row items-center gap-2`}>
                             <Image
                               source={require('../../assets/images/trophy.png')}
+                              style={tw`w-6 h-6`}
                             />
                             <Text
                               style={tw`text-gray100 text-[10px] font-WorkRegular`}>
@@ -228,6 +260,14 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                           </View>
                         </View>
                       </View>
+                      {item?.status == 'unlocked' && (
+                        <TButton
+                          title="Claim"
+                          onPress={() => handleCompleteQuest(item?.id)}
+                          titleStyle={tw`text-xs`}
+                          containerStyle={tw`bg-orange-400 w-16 h-8 rounded-full`}
+                        />
+                      )}
                     </View>
                   ))}
                 </View>
@@ -242,7 +282,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                 </View>
 
                 <View style={tw`gap-y-4 mt-6 pb-2`}>
-                  {completeQuests?.map((item: any) => (
+                  {weeklyQuests?.data?.complete?.map((item: any) => (
                     <View
                       style={tw`flex-row items-center justify-between gap-3 border dark:bg-darkBg border-gray90 dark:border-darkBg rounded-2xl p-4`}
                       key={item?.id}>
@@ -367,7 +407,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                 </Text>
               </View>
               <View style={tw`gap-y-4`}>
-                {unlockedQuestAchievements?.map((item: any) => (
+                {questAchievements?.map((item: any) => (
                   <View
                     style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-white dark:bg-darkBg`}
                     key={item?.id}>

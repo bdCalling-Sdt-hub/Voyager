@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -8,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {
   IconBottomArrow,
   IconBrowse,
@@ -21,28 +23,25 @@ import {
   IconTik,
   IconTopArrow,
 } from '../../../assets/icons/Icons';
-import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import React, {useState} from 'react';
-import {
-  useAddToBucketListMutation,
-  useRemoveFromBucketListMutation,
-} from '../../../redux/apiSlices/bucketApiSlice';
 import {
   useGetSinglePlaceAndImagesQuery,
   useMarkAsVisitedMutation,
 } from '../../../redux/apiSlices/attractionApiSlice';
+import {
+  useAddToBucketListMutation,
+  useRemoveFromBucketListMutation,
+} from '../../../redux/apiSlices/bucketApiSlice';
 
-import {Fader} from 'react-native-ui-lib';
-import {NavigProps} from '../../../utils/interface/NaviProps';
-import NormalModal from '../../../components/modals/NormalModal';
-import {PrimaryColor} from '../../utils/utils';
-import Spinner from 'react-native-loading-spinner-overlay';
 import {SvgXml} from 'react-native-svg';
 import Swiper from 'react-native-swiper';
-import {Wander} from 'react-native-animated-spinkit';
-import {makeImage} from '../../../redux/api/baseApi';
-import tw from '../../../lib/tailwind';
+import {Fader} from 'react-native-ui-lib';
 import {useAppColorScheme} from 'twrnc';
+import LoadingModal from '../../../components/modals/LoadingModal';
+import NormalModal from '../../../components/modals/NormalModal';
+import tw from '../../../lib/tailwind';
+import {makeImage} from '../../../redux/api/baseApi';
+import {NavigProps} from '../../../utils/interface/NaviProps';
+import {PrimaryColor} from '../../utils/utils';
 
 const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
   const {item} = route?.params || {};
@@ -61,8 +60,8 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
     refetch: singlePlaceRefetch,
   } = useGetSinglePlaceAndImagesQuery(
     {
-      place_type: item?.type,
-      place_id: item?.id,
+      type: item?.type,
+      id: item?.id,
       place_image: false,
     },
     {
@@ -104,8 +103,8 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
   const handleRemoveBucketList = async () => {
     try {
       const response = await removeFromBucketList({
-        id: item?.id,
-        type: item.type,
+        id: singlePlace?.id,
+        type: singlePlace?.type,
       }).unwrap();
       // console.log('reponse check of remove bucket list: ', response);
       if (response?.error?.success === false) {
@@ -121,9 +120,9 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
   };
 
   const handleVisited = async () => {
-    const data = {type: item?.type, visit_status: 'visited'};
+    const data = {type: singlePlace?.type, visit_status: 'visited'};
     try {
-      const response = await markAsVisited({id: item?.id, data});
+      const response = await markAsVisited({id: singlePlace?.id, data});
       console.log('response of mark as visited: ', response);
       if (response?.error?.success === false) {
         Alert.alert(
@@ -148,17 +147,8 @@ const DestinationDetails = ({navigation, route}: NavigProps<null>) => {
   // console.log('remove id check: ', bucketListCheck?.data);
   // console.log("mark as visited check: ", visitedStatus);
   return (
-    <View style={tw`flex-1`} key={singlePlace?.id}>
-      <Spinner
-        animation="fade"
-        spinnerKey="DestinationDetails"
-        // textStyle={tw`text-white text-base`}
-        // textContent="Loading"
-        size={40}
-        customIndicator={<Wander size={30} color={'white'} />}
-        overlayColor={'rgba(123, 99, 235,0.2)'}
-        visible={singlePlaceFetching}
-      />
+    <View style={tw`flex-1 bg-white dark:bg-primaryDark`} key={singlePlace?.id}>
+      <LoadingModal visible={singlePlaceFetching} />
       {singlePlace?.id && (
         <View style={tw`bg-white flex-1 dark:bg-primaryDark`}>
           <ScrollView

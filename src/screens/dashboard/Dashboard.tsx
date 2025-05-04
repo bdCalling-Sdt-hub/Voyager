@@ -18,12 +18,11 @@ import {
   useGetWeeklyQuestProgressQuery,
 } from '../../redux/apiSlices/dashboardApiSlice';
 
-import {Wander} from 'react-native-animated-spinkit';
 import {RefreshControl} from 'react-native-gesture-handler';
-import Spinner from 'react-native-loading-spinner-overlay';
 import {SvgXml} from 'react-native-svg';
 import AttractionCard from '../../components/cards/AttractionCard';
 import Header from '../../components/header/Header';
+import LoadingModal from '../../components/modals/LoadingModal';
 import CircularProgress from '../../components/progressBar/CircularProgress';
 import RangeSlider from '../../components/slider/RangeSlider';
 import tw from '../../lib/tailwind';
@@ -60,25 +59,14 @@ const Dashboard = ({navigation}: any) => {
     refetch: bucketListDataRefetch,
   } = useGetBucketListDataQuery({});
 
-  const handleVisitLocation = async (item: any) => {
-    navigation?.navigate('DestinationDetails', {item});
-  };
-
   return (
     <>
-      <Spinner
-        animation="fade"
-        spinnerKey="dashboard"
-        // textStyle={tw`text-white text-base`}
-        // textContent="Loading"
-        size={40}
-        customIndicator={<Wander size={30} color={'white'} />}
-        overlayColor={'rgba(123, 99, 235,0.2)'}
+      <LoadingModal
         visible={
-          appDashboardFetching ||
-          weeklyQuestFetching ||
-          bucketListProgressFetching ||
-          bucketListDataFetching
+          appDashboardLoading ||
+          weeklyQuestLoading ||
+          bucketListProgressLoading ||
+          bucketListDataLoading
         }
       />
       <ScrollView
@@ -175,10 +163,10 @@ const Dashboard = ({navigation}: any) => {
               <CircularProgress
                 percentage={
                   activePlace === 'attractions'
-                    ? appDashboard?.data?.attractionProgress
+                    ? appDashboard?.data?.attractionProgress || 0
                     : activePlace === 'cities'
-                    ? appDashboard?.data?.cityProgress
-                    : appDashboard?.data?.countyProgress
+                    ? appDashboard?.data?.cityProgress || 0
+                    : appDashboard?.data?.countyProgress || 0
                 }
               />
             </View>
@@ -189,10 +177,10 @@ const Dashboard = ({navigation}: any) => {
               </Text>
               <Text style={tw`text-violet100 text-2xl font-WorkSemiBold`}>
                 {activePlace === 'attractions'
-                  ? appDashboard?.data?.totalAttractionVisited
+                  ? appDashboard?.data?.totalAttractionVisited || 0
                   : activePlace === 'cities'
-                  ? appDashboard?.data?.totalCityVisited
-                  : appDashboard?.data?.totalCountryVisited}
+                  ? appDashboard?.data?.totalCityVisited || 0
+                  : appDashboard?.data?.totalCountryVisited || 0}
               </Text>
             </View>
           </TouchableOpacity>
@@ -217,11 +205,7 @@ const Dashboard = ({navigation}: any) => {
                 renderItem={({index, item}) => {
                   // console.log(makeImage(item?.images[0]));
                   return (
-                    <TouchableOpacity
-                      onPress={() => {
-                        handleVisitLocation(item);
-                      }}
-                      disabled>
+                    <TouchableOpacity disabled>
                       <Image
                         style={tw`w-24 h-22 rounded-lg`}
                         key={index}
@@ -250,13 +234,13 @@ const Dashboard = ({navigation}: any) => {
             Weekly Quests Progress
           </Text>
           <Text style={tw`text-xs text-black dark:text-white font-WorkMedium`}>
-            Completed {weeklyQuest?.data?.completedCount}/
-            {weeklyQuest?.data?.total_quest} quests
+            Completed {weeklyQuest?.data?.completedCount || 0}/
+            {weeklyQuest?.data?.total_quest || 0} quests
           </Text>
           <View style={tw`mt-4`} pointerEvents="none">
             <RangeSlider
               color="#ff5c8d"
-              value={weeklyQuest?.data?.questProgress}
+              value={weeklyQuest?.data?.questProgress || 0}
             />
           </View>
         </TouchableOpacity>
@@ -265,21 +249,21 @@ const Dashboard = ({navigation}: any) => {
         {bucketListProgress?.data?.coin && (
           <TouchableOpacity
             style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-blue80 dark:bg-darkBg mt-4`}
-            onPress={() => navigation.navigate('Places')}>
+            onPress={() => navigation.navigate('BucketList')}>
             <Text
               style={tw`text-black dark:text-white text-base font-WorkMedium mb-2`}>
               Bucket List Progress
             </Text>
             <Text
               style={tw`text-xs font-WorkMedium text-black dark:text-white`}>
-              Visited {bucketListProgress?.data?.usedBuckets}/
-              {bucketListProgress?.data?.totalBucketSpace}
+              Visited {bucketListProgress?.data?.usedBuckets || 0}/
+              {bucketListProgress?.data?.totalBucketSpace || 0}
             </Text>
             <View pointerEvents="none">
               <RangeSlider
                 color="#32B1B4"
                 containerStyle={tw`mt-4`}
-                value={bucketListProgress?.data?.progress}
+                value={bucketListProgress?.data?.progress || 0}
               />
             </View>
             {bucketListProgress?.data?.message && (
@@ -297,7 +281,7 @@ const Dashboard = ({navigation}: any) => {
             style={tw`flex-row items-center justify-between`}
             onPress={() => {
               // navigation.navigate('ProgressBucketlist');
-              navigation.navigate('Places');
+              navigation.navigate('BucketList');
             }}>
             <View style={tw`w-11/12`}>
               <Text
@@ -320,7 +304,6 @@ const Dashboard = ({navigation}: any) => {
                   <AttractionCard
                     key={index + item?.id + item?.type + Math.random() * 6000}
                     item={item}
-                    handleVisitLocation={handleVisitLocation}
                   />
                 );
               }}

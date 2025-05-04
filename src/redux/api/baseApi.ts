@@ -74,6 +74,7 @@ export const api = createApi({
     'quests',
     'setting',
     'subscription',
+    'filter',
   ],
 });
 

@@ -6,8 +6,8 @@ import tw from '../../lib/tailwind';
 import {LStorage} from '../../screens/utils/utils';
 
 interface AppContextType {
-  showActionModal: string;
-  setShowActionModal: (value: string) => void;
+  showActionModal: boolean;
+  setShowActionModal: (value: boolean) => void;
   colorScheme: 'light' | 'dark';
   toggleColorScheme: () => void;
   setColorScheme: (colorScheme: RnColorScheme) => void;
@@ -15,7 +15,7 @@ interface AppContextType {
 
 // Create a Context
 const AppContext = createContext<AppContextType>({
-  showActionModal: '',
+  showActionModal: false,
   setShowActionModal: () => {},
   colorScheme: 'light',
   toggleColorScheme: () => {},
@@ -26,7 +26,7 @@ const AppContext = createContext<AppContextType>({
 
 // Create a Provider component
 export const AppProvider = ({children}: {children: any}) => {
-  const [showActionModal, setShowActionModal] = useState<string>('');
+  const [showActionModal, setShowActionModal] = useState<boolean>(false);
   const [colorScheme, toggleColorScheme, setColorScheme] =
     useAppColorScheme(tw);
   const colorMode = useColorScheme();

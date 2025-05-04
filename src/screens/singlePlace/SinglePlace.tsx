@@ -29,11 +29,17 @@ const SinglePlace = ({navigation, route}: NavigProps<null>) => {
         ListEmptyComponent={
           <EmptyCard title="No have any place's" hight={HIGHT * 0.7} />
         }
-        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={tw`pt-4 pb-10 gap-2`}
         data={data}
         renderItem={({item, index}) => (
-          <AttractionCard disabled removeHeartBtn item={item} key={index} />
+          <AttractionCard
+            disabled
+            visited
+            removeHeartBtn
+            item={item}
+            key={index}
+          />
         )}
       />
     </View>

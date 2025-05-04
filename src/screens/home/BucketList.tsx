@@ -1,12 +1,5 @@
 import React, {useState} from 'react';
-import {
-  Alert,
-  Image,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {
   useGetBucketListAttractionsQuery,
   useGetBucketListBannerQuery,
@@ -14,19 +7,17 @@ import {
   useGetBucketListCountriesQuery,
 } from '../../redux/apiSlices/bucketApiSlice';
 
-import {Wander} from 'react-native-animated-spinkit';
 import {RefreshControl} from 'react-native-gesture-handler';
-import Spinner from 'react-native-loading-spinner-overlay';
 import {IconSearch} from '../../assets/icons/Icons';
 import AttractionCard from '../../components/cards/AttractionCard';
 import Header from '../../components/header/Header';
+import LoadingModal from '../../components/modals/LoadingModal';
 import tw from '../../lib/tailwind';
 import {makeImage} from '../../redux/api/baseApi';
-import {useLocationVisitMutation} from '../../redux/apiSlices/attractionApiSlice';
 import {NavigProps} from '../../utils/interface/NaviProps';
 import {PrimaryColor} from '../utils/utils';
 
-const Places = ({navigation, route}: NavigProps<null>) => {
+const BucketList = ({navigation, route}: NavigProps<null>) => {
   const [activePlace, setActivePlace] = useState('attractions');
 
   // rtk query hooks
@@ -54,46 +45,17 @@ const Places = ({navigation, route}: NavigProps<null>) => {
     isFetching: bannerFetching,
     refetch: bannerRefetch,
   } = useGetBucketListBannerQuery({});
-  const [locationVisit, {isLoading}] = useLocationVisitMutation();
 
   // handlers
-  const handleVisitLocation = async (item: any) => {
-    const data = {type: item?.type, visited: '1'};
-    try {
-      const response = await locationVisit({id: item?.id, data});
-      console.log('reponse check of visit location: ', response);
-      if (response?.error?.success === false) {
-        Alert.alert(
-          'Adding to bucket list failed',
-          response?.error?.message || 'An error occurred.',
-        );
-        return;
-      } else {
-        navigation?.navigate('DestinationDetails', {item});
-      }
-    } catch (err: any) {
-      Alert.alert(
-        'Visit Location Failed',
-        err?.message || 'An error occurred.',
-      );
-    }
-  };
 
   return (
     <>
-      <Spinner
-        animation="fade"
-        spinnerKey="places"
-        // textStyle={tw`text-white text-base`}
-        // textContent="Loading"
-        size={40}
-        customIndicator={<Wander size={30} color={'white'} />}
-        overlayColor={'rgba(123, 99, 235,0.2)'}
+      <LoadingModal
         visible={
-          citiesFetching ||
-          attractionsFetching ||
-          bannerFetching ||
-          countriesFetching
+          citiesLoading ||
+          attractionsLoading ||
+          bannerLoading ||
+          countriesLoading
         }
       />
       <ScrollView
@@ -180,7 +142,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
                       ? 'text-violet100'
                       : 'text-white'
                   }`}>
-                  {bucketListAttractions?.data?.attractions?.data?.length}
+                  {bucketListAttractions?.data?.attractions?.data?.length || 0}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -203,7 +165,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
                   style={tw`text-xs ${
                     activePlace === 'cities' ? 'text-violet100' : 'text-white'
                   }`}>
-                  {bucketListCities?.data?.cities?.data?.length}
+                  {bucketListCities?.data?.cities?.data?.length || 0}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -228,7 +190,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
                       ? 'text-violet100'
                       : 'text-white'
                   }`}>
-                  {bucketListCountries?.data?.countries?.data?.length}
+                  {bucketListCountries?.data?.countries?.data?.length || 0}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -239,11 +201,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
               <>
                 {bucketListAttractions?.data?.attractions?.data?.map(
                   (item: any, index: number) => (
-                    <AttractionCard
-                      key={index}
-                      item={item?.data}
-                      handleVisitLocation={handleVisitLocation}
-                    />
+                    <AttractionCard key={index} item={item?.data} />
                   ),
                 )}
               </>
@@ -252,11 +210,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
               <>
                 {bucketListCities?.data?.cities?.data?.map(
                   (item: any, index: number) => (
-                    <AttractionCard
-                      key={index}
-                      item={item?.data}
-                      handleVisitLocation={handleVisitLocation}
-                    />
+                    <AttractionCard key={index} item={item?.data} />
                   ),
                 )}
               </>
@@ -265,11 +219,7 @@ const Places = ({navigation, route}: NavigProps<null>) => {
               <>
                 {bucketListCountries?.data?.countries?.data?.map(
                   (item: any, index: number) => (
-                    <AttractionCard
-                      key={index}
-                      item={item?.data}
-                      handleVisitLocation={handleVisitLocation}
-                    />
+                    <AttractionCard key={index} item={item?.data} />
                   ),
                 )}
               </>
@@ -281,4 +231,4 @@ const Places = ({navigation, route}: NavigProps<null>) => {
   );
 };
 
-export default Places;
+export default BucketList;

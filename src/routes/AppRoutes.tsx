@@ -1,51 +1,50 @@
 import React, {useEffect} from 'react';
 
-import AccountSettings from '../screens/settings/AccountSettings';
-import AttractionsScreen from '../screens/home/AttractionsScreen';
-import BottomRoutes from './bottomRoutes';
-import BowersActivities from '../screens/home/components/BowersActivities';
-import CitiesScreen from '../screens/home/CitiesScreen';
-import CountriesScreen from '../screens/home/CountriesScreen';
-import DestinationDetails from '../screens/home/components/DestinationDetails';
-import Faq from '../screens/policyAndAbout/Faq';
-import ForgotPassword from '../screens/authentication/ForgotPassword';
-import Friends from '../screens/friends/Friends';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {LogBox} from 'react-native';
-import Login from '../screens/authentication/Login';
 import {NavigationContainer} from '@react-navigation/native';
-import Notifications from '../screens/natifications/Notifications';
-import OthersProfile from '../screens/profile/OthersProfile';
-import PaymentMethod from '../screens/settings/subscription/PaymentMethod';
-import PicsForYour from '../screens/picsForYou/PicsForYour';
-import Preferences from '../screens/settings/Preferences';
-import PrivacyPolicy from '../screens/policyAndAbout/PrivacyPolicy';
-import ProfileSettings from '../screens/settings/ProfileSettings';
-import ProgressBucketlist from '../screens/progressBucketlist/ProgressBucketlist';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {LogBox} from 'react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Provider} from 'react-redux';
+import tw from '../lib/tailwind';
+import store from '../redux/store';
+import ForgotPassword from '../screens/authentication/ForgotPassword';
+import Login from '../screens/authentication/Login';
 import Registration from '../screens/authentication/Registration';
-import SearchScreen from '../screens/search/SearchScreen';
 import SetNewPassword from '../screens/authentication/SetNewPassword';
-import Settings from '../screens/settings/Settings';
-import Shop from '../screens/shop/Shop';
-import SinglePlace from '../screens/singlePlace/SinglePlace';
-import Splash from '../screens/splash/Splash';
-import Subscription from '../screens/settings/subscription/Subscription';
-import SubscriptionPlan from '../screens/settings/subscription/SubscriptionPlan';
-import TermsAndConditions from '../screens/policyAndAbout/TermsAndConditions';
 import TravelPreferences from '../screens/authentication/TravelPreference';
 import UpdatePassword from '../screens/authentication/UpdatePassword';
 import VerifyOTP from '../screens/authentication/VerifyOTP';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import store from '../redux/store';
-import tw from '../lib/tailwind';
+import Friends from '../screens/friends/Friends';
+import AttractionsScreen from '../screens/home/AttractionsScreen';
+import CitiesScreen from '../screens/home/CitiesScreen';
+import CountriesScreen from '../screens/home/CountriesScreen';
+import BowersActivities from '../screens/home/components/BowersActivities';
+import DestinationDetails from '../screens/home/components/DestinationDetails';
+import Notifications from '../screens/natifications/Notifications';
+import PicsForYour from '../screens/picsForYou/PicsForYour';
+import Faq from '../screens/policyAndAbout/Faq';
+import PrivacyPolicy from '../screens/policyAndAbout/PrivacyPolicy';
+import TermsAndConditions from '../screens/policyAndAbout/TermsAndConditions';
+import OthersProfile from '../screens/profile/OthersProfile';
+import ProgressBucketlist from '../screens/progressBucketlist/ProgressBucketlist';
+import SearchScreen from '../screens/search/SearchScreen';
+import AccountSettings from '../screens/settings/AccountSettings';
+import Preferences from '../screens/settings/Preferences';
+import ProfileSettings from '../screens/settings/ProfileSettings';
+import Settings from '../screens/settings/Settings';
+import PaymentMethod from '../screens/settings/subscription/PaymentMethod';
+import Subscription from '../screens/settings/subscription/Subscription';
+import SubscriptionPlan from '../screens/settings/subscription/SubscriptionPlan';
+import Shop from '../screens/shop/Shop';
+import SinglePlace from '../screens/singlePlace/SinglePlace';
+import Splash from '../screens/splash/Splash';
 import {useAppContext} from '../utils/context/AppContext';
+import BottomRoutes from './bottomRoutes';
 
 LogBox.ignoreAllLogs();
+const Stack = createNativeStackNavigator();
 
 const AppRoutes = () => {
-  const Stack = createNativeStackNavigator();
-
   const {colorScheme, setColorScheme} = useAppContext();
 
   useEffect(() => {

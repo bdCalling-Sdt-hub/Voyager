@@ -3,10 +3,10 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-} from "react-native";
+} from 'react-native';
 
-import React from "react";
-import tw from "../tailwind";
+import React from 'react';
+import tw from '../../lib/tailwind';
 
 interface IButton {
   containerStyle?: {};
@@ -34,13 +34,12 @@ const TButton = ({
       activeOpacity={0.5}
       style={[
         tw`bg-primary h-12 flex-row justify-center items-center gap-3 rounded-full   ${
-          disabled ? "opacity-60" : "opacity-100"
+          disabled ? 'opacity-60' : 'opacity-100'
         }`,
         containerStyle,
-      ]}
-    >
+      ]}>
       {isLoading && (
-        <ActivityIndicator color={loadingColor ? loadingColor : "white"} />
+        <ActivityIndicator color={loadingColor ? loadingColor : 'white'} />
       )}
       {title && (
         <Text style={[tw`text-white font-PoppinsSemiBold text-sm`, titleStyle]}>

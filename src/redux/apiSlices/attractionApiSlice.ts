@@ -11,14 +11,14 @@ export const AttractionSlice = api.injectEndpoints({
       providesTags: ['attractions'],
     }),
     getSinglePlaceAndImages: builder.query({
-      query: ({place_image, place_id, place_type}) => {
+      query: ({place_image, id, type}) => {
         if (place_image) {
           return {
-            url: `/place-details?place_id=${place_id}&place_type=${place_type}&place_image=${place_image}`,
+            url: `/place-details?id=${id}&type=${type}&place_image=${place_image}`,
           };
         } else {
           return {
-            url: `/place-details?place_id=${place_id}&place_type=${place_type}`,
+            url: `/place-details?id=${id}&type=${type}`,
           };
         }
       },
@@ -86,7 +86,7 @@ export const AttractionSlice = api.injectEndpoints({
           body: data,
         };
       },
-      invalidatesTags: ['attractions', 'bucket', 'dashboard'],
+      invalidatesTags: ['attractions', 'bucket', 'dashboard', 'auth'],
     }),
     // location visit
     locationVisit: builder.mutation({

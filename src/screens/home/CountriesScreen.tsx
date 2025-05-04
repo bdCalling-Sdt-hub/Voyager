@@ -1,18 +1,14 @@
-import {Alert, FlatList, RefreshControl, View} from 'react-native';
-import {
-  useGetCountryQuery,
-  useLocationVisitMutation,
-} from '../../redux/apiSlices/attractionApiSlice';
+import {FlatList, RefreshControl, View} from 'react-native';
 import {HIGHT, PrimaryColor} from '../utils/utils';
 
 import React from 'react';
-import {Wander} from 'react-native-animated-spinkit';
-import Spinner from 'react-native-loading-spinner-overlay';
 import {IconSearch} from '../../assets/icons/Icons';
 import AttractionCard from '../../components/cards/AttractionCard';
 import EmptyCard from '../../components/Empty/EmptyCard';
 import Header from '../../components/header/Header';
+import LoadingModal from '../../components/modals/LoadingModal';
 import tw from '../../lib/tailwind';
+import {useGetCountryQuery} from '../../redux/apiSlices/attractionApiSlice';
 import {NavigProps} from '../../utils/interface/NaviProps';
 
 const CountriesScreen = ({navigation, route}: NavigProps<null>) => {
@@ -28,42 +24,10 @@ const CountriesScreen = ({navigation, route}: NavigProps<null>) => {
   } = useGetCountryQuery({});
 
   // rtk query hooks
-  const [locationVisit] = useLocationVisitMutation();
-
-  // handlers
-  const handleVisitLocation = async (item: any) => {
-    const data = {type: item?.type, visited: '1'};
-    try {
-      const response = await locationVisit({id: item?.id, data});
-      if (response?.error?.success === false) {
-        Alert.alert(
-          'Adding to bucket list failed',
-          response?.error?.message || 'An error occurred.',
-        );
-        return;
-      } else {
-        navigation?.navigate('DestinationDetails', {item});
-      }
-    } catch (err: any) {
-      Alert.alert(
-        'Visit Location Failed',
-        err?.message || 'An error occurred.',
-      );
-    }
-  };
 
   return (
     <View style={tw`px-[4%] bg-white h-full dark:bg-primaryDark`}>
-      <Spinner
-        animation="fade"
-        spinnerKey="AttractionGroup"
-        // textStyle={tw`text-white text-base`}
-        // textContent="Loading"
-        size={40}
-        customIndicator={<Wander size={30} color={'white'} />}
-        overlayColor={'rgba(123, 99, 235,0.2)'}
-        visible={countriesFetching}
-      />
+      <LoadingModal visible={countriesFetching} />
       <Header
         title={title || 'Next Destination'}
         containerStyle={tw`mt-2`}
@@ -90,12 +54,7 @@ const CountriesScreen = ({navigation, route}: NavigProps<null>) => {
         showsVerticalScrollIndicator={false}
         onEndReachedThreshold={0.5}
         contentContainerStyle={tw`pb-10 pt-2 gap-2`}
-        renderItem={({item}) => (
-          <AttractionCard
-            item={item}
-            handleVisitLocation={handleVisitLocation}
-          />
-        )}
+        renderItem={({item}) => <AttractionCard item={item} />}
       />
     </View>
   );

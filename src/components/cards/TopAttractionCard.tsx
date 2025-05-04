@@ -11,14 +11,15 @@ import {
   useRemoveFromBucketListMutation,
 } from '../../redux/apiSlices/bucketApiSlice';
 
-import {IconFilledHeart} from '../../assets/icons/Icons';
-import {PrimaryColor} from '../../screens/utils/utils';
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {SvgXml} from 'react-native-svg';
-import {makeImage} from '../../redux/api/baseApi';
-import tw from '../../lib/tailwind';
 import {useAppColorScheme} from 'twrnc';
-import {useNavigation} from '@react-navigation/native';
+import {IconFilledHeart} from '../../assets/icons/Icons';
+import tw from '../../lib/tailwind';
+import {makeImage} from '../../redux/api/baseApi';
+import {useLocationVisitMutation} from '../../redux/apiSlices/attractionApiSlice';
+import {PrimaryColor} from '../../screens/utils/utils';
 
 interface TopAttractionCardProps {
   item: any;
@@ -66,6 +67,32 @@ const TopAttractionCard = ({item}: TopAttractionCardProps) => {
       Alert.alert('Warning', err?.message || 'An error occurred.');
     }
   };
+
+  // rtk query hooks
+  const [locationVisit] = useLocationVisitMutation();
+
+  // handlers
+  const handleVisitLocation = async (item: any) => {
+    const data = {type: item?.type, visited: '1'};
+    try {
+      const response = await locationVisit({id: item?.id, data}).unwrap();
+      if (response?.error?.success === false) {
+        Alert.alert(
+          'Adding to bucket list failed',
+          response?.error?.message || 'An error occurred.',
+        );
+        return;
+      } else {
+        (navigation as any)?.navigate('DestinationDetails', {item});
+      }
+    } catch (err: any) {
+      Alert.alert(
+        'Visit Location Failed',
+        err?.message || 'An error occurred.',
+      );
+    }
+  };
+
   return (
     <TouchableOpacity
       style={tw`rounded-2xl overflow-hidden mt-6`}

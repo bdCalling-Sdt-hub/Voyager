@@ -13,6 +13,27 @@ export const questSlice = api.injectEndpoints({
       providesTags: ['quests'],
     }),
 
+    // claim quist
+    completedQuest: builder.mutation({
+      query: id => {
+        return {
+          url: `/complete-quest?quest_id=${id}`,
+          method: 'POST',
+        };
+      },
+      invalidatesTags: ['quests', 'auth'],
+    }),
+    // claim quist
+    completedAchievement: builder.mutation({
+      query: id => {
+        return {
+          url: `/earn-achievement?id=${id}`,
+          method: 'POST',
+        };
+      },
+      invalidatesTags: ['quests', 'auth'],
+    }),
+
     // get quest achievements
     getQuestAchievements: builder.query({
       query: () => ({
@@ -27,4 +48,6 @@ export const {
   // weekly quests
   useGetWeeklyQuestsQuery,
   useGetQuestAchievementsQuery,
+  useCompletedQuestMutation,
+  useCompletedAchievementMutation,
 } = questSlice;
