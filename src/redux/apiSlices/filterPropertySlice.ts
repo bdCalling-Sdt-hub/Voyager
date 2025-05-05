@@ -13,6 +13,7 @@ export const FriendSlice = api.injectEndpoints({
     getGlobalSearch: builder.query({
       query: data => ({
         url: `/global-filter`,
+        params: data,
         body: data,
       }),
       providesTags: ['filter'],

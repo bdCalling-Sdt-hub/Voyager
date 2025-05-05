@@ -19,7 +19,6 @@ import {
   useGetActivityLevelQuery,
   useGetBestTravelTimesQuery,
   useGetCategoriesQuery,
-  useGetGlobalSearchQuery,
 } from '../../redux/apiSlices/filterPropertySlice';
 
 import {useNavigation} from '@react-navigation/native';
@@ -50,6 +49,7 @@ interface Props {
   searchBarShow?: boolean;
   hideDestination?: boolean;
   rightComponent?: any;
+  setFilterData?: any;
 }
 
 const Header = ({
@@ -71,6 +71,7 @@ const Header = ({
   searchBarShow,
   hideDestination,
   rightComponent,
+  setFilterData,
 }: Props) => {
   const navigation: any = useNavigation();
   const [filterModal, setFilterModal] = useState(false);
@@ -95,21 +96,6 @@ const Header = ({
   const {data: categories} = useGetCategoriesQuery({});
   const {data: bestTimes} = useGetBestTravelTimesQuery({});
   const {data: activityLevels} = useGetActivityLevelQuery({});
-
-  const {data: SearchResults} = useGetGlobalSearchQuery(
-    {
-      search: '',
-      per_page: 100,
-      page: 1,
-      category: selectedCategory,
-      subcategories: selectedSubCategory,
-      best_visit_times: selectedTime,
-      activity_levels: selectedActivity,
-    },
-    {
-      skip: !selectedCategory,
-    },
-  );
 
   const handleSelectCategory = (item: any) => {
     if (!selectedCategory?.includes(item.id)) {
@@ -150,7 +136,7 @@ const Header = ({
 
   const {showActionModal, setShowActionModal} = useAppContext();
 
-  console.log(SearchResults, 'Search Result');
+  // console.log(SearchResults, 'Search Result');
 
   return (
     <>
@@ -596,7 +582,16 @@ const Header = ({
           </TouchableOpacity>
           <TouchableOpacity
             style={tw`bg-violet100 py-2 rounded-full justify-center items-center border-[2px] border-violet100 flex-1`}
-            onPress={() => setFilterModal(false)}>
+            onPress={() => {
+              setFilterData &&
+                setFilterData({
+                  selectedCategory: selectedCategory,
+                  selectedSubCategory: selectedSubCategory,
+                  selectedTime: selectedTime,
+                  selectedActivity: selectedActivity,
+                });
+              setFilterModal(false);
+            }}>
             <Text style={tw`text-white font-WorkSemiBold text-sm`}>
               Apply Filters
             </Text>
