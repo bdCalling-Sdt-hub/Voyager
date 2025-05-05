@@ -16,8 +16,10 @@ import {
   IconSearch,
 } from '../../assets/icons/Icons';
 import {
+  useGetActivityLevelQuery,
   useGetBestTravelTimesQuery,
   useGetCategoriesQuery,
+  useGetGlobalSearchQuery,
 } from '../../redux/apiSlices/filterPropertySlice';
 
 import {useNavigation} from '@react-navigation/native';
@@ -74,8 +76,17 @@ const Header = ({
   const [filterModal, setFilterModal] = useState(false);
   const [locationType, setLocationType] = useState('');
   const [selectedItems, setSelectedItems] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState<any | null>(null);
-  const [selectedTime, setSelectedTime] = useState<any | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string[] | null>(
+    null,
+  );
+  const [subCategory, setSubCategory] = useState<any[] | null>(null);
+  const [selectedSubCategory, setSelectedSubCategory] = useState<
+    string[] | null
+  >(null);
+  const [selectedActivity, setSelectedActivity] = useState<string[] | null>(
+    null,
+  );
+  const [selectedTime, setSelectedTime] = useState<any[] | null>(null);
   const [visitedStatus, setVisitedStatus] = useState<string>('');
   const [colorScheme] = useAppColorScheme(tw);
 
@@ -83,28 +94,63 @@ const Header = ({
   const {data: profileData} = useGetProfileQuery({});
   const {data: categories} = useGetCategoriesQuery({});
   const {data: bestTimes} = useGetBestTravelTimesQuery({});
+  const {data: activityLevels} = useGetActivityLevelQuery({});
 
-  const handleCheckboxChange = value => {
-    if (selectedItems.includes(value)) {
-      setSelectedItems(selectedItems.filter(item => item !== value));
-    } else {
-      setSelectedItems([...selectedItems, value]);
-    }
-  };
+  const {data: SearchResults} = useGetGlobalSearchQuery(
+    {
+      search: '',
+      per_page: 100,
+      page: 1,
+      category: selectedCategory,
+      subcategories: selectedSubCategory,
+      best_visit_times: selectedTime,
+      activity_levels: selectedActivity,
+    },
+    {
+      skip: !selectedCategory,
+    },
+  );
 
-  const toggleVisitedStatus = (status: string) => {
-    if (visitedStatus.includes(status)) {
+  const handleSelectCategory = (item: any) => {
+    if (!selectedCategory?.includes(item.id)) {
       // If the status is already selected, remove it
-      setVisitedStatus(visitedStatus.filter(item => item !== status));
+      setSelectedCategory(pre => {
+        if (pre) {
+          return pre?.concat(item.id);
+        } else {
+          return [item.id];
+        }
+      });
+      setSubCategory(pre => {
+        if (pre?.length) {
+          const newSubCategory = pre?.concat(...item.sub_categories);
+          return newSubCategory;
+        } else {
+          return [...item.sub_categories];
+        }
+      });
     } else {
-      // If the status is not selected, add it
-      setVisitedStatus([...visitedStatus, status]);
+      //  If already selected, remove it
+      setSelectedCategory(pre => {
+        if (pre) {
+          return pre?.filter(id => id !== item.id);
+        } else {
+          return [item.id];
+        }
+      });
+      // If have already sub category then remove sub category
+      setSubCategory(pre => {
+        const newSubCategory = pre?.filter(
+          subCategory => !item.sub_categories?.includes(subCategory),
+        );
+        return newSubCategory;
+      });
     }
   };
 
   const {showActionModal, setShowActionModal} = useAppContext();
 
-  // console.log(selectedCategory, 'selectedCategory');
+  console.log(SearchResults, 'Search Result');
 
   return (
     <>
@@ -332,43 +378,85 @@ const Header = ({
         visible={filterModal}
         setVisible={setFilterModal}
         disabled
-        layerContainerStyle={tw`self-center items-center justify-center h-full w-[80%]`}
+        layerContainerStyle={tw`self-center items-center justify-center h-full w-[90%]`}
         containerStyle={tw`bg-white dark:bg-darkBg p-4 rounded-2xl h-[80%]`}>
-        <View style={tw`pb-6`}>
-          {/* header */}
-          <View style={tw`flex-row items-center justify-between w-full pb-1`}>
-            <Text
-              style={tw`text-black dark:text-white text-base font-WorkSemiBold`}>
-              Filters
-            </Text>
-            <TouchableOpacity onPress={() => setFilterModal(false)}>
-              <SvgXml xml={IconClose} />
-            </TouchableOpacity>
-          </View>
-          <ScrollView
-            keyboardShouldPersistTaps="always"
-            showsVerticalScrollIndicator={false}>
-            {/* location type */}
+        {/* header */}
+        <View style={tw`flex-row items-center justify-between w-full pb-1`}>
+          <Text
+            style={tw`text-black dark:text-white text-base font-WorkSemiBold`}>
+            Filters
+          </Text>
+          <TouchableOpacity onPress={() => setFilterModal(false)}>
+            <SvgXml xml={IconClose} />
+          </TouchableOpacity>
+        </View>
+        <ScrollView
+          keyboardShouldPersistTaps="always"
+          showsVerticalScrollIndicator={false}>
+          {/* location type */}
 
+          <View style={tw`mt-2`}>
+            <Text
+              style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
+              Categories
+            </Text>
+
+            <View style={tw`flex-row flex-wrap gap-3 mt-1 `}>
+              {categories?.data?.data?.map((category: any, index: number) => (
+                <TouchableOpacity
+                  key={index}
+                  style={tw`${
+                    selectedCategory?.includes(category?.id)
+                      ? 'bg-violet100'
+                      : 'bg-white dark:bg-darkBg'
+                  } py-2 flex-row gap-1 rounded-full justify-center items-center border-[2px] border-violet100 px-2`}
+                  onPress={() => handleSelectCategory(category)}>
+                  <Text
+                    style={tw`${
+                      selectedCategory?.includes(category?.id)
+                        ? 'text-white'
+                        : 'text-violet100'
+                    } font-WorkMedium text-sm capitalize`}>
+                    {category?.name?.replace('_', '-')}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+          {Array.isArray(subCategory) && (
             <View style={tw`mt-2`}>
               <Text
                 style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
-                Categories
+                Sub - Categories
               </Text>
 
               <View style={tw`flex-row flex-wrap gap-3 mt-1 `}>
-                {categories?.data?.data?.map((category: any, index: number) => (
+                {subCategory?.map((category: any, index: number) => (
                   <TouchableOpacity
                     key={index}
                     style={tw`${
-                      selectedCategory?.name === category?.name
+                      selectedSubCategory?.includes(category?.name)
                         ? 'bg-violet100'
                         : 'bg-white dark:bg-darkBg'
                     } py-2 flex-row gap-1 rounded-full justify-center items-center border-[2px] border-violet100 px-2`}
-                    onPress={() => setSelectedCategory(category)}>
+                    onPress={() =>
+                      setSelectedSubCategory(pre => {
+                        if (pre?.length) {
+                          if (pre?.includes(category?.name)) {
+                            return pre?.filter(
+                              (item: any) => item !== category?.name,
+                            );
+                          } else {
+                            return pre?.concat(category?.name);
+                          }
+                        } else {
+                          return [category?.name];
+                        }
+                      })
+                    }>
                     <Text
                       style={tw`${
-                        selectedCategory?.name === category?.name
+                        selectedSubCategory?.includes(category?.name)
                           ? 'text-white'
                           : 'text-violet100'
                       } font-WorkMedium text-sm capitalize`}>
@@ -378,39 +466,10 @@ const Header = ({
                 ))}
               </View>
             </View>
-            <View style={tw`mt-2`}>
-              <Text
-                style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
-                Sub - Categories
-              </Text>
+          )}
 
-              <View style={tw`flex-row flex-wrap gap-3 mt-1 `}>
-                {(selectedCategory as any)?.sub_categories?.map(
-                  (category: any, index: number) => (
-                    <TouchableOpacity
-                      key={index}
-                      style={tw`${
-                        selectedCategory?.name === category?.name
-                          ? 'bg-violet100'
-                          : 'bg-white dark:bg-darkBg'
-                      } py-2 flex-row gap-1 rounded-full justify-center items-center border-[2px] border-violet100 px-2`}
-                      onPress={() => setSelectedCategory(category)}>
-                      <Text
-                        style={tw`${
-                          selectedCategory?.name === category?.name
-                            ? 'text-white'
-                            : 'text-violet100'
-                        } font-WorkMedium text-sm capitalize`}>
-                        {category?.name?.replace('_', '-')}
-                      </Text>
-                    </TouchableOpacity>
-                  ),
-                )}
-              </View>
-            </View>
-
-            {/* Experience type */}
-            {/* <View style={tw`mt-5`}>
+          {/* Experience type */}
+          {/* <View style={tw`mt-5`}>
               <Text
                 style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
                 Experience type
@@ -439,72 +498,109 @@ const Header = ({
               </View>
             </View> */}
 
-            {/* Best travel time */}
-            <View style={tw`mt-5`}>
-              <Text
-                style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
-                Best travel time
-              </Text>
-              <View style={tw`flex-row flex-wrap gap-3 mt-1`}>
-                {bestTimes?.data?.map((type: any, index: number) => (
-                  <TouchableOpacity
-                    key={index}
+          {/* Best travel time */}
+          <View style={tw`mt-5`}>
+            <Text
+              style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
+              Best travel time
+            </Text>
+            <View style={tw`flex-row flex-wrap gap-3 mt-1`}>
+              {bestTimes?.data?.map((type: any, index: number) => (
+                <TouchableOpacity
+                  key={index}
+                  style={tw`${
+                    selectedTime?.includes(type?.name)
+                      ? 'bg-violet100'
+                      : 'bg-white dark:bg-darkBg'
+                  } py-2 flex-row gap-1 rounded-full justify-center items-center border-[2px] border-violet100 px-2`}
+                  onPress={() =>
+                    setSelectedTime(pre => {
+                      if (pre?.length) {
+                        if (pre?.includes(type?.name)) {
+                          return pre?.filter(
+                            (item: any) => item !== type?.name,
+                          );
+                        } else {
+                          return pre?.concat(type?.name);
+                        }
+                      } else {
+                        return [type?.name];
+                      }
+                    })
+                  }>
+                  <SvgXml xml={type?.icon} />
+                  <Text
                     style={tw`${
-                      visitedStatus.includes(type?.name)
-                        ? 'bg-violet100'
-                        : 'bg-white dark:bg-darkBg'
-                    } py-2 flex-row gap-1 rounded-full justify-center items-center border-[2px] border-violet100 px-2`}
-                    onPress={() => toggleVisitedStatus(type?.name)}>
-                    <SvgXml xml={type?.icon} />
-                    <Text
-                      style={tw`${
-                        visitedStatus.includes(type?.name)
-                          ? 'text-white'
-                          : 'text-violet100'
-                      } font-WorkMedium text-sm capitalize`}>
-                      {type?.name.replace('_', '-')}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </View>
-
-            {/* activity type */}
-            {/* <View style={tw`gap-y-3 mt-5`}>
-              <Text
-                style={tw`text-black dark:text-white text-base font-WorkSemiBold`}>
-                Activity level
-              </Text>
-
-              {activityType.map(item => (
-                <Checkbox
-                  key={item.id}
-                  color={'#8C78EA'}
-                  labelStyle={tw`text-black dark:text-white`}
-                  value={selectedItems.includes(item.label)}
-                  label={item.label}
-                  onValueChange={() => handleCheckboxChange(item.label)}
-                />
+                      selectedTime?.includes(type?.name)
+                        ? 'text-white'
+                        : 'text-violet100'
+                    } font-WorkMedium text-sm capitalize`}>
+                    {type?.name.replace('_', '-')}
+                  </Text>
+                </TouchableOpacity>
               ))}
-            </View> */}
-
-            <View style={tw`flex-row gap-6 mt-5`}>
-              <TouchableOpacity
-                style={tw`bg-white dark:bg-darkBg py-2 rounded-full justify-center items-center border-[2px] border-violet100 flex-1`}
-                onPress={() => {}}>
-                <Text style={tw`text-violet100 font-WorkSemiBold text-sm`}>
-                  Clear all
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={tw`bg-violet100 py-2 rounded-full justify-center items-center border-[2px] border-violet100 flex-1`}
-                onPress={() => setFilterModal(false)}>
-                <Text style={tw`text-white font-WorkSemiBold text-sm`}>
-                  Apply Filters
-                </Text>
-              </TouchableOpacity>
             </View>
-          </ScrollView>
+          </View>
+
+          {/* activity type */}
+          <View style={tw`mt-5`}>
+            <Text
+              style={tw`text-black dark:text-white text-base font-WorkSemiBold`}>
+              Activity level
+            </Text>
+            <View style={tw`flex-row flex-wrap gap-3 mt-1`}>
+              {activityLevels?.data?.data?.map((type: any, index: number) => (
+                <TouchableOpacity
+                  key={index}
+                  style={tw`${
+                    selectedActivity?.includes(type?.name)
+                      ? 'bg-violet100'
+                      : 'bg-white dark:bg-darkBg'
+                  } py-2 flex-row gap-1 rounded-full justify-center items-center border-[2px] border-violet100 px-2`}
+                  onPress={() =>
+                    setSelectedActivity(pre => {
+                      if (pre?.length) {
+                        if (pre?.includes(type?.name)) {
+                          return pre?.filter(
+                            (item: any) => item !== type?.name,
+                          );
+                        } else {
+                          return pre?.concat(type?.name);
+                        }
+                      } else {
+                        return [type?.name];
+                      }
+                    })
+                  }>
+                  {/* <SvgXml xml={type?.icon} /> */}
+                  <Text
+                    style={tw`${
+                      selectedActivity?.includes(type?.name)
+                        ? 'text-white'
+                        : 'text-violet100'
+                    } font-WorkMedium text-sm capitalize`}>
+                    {type?.name.replace('_', '-')}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+        </ScrollView>
+        <View style={tw`flex-row gap-6 mt-5`}>
+          <TouchableOpacity
+            style={tw`bg-white dark:bg-darkBg py-2 rounded-full justify-center items-center border-[2px] border-violet100 flex-1`}
+            onPress={() => {}}>
+            <Text style={tw`text-violet100 font-WorkSemiBold text-sm`}>
+              Clear all
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={tw`bg-violet100 py-2 rounded-full justify-center items-center border-[2px] border-violet100 flex-1`}
+            onPress={() => setFilterModal(false)}>
+            <Text style={tw`text-white font-WorkSemiBold text-sm`}>
+              Apply Filters
+            </Text>
+          </TouchableOpacity>
         </View>
       </NormalModal>
     </>

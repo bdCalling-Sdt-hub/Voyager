@@ -10,6 +10,7 @@ import {
 import {
   IconClose,
   IconColoredRightArrow,
+  IconLock,
   IconSearch,
   IconShare,
   IconSuccessTik,
@@ -216,9 +217,13 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                   {weeklyQuests?.data?.incomplete?.map((item: any) => (
                     <View
                       style={[
-                        tw`flex-row items-center gap-3 border border-gray90 dark:bg-darkBg dark:border-darkBg rounded-2xl p-4`,
+                        tw`flex-row items-center gap-3 border ${
+                          item?.status == 'locked'
+                            ? 'border-gray90'
+                            : 'border-orange-400'
+                        }  dark:bg-darkBg dark:border-darkBg rounded-2xl p-4`,
                         {
-                          opacity: item?.status == 'locked' ? 0.5 : 1,
+                          opacity: item?.status == 'locked' ? 0.8 : 1,
                         },
                       ]}
                       key={item?.id}>
@@ -260,13 +265,17 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                           </View>
                         </View>
                       </View>
-                      {item?.status == 'unlocked' && (
+                      {item?.status == 'unlocked' ? (
                         <TButton
                           title="Claim"
                           onPress={() => handleCompleteQuest(item?.id)}
                           titleStyle={tw`text-xs`}
                           containerStyle={tw`bg-orange-400 w-16 h-8 rounded-full`}
                         />
+                      ) : (
+                        <View style={tw`opacity-50`}>
+                          <SvgXml xml={IconLock} />
+                        </View>
                       )}
                     </View>
                   ))}
@@ -284,36 +293,49 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                 <View style={tw`gap-y-4 mt-6 pb-2`}>
                   {weeklyQuests?.data?.complete?.map((item: any) => (
                     <View
-                      style={tw`flex-row items-center justify-between gap-3 border dark:bg-darkBg border-gray90 dark:border-darkBg rounded-2xl p-4`}
+                      style={[
+                        tw`flex-row items-center gap-3 border 
+                          border-gray90
+                          dark:bg-darkBg dark:border-darkBg rounded-2xl p-4`,
+                        {
+                          opacity: item?.status == 'locked' ? 0.8 : 1,
+                        },
+                      ]}
                       key={item?.id}>
                       <View style={tw``}>
                         <Image
-                          source={require('../../assets/images/quest-1.png')}
+                          key={item?.id + 'quest-images'}
+                          source={{
+                            uri: makeImage(item?.icons),
+                          }}
+                          style={tw`w-16 h-16`}
                         />
                       </View>
-                      <View style={tw`flex-shrink gap-y-3`}>
+                      <View style={tw`flex-1 gap-y-3`}>
                         <Text
                           style={tw`text-black dark:text-white font-WorkRegular text-base `}>
-                          {item?.question}
+                          {item?.name}
                         </Text>
 
                         <View style={tw`gap-4 flex-row items-center`}>
                           <View style={tw`flex-row items-center gap-2`}>
                             <Image
                               source={require('../../assets/images/coin.png')}
+                              style={tw`w-6 h-6`}
                             />
                             <Text
                               style={tw`text-gray100 text-[10px] font-WorkRegular`}>
-                              {item?.coins} Coins
+                              {item?.bonus_coins} Coins
                             </Text>
                           </View>
                           <View style={tw`flex-row items-center gap-2`}>
                             <Image
                               source={require('../../assets/images/trophy.png')}
+                              style={tw`w-6 h-6`}
                             />
                             <Text
                               style={tw`text-gray100 text-[10px] font-WorkRegular`}>
-                              {item?.trophy}
+                              {item?.bonus_xp} XP
                             </Text>
                           </View>
                         </View>
