@@ -83,6 +83,7 @@ const BucketList = ({navigation, route}: NavigProps<null>) => {
             isSearchVisible={true}
             searchBarShow={true}
             hideDestination={true}
+            searchNavigate
             hideFilterIcon={true}
           />
 

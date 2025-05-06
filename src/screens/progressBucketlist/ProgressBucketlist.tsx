@@ -19,7 +19,7 @@ const ProgressBucketlist = ({navigation, route}: NavigProps<null>) => {
         searchBarShow={false}
         hideDestination={true}
         isIcon={true}
-        searchNavigate
+        // searchNavigate
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={tw`gap-y-4 mt-4 pb-2`}>

@@ -27,6 +27,7 @@ import PrivacyPolicy from '../screens/policyAndAbout/PrivacyPolicy';
 import TermsAndConditions from '../screens/policyAndAbout/TermsAndConditions';
 import OthersProfile from '../screens/profile/OthersProfile';
 import ProgressBucketlist from '../screens/progressBucketlist/ProgressBucketlist';
+import ShowAllBadges from '../screens/questions/ShowAllBadges';
 import SearchScreen from '../screens/search/SearchScreen';
 import AccountSettings from '../screens/settings/AccountSettings';
 import Preferences from '../screens/settings/Preferences';
@@ -122,6 +123,7 @@ const AppRoutes = () => {
               component={TravelPreferences}
             />
             <Stack.Screen name="Search" component={SearchScreen} />
+            <Stack.Screen name="ShowAllBadges" component={ShowAllBadges} />
           </Stack.Navigator>
         </NavigationContainer>
       </GestureHandlerRootView>

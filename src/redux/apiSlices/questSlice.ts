@@ -12,6 +12,12 @@ export const questSlice = api.injectEndpoints({
       }),
       providesTags: ['quests'],
     }),
+    getEarnBadges: builder.query({
+      query: () => ({
+        url: `/badges-earn`,
+      }),
+      providesTags: ['quests'],
+    }),
 
     // claim quist
     completedQuest: builder.mutation({
@@ -50,4 +56,5 @@ export const {
   useGetQuestAchievementsQuery,
   useCompletedQuestMutation,
   useCompletedAchievementMutation,
+  useGetEarnBadgesQuery,
 } = questSlice;

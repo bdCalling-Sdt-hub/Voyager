@@ -1,5 +1,6 @@
 import React, {useMemo, useRef, useState} from 'react';
 import {
+  FlatList,
   Image,
   ScrollView,
   Text,
@@ -18,6 +19,7 @@ import {
 import {
   useCompletedAchievementMutation,
   useCompletedQuestMutation,
+  useGetEarnBadgesQuery,
   useGetQuestAchievementsQuery,
   useGetWeeklyQuestsQuery,
 } from '../../redux/apiSlices/questSlice';
@@ -34,15 +36,15 @@ import RangeSlider from '../../components/slider/RangeSlider';
 import tw from '../../lib/tailwind';
 import {makeImage} from '../../redux/api/baseApi';
 import {NavigProps} from '../../utils/interface/NaviProps';
-import {baseUrl} from '../utils/exports';
 import {PrimaryColor} from '../utils/utils';
+import Badge from './components/Badge';
 
 interface SheetData {
   title?: string;
   subtitle?: string;
   image?: string;
 }
-const WeeklyQuestions = ({route}: NavigProps<null>) => {
+const WeeklyQuestions = ({route, navigation}: NavigProps<null>) => {
   const {screen} = route?.params || {};
   const [activeQuest, setActiveQuest] = useState(screen || 'quests');
   const [achievementsPopupVisible, setAchievementsPopupVisible] =
@@ -110,6 +112,10 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
     refetch: questAchievementsRefetch,
   } = useGetQuestAchievementsQuery({});
 
+  const {data: earnBadges, refetch: earnBadgesRefetch} = useGetEarnBadgesQuery(
+    {},
+  );
+
   const [completedQuest] = useCompletedQuestMutation();
   const [completedAchievement] = useCompletedAchievementMutation();
 
@@ -120,8 +126,6 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
       console.log(error);
     }
   };
-
-  const lockedQuestAchievements = [];
 
   return (
     <>
@@ -134,6 +138,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
             onRefresh={() => {
               weeklyQuestsRefetch();
               questAchievementsRefetch();
+              earnBadgesRefetch();
             }}
           />
         }
@@ -357,68 +362,32 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                 </Text>
                 <View style={tw`flex-row items-center`}>
                   <Text style={tw`text-violet100 text-2xl font-WorkMedium`}>
-                    12{' '}
+                    {earnBadges?.data?.earned_achievements}
                   </Text>
                   <Text style={tw`text-violet100 text-xs font-WorkMedium`}>
-                    / 60
+                    / {earnBadges?.data?.total_achievements}
                   </Text>
                 </View>
               </View>
-              <SvgXml xml={IconColoredRightArrow} />
+              <TouchableOpacity
+                onPress={() => {
+                  (navigation as any)?.navigate('ShowAllBadges', {
+                    badgeData: earnBadges?.data?.badges,
+                  });
+                }}>
+                <SvgXml xml={IconColoredRightArrow} />
+              </TouchableOpacity>
             </View>
 
             <View style={tw`flex-row items-center mt-4`}>
-              <TouchableOpacity
-                style={tw`items-center justify-center flex-1`}
-                onPress={() =>
-                  handleExpand({
-                    title: 'Travel Expert',
-                    subtitle: 'Travel Expert Hey there, \nhow are you',
-                    image: require('../../assets/images/travel-expert.png'),
-                  })
-                }>
-                <Image
-                  source={require('../../assets/images/travel-expert.png')}
-                />
-                <Text
-                  style={tw`text-black dark:text-white text-[10px] font-WorkRegular`}>
-                  Travel Expert
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={tw`items-center justify-center flex-1`}
-                onPress={() =>
-                  handleExpand({
-                    title: 'Top of the World',
-                    subtitle: 'You visited 10 countries to earn \nthis badge',
-                    image: require('../../assets/images/top-the-world.png'),
-                  })
-                }>
-                <Image
-                  source={require('../../assets/images/top-the-world.png')}
-                />
-                <Text
-                  style={tw`text-black dark:text-white text-[10px] font-WorkRegular`}>
-                  Top of the World
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={tw`items-center justify-center flex-1`}
-                onPress={() =>
-                  handleExpand({
-                    title: 'Cultural Explorer',
-                    subtitle: 'Cultural Explorer Hey there, \nhow are you',
-                    image: require('../../assets/images/cultural-explorer.png'),
-                  })
-                }>
-                <Image
-                  source={require('../../assets/images/cultural-explorer.png')}
-                />
-                <Text
-                  style={tw`text-black dark:text-white text-[10px] font-WorkRegular`}>
-                  Cultural Explorer
-                </Text>
-              </TouchableOpacity>
+              <FlatList
+                showsHorizontalScrollIndicator={false}
+                horizontal
+                data={earnBadges?.data?.badges}
+                renderItem={({item}) => (
+                  <Badge handleExpand={handleExpand} item={item} />
+                )}
+              />
             </View>
 
             <View>
@@ -429,17 +398,15 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                 </Text>
               </View>
               <View style={tw`gap-y-4`}>
-                {questAchievements?.map((item: any) => (
+                {questAchievements?.data?.ongoing?.map((item: any) => (
                   <View
                     style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-white dark:bg-darkBg`}
                     key={item?.id}>
                     <View style={tw`flex-row items-center gap-3`}>
                       <Image
-                        source={
-                          item?.photos[0]
-                            ? {uri: baseUrl + item?.photos[0]}
-                            : require('../../assets/images/city-hopper.png')
-                        }
+                        key={item?.id}
+                        style={tw` h-16 aspect-square rounded-2xl`}
+                        source={{uri: makeImage(item?.photos)}}
                       />
                       <View style={tw`flex-shrink`}>
                         <Text
@@ -494,7 +461,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                   </View>
                 ))}
 
-                <View style={tw`pb-2`}>
+                <View style={tw`pb-6`}>
                   <View style={tw`flex-row items-center my-4`}>
                     <Text
                       style={tw`text-black dark:text-white text-base font-WorkMedium`}>
@@ -502,69 +469,76 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
                     </Text>
                   </View>
                   <View style={tw`gap-y-4`}>
-                    {lockedQuestAchievements?.map((item: any) => (
-                      <View
-                        style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-white dark:bg-darkBg opacity-50`}
-                        key={item?.id}>
-                        <View style={tw`flex-row items-center gap-3`}>
-                          <Image
-                            source={require('../../assets/images/city-hopper.png')}
-                          />
-                          <View style={tw`flex-shrink`}>
-                            <Text
-                              style={tw`text-black dark:text-white text-base font-WorkRegular mb-1`}>
-                              {item?.name}
-                            </Text>
-                            <Text
-                              style={tw`text-[10px] font-WorkMedium text-gray100`}>
-                              {item?.choose_option}
-                            </Text>
-                            <View style={tw`gap-4 flex-row items-center mt-3`}>
-                              <View style={tw`flex-row items-center gap-2`}>
-                                <Image
-                                  source={require('../../assets/images/coin.png')}
-                                />
-                                <Text
-                                  style={tw`text-gray100 text-[10px] font-WorkRegular`}>
-                                  {item?.coins} Coins
-                                </Text>
-                              </View>
-                              <View style={tw`flex-row items-center gap-2`}>
-                                <Image
-                                  source={require('../../assets/images/trophy.png')}
-                                />
-                                <Text
-                                  style={tw`text-gray100 text-[10px] font-WorkRegular`}>
-                                  {item?.xp} XP
-                                </Text>
-                              </View>
-                            </View>
-                          </View>
-                        </View>
-                        {/* tresure progressbar */}
+                    {questAchievements?.data?.locked?.map((item: any) => {
+                      // console.log(makeImage(item?.photos));
+                      return (
                         <View
-                          style={tw`flex-row items-center justify-between mt-3`}>
-                          <View
-                            style={tw`bg-violet90 h-3.5 rounded-full w-10/12`}>
-                            <View
-                              style={tw`bg-violet100 w-[${
-                                item?.progress || '8'
-                              }%] h-full rounded-full items-end justify-center`}>
-                              <Image
-                                source={require('../../assets/images/tressure.png')}
-                                style={tw`h-8 w-8 absolute right-[-1]`}
-                              />
+                          style={tw`border border-gray90 dark:border-darkBg p-4 rounded-2xl bg-white dark:bg-darkBg opacity-50`}
+                          key={item?.id}>
+                          <View style={tw`flex-row items-center gap-3`}>
+                            <Image
+                              key={item?.id}
+                              style={tw` h-16 aspect-square rounded-2xl`}
+                              source={{uri: makeImage(item?.photos)}}
+                            />
+                            <View style={tw`flex-shrink`}>
+                              <Text
+                                numberOfLines={2}
+                                style={tw`text-black dark:text-white text-base font-WorkRegular mb-1`}>
+                                {item?.name}
+                              </Text>
+                              <Text
+                                style={tw`text-[10px] font-WorkMedium text-gray100`}>
+                                {item?.choose_option}
+                              </Text>
+                              <View
+                                style={tw`gap-4 flex-row items-center mt-3`}>
+                                <View style={tw`flex-row items-center gap-2`}>
+                                  <Image
+                                    source={require('../../assets/images/coin.png')}
+                                  />
+                                  <Text
+                                    style={tw`text-gray100 text-[10px] font-WorkRegular`}>
+                                    {item?.coins} Coins
+                                  </Text>
+                                </View>
+                                <View style={tw`flex-row items-center gap-2`}>
+                                  <Image
+                                    source={require('../../assets/images/trophy.png')}
+                                  />
+                                  <Text
+                                    style={tw`text-gray100 text-[10px] font-WorkRegular`}>
+                                    {item?.xp} XP
+                                  </Text>
+                                </View>
+                              </View>
                             </View>
                           </View>
-                          <View style={tw`w-2/12`}>
-                            <Text
-                              style={tw`ml-3 text-violet100 text-base font-WorkMedium`}>{`${
-                              item?.progress || '0'
-                            }%`}</Text>
-                          </View>
+                          {/* tresure progressbar */}
+                          {/* <View
+                            style={tw`flex-row items-center justify-between mt-3`}>
+                            <View
+                              style={tw`bg-violet90 h-3.5 rounded-full w-10/12`}>
+                              <View
+                                style={tw`bg-violet100 w-[${
+                                  item?.progress || '8'
+                                }%] h-full rounded-full items-end justify-center`}>
+                                <Image
+                                  source={require('../../assets/images/tressure.png')}
+                                  style={tw`h-8 w-8 absolute right-[-1]`}
+                                />
+                              </View>
+                            </View>
+                            <View style={tw`w-2/12`}>
+                              <Text
+                                style={tw`ml-3 text-violet100 text-base font-WorkMedium`}>{`${
+                                item?.progress || '0'
+                              }%`}</Text>
+                            </View>
+                          </View> */}
                         </View>
-                      </View>
-                    ))}
+                      );
+                    })}
                   </View>
                 </View>
               </View>
@@ -585,7 +559,7 @@ const WeeklyQuestions = ({route}: NavigProps<null>) => {
         <>
           <View style={tw`px-4 flex-1 py-2 bg-white dark:bg-darkBg`}>
             <View style={tw`items-center`}>
-              <Image source={sheetData?.image} style={tw`h-22 w-22`} />
+              {/* <Image source={sheetData?.image} style={tw`h-22 w-22`} /> */}
             </View>
             <Text
               style={tw`text-2xl text-center font-WorkBold text-black dark:text-white font-bold mt-6`}>
