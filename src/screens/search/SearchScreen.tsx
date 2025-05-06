@@ -1,6 +1,6 @@
+import React, {useState} from 'react';
 import {FlatList, View} from 'react-native';
 
-import React from 'react';
 import {IconSearch} from '../../assets/icons/Icons';
 import AttractionCard from '../../components/cards/AttractionCard';
 import EmptyCard from '../../components/Empty/EmptyCard';
@@ -10,7 +10,7 @@ import {useGetGlobalSearchQuery} from '../../redux/apiSlices/filterPropertySlice
 import {NavigProps} from '../../utils/interface/NaviProps';
 import {HIGHT} from '../utils/utils';
 
-const SearchScreen = ({navigation, route}: NavigProps<null>) => {
+const SearchScreen = ({navigation, route}: NavigProps<{search: string}>) => {
   // rtk query hooks
   const [filterData, setFilterData] = React.useState({
     selectedCategory: [],
@@ -18,25 +18,29 @@ const SearchScreen = ({navigation, route}: NavigProps<null>) => {
     selectedTime: [],
     selectedActivity: [],
   });
-  const {data: SearchResults} = useGetGlobalSearchQuery(
-    {
-      search: '',
+  const [search, setSearch] = useState<string>('');
+  const {data: SearchResults, isFetching: searchFetching} =
+    useGetGlobalSearchQuery({
+      search: search,
       per_page: 100,
       page: 1,
-      ...filterData,
-    },
-    {
-      skip: !filterData.search,
-    },
-  );
+      subcategories: filterData?.selectedSubCategory,
+      category: filterData?.selectedCategory,
+      best_visit_times: filterData?.selectedTime,
+      activity_levels: filterData?.selectedActivity,
+    });
 
-  console.log(filterData);
+  React.useEffect(() => {
+    if (route?.params?.search) setSearch(route?.params?.search);
+  }, [route?.params?.search]);
 
   return (
     <View style={tw`px-[4%] bg-white dark:bg-primaryDark h-full`}>
       <Header
         setFilterData={setFilterData}
         title="Search"
+        searchValue={search}
+        setSearchText={setSearch}
         containerStyle={tw`mt-2`}
         icon={IconSearch}
         IconRouteName="Dashboard"
@@ -47,10 +51,17 @@ const SearchScreen = ({navigation, route}: NavigProps<null>) => {
 
       <FlatList
         ListEmptyComponent={
-          <EmptyCard title="No have any place's" hight={HIGHT * 0.7} />
+          <EmptyCard
+            isLoading={searchFetching}
+            title="No have any place's"
+            hight={HIGHT * 0.6}
+          />
         }
         contentContainerStyle={tw`gap-2 mt-4 pb-8`}
-        data={SearchResults?.data?.data?.data}
+        data={SearchResults?.data?.data}
+        keyExtractor={(item, index) =>
+          item?.id + index + 'search' + item?.type + item?.name
+        }
         renderItem={({index, item}) => {
           return <AttractionCard item={item} />;
         }}

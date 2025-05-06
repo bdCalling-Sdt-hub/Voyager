@@ -6,7 +6,6 @@ import {IconSearch} from '../../assets/icons/Icons';
 import AttractionCard from '../../components/cards/AttractionCard';
 import EmptyCard from '../../components/Empty/EmptyCard';
 import Header from '../../components/header/Header';
-import LoadingModal from '../../components/modals/LoadingModal';
 import tw from '../../lib/tailwind';
 import {useGetCityQuery} from '../../redux/apiSlices/attractionApiSlice';
 import {NavigProps} from '../../utils/interface/NaviProps';
@@ -15,19 +14,34 @@ const CitiesScreen = ({navigation, route}: NavigProps<null>) => {
   const {title} = route?.params || {};
 
   // rkt query hooks
+  const [filterData, setFilterData] = React.useState({
+    selectedCategory: [],
+    selectedSubCategory: [],
+    selectedTime: [],
+    selectedActivity: [],
+  });
+  const [search, setSearch] = React.useState<string>('');
 
   const {
     data: cities,
     isLoading: citiesLoading,
-    isFetching: citiesLoadingFetching,
+    isFetching: citiesFetching,
     refetch: citiesRefetch,
-  } = useGetCityQuery({});
+  } = useGetCityQuery({
+    search: search,
+    per_page: 100,
+    page: 1,
+    subcategories: filterData?.selectedSubCategory,
+    category: filterData?.selectedCategory,
+    best_visit_times: filterData?.selectedTime,
+    activity_levels: filterData?.selectedActivity,
+  });
 
   // rtk query hooks
 
   return (
     <View style={tw`px-[4%] bg-white h-full dark:bg-primaryDark`}>
-      <LoadingModal visible={citiesLoadingFetching} />
+      {/* <LoadingModal visible={citiesLoadingFetching} /> */}
       <Header
         title={title || 'Next Destination'}
         containerStyle={tw`mt-2`}
@@ -36,6 +50,9 @@ const CitiesScreen = ({navigation, route}: NavigProps<null>) => {
         searchBarShow={true}
         hideDestination={true}
         isIcon={true}
+        searchValue={search}
+        setFilterData={setFilterData}
+        setSearchText={setSearch}
       />
 
       <FlatList
@@ -47,7 +64,11 @@ const CitiesScreen = ({navigation, route}: NavigProps<null>) => {
           />
         }
         ListEmptyComponent={
-          <EmptyCard title="No have any place's" hight={HIGHT * 0.7} />
+          <EmptyCard
+            isLoading={citiesFetching}
+            title="No have any place's"
+            hight={HIGHT * 0.7}
+          />
         }
         data={cities?.data?.data}
         keyExtractor={(item, index) => index.toString()}

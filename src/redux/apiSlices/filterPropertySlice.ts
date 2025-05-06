@@ -11,11 +11,12 @@ export const FriendSlice = api.injectEndpoints({
       providesTags: ['filter'],
     }),
     getGlobalSearch: builder.query({
-      query: data => ({
-        url: `/global-filter`,
-        params: data,
-        body: data,
-      }),
+      query: data => {
+        return {
+          url: `/global-filter`,
+          params: data,
+        };
+      },
       providesTags: ['filter'],
     }),
     // send friend request

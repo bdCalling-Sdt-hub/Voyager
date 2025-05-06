@@ -15,13 +15,28 @@ const CountriesScreen = ({navigation, route}: NavigProps<null>) => {
   const {title} = route?.params || {};
 
   // rkt query hooks
+  const [filterData, setFilterData] = React.useState({
+    selectedCategory: [],
+    selectedSubCategory: [],
+    selectedTime: [],
+    selectedActivity: [],
+  });
+  const [search, setSearch] = React.useState<string>('');
 
   const {
     data: countries,
     isLoading: countriesLoading,
     isFetching: countriesFetching,
     refetch: countriesRefetch,
-  } = useGetCountryQuery({});
+  } = useGetCountryQuery({
+    search: search,
+    per_page: 100,
+    page: 1,
+    subcategories: filterData?.selectedSubCategory,
+    category: filterData?.selectedCategory,
+    best_visit_times: filterData?.selectedTime,
+    activity_levels: filterData?.selectedActivity,
+  });
 
   // rtk query hooks
 
@@ -36,6 +51,9 @@ const CountriesScreen = ({navigation, route}: NavigProps<null>) => {
         searchBarShow={true}
         hideDestination={true}
         isIcon={true}
+        searchValue={search}
+        setFilterData={setFilterData}
+        setSearchText={setSearch}
       />
 
       <FlatList
@@ -47,7 +65,11 @@ const CountriesScreen = ({navigation, route}: NavigProps<null>) => {
           />
         }
         ListEmptyComponent={
-          <EmptyCard title="No have any place" hight={HIGHT * 0.7} />
+          <EmptyCard
+            isLoading={countriesFetching}
+            title="No have any place"
+            hight={HIGHT * 0.7}
+          />
         }
         data={countries?.data?.data}
         keyExtractor={(item, index) => index.toString()}

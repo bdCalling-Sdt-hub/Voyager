@@ -5,8 +5,9 @@ export const AttractionSlice = api.injectEndpoints({
   endpoints: builder => ({
     // explore get attractions
     getAttractions: builder.query({
-      query: () => ({
+      query: data => ({
         url: `/get-attraction`,
+        params: data,
       }),
       providesTags: ['attractions'],
     }),
@@ -40,16 +41,18 @@ export const AttractionSlice = api.injectEndpoints({
     }),
     // get city
     getCity: builder.query({
-      query: () => ({
+      query: data => ({
         url: `/get-city`,
+        params: data,
       }),
       providesTags: ['attractions'],
     }),
 
     // get country
     getCountry: builder.query({
-      query: () => ({
+      query: data => ({
         url: `/get-country`,
+        params: data,
       }),
       providesTags: ['attractions'],
     }),

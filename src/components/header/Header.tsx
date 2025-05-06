@@ -50,6 +50,9 @@ interface Props {
   hideDestination?: boolean;
   rightComponent?: any;
   setFilterData?: any;
+  searchValue?: string;
+  setSearchText?: React.Dispatch<React.SetStateAction<string>>;
+  searchNavigate?: boolean;
 }
 
 const Header = ({
@@ -72,11 +75,12 @@ const Header = ({
   hideDestination,
   rightComponent,
   setFilterData,
+  searchValue,
+  searchNavigate,
+  setSearchText,
 }: Props) => {
   const navigation: any = useNavigation();
   const [filterModal, setFilterModal] = useState(false);
-  const [locationType, setLocationType] = useState('');
-  const [selectedItems, setSelectedItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState<string[] | null>(
     null,
   );
@@ -340,8 +344,14 @@ const Header = ({
             <TextInput
               placeholder="Search"
               style={tw`w-[85%]`}
+              value={searchValue}
+              onChangeText={text => {
+                setSearchText && setSearchText(text);
+              }}
               onEndEditing={e => {
-                navigation?.navigate('Search', {search: e.nativeEvent.text});
+                if (searchNavigate) {
+                  navigation?.navigate('Search', {search: e.nativeEvent.text});
+                }
               }}
               placeholderTextColor={`${
                 colorScheme === 'dark' ? '#9A9C9D' : '#000000'
@@ -409,7 +419,7 @@ const Header = ({
               ))}
             </View>
           </View>
-          {Array.isArray(subCategory) && (
+          {Array.isArray(subCategory) && subCategory?.length > 0 && (
             <View style={tw`mt-2`}>
               <Text
                 style={tw`text-lg text-black dark:text-white font-WorkMedium`}>
@@ -575,7 +585,14 @@ const Header = ({
         <View style={tw`flex-row gap-6 mt-5`}>
           <TouchableOpacity
             style={tw`bg-white dark:bg-darkBg py-2 rounded-full justify-center items-center border-[2px] border-violet100 flex-1`}
-            onPress={() => {}}>
+            onPress={() => {
+              setSelectedCategory([]);
+              setSelectedSubCategory([]);
+              setSelectedTime([]);
+              setSubCategory([]);
+              setSelectedActivity([]);
+              // setFilterModal(false);
+            }}>
             <Text style={tw`text-violet100 font-WorkSemiBold text-sm`}>
               Clear all
             </Text>

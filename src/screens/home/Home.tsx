@@ -80,6 +80,7 @@ const Home = ({navigation}: NavigProps<null>) => {
             IconRouteName="Dashboard"
             isSearchVisible={true}
             searchBarShow={true}
+            searchNavigate
             hideFilterIcon={true}
           />
           <View>
@@ -130,36 +131,39 @@ const Home = ({navigation}: NavigProps<null>) => {
                                     singlePlaceAndImages?.data?.countries)
                                 )?.map((item: any, index: number) => {
                                   return (
-                                    <Image
-                                      key={item?.id + index}
-                                      style={[
-                                        tw`${
-                                          index == 0 ? '' : `absolute`
-                                        } w-20 border-2 shadow border-white rounded-lg h-30`,
-                                        {
-                                          zIndex: index == 0 ? 1 : -1,
-                                          opacity: index == 0 ? 1 : 0.7,
-                                          transform:
-                                            index == 1
-                                              ? [
-                                                  {scale: 0.9},
-                                                  {translateY: -6},
-                                                  {scaleX: 1},
-                                                  {rotate: '15deg'},
-                                                ]
-                                              : index == 2
-                                              ? [
-                                                  {scale: 0.9},
-                                                  {translateY: -11},
-                                                  {rotate: '-10deg'},
-                                                ]
-                                              : [],
-                                        },
-                                      ]}
-                                      source={{
-                                        uri: makeImage(item?.images![0]),
-                                      }}
-                                    />
+                                    <React.Fragment key={item?.id + index}>
+                                      {item?.images![0] && (
+                                        <Image
+                                          style={[
+                                            tw`${
+                                              index == 0 ? '' : `absolute`
+                                            } w-20 border-2 shadow border-white rounded-lg h-30`,
+                                            {
+                                              zIndex: index == 0 ? 1 : -1,
+                                              opacity: index == 0 ? 1 : 0.7,
+                                              transform:
+                                                index == 1
+                                                  ? [
+                                                      {scale: 0.9},
+                                                      {translateY: -6},
+                                                      {scaleX: 1},
+                                                      {rotate: '15deg'},
+                                                    ]
+                                                  : index == 2
+                                                  ? [
+                                                      {scale: 0.9},
+                                                      {translateY: -11},
+                                                      {rotate: '-10deg'},
+                                                    ]
+                                                  : [],
+                                            },
+                                          ]}
+                                          source={{
+                                            uri: makeImage(item?.images![0]),
+                                          }}
+                                        />
+                                      )}
+                                    </React.Fragment>
                                   );
                                 })}
                               </View>

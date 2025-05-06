@@ -65,8 +65,7 @@ const IwtButton = ({
       )}
 
       {title && (
-        <Text
-          style={[tw`text-white font-PoppinsSemiBold text-base `, titleStyle]}>
+        <Text style={[tw`text-white font-WorkSemiBold text-base `, titleStyle]}>
           {title}
         </Text>
       )}

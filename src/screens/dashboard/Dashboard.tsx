@@ -94,6 +94,7 @@ const Dashboard = ({navigation}: any) => {
           isSearchVisible={true}
           searchBarShow={true}
           hideFilterIcon={true}
+          searchNavigate
         />
         {/* visited location card */}
         <View

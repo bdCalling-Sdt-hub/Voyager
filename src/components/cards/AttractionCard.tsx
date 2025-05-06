@@ -125,13 +125,16 @@ export default function AttractionCard({
       onPress={() =>
         (navigation as any)?.navigate('DestinationDetails', {item})
       }>
-      <Image
-        resizeMode="cover"
-        source={{
-          uri: makeImage(item?.images![0]),
-        }}
-        style={tw`rounded-2xl w-4/12 h-24`}
-      />
+      {item?.images![0] && (
+        <Image
+          resizeMode="cover"
+          source={{
+            uri: makeImage(item?.images![0]),
+          }}
+          style={tw`rounded-2xl w-4/12 h-24`}
+        />
+      )}
+
       <View style={tw`flex-1 justify-between flex-row items-center gap-2`}>
         <View style={tw`gap-y-1`}>
           <View>
