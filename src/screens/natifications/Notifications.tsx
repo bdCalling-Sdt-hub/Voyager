@@ -104,7 +104,7 @@ const Notifications = ({navigation}: any) => {
           {notifications?.map((item: any) => (
             <TouchableOpacity
               style={tw`p-2 flex-row items-center gap-4 ${
-                item?.data?.read_at ? '' : 'bg-darkBg'
+                item?.data?.read_at ? '' : ' bg-white dark:bg-darkBg'
               } rounded-2xl`}
               key={item?.id}>
               <Image
