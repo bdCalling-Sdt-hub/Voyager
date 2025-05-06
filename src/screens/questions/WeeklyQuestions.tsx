@@ -125,7 +125,9 @@ const WeeklyQuestions = ({route, navigation}: NavigProps<null>) => {
 
   return (
     <>
-      <LoadingModal visible={weeklyQuestsLoading || questAchievementsLoading} />
+      <LoadingModal
+        visible={weeklyQuestsFetching || questAchievementsFetching}
+      />
       <ScrollView
         refreshControl={
           <RefreshControl
