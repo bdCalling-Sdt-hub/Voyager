@@ -49,7 +49,7 @@ export const FriendSlice = api.injectEndpoints({
     // get friends
     getFriends: builder.query({
       query: () => ({
-        url: `/user-friends?per_page=10&page=1`,
+        url: `/user-friends?per_page=100&page=1`,
       }),
     }),
     // accept friend request

@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  RefreshControl,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {
   IconAdd,
   IconNotification,
@@ -8,9 +15,11 @@ import {
 
 import {SvgXml} from 'react-native-svg';
 import tw from '../../lib/tailwind';
+import {makeImage} from '../../redux/api/baseApi';
+import {useGetVisitedQuery} from '../../redux/apiSlices/attractionApiSlice';
 import {useGetProfileQuery} from '../../redux/apiSlices/authApiSlice';
-import {useGetMysubscriptionQuery} from '../../redux/apiSlices/subsCription';
-import {baseUrl} from '../utils/exports';
+import {useGetFriendsQuery} from '../../redux/apiSlices/friendSlice';
+import {PrimaryColor} from '../utils/utils';
 import Achievements from './components/Achievements';
 import FriendsList from './components/FriendsList';
 import Visited from './components/Visited';
@@ -19,25 +28,45 @@ const Profile = ({navigation}: any) => {
   const [activeTab, setActiveTab] = useState(0);
 
   // rtk query hooks
-  const {data: profileData, isLoading, error} = useGetProfileQuery({});
-  const {full_name, email, image, user_name, signup_date} =
-    profileData?.data || {};
+  const {
+    data: profileData,
+    isLoading: isLoadingProfile,
+    isFetching: isFetchingProfile,
+    refetch: refetchProfile,
+  } = useGetProfileQuery({});
+
+  const {
+    data: visitedData,
+    isLoading: isLoadingVisited,
+    isFetching: isFetchingVisited,
+    refetch: refetchVisited,
+  } = useGetVisitedQuery({});
+
+  const {
+    data: friendsData,
+    isLoading: isLoadingFriends,
+    isFetching: isFetchingFriends,
+    refetch: refetchFriends,
+  } = useGetFriendsQuery({});
 
   // Fetch user data
 
-  const userId = profileData?.data?.id;
-
-  // Fetch subscription data
-  const {
-    data: subscriptionData,
-    isLoading: isSubscriptionLoading,
-    error: subscriptionError,
-  } = useGetMysubscriptionQuery(userId ? {id: userId} : null, {
-    skip: !userId,
-  });
+  // console.log(profileData);
 
   return (
     <ScrollView
+      refreshControl={
+        <RefreshControl
+          refreshing={false}
+          tintColor={PrimaryColor}
+          colors={[PrimaryColor]}
+          onRefresh={() => {
+            refetchProfile();
+            refetchVisited();
+            refetchFriends();
+          }}
+        />
+      }
       style={tw`px-[4%] pt-2 bg-white dark:bg-primaryDark h-full`}
       showsVerticalScrollIndicator={false}>
       <View style={tw`mb-4`}>
@@ -49,7 +78,7 @@ const Profile = ({navigation}: any) => {
           </TouchableOpacity>
           <View style={[tw``]}>
             <Image
-              source={{uri: baseUrl + image}}
+              source={{uri: makeImage(profileData?.data?.image)}}
               style={tw`h-24 w-24 rounded-full`}
             />
           </View>
@@ -69,9 +98,11 @@ const Profile = ({navigation}: any) => {
         </View>
         <Text
           style={tw`text-black dark:text-white text-2xl font-WorkMedium text-center`}>
-          {full_name || 'N/A'}
+          {profileData?.data?.full_name || 'N/A'}
         </Text>
-        <Text style={tw`text-center text-gray70`}>{user_name || 'N/A'}</Text>
+        <Text style={tw`text-center text-gray70`}>
+          {profileData?.data?.user_name || 'N/A'}
+        </Text>
         <View style={tw`flex-row items-center mt-6`}>
           <View style={tw`items-center flex-1`}>
             <Text
@@ -80,7 +111,7 @@ const Profile = ({navigation}: any) => {
             </Text>
             <Text
               style={tw`text-black dark:text-white text-lg font-WorkSemiBold`}>
-              {signup_date?.slice(0, 4) || 'N/A'}
+              {profileData?.data?.signup_date?.slice(0, 4) || 'N/A'}
             </Text>
           </View>
           <View style={tw`items-center flex-1`}>
@@ -90,7 +121,7 @@ const Profile = ({navigation}: any) => {
             </Text>
             <Text
               style={tw`text-black dark:text-white text-lg font-WorkSemiBold`}>
-              10
+              {profileData?.data?.friends_count || '0'}
             </Text>
           </View>
           <View style={tw`items-center flex-1`}>
@@ -99,7 +130,9 @@ const Profile = ({navigation}: any) => {
               Country
             </Text>
             <Image
-              source={{uri: 'https://flagsapi.com/US/flat/64.png'}}
+              source={{
+                uri: `https://flagsapi.com/${profileData?.data?.country_abbreviated}/flat/64.png`,
+              }}
               style={tw`h-5 w-7 mt-1`}
             />
           </View>
@@ -113,7 +146,7 @@ const Profile = ({navigation}: any) => {
               Add Friends
             </Text>
           </TouchableOpacity>
-          {!isSubscriptionLoading && !subscriptionData?.data?.length && (
+          {profileData?.data?.user_type === 'Free' && (
             <TouchableOpacity
               style={tw`border-pink100 bg-pink100 border py-3 rounded-full flex-row items-center justify-center gap-3 w-full`}
               onPress={() => navigation?.navigate('Subscription')}>
@@ -159,7 +192,9 @@ const Profile = ({navigation}: any) => {
                   ? 'bg-violet100'
                   : 'bg-gray100 dark:bg-secDarkBg'
               } px-1 py-0.5 rounded`}>
-              <Text style={tw`text-white text-[10px]`}>03</Text>
+              <Text style={tw`text-white text-[10px]`}>
+                {visitedData?.data?.count}
+              </Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
@@ -181,17 +216,25 @@ const Profile = ({navigation}: any) => {
                   ? 'bg-violet100'
                   : 'bg-gray100 dark:bg-secDarkBg'
               } px-1 py-0.5 rounded`}>
-              <Text style={tw`text-white text-[10px]`}>09</Text>
+              <Text style={tw`text-white text-[10px]`}>
+                {friendsData?.data?.total_friends}
+              </Text>
             </View>
           </TouchableOpacity>
         </View>
         {/* achievements */}
         {activeTab === 0 ? (
-          <Achievements navigation={navigation} />
+          <Achievements navigation={navigation} key={profileData?.data?.id} />
         ) : activeTab === 1 ? (
-          <Visited navigation={navigation} />
+          <Visited
+            navigation={navigation}
+            data={visitedData?.data?.paginated_data?.data}
+          />
         ) : activeTab === 2 ? (
-          <FriendsList navigation={navigation} />
+          <FriendsList
+            navigation={navigation}
+            friends={friendsData?.data?.friends?.data}
+          />
         ) : null}
       </View>
     </ScrollView>

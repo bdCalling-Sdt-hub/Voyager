@@ -11,6 +11,19 @@ export const EquipmentSlice = api.injectEndpoints({
       }),
       providesTags: ['equipment'],
     }),
+    // get avatar
+    getDigitalSouvenir: builder.query({
+      query: () => ({
+        url: `/get-shop-digital-souvenir`,
+      }),
+      providesTags: ['equipment'],
+    }),
+    getPowerUps: builder.query({
+      query: () => ({
+        url: `/get-shop-powerups`,
+      }),
+      providesTags: ['equipment'],
+    }),
 
     // equip avatar
     equipAvatar: builder.mutation({
@@ -37,5 +50,10 @@ export const EquipmentSlice = api.injectEndpoints({
   }),
 });
 
-export const {useGetAvatarQuery, useEquipAvatarMutation, useBuyAvatarMutation} =
-  EquipmentSlice;
+export const {
+  useGetAvatarQuery,
+  useEquipAvatarMutation,
+  useBuyAvatarMutation,
+  useGetDigitalSouvenirQuery,
+  useGetPowerUpsQuery,
+} = EquipmentSlice;

@@ -25,7 +25,6 @@ import {
 } from '../../redux/apiSlices/questSlice';
 
 import BottomSheet from '@gorhom/bottom-sheet';
-import {useFocusEffect} from '@react-navigation/native';
 import {RefreshControl} from 'react-native-gesture-handler';
 import {SvgXml} from 'react-native-svg';
 import TButton from '../../components/buttons/TButton';
@@ -45,25 +44,25 @@ interface SheetData {
   image?: string;
 }
 const WeeklyQuestions = ({route, navigation}: NavigProps<null>) => {
-  const {screen} = route?.params || {};
-  const [activeQuest, setActiveQuest] = useState(screen || 'quests');
+  // const {screen} = route?.params || {};
+  const [activeQuest, setActiveQuest] = useState('quests');
   const [achievementsPopupVisible, setAchievementsPopupVisible] =
     useState<boolean>(false);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      if (screen) {
-        setActiveQuest(screen);
-        console.log('Screen focused, state updated with screen:', screen);
-      } else {
-        console.log('Screen focused, but no screen value found.');
-      }
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     if (screen) {
+  //       setActiveQuest(screen);
+  //       console.log('Screen focused, state updated with screen:', screen);
+  //     } else {
+  //       console.log('Screen focused, but no screen value found.');
+  //     }
 
-      return () => {
-        setActiveQuest(activeQuest);
-      };
-    }, [screen]),
-  );
+  //     return () => {
+  //       setActiveQuest(activeQuest);
+  //     };
+  //   }, [screen]),
+  // );
 
   const bottomSheetRef = useRef(null);
 
@@ -89,10 +88,7 @@ const WeeklyQuestions = ({route, navigation}: NavigProps<null>) => {
     return (
       <TouchableWithoutFeedback onPress={() => bottomSheetRef.current?.close()}>
         <View
-          style={[
-            props.style,
-            tw`absolute inset-0 bg-black bg-opacity-50 transition-all`,
-          ]}
+          style={[props.style, tw`absolute inset-0 bg-black bg-opacity-50 `]}
         />
       </TouchableWithoutFeedback>
     );
@@ -557,9 +553,14 @@ const WeeklyQuestions = ({route, navigation}: NavigProps<null>) => {
         handleStyle={tw`bg-white dark:bg-darkBg`}
         enablePanDownToClose>
         <>
-          <View style={tw`px-4 flex-1 py-2 bg-white dark:bg-darkBg`}>
+          <View style={tw`px-4 flex-1 mt-6 py-2 bg-white dark:bg-darkBg`}>
             <View style={tw`items-center`}>
-              {/* <Image source={sheetData?.image} style={tw`h-22 w-22`} /> */}
+              <Image
+                source={{
+                  uri: sheetData?.image,
+                }}
+                style={tw`h-22 w-22`}
+              />
             </View>
             <Text
               style={tw`text-2xl text-center font-WorkBold text-black dark:text-white font-bold mt-6`}>

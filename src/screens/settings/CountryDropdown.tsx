@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {View, Text, Image} from 'react-native';
+import {Image, Text, View} from 'react-native';
+
 import {Dropdown} from 'react-native-element-dropdown';
 import tw from '../../lib/tailwind';
 
@@ -50,7 +51,6 @@ const countries = [
 
 const CountryDropdown = ({placeholderText, searchPlaceholder}: any) => {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
-
   const renderItem = (item: any) => {
     return (
       <View style={tw`flex-row items-center p-2`}>
@@ -85,7 +85,7 @@ const CountryDropdown = ({placeholderText, searchPlaceholder}: any) => {
         onChange={item => setSelectedCountry(item.value)}
         renderItem={renderItem}
         search
-        activeColor='#141518'
+        activeColor="#141518"
         searchPlaceholder={searchPlaceholder || 'Search country'}
         placeholderStyle={tw`text-gray50 dark:text-gray100 text-base font-WorkMedium font-500 pl-2`}
       />

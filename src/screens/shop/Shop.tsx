@@ -6,6 +6,7 @@ import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
 import shop from '../../utils/json/shop.json';
 import Avatar from './Avatar';
+import DigitalSouvenirs from './DigitalSouvenirs';
 import PowersUps from './PowersUps';
 
 const Shop = () => {
@@ -110,6 +111,8 @@ const Shop = () => {
         <View>
           {activePlace === 'power_ups' ? (
             <PowersUps />
+          ) : activePlace === 'digital_souvenirs' ? (
+            <DigitalSouvenirs />
           ) : (
             <Avatar data={data()} />
           )}
