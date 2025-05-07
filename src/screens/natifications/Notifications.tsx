@@ -1,51 +1,37 @@
 import {
-  Alert,
-  Image,
-  ScrollView,
+  FlatList,
+  RefreshControl,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import {
+  useGetNotificationsQuery,
+  useReadAllNotificationMutation,
+} from '../../redux/apiSlices/settingSlice';
+import {HIGHT, PrimaryColor} from '../utils/utils';
 
 import React from 'react';
 import {IconFilledNotification} from '../../assets/icons/Icons';
+import EmptyCard from '../../components/Empty/EmptyCard';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
-import {useAcceptFriendRequestMutation} from '../../redux/apiSlices/friendSlice';
-import {useGetNotificationsQuery} from '../../redux/apiSlices/settingSlice';
-import {baseUrl} from '../utils/exports';
+import NotificationCard from './components/NotificationCard';
 
 const Notifications = ({navigation}: any) => {
   const title = 'Notifications';
 
   // rkt query hooks
-  const {data} = useGetNotificationsQuery({});
-  const [acceptFriendRequest, {isLoading: isAccepting}] =
-    useAcceptFriendRequestMutation();
-  const notifications = data?.data;
-  console.log('notification data: ', notifications);
+  const {
+    data: notifications,
+    isLoading: isLoadingNotifications,
+    isFetching: isFetchingNotifications,
+    refetch: refetchNotifications,
+  } = useGetNotificationsQuery({});
 
-  // handlers
-  const handleAcceptRequest = async (id: number) => {
-    try {
-      const response = await acceptFriendRequest({id});
-      console.log('response of accept friend request: ', response);
-      if (response?.error?.success === false) {
-        Alert.alert(
-          'Accepting friend request failed',
-          response?.error?.message || 'An error occurred.',
-        );
-        return;
-      } else {
-        // navigation?.navigate('OthersProfile');
-      }
-    } catch (err: any) {
-      Alert.alert(
-        'Accepting friend request Failed',
-        err?.message || 'An error occurred.',
-      );
-    }
-  };
+  const [readAllNotification] = useReadAllNotificationMutation();
+  // console.log('notification data: ', notifications);
+
   return (
     <View style={tw`bg-white px-[4%] h-full dark:bg-primaryDark`}>
       <Header
@@ -55,107 +41,69 @@ const Notifications = ({navigation}: any) => {
         icon={IconFilledNotification}
       />
       {/* body */}
-      <ScrollView style={tw`mt-4`} showsVerticalScrollIndicator={false}>
-        <View style={tw`flex-row items-center justify-between`}>
-          <Text
-            style={tw`text-black dark:text-white text-sm font-WorkRegular font-400`}>
-            Today
-          </Text>
-          <TouchableOpacity>
-            <Text style={tw`text-violet100 text-sm font-WorkMedium font-500`}>
-              Mark all as read
-            </Text>
-          </TouchableOpacity>
-        </View>
 
-        {/* notifications */}
-        <View style={tw`mt-4 gap-y-2`}>
-          {/*add request notification */}
-          {/* <TouchableOpacity
-            style={tw`p-2 bg-gray80 dark:bg-darkBg rounded-3xl flex-row items-center gap-4`}>
-            <Image
-              source={require('../../assets/images/avatar1.png')}
-              style={tw`w-16 h-16 rounded-full`}
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={tw`pt-4 pb-10 gap-3`}
+        data={notifications?.data}
+        refreshControl={
+          <RefreshControl
+            tintColor={PrimaryColor}
+            colors={[PrimaryColor]}
+            refreshing={false}
+            onRefresh={refetchNotifications}
+          />
+        }
+        ListEmptyComponent={() => {
+          return (
+            <EmptyCard
+              title={'No notifications'}
+              hight={HIGHT * 0.7}
+              isLoading={isFetchingNotifications || isLoadingNotifications}
             />
-            <View style={tw`flex-shrink`}>
+          );
+        }}
+        ListHeaderComponent={() => {
+          return (
+            <View style={tw`flex-row items-center justify-between`}>
               <Text
-                style={tw`text-black dark:text-white text-base font-WorkRegular font-400`}>
-                <Text style={tw`font-600 font-WorkSemiBold`}>Anika Marley</Text>{' '}
-                sent you an add Request
+                style={tw`text-black dark:text-white text-sm font-WorkRegular font-400`}>
+                Today
               </Text>
-              <View style={tw`flex-row items-center gap-2 mt-2`}>
+              {notifications?.data?.filter(
+                (item: any) => item?.read_at === null,
+              ) && (
                 <TouchableOpacity
-                  style={tw`bg-violet100 rounded-3xl px-5 pt-1 pb-1.5`}>
+                  onPress={() => {
+                    readAllNotification({});
+                  }}>
                   <Text
-                    style={tw`text-white text-base font-600 font-WorkSemiBold`}>
-                    Accept
+                    style={tw`text-violet100 text-sm font-WorkMedium font-500`}>
+                    Mark all as read
                   </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={tw`rounded-3xl px-5 pt-1 pb-1.5`}>
-                  <Text
-                    style={tw`text-black dark:text-white text-base font-600 font-WorkSemiBold`}>
-                    Cancel
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              )}
             </View>
-          </TouchableOpacity> */}
-          {/* Notification view */}
-          {notifications?.map((item: any) => (
-            <TouchableOpacity
-              style={tw`p-2 flex-row items-center gap-4 ${
-                item?.data?.read_at ? '' : ' bg-white dark:bg-darkBg'
-              } rounded-2xl`}
-              key={item?.id}>
-              <Image
-                source={
-                  item?.data?.sender_image
-                    ? {uri: baseUrl + item?.data?.sender_image}
-                    : require('../../assets/images/avatar1.png')
-                }
-                style={tw`h-16 w-16 rounded-full`}
-              />
-              <View style={tw`flex-shrink`}>
-                <View>
+          );
+        }}
+        renderItem={({item, index}) => {
+          return (
+            <>
+              {/* notifications */}
+              {!notifications?.data?.length && (
+                <View style={tw`mt-6`}>
                   <Text
-                    style={tw`text-black dark:text-white text-base font-WorkRegular font-400`}>
-                    <Text style={tw`font-600 font-WorkSemiBold`}>
-                      {item?.data?.sender_name || 'title'}
-                    </Text>{' '}
-                    {item?.data?.title || 'subtitle'}
+                    style={tw`text-gray100 text-sm font-WorkRegular font-400`}>
+                    No notifications
                   </Text>
-                  <View style={tw`flex-row items-center gap-2 mt-1`}>
-                    <Text
-                      style={tw`text-gray60 text-xs font-WorkRegular font-400`}>
-                      {item?.time || 'time'}
-                    </Text>
-                  </View>
                 </View>
+              )}
 
-                {item?.type ===
-                  'App\\Notifications\\FriendInterationNotification' && (
-                  <View style={tw`flex-row items-center gap-2 mt-2`}>
-                    <TouchableOpacity
-                      onPress={() => handleAcceptRequest(item?.data?.sender_id)}
-                      style={tw`bg-violet100 rounded-3xl px-5 pt-1 pb-1.5`}>
-                      <Text
-                        style={tw`text-white text-base font-600 font-WorkSemiBold`}>
-                        {isAccepting ? 'Accepting...' : 'Accept'}
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={tw`rounded-3xl px-5 pt-1 pb-1.5`}>
-                      <Text
-                        style={tw`text-black dark:text-white text-base font-600 font-WorkSemiBold`}>
-                        Cancel
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                )}
-              </View>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </ScrollView>
+              <NotificationCard key={index} item={item} />
+            </>
+          );
+        }}
+      />
     </View>
   );
 };

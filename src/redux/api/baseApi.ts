@@ -69,11 +69,13 @@ export const api = createApi({
     'attractions',
     'bucket',
     'friend',
+    'shop',
     'dashboard',
     'equipment',
     'quests',
     'setting',
     'subscription',
+    'notification',
     'filter',
   ],
 });

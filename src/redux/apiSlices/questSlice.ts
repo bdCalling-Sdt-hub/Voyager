@@ -27,7 +27,7 @@ export const questSlice = api.injectEndpoints({
           method: 'POST',
         };
       },
-      invalidatesTags: ['quests', 'auth'],
+      invalidatesTags: ['quests', 'auth', 'attractions', 'dashboard'],
     }),
     // claim quist
     completedAchievement: builder.mutation({
@@ -37,7 +37,7 @@ export const questSlice = api.injectEndpoints({
           method: 'POST',
         };
       },
-      invalidatesTags: ['quests', 'auth'],
+      invalidatesTags: ['quests', 'auth', 'attractions', 'dashboard'],
     }),
 
     // get quest achievements

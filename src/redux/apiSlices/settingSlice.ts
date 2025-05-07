@@ -24,7 +24,7 @@ export const SettingSlice = api.injectEndpoints({
       query: () => ({
         url: `/notifications`,
       }),
-      providesTags: ['setting'],
+      providesTags: ['notification'],
     }),
 
     // get faq
@@ -64,6 +64,26 @@ export const SettingSlice = api.injectEndpoints({
       },
       invalidatesTags: ['setting'],
     }),
+    //  read notificition
+    readNotification: builder.mutation({
+      query: id => {
+        return {
+          url: `/notifications-read?notification_id=${id}`,
+          method: 'POST',
+        };
+      },
+      invalidatesTags: ['setting', 'notification'],
+    }),
+    //  read notificition
+    readAllNotification: builder.mutation({
+      query: () => {
+        return {
+          url: `/notifications-read-all`,
+          method: 'POST',
+        };
+      },
+      invalidatesTags: ['setting', 'notification'],
+    }),
   }),
 });
 
@@ -81,4 +101,8 @@ export const {
   // travel preferences
   useGetTravelPreferencesQuery,
   useAddTravelInterestMutation,
+
+  // notifications
+  useReadNotificationMutation,
+  useReadAllNotificationMutation,
 } = SettingSlice;

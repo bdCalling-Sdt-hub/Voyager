@@ -25,23 +25,66 @@ export const EquipmentSlice = api.injectEndpoints({
       providesTags: ['equipment'],
     }),
 
-    // equip avatar
-    equipAvatar: builder.mutation({
-      query: ({id, data}) => {
+    // "Avatars queries"
+    buyShopAvatar: builder.mutation({
+      query: data => {
         return {
-          url: `/equip_avatar?id=${id}&_method=PUT`,
+          url: `/buy-shop-avatar`,
+          params: data,
           method: 'POST',
-          body: data,
+        };
+      },
+      invalidatesTags: ['equipment'],
+    }),
+    equipAvatar: builder.mutation({
+      query: data => {
+        return {
+          url: `/equip_avatar`,
+          params: data,
+          method: 'POST',
         };
       },
       invalidatesTags: ['equipment'],
     }),
 
-    // buy avatar
-    buyAvatar: builder.mutation({
-      query: ({id}) => {
+    // digitals sourvien
+    buyDigitalSouvenir: builder.mutation({
+      query: data => {
         return {
-          url: `/buy-shop-avatar?id=${id}&_method=PUT`,
+          url: `/buy-digital-souvenir`,
+          params: data,
+          method: 'POST',
+        };
+      },
+      invalidatesTags: ['equipment'],
+    }),
+    equipDigitalSouvenir: builder.mutation({
+      query: data => {
+        return {
+          url: `/equip_digital-souvenir`,
+          params: data,
+          method: 'POST',
+        };
+      },
+      invalidatesTags: ['equipment'],
+    }),
+
+    // power ups
+    buyPowerUps: builder.mutation({
+      query: data => {
+        return {
+          url: `/buy-powerup`,
+          params: data,
+          method: 'POST',
+        };
+      },
+      invalidatesTags: ['equipment'],
+    }),
+    equipPowerUps: builder.mutation({
+      query: data => {
+        return {
+          url: `/equip_powerup`,
+          params: data,
           method: 'POST',
         };
       },
@@ -53,7 +96,11 @@ export const EquipmentSlice = api.injectEndpoints({
 export const {
   useGetAvatarQuery,
   useEquipAvatarMutation,
-  useBuyAvatarMutation,
   useGetDigitalSouvenirQuery,
   useGetPowerUpsQuery,
+  useBuyShopAvatarMutation,
+  useBuyDigitalSouvenirMutation,
+  useBuyPowerUpsMutation,
+  useEquipDigitalSouvenirMutation,
+  useEquipPowerUpsMutation,
 } = EquipmentSlice;

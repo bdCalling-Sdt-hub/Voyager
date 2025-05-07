@@ -51,17 +51,18 @@ export const FriendSlice = api.injectEndpoints({
       query: () => ({
         url: `/user-friends?per_page=100&page=1`,
       }),
+      providesTags: ['friend'],
     }),
     // accept friend request
     acceptFriendRequest: builder.mutation({
-      query: ({id}) => {
-        console.log(`/accept-request?friend_id=${id}`);
+      query: data => {
         return {
-          url: `/accept-request?friend_id=${id}`,
+          url: `/accept-request`,
+          params: data,
           method: 'PATCH',
         };
       },
-      invalidatesTags: ['friend'],
+      invalidatesTags: ['friend', 'notification'],
     }),
   }),
 });

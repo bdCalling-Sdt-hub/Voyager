@@ -20,6 +20,7 @@ import {makeImage} from '../../redux/api/baseApi';
 import {useGetVisitedQuery} from '../../redux/apiSlices/attractionApiSlice';
 import {useGetProfileQuery} from '../../redux/apiSlices/authApiSlice';
 import {useGetFriendsQuery} from '../../redux/apiSlices/friendSlice';
+import {useGetNotificationsQuery} from '../../redux/apiSlices/settingSlice';
 import {PrimaryColor} from '../utils/utils';
 import Achievements from './components/Achievements';
 import FriendsList from './components/FriendsList';
@@ -50,14 +51,32 @@ const Profile = ({navigation}: any) => {
     refetch: refetchFriends,
   } = useGetFriendsQuery({});
 
+  const {
+    data: notification = [],
+    isLoading: isLoadingNotification,
+    isFetching: isFetchingNotification,
+    refetch: refetchNotification,
+  } = useGetNotificationsQuery({});
+
   // Fetch user data
 
-  // console.log(profileData);
+  // console.log(friendsData?.data?.total_friends);
+
+  // console.log(
+  //   notification?.data
+  //     ?.filter((im: any) => im.read_at == null)
+  //     .length?.toString(),
+  // );
 
   return (
     <>
       <LoadingModal
-        visible={isFetchingProfile || isFetchingVisited || isFetchingFriends}
+        visible={
+          isFetchingProfile ||
+          isFetchingVisited ||
+          isFetchingFriends ||
+          isFetchingNotification
+        }
       />
       <ScrollView
         refreshControl={
@@ -66,6 +85,7 @@ const Profile = ({navigation}: any) => {
             tintColor={PrimaryColor}
             colors={[PrimaryColor]}
             onRefresh={() => {
+              refetchNotification();
               refetchProfile();
               refetchVisited();
               refetchFriends();
@@ -95,10 +115,16 @@ const Profile = ({navigation}: any) => {
                 navigation?.navigate('Notifications');
               }}>
               <SvgXml xml={IconNotification} />
-              <View
-                style={tw`bg-gold h-4 w-4 rounded-full items-center justify-center absolute top-1 right-1`}>
-                <Text style={tw`text-white text-[8px] text-center`}>12</Text>
-              </View>
+              {notification?.data?.filter((im: any) => im.read_at == null)
+                .length ? (
+                <View
+                  style={tw`bg-gold h-4 w-4 rounded-full items-center justify-center absolute top-1 right-1`}>
+                  <Text style={tw`text-white text-[8px] text-center`}>
+                    {notification?.data?.filter((im: any) => im.read_at == null)
+                      .length || ''}
+                  </Text>
+                </View>
+              ) : null}
             </TouchableOpacity>
           </View>
           <Text
@@ -126,7 +152,7 @@ const Profile = ({navigation}: any) => {
               </Text>
               <Text
                 style={tw`text-black dark:text-white text-lg font-WorkSemiBold`}>
-                {profileData?.data?.friends_count || '0'}
+                {friendsData?.data?.total_friends || '0'}
               </Text>
             </View>
             <View style={tw`items-center flex-1`}>

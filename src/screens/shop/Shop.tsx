@@ -1,23 +1,41 @@
 import React, {useState} from 'react';
 import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  useGetAvatarQuery,
+  useGetDigitalSouvenirQuery,
+  useGetPowerUpsQuery,
+} from '../../redux/apiSlices/equipmentSlice';
 
 import LinearGradient from 'react-native-linear-gradient';
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
-import shop from '../../utils/json/shop.json';
 import Avatar from './Avatar';
 import DigitalSouvenirs from './DigitalSouvenirs';
 import PowersUps from './PowersUps';
 
 const Shop = () => {
   const [activePlace, setActivePlace] = useState('avatar');
-  const data = () => {
-    if (activePlace === 'avatar') {
-      return shop?.users;
-    } else {
-      return shop?.countries;
-    }
-  };
+
+  const {
+    data: powerUpItems,
+    isLoading: powerUpLoading,
+    isFetching: powerUpFetching,
+    refetch: powerUpRefetch,
+  } = useGetPowerUpsQuery({});
+  const {
+    data: digitalSouvenirs,
+    isLoading: digitalLoading,
+    isFetching: digitalFetching,
+    refetch: digitalRefetch,
+  } = useGetDigitalSouvenirQuery({});
+
+  const {
+    data: avatarData,
+    isLoading: avatarLoading,
+    isFetching: avatarFetching,
+    refetch: avatarRefetch,
+  } = useGetAvatarQuery({});
+
   return (
     <View style={tw`h-full bg-white dark:bg-primaryDark px-[4%] pb-2`}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -110,11 +128,13 @@ const Shop = () => {
 
         <View>
           {activePlace === 'power_ups' ? (
-            <PowersUps />
+            <PowersUps powerUpItems={powerUpItems?.data?.powerups} />
           ) : activePlace === 'digital_souvenirs' ? (
-            <DigitalSouvenirs />
+            <DigitalSouvenirs
+              digitalSouvenirs={digitalSouvenirs?.data?.digital_items}
+            />
           ) : (
-            <Avatar data={data()} />
+            <Avatar avatarData={avatarData?.data?.avatars} />
           )}
         </View>
       </ScrollView>
