@@ -95,11 +95,14 @@ export const AuthApiSlice = api.injectEndpoints({
 
     // update profile
     updateProfile: builder.mutation({
-      query: data => ({
-        url: `/profile-update?_method=PUT`,
-        method: 'POST',
-        body: data,
-      }),
+      query: data => {
+        // console.log(data);
+        return {
+          url: `/profile-update?_method=PUT`,
+          method: 'POST',
+          body: data,
+        };
+      },
       invalidatesTags: ['auth'],
     }),
 

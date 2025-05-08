@@ -50,6 +50,7 @@ const SearchScreen = ({navigation, route}: NavigProps<{search: string}>) => {
       />
 
       <FlatList
+        showsVerticalScrollIndicator={false}
         ListEmptyComponent={
           <EmptyCard
             isLoading={searchFetching}

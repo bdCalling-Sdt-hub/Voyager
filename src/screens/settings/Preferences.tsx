@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Alert, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {
   useAddTravelInterestMutation,
   useGetTravelPreferencesQuery,
@@ -7,6 +14,7 @@ import {
 
 import Header from '../../components/header/Header';
 import tw from '../../lib/tailwind';
+import {PrimaryColor} from '../utils/utils';
 
 const Preferences = ({navigation}: any) => {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
@@ -63,10 +71,10 @@ const Preferences = ({navigation}: any) => {
     }
   };
 
-  React.useEffect(() => {
-    setSelectedItems(data?.data?.map((item: any) => item.id) || []);
-    setSelectedName(data?.data?.map((item: any) => item.name) || []);
-  }, []);
+  // React.useEffect(() => {
+  //   setSelectedItems(data?.data?.map((item: any) => item.id) || []);
+  //   setSelectedName(data?.data?.map((item: any) => item.name) || []);
+  // }, []);
 
   return (
     <View style={tw`h-full bg-white px-[4%] pb-2 dark:bg-primaryDark`}>
@@ -95,25 +103,33 @@ const Preferences = ({navigation}: any) => {
           {/* Activity Selection */}
           <View style={tw`mt-5`}>
             <View style={tw`flex-row flex-wrap gap-3 mt-1`}>
-              {activityType.map(type => (
-                <TouchableOpacity
-                  key={type.id}
-                  style={tw`${
-                    selectedItems.includes(type.id)
-                      ? 'bg-violet100'
-                      : 'bg-white dark:bg-primaryDark'
-                  } py-2 rounded-full justify-center items-center border-[2px] border-violet100 px-4`}
-                  onPress={() => toggleSelection(type.id, type.name)}>
-                  <Text
-                    style={tw`${
-                      selectedItems.includes(type.id)
-                        ? 'text-white'
-                        : 'text-violet100'
-                    } font-WorkMedium text-sm`}>
-                    {type?.name}
-                  </Text>
-                </TouchableOpacity>
-              ))}
+              {isLoading ? (
+                <View style={tw`h-40 w-full justify-center`}>
+                  <ActivityIndicator size={'large'} color={PrimaryColor} />
+                </View>
+              ) : (
+                <>
+                  {activityType.map((type: any) => (
+                    <TouchableOpacity
+                      key={type.id}
+                      style={tw`${
+                        selectedItems.includes(type.id)
+                          ? 'bg-violet100'
+                          : 'bg-white dark:bg-primaryDark'
+                      } py-2 rounded-full justify-center items-center border-[2px] border-violet100 px-4`}
+                      onPress={() => toggleSelection(type.id, type.name)}>
+                      <Text
+                        style={tw`${
+                          selectedItems.includes(type.id)
+                            ? 'text-white'
+                            : 'text-violet100'
+                        } font-WorkMedium text-sm`}>
+                        {type?.name}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </>
+              )}
             </View>
           </View>
 

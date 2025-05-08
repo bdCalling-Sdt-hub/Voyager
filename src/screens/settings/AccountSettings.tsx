@@ -46,7 +46,7 @@ const AccountSettings = ({navigation}: any) => {
             </Text>
             <CountryDropdown
               placeholderText="Select Language"
-              searchPlaceholder="Search languages"
+              searchPlaceholder="US"
             />
           </View>
 

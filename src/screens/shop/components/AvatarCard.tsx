@@ -1,6 +1,7 @@
 import {
   ActivityIndicator,
   Image,
+  Pressable,
   Text,
   TouchableOpacity,
   View,
@@ -22,8 +23,8 @@ const AvatarCard = ({avatar}: {avatar: AvatarData}) => {
   const [buyAvatar, {isLoading: isLoadingBuy}] = useBuyShopAvatarMutation();
   const [equipAvatar, {isLoading: isLoadingEquip}] = useEquipAvatarMutation();
   return (
-    <TouchableOpacity
-      disabled={true}
+    <Pressable
+      // disabled={true}
       style={[
         tw`w-[48%] items-center bg-white dark:bg-primaryDark p-3 rounded-2xl `,
         {
@@ -109,7 +110,7 @@ const AvatarCard = ({avatar}: {avatar: AvatarData}) => {
           </Text>
         </TouchableOpacity>
       )}
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

@@ -3,6 +3,7 @@ import {Image, Text, View} from 'react-native';
 
 import {Dropdown} from 'react-native-element-dropdown';
 import tw from '../../lib/tailwind';
+import {PrimaryColor} from '../utils/utils';
 
 // countries json
 const countries = [
@@ -49,8 +50,18 @@ const countries = [
   {label: 'Vietnam', value: 'VN'},
 ];
 
-const CountryDropdown = ({placeholderText, searchPlaceholder}: any) => {
-  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+const CountryDropdown = ({
+  placeholderText,
+  searchPlaceholder,
+  setCountry,
+}: {
+  placeholderText?: string;
+  searchPlaceholder?: string;
+  setCountry?: any;
+}) => {
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(
+    searchPlaceholder || null,
+  );
   const renderItem = (item: any) => {
     return (
       <View style={tw`flex-row items-center p-2`}>
@@ -77,16 +88,23 @@ const CountryDropdown = ({placeholderText, searchPlaceholder}: any) => {
         style={tw`flex-1`}
         data={countries}
         labelField="label"
-        containerStyle={tw`dark:bg-darkBg`}
+        containerStyle={tw`dark:bg-darkBg bg-white `}
         selectedTextStyle={tw`dark:text-white text-black text-base font-WorkMedium font-500`}
         valueField="value"
         placeholder={placeholderText || 'Select a country'}
         value={selectedCountry}
-        onChange={item => setSelectedCountry(item.value)}
+        onChange={item => {
+          setSelectedCountry(item.value);
+          setCountry &&
+            setCountry({
+              code: item.value,
+              country: item.label,
+            });
+        }}
         renderItem={renderItem}
         search
-        activeColor="#141518"
-        searchPlaceholder={searchPlaceholder || 'Search country'}
+        activeColor={PrimaryColor}
+        searchPlaceholder={placeholderText || 'Search country'}
         placeholderStyle={tw`text-gray50 dark:text-gray100 text-base font-WorkMedium font-500 pl-2`}
       />
     </View>

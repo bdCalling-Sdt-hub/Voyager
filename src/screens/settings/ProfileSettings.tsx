@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {
   Alert,
+  FlatList,
   Image,
   ScrollView,
   Text,
@@ -8,49 +9,51 @@ import {
   View,
 } from 'react-native';
 import {RadioButton, RadioGroup} from 'react-native-ui-lib';
-import {IconLightCamera, IconLock2} from '../../assets/icons/Icons';
+import {IconClose, IconLightCamera} from '../../assets/icons/Icons';
 import {
   useGetProfileQuery,
   useUpdateProfileMutation,
 } from '../../redux/apiSlices/authApiSlice';
-import {
-  useBuyShopAvatarMutation,
-  useEquipAvatarMutation,
-  useGetAvatarQuery,
-} from '../../redux/apiSlices/equipmentSlice';
 
 import {SvgXml} from 'react-native-svg';
 import Header from '../../components/header/Header';
 import InputText from '../../components/inputs/InputText';
 import NormalModal from '../../components/modals/NormalModal';
 import tw from '../../lib/tailwind';
-import {baseUrl} from '../utils/exports';
-import {AvatarData} from '../utils/types';
+import {makeImage} from '../../redux/api/baseApi';
+import {useGetAvatarQuery} from '../../redux/apiSlices/equipmentSlice';
+import AvatarCard from '../shop/components/AvatarCard';
 import CountryDropdown from './CountryDropdown';
 
 const ProfileSettings = ({navigation}: any) => {
-  const [bucketlistPrivacy, setBucketlistPrivacy] = useState('public');
-  const [profilePrivacy, setProfilePrivacy] = useState('public');
+  const {data: profileData, error} = useGetProfileQuery({});
+  const [bucketlistPrivacy, setBucketlistPrivacy] = useState(
+    profileData?.data?.bucketlist_privacy || 'public',
+  );
+  const [profilePrivacy, setProfilePrivacy] = useState(
+    profileData?.data?.privacy || 'public',
+  );
   const [avatarModalVisible, setAvatarModalVisible] = useState(false);
-  const [name, setName] = useState('');
 
   // rtk query hooks
   const [updateProfile, {isLoading}] = useUpdateProfileMutation();
-  const {data} = useGetAvatarQuery({});
-  const [equipAvatar, {isLoading: isLoadingEquip}] = useEquipAvatarMutation();
-  const [buyAvatar, {isLoading: isLoadingBuy}] = useBuyShopAvatarMutation();
-  const {data: profileData, error} = useGetProfileQuery({});
-  const {full_name, email, image, user_name, signup_date} =
-    profileData?.data || {};
-  const avatars = data?.data?.avatars || [];
-  console.log('avatars checking: ', avatars);
+  const {data: avatarData} = useGetAvatarQuery({});
 
+  const [name, setName] = useState(profileData?.data?.full_name || '');
+  const [country, setCounty] = useState({
+    country: profileData?.data?.country || '',
+    code: profileData?.data?.country_abbreviated || '',
+  });
   const handleUpdateProfile = async () => {
     try {
       const response = await updateProfile({
         full_name: name,
-      });
-      console.log('response of update profile: ', response);
+        country: country.country,
+        country_abbreviated: country.code,
+        privacy: profilePrivacy,
+        bucketlist_privacy: bucketlistPrivacy,
+      }).unwrap();
+      // console.log('response of update profile: ', response);
       if (response?.error?.success === false) {
         Alert.alert(
           'Updating profile failed',
@@ -68,54 +71,8 @@ const ProfileSettings = ({navigation}: any) => {
     }
   };
 
-  const handleEquipAvatar = async (id: number) => {
-    try {
-      const response = await equipAvatar({id});
-      console.log('response of equip avatar: ', response);
-      if (response?.error?.success === false) {
-        Alert.alert(
-          'Equipping avatar failed',
-          response?.error?.message || 'An error occurred.',
-        );
-        return;
-      } else {
-        setAvatarModalVisible(false);
-        Alert.alert(
-          'Equipping avatar Success',
-          'Your avatar has been successfully equipped.',
-        );
-      }
-    } catch (err: any) {
-      Alert.alert(
-        'Equipping avatar Failed',
-        err?.message || 'An error occurred.',
-      );
-    }
-  };
+  // console.log(country);
 
-  // handle buy avatar
-  const handleBuyAvatar = async (id: number) => {
-    try {
-      const response = await buyAvatar({id});
-      if (response?.error) {
-        Alert.alert(
-          'Buying avatar Failed',
-          response?.error?.message || 'An error occurred.',
-        );
-        return;
-      } else {
-        Alert.alert(
-          'Buying avatar Success',
-          'Your avatar has been successfully bought.',
-        );
-      }
-      console.log('buy avatar data: ', response);
-    } catch (err: any) {
-      Alert.alert('Buying avatar Failed', err?.message || 'An error occurred.');
-    }
-  };
-
-  console.log('avatars: ', avatars);
   return (
     <View style={tw`h-full bg-white dark:bg-primaryDark px-[4%] pb-2`}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -131,11 +88,7 @@ const ProfileSettings = ({navigation}: any) => {
           <View style={tw`items-center`}>
             <TouchableOpacity>
               <Image
-                source={
-                  image
-                    ? {uri: baseUrl + image}
-                    : require('../../assets/images/avatar1.png')
-                }
+                source={{uri: makeImage(profileData?.data?.image)}}
                 style={tw`h-18 w-18 rounded-full`}
               />
               <TouchableOpacity
@@ -166,7 +119,11 @@ const ProfileSettings = ({navigation}: any) => {
                   style={tw`text-black dark:text-white text-base font-WorkMedium font-500`}
                 />
               </View>
-              <CountryDropdown />
+              <CountryDropdown
+                placeholderText={country.country}
+                searchPlaceholder={country.code}
+                setCountry={setCounty}
+              />
             </View>
           </View>
 
@@ -209,7 +166,10 @@ const ProfileSettings = ({navigation}: any) => {
                   Who can see your bucketlist?
                 </Text>
                 <RadioGroup
-                  onValueChange={(value: any) => setBucketlistPrivacy(value)}
+                  initialValue={bucketlistPrivacy}
+                  onValueChange={(value: any) => {
+                    setBucketlistPrivacy(value);
+                  }}
                   style={tw`gap-y-3 mt-1`}>
                   <RadioButton
                     label="Public"
@@ -237,6 +197,7 @@ const ProfileSettings = ({navigation}: any) => {
                   Who can see your profile information?
                 </Text>
                 <RadioGroup
+                  initialValue={profilePrivacy}
                   onValueChange={(value: any) => setProfilePrivacy(value)}
                   style={tw`gap-y-3 mt-1`}>
                   <RadioButton
@@ -275,57 +236,31 @@ const ProfileSettings = ({navigation}: any) => {
         setVisible={setAvatarModalVisible}
         visible={avatarModalVisible}
         layerContainerStyle={tw`self-center items-center justify-center h-full w-[80%]`}
-        containerStyle={tw`bg-gray80 p-4 rounded-2xl dark:bg-black`}>
-        <Text
-          style={tw`text-black dark:text-white text-lg font-WorkSemiBold font-600`}>
-          Choose your avatar
-        </Text>
-
-        <View style={tw`flex-row flex-wrap mt-2 justify-between`}>
-          {avatars?.map((avatar: AvatarData, index: number) => (
-            <TouchableOpacity
-              onPress={() => handleEquipAvatar(avatar?.id)}
-              disabled={avatar?.status !== 'unlocked'}
-              key={index}
-              style={tw`w-[48%] items-center bg-white dark:bg-primaryDark p-4 rounded-2xl mb-2.5`}>
-              <View style={tw`w-full items-end justify-end h-4`}>
-                {avatar?.status === 'locked' && <SvgXml xml={IconLock2} />}
-              </View>
-              <Image
-                source={
-                  avatar?.avatar
-                    ? {uri: baseUrl + avatar?.avatar}
-                    : require('../../assets/images/avatar2.png')
-                }
-                style={tw`w-14 h-14 rounded-full`}
-              />
-              <Text
-                style={tw`text-black dark:text-white text-base font-WorkMedium font-500 my-1`}>
-                {avatar?.name || 'No Name Available'}
-              </Text>
-
-              <TouchableOpacity
-                disabled={
-                  avatar?.status === 'locked' || avatar?.purchase_status
-                }
-                onPress={() => handleBuyAvatar(avatar?.id)}
-                style={tw`flex-row items-center gap-2 border border-gold rounded-full py-0.5 px-2`}>
-                {avatar?.purchase_status === false && (
-                  <Image
-                    source={require('../../assets/images/coin.png')}
-                    style={tw`h-7 w-7`}
-                  />
-                )}
-                <Text
-                  style={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}>
-                  {avatar?.purchase_status === false
-                    ? avatar?.cost || 0
-                    : 'Get Avatar'}
-                </Text>
-              </TouchableOpacity>
-            </TouchableOpacity>
-          ))}
+        containerStyle={tw`bg-gray80 p-4 h-4/5 rounded-2xl dark:bg-black`}>
+        <View style={tw`flex-row items-center justify-between`}>
+          <Text
+            style={tw`text-black dark:text-white text-lg font-WorkSemiBold font-600`}>
+            Choose your avatar
+          </Text>
+          <TouchableOpacity
+            style={tw`p-2`}
+            onPress={() => {
+              setAvatarModalVisible(false);
+            }}>
+            <SvgXml xml={IconClose} />
+          </TouchableOpacity>
         </View>
+
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={avatarData?.data?.avatars}
+          numColumns={2}
+          contentContainerStyle={tw`gap-2 mt-2`}
+          columnWrapperStyle={tw`justify-between`}
+          renderItem={({item, index}) => {
+            return <AvatarCard avatar={item} />;
+          }}
+        />
       </NormalModal>
     </View>
   );
