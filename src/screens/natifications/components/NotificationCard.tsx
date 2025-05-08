@@ -1,11 +1,4 @@
-import {
-  ActivityIndicator,
-  Alert,
-  Image,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
 
 import React from 'react';
 import tw from '../../../lib/tailwind';
@@ -53,10 +46,12 @@ const NotificationCard = ({item}: {item: any}) => {
         },
       ]}>
       {/*add request notification */}
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={tw`p-2 bg-gray80 dark:bg-darkBg rounded-3xl flex-row items-center gap-4`}>
         <Image
-          source={require('../../../assets/images/avatar1.png')}
+          source={{
+            uri: makeImage(item?.data?.sender_image),
+          }}
           style={tw`w-16 h-16 rounded-full`}
         />
         <View style={tw`flex-shrink`}>
@@ -98,7 +93,7 @@ const NotificationCard = ({item}: {item: any}) => {
             </>
           )}
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       {/* Notification view */}
 
       <TouchableOpacity

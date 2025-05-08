@@ -44,7 +44,7 @@ export const EquipmentSlice = api.injectEndpoints({
           method: 'POST',
         };
       },
-      invalidatesTags: ['equipment'],
+      invalidatesTags: ['equipment', 'auth'],
     }),
 
     // digitals sourvien
@@ -66,7 +66,7 @@ export const EquipmentSlice = api.injectEndpoints({
           method: 'POST',
         };
       },
-      invalidatesTags: ['equipment'],
+      invalidatesTags: ['equipment', 'auth'],
     }),
 
     // power ups

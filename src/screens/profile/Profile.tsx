@@ -106,6 +106,12 @@ const Profile = ({navigation}: any) => {
                 source={{uri: makeImage(profileData?.data?.image)}}
                 style={tw`h-24 w-24 rounded-full`}
               />
+              <Image
+                source={{
+                  uri: makeImage(profileData?.data?.digital_item_icon),
+                }}
+                style={tw`absolute -top-6 -left-4 z-10 h-32 w-32 rounded-full`}
+              />
             </View>
             <TouchableOpacity
               style={[

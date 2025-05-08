@@ -172,13 +172,21 @@ const Header = ({
               </TouchableOpacity>
             ) : (
               <View>
-                <Image
-                  source={{uri: makeImage(profileData?.data?.image)}}
-                  style={tw`h-12 w-12 rounded-full`}
-                />
-                <View
-                  style={tw`h-2 w-2 bg-red rounded-full absolute bottom-0 left-9`}
-                />
+                <View>
+                  <Image
+                    source={{uri: makeImage(profileData?.data?.image)}}
+                    style={tw`h-12 w-12 rounded-full`}
+                  />
+                  <Image
+                    source={{
+                      uri: makeImage(profileData?.data?.digital_item_icon),
+                    }}
+                    style={tw`absolute -top-3 -left-2 z-10 h-16 w-16 rounded-full`}
+                  />
+                  <View
+                    style={tw`h-2 w-2 z-20 bg-red rounded-full absolute bottom-0 left-9`}
+                  />
+                </View>
 
                 {showActionModal && (
                   <Pressable

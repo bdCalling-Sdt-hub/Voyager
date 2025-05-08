@@ -68,7 +68,7 @@ const Achievements = ({navigation}: any) => {
                 {achievements?.data?.xp}
               </Text>
               <Text style={tw`text-gray100 text-sm font-WorkMedium font-500`}>
-                Souvenirs
+                XP
               </Text>
             </View>
           </View>

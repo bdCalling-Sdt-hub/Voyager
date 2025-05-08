@@ -24,7 +24,14 @@ const PowersUpsCard = ({item}: {item: any}) => {
   return (
     <TouchableOpacity
       disabled={true}
-      style={tw`border flex-row items-center  border-gray90 dark:border-darkBg rounded-2xl p-4`}>
+      style={[
+        tw`border flex-row items-center  border-gray90 dark:border-darkBg rounded-2xl p-4`,
+        {
+          borderColor: 'rgba(0,0,0,.1)',
+          borderWidth: 1,
+          opacity: item?.status === 'locked' ? 0.5 : 1,
+        },
+      ]}>
       <View style={tw`flex-1`}>
         <View style={tw`  h-4`}>
           {item?.status === 'locked' && <SvgXml xml={IconLock2} />}
