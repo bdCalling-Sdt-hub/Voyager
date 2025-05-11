@@ -94,11 +94,11 @@ export const AuthApiSlice = api.injectEndpoints({
     }),
 
     // update profile
-    updateProfile: builder.mutation({
+    updateProfileSetting: builder.mutation({
       query: data => {
-        // console.log(data);
+        console.log(data);
         return {
-          url: `/profile-update?_method=PUT`,
+          url: `/update-profile-setting?_method=PUT`,
           method: 'POST',
           body: data,
         };
@@ -135,6 +135,6 @@ export const {
   useGetProfileQuery,
 
   useGetOthersProfileQuery,
-  useUpdateProfileMutation,
+  useUpdateProfileSettingMutation,
   useValidateTokenQuery,
 } = AuthApiSlice;

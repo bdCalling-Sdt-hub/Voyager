@@ -12,7 +12,7 @@ import {RadioButton, RadioGroup} from 'react-native-ui-lib';
 import {IconClose, IconLightCamera} from '../../assets/icons/Icons';
 import {
   useGetProfileQuery,
-  useUpdateProfileMutation,
+  useUpdateProfileSettingMutation,
 } from '../../redux/apiSlices/authApiSlice';
 
 import {SvgXml} from 'react-native-svg';
@@ -36,7 +36,7 @@ const ProfileSettings = ({navigation}: any) => {
   const [avatarModalVisible, setAvatarModalVisible] = useState(false);
 
   // rtk query hooks
-  const [updateProfile, {isLoading}] = useUpdateProfileMutation();
+  const [updateProfile, {isLoading}] = useUpdateProfileSettingMutation();
   const {data: avatarData} = useGetAvatarQuery({});
 
   const [name, setName] = useState(profileData?.data?.full_name || '');
@@ -52,16 +52,21 @@ const ProfileSettings = ({navigation}: any) => {
         country_abbreviated: country.code,
         privacy: profilePrivacy,
         bucketlist_privacy: bucketlistPrivacy,
+        _method: 'PUT',
       }).unwrap();
-      // console.log('response of update profile: ', response);
       if (response?.error?.success === false) {
         Alert.alert(
           'Updating profile failed',
           response?.error?.message || 'An error occurred.',
         );
         return;
-      } else {
-        navigation?.navigate('Settings');
+      } else if (response?.success) {
+        // console.log('response of update profile: ', response);
+        Alert.alert(
+          'Profile updated',
+          response?.message || 'An error occurred.',
+        );
+        // navigation?.navigate('Settings');
       }
     } catch (err: any) {
       Alert.alert(
@@ -179,7 +184,7 @@ const ProfileSettings = ({navigation}: any) => {
                   />
                   <RadioButton
                     label="Friends Only"
-                    value="friends_only"
+                    value="friends"
                     color="#8C78EA"
                     labelStyle={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}
                   />
@@ -208,7 +213,7 @@ const ProfileSettings = ({navigation}: any) => {
                   />
                   <RadioButton
                     label="Friends Only"
-                    value="friends_only"
+                    value="friends"
                     color="#8C78EA"
                     labelStyle={tw`text-black dark:text-white text-sm font-WorkMedium font-500`}
                   />

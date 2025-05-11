@@ -1,19 +1,156 @@
-import React, {useState} from 'react';
-import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {
   IconClose,
   IconFooterDot,
   IconVerifiedTik,
 } from '../../../assets/icons/Icons';
+// PaymentScreen.ts
+import {useStripe} from '@stripe/stripe-react-native';
+import React, {useState} from 'react';
+import {
+  useCreatePaymentIntentMutation,
+  useGetSubscriptionQuery,
+  usePaymentSuccessMutation,
+} from '../../../redux/apiSlices/subsCription';
 
 import {SvgXml} from 'react-native-svg';
 import tw from '../../../lib/tailwind';
-import {useGetSubscriptionQuery} from '../../../redux/apiSlices/subsCription';
 
 const Subscription = ({navigation}: any) => {
+  const {
+    initPaymentSheet,
+    presentPaymentSheet,
+    isPlatformPaySupported,
+    confirmPlatformPayPayment,
+  } = useStripe();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const {data, isLoading} = useGetSubscriptionQuery({});
   const subscriptionData = data?.data?.data || [];
+
+  const [createPaymentIntent] = useCreatePaymentIntentMutation();
+  const [paymentSuccess] = usePaymentSuccessMutation();
+
+  const handlePayment = async (cost: number) => {
+    try {
+      const response = await createPaymentIntent({
+        amount: cost * 100,
+        payment_method_types: ['card'], // Just 'card' is sufficient
+        currency: 'usd',
+      }).unwrap();
+
+      const clientSecret = response?.data?.client_secret;
+
+      if (!clientSecret) {
+        Alert.alert('Error', 'Payment initialization failed');
+        return;
+      }
+
+      // Initialize payment sheet with Google Pay config
+      const {error} = await initPaymentSheet({
+        paymentIntentClientSecret: clientSecret,
+        allowsDelayedPaymentMethods: false,
+        merchantDisplayName: 'Your Business Name',
+        returnURL: 'yourapp://stripe-redirect', // Important for Apple Pay
+
+        // Google Pay configuration
+        googlePay: {
+          merchantCountryCode: 'US',
+          currencyCode: 'USD',
+          testEnv: true, // Set to false in production
+        },
+
+        // Apple Pay configuration
+        applePay: {
+          merchantCountryCode: 'US',
+        },
+
+        appearance: {
+          colors: {
+            primary: '#635BFF',
+          },
+        },
+      });
+
+      if (error) {
+        console.warn('Error initializing payment sheet:', error);
+        Alert.alert('Error', error.message);
+        return;
+      }
+
+      // Present the payment sheet - Google Pay will appear as an option if available
+      const {error: sheetError} = await presentPaymentSheet();
+
+      if (sheetError) {
+        console.warn('Error presenting payment sheet:', sheetError);
+        Alert.alert('Error', sheetError.message);
+      } else {
+        // Payment success
+        await paymentSuccess({
+          paymentId: response.data.id,
+          amount: cost,
+          planId: selectedPlan.id,
+        }).unwrap();
+
+        Alert.alert('Success', 'Payment successful!');
+        navigation.navigate('PaymentSuccess');
+      }
+    } catch (error) {
+      console.warn('Payment error:', error);
+      Alert.alert('Error', 'Payment failed');
+    }
+  };
+
+  // const pay = async (cost: number) => {
+  //   const response = await createPaymentIntent({
+  //     amount: cost * 100,
+  //     payment_method_types: ['card'], // Include all payment methods
+  //     currency: 'usd', // Make sure to specify currency
+  //   }).unwrap();
+
+  //   const clientSecret = response?.data?.client_secret;
+
+  //   if (!clientSecret) {
+  //     console.error('No client secret received');
+  //     return;
+  //   }
+
+  //   const {error} = await confirmPlatformPayPayment(clientSecret, {
+  //     googlePay: {
+  //       testEnv: true,
+  //       merchantName: 'My merchant name',
+  //       merchantCountryCode: 'US',
+  //       currencyCode: 'USD',
+  //       billingAddressConfig: {
+  //         format: PlatformPay.BillingAddressFormat.Full,
+  //         isPhoneNumberRequired: true,
+  //         isRequired: true,
+  //       },
+  //     },
+  //   });
+
+  //   if (error) {
+  //     Alert.alert(error.code, error.message);
+  //     // Update UI to prompt user to retry payment (and possibly another payment method)
+  //     return;
+  //   }
+  //   Alert.alert('Success', 'The payment was confirmed successfully.');
+  // };
+
+  React.useEffect(() => {
+    (async function () {
+      if (!(await isPlatformPaySupported({googlePay: {testEnv: true}}))) {
+        Alert.alert('Google Pay is not supported.');
+        return;
+      }
+    })();
+  }, []);
 
   const handleSelect = (index: number) => {
     setSelectedIndex(index);
@@ -36,7 +173,7 @@ const Subscription = ({navigation}: any) => {
   }
 
   const selectedPlan = subscriptionData[selectedIndex];
-  console.log('selectedPlan: ', selectedPlan);
+  // console.log('selectedPlan: ', selectedPlan);
   return (
     <View style={tw`bg-white h-full px-[4%] pb-2 dark:bg-primaryDark`}>
       <ScrollView style={tw`mt-3`}>
@@ -126,13 +263,22 @@ const Subscription = ({navigation}: any) => {
       <TouchableOpacity
         style={tw`bg-violet100 rounded-full p-3 mt-2`}
         onPress={() =>
-          navigation?.navigate('PaymentMethod', {plan: selectedPlan})
+          // navigation?.navigate('PaymentMethod', {plan: selectedPlan})
+          handlePayment(selectedPlan?.price)
         }>
         <Text
           style={tw`text-center text-white text-base font-WorkMedium font-500`}>
           Continue - ${selectedPlan?.price} Total
         </Text>
       </TouchableOpacity>
+      {/* <PlatformPayButton
+        type={PlatformPay.ButtonType.Pay}
+        onPress={() => pay(selectedPlan?.price)}
+        style={{
+          width: '100%',
+          height: 50,
+        }}
+      /> */}
 
       {/* Footer */}
       <View style={tw`flex-row items-center justify-center mt-2`}>

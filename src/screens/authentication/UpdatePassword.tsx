@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Alert, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {
   IconCloseEye,
   IconDot,
@@ -25,7 +32,7 @@ const UpdatePassword = ({navigation}: any) => {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   // rtk query hooks
-  const [updatePassword] = useUpdatePasswordMutation();
+  const [updatePassword, {isLoading}] = useUpdatePasswordMutation();
 
   const updatePasswordHandler = async (data: any) => {
     try {
@@ -33,22 +40,16 @@ const UpdatePassword = ({navigation}: any) => {
         current_password: oldPassword,
         new_password: newPassword,
         c_password: confirmPassword,
-      });
-      console.log(response);
+      }).unwrap();
+
       console.log('response check : ', response);
-      if (response?.error?.success === false) {
-        Alert.alert(
-          'Password Update Failed',
-          response?.error?.message || 'An error occurred.',
-        );
-        return;
-      } else {
+      if (response?.success) {
         setIsSuccessModalVisible(true);
       }
     } catch (err: any) {
       Alert.alert(
         'Password Update Failed',
-        err?.message || 'An error occurred.',
+        err?.message || 'Please do not same new password as old password.',
       );
     }
   };
@@ -136,8 +137,9 @@ const UpdatePassword = ({navigation}: any) => {
         </View>
 
         <TouchableOpacity
-          style={tw`bg-violet100 rounded-full p-3 mt-4`}
+          style={tw`bg-violet100 flex-row  gap-2 items-center justify-center rounded-full p-3 mt-4`}
           onPress={updatePasswordHandler}>
+          {isLoading && <ActivityIndicator size="small" color={'white'} />}
           <Text style={tw`text-center text-white text-base font-WorkMedium`}>
             Update Password
           </Text>
@@ -162,7 +164,7 @@ const UpdatePassword = ({navigation}: any) => {
           </Text>
           <View style={tw`w-full`}>
             <TouchableOpacity
-              style={tw`bg-violet100 rounded-full p-2 mt-4`}
+              style={tw`bg-violet100 flex-row items-center justify-center rounded-full p-2 mt-4`}
               onPress={() => {
                 setIsSuccessModalVisible(false);
                 navigation.goBack();
